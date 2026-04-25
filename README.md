@@ -17,14 +17,35 @@ not run it on the production host.
 ## Build
 
 ```sh
-npm run build  # writes ./dist
+npm run build    # writes ./dist
 npm run preview  # sanity-check the static bundle on :9002
 ```
 
-`dist/` is the entire deployable artefact. Copy it to the host (e.g.,
-`/var/www/wjhome/dist`) and serve it through nginx — see `nginx.example.conf`
-for the clean-URL fallback that lets `/home`, `/pubs`, `/work`, `/cv` resolve
-on a hard refresh.
+`dist/` is the entire deployable artefact.
+
+## Deploy
+
+### GitHub Pages (canonical)
+
+Push to `master` — `.github/workflows/deploy.yaml` builds and publishes to
+<https://jianwang-ntu.github.io/>. The workflow copies `dist/index.html` to
+`dist/404.html` so SPA clean URLs (`/home`, `/pubs`, `/work`, `/cv`) resolve
+on direct hits.
+
+The repo must be **public** for Pages to publish on a free account, and the
+Pages source must be set to **GitHub Actions** under `Settings → Pages`.
+
+### Self-hosted nginx
+
+Copy `dist/` to the host doc-root and serve it. See `nginx.example.conf` for
+the clean-URL fallback (`try_files $uri $uri/ /index.html;`) — without this
+patch, `/pubs` etc. 404 on hard refresh.
+
+```sh
+rsync -avz --delete \
+      --exclude '.DS_Store' --exclude '~$*' \
+      ./dist/ ubuntu@HOST:/home/ubuntu/www/website/
+```
 
 ## Editing content
 
