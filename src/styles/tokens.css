@@ -1,0 +1,53 @@
+/* design tokens — single source of truth for the wireframe-as-final aesthetic */
+:root {
+  /* type */
+  --body: "Inter", system-ui, -apple-system, sans-serif;
+  --hand: "Caveat", cursive;
+  --mono: "JetBrains Mono", ui-monospace, monospace;
+  --serif: "Charter", "Iowan Old Style", Georgia, serif;
+
+  /* color — warm cream + ink */
+  --bg: #fafaf7;
+  --bg-alt: #f3f1e8;
+  --bg-frame: #e8e6dc;
+  --ink: #1a1a1a;
+  --ink-soft: rgba(26, 26, 26, 0.7);
+  --ink-faint: rgba(26, 26, 26, 0.55);
+  --hatch: rgba(0, 0, 0, 0.07);
+
+  /* line */
+  --line: 1.5px solid var(--ink);
+  --line-thin: 1px solid var(--ink);
+  --dash: 1px dashed var(--ink);
+  --dash-thick: 1.5px dashed var(--ink);
+
+  /* spacing scale */
+  --gap-1: 4px;
+  --gap-2: 8px;
+  --gap-3: 12px;
+  --gap-4: 16px;
+  --gap-5: 22px;
+  --gap-6: 28px;
+  --gap-7: 36px;
+  --gap-8: 48px;
+  --gap-9: 56px;
+
+  /* type scale */
+  --t-mono-xs: 9px;
+  --t-mono-s: 10px;
+  --t-mono-m: 11px;
+  --t-body-s: 11.5px;
+  --t-body: 12.5px;
+  --t-body-l: 14px;
+  --t-hand-s: 22px;
+  --t-hand: 32px;
+  --t-hand-l: 44px;
+  --t-hand-xl: 56px;
+
+  /* layout */
+  --page-w: 1180px;
+  --page-pad-x: 56px;
+
+  /* accent (kept neutral to match the wireframe vibe) */
+  --accent: var(--ink);
+}
