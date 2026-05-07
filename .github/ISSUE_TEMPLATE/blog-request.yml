@@ -1,0 +1,69 @@
+name: Blog draft request
+description: Drop a video / paper / blog / LinkedIn URL — the watcher drafts a post and opens a PR.
+title: "[blog] "
+labels: ["blog-request"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Fill in the source. The watcher (`tools/video-to-blog/watch-issues.sh`)
+        polls open `blog-request` issues and runs the pipeline end-to-end.
+        On success a PR is opened with `Closes #N` so the issue closes when
+        the PR merges.
+
+  - type: input
+    id: source_url
+    attributes:
+      label: Source URL
+      description: Any URL the pipeline understands — YouTube, arXiv, LinkedIn, direct PDF, blog post, etc.
+      placeholder: https://...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: source_kind
+    attributes:
+      label: Source kind
+      description: Leave on `auto` to let the URL pattern decide (arXiv → paper, LinkedIn → post, otherwise video). Override only when the URL doesn't pattern-match.
+      options:
+        - auto
+        - video
+        - paper
+        - post
+      default: 0
+    validations:
+      required: true
+
+  - type: input
+    id: tags
+    attributes:
+      label: Tags
+      description: Comma-separated free-form tags. The auto-classifier adds its own structured `topic:` / `format:` / `speaker:` labels regardless.
+      placeholder: agents,llm
+
+  - type: dropdown
+    id: languages
+    attributes:
+      label: Languages
+      description: Translations to produce. English is always written.
+      options:
+        - en,zh
+        - en
+      default: 0
+
+  - type: textarea
+    id: pasted_source
+    attributes:
+      label: Pasted source body
+      description: |
+        Paste the source text here only when the URL is paywalled (LinkedIn login
+        wall, member-only post, etc). If filled, the pipeline uses `--text-file`
+        with this content and stores the URL above as the post's `source` link.
+        Leave empty otherwise.
+      render: text
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: Anything the writer should know — preferred angle, topic context, must-mention examples.
