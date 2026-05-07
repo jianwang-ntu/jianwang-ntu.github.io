@@ -48,15 +48,17 @@ jobs:
       - run: cp dist/index.html dist/404.html
       - run: touch dist/.nojekyll
 
-      # Rewrite /images/ refs in built HTML/JS/CSS/MD so every consumer
+      # Rewrite /images/ refs in built HTML/JS/CSS/JSON/MD so every consumer
       # loads images from the public S3 bucket rather than the deploy
       # target's local /images/ path. Match the four delimiter forms
       # ('"/images/, \"/images/, (/images/, =/images/) so we never touch
       # unrelated text. Markdown is included so blog posts written
-      # `![alt](/images/...)` resolve via the same bucket.
+      # `![alt](/images/...)` resolve via the same bucket. JSON is
+      # included so posts.json's "image": "/images/..." entries — read
+      # by the React index page — resolve via S3 too.
       - name: Rewrite /images/ → S3
         run: |
-          find dist -type f \( -name '*.html' -o -name '*.js' -o -name '*.css' -o -name '*.md' \) \
+          find dist -type f \( -name '*.html' -o -name '*.js' -o -name '*.css' -o -name '*.json' -o -name '*.md' \) \
             -print0 \
           | xargs -0 sed -i \
               -e "s|\"/images/|\"${S3_IMAGE_BASE}/images/|g" \
