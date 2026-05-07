@@ -1,0 +1,18 @@
+{
+  "slug": "ralph-loops-why-chris-parsons-stopped-orchestrating-agents",
+  "title_en": "Ralph Loops: Why Chris Parsons Stopped Orchestrating Agents and Started Looping Them",
+  "date": "2026-05-08",
+  "dek_en": "In a two-hour workshop at what appears to be an AI engineering conference, Chris Parsons argued that the future of working with AI is not elaborate orchestration but a deceptively simple pattern: a loop that does one thing, picks the next m",
+  "tags": [
+    "llm",
+    "video-summary",
+    "ralph-loop"
+  ],
+  "languages": [
+    "en",
+    "zh"
+  ],
+  "title_zh": "Ralph Loop：把 AI 当成\"同一个工程师\"无限循环跑下去",
+  "dek_zh": "在 AI Engineer 大会的一场两小时工作坊里，资深 CTO、连续创业者 Chris Parsons 提出一个看似简单到荒谬的主张：与其费劲编排多代理工作流，不如让 AI 在一个循环里反复挑下一个最重要的任务来做。他认为，这是大多数知识工作未来的真实形态——从写代码、写新闻邮件，到运营整个创业公司。",
+  "source": "https://www.youtube.com/watch?v=2TLXsxkz0zI"
+}
