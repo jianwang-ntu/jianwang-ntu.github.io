@@ -774,8 +774,11 @@ def _slugify(text: str, max_len: int = 60) -> str:
     return s.rstrip("-") or "post"
 
 
+_IMAGE_ONLY_RE = re.compile(r"^!\[[^\]]*\]\([^)]+\)\s*$")
+
+
 def _parse_blog_md(md_text: str) -> tuple[str, str]:
-    """Pull H1 title and the first non-heading paragraph (dek) from blog.md."""
+    """Pull H1 title and the first non-heading, non-image paragraph (dek)."""
     title, dek = "Untitled", ""
     for line in md_text.splitlines():
         s = line.strip()
@@ -785,9 +788,10 @@ def _parse_blog_md(md_text: str) -> tuple[str, str]:
     after_h1 = md_text.split("\n", 1)[1] if "\n" in md_text else ""
     for para in re.split(r"\n\s*\n", after_h1):
         p = para.strip()
-        if p and not p.startswith("#"):
-            dek = re.sub(r"\s+", " ", p)[:240]
-            break
+        if not p or p.startswith("#") or _IMAGE_ONLY_RE.match(p):
+            continue
+        dek = re.sub(r"\s+", " ", p)[:240]
+        break
     return title, dek
 
 

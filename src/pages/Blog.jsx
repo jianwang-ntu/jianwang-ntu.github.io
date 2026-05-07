@@ -155,7 +155,8 @@ function FilterBar({ posts, selected, onToggle, onClear }) {
 
 
 function BlogCard({ post, featured, globalCount, onClick }) {
-  const cls = ['blog-post', featured ? 'feat' : ''].filter(Boolean).join(' ');
+  const cls = ['blog-post', featured ? 'feat' : '', post.image ? 'has-cover' : '']
+    .filter(Boolean).join(' ');
   const langs = post.languages || ['en'];
   return (
     <Link
@@ -172,7 +173,7 @@ function BlogCard({ post, featured, globalCount, onClick }) {
           {globalCount > 0 && <span> · {globalCount} read{globalCount > 1 ? 's' : ''}</span>}
         </div>
       </div>
-      <div>
+      <div className="body">
         <div className="ttl">{post.title_en}</div>
         {post.dek_en && <div className="dek">{post.dek_en}</div>}
         {(post.labels?.length > 0 || post.tags?.length > 0) && (
@@ -182,6 +183,14 @@ function BlogCard({ post, featured, globalCount, onClick }) {
           </div>
         )}
       </div>
+      {post.image && (
+        <img
+          className="cover"
+          src={`${import.meta.env.BASE_URL.replace(/\/$/, '')}${post.image}`}
+          alt=""
+          loading="lazy"
+        />
+      )}
     </Link>
   );
 }
