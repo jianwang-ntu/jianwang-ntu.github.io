@@ -109,10 +109,20 @@ BRANCH="blog/$SLUG"
 git -C "$REPO_ROOT" checkout -B "$BRANCH" >/dev/null
 
 git -C "$REPO_ROOT" add "$POST_DIR" public/blog/posts.json
-# Stage the cover image if pipeline.py generated one.
+# Stage the cover image if pipeline.py generated one, and ship it to S3
+# so the public bucket has the asset before the PR is even reviewed.
 COVER_GLOB="public/images/blog/${SLUG}.*"
 if compgen -G "$REPO_ROOT/$COVER_GLOB" > /dev/null; then
   git -C "$REPO_ROOT" add $COVER_GLOB
+  if command -v aws >/dev/null && [[ -n "${S3_IMAGE_BUCKET:-publicsg}" ]]; then
+    cover_src=$(compgen -G "$REPO_ROOT/$COVER_GLOB" | head -1)
+    cover_key="github.io/images/blog/$(basename "$cover_src")"
+    echo "Uploading cover → s3://${S3_IMAGE_BUCKET:-publicsg}/${cover_key}"
+    aws s3 cp "$cover_src" "s3://${S3_IMAGE_BUCKET:-publicsg}/${cover_key}" \
+      --no-progress 2>&1 | tail -1 || echo "  (S3 upload failed — image will still ship in the PR; sync manually later)"
+  else
+    echo "  (skipping S3 upload — aws CLI missing; sync manually later)"
+  fi
 fi
 COMMIT_MSG="blog: $TITLE"
 [[ -n "$ISSUE" ]] && COMMIT_MSG+=$'\n\nCloses #'$ISSUE

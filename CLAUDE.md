@@ -21,15 +21,13 @@ content-hashed JS/CSS — no SSR.
   - `meta.json` — slug, titles, deks, date, tags, source URL, languages.
 - `tools/video-to-blog/` — the Python pipeline + the `blog.sh` wrapper that
   drafts posts from a video and opens a PR. Run from a residential network.
-- `.github/workflows/deploy.yaml` — Pages artifact deploy on master push.
-- `.github/workflows/publish-dist.yml` — on master push, builds dist/
-  once and force-pushes two orphan commits:
-  - **`dist`** — full build, image refs stay relative (`/images/...`).
-    Served by GitHub Pages itself.
-  - **`dist_remote`** — same build with image refs rewritten to absolute
-    GitHub Pages URLs (`https://<owner>.github.io/images/...`) and the
-    local `images/` dir dropped. Served by the remote nginx host, which
-    therefore doesn't need to store the image assets.
+- `.github/workflows/deploy.yaml` — single deploy workflow on master push.
+  Builds once, rewrites `/images/` paths in the built dist to point at
+  the public S3 bucket (`https://publicsg.s3.ap-southeast-1.amazonaws.com/
+  github.io/images/...`), drops `dist/images/`, then both deploys to
+  GitHub Pages and force-pushes the dist as an orphan commit on the
+  `dist` branch. Both targets carry identical content. The `dist_remote`
+  branch is no longer used — image hosting moved to S3.
 
 ## How a blog post gets created
 
@@ -119,10 +117,11 @@ Flags:
 **Cover image** — after the EN draft, the pipeline asks OpenAI's image API
 for a square editorial illustration based on the title + dek. The image is
 saved to `public/images/blog/<slug>.png` and `![title](/images/blog/<slug>.png)`
-is injected at the top of every language version's markdown. Skipped silently
-if `OPENAI_API_KEY` is unset. Disable with `--image off`. Pick a different
-model with `--image-model {gpt-image-1, dall-e-3}` (default gpt-image-1
-medium quality, ~$0.04 per post).
+is injected at the top of every language version's markdown. `blog.sh`
+also uploads the new cover to `s3://publicsg/github.io/images/blog/` so
+the deployed sites can resolve it before a CI run touches it. Skipped
+silently if `OPENAI_API_KEY` is unset. Disable with `--image off`. Pick a
+different model with `--image-model {gpt-image-1, dall-e-3}`.
 
 **Blog-drafting LLM**:
 - `--llm claude` (default) — drives the `claude` CLI in headless mode.

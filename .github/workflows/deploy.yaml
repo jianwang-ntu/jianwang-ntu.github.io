@@ -1,4 +1,18 @@
-name: Deploy to GitHub Pages
+name: Deploy site
+
+# Single deployment workflow. On every push to master:
+#   1. npm run build                      → dist/
+#   2. SPA fallback (index.html → 404.html) and .nojekyll
+#   3. Rewrite /images/ paths in dist to S3 URLs (publicsg bucket)
+#   4. Drop dist/images/ — assets live on S3 now, no need to ship them
+#   5. Upload dist as a GitHub Pages artifact and deploy
+#   6. Force-push the same dist as an orphan commit on the `dist` branch
+#      (consumed by the self-hosted nginx host)
+#
+# Both deploy targets carry identical content. Image references resolve to
+# https://publicsg.s3.ap-southeast-1.amazonaws.com/github.io/images/... on
+# every host, served by the shared S3 bucket. Image uploads to S3 happen
+# at content-creation time via tools/video-to-blog/blog.sh, not in CI.
 
 on:
   push:
@@ -6,13 +20,16 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
 concurrency:
-  group: pages
+  group: deploy-site
   cancel-in-progress: true
+
+env:
+  S3_IMAGE_BASE: https://publicsg.s3.ap-southeast-1.amazonaws.com/github.io
 
 jobs:
   build:
@@ -28,14 +45,67 @@ jobs:
       - run: npm ci
       - run: npm run build
 
-      # SPA fallback for clean URLs on GH Pages: serve index.html on 404.
       - run: cp dist/index.html dist/404.html
+      - run: touch dist/.nojekyll
+
+      # Rewrite /images/ refs in built HTML/JS/CSS/MD so every consumer
+      # loads images from the public S3 bucket rather than the deploy
+      # target's local /images/ path. Match the four delimiter forms
+      # ('"/images/, \"/images/, (/images/, =/images/) so we never touch
+      # unrelated text. Markdown is included so blog posts written
+      # `![alt](/images/...)` resolve via the same bucket.
+      - name: Rewrite /images/ → S3
+        run: |
+          find dist -type f \( -name '*.html' -o -name '*.js' -o -name '*.css' -o -name '*.md' \) \
+            -print0 \
+          | xargs -0 sed -i \
+              -e "s|\"/images/|\"${S3_IMAGE_BASE}/images/|g" \
+              -e "s|'/images/|'${S3_IMAGE_BASE}/images/|g" \
+              -e "s|(/images/|(${S3_IMAGE_BASE}/images/|g" \
+              -e "s|=/images/|=${S3_IMAGE_BASE}/images/|g"
+          # Drop the local copy — images now load from S3.
+          rm -rf dist/images
 
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
 
-  deploy:
+      - name: Upload dist as artifact for the dist-branch job
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-tree
+          path: dist
+          retention-days: 1
+          include-hidden-files: true
+
+  publish-dist-branch:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist-tree
+          path: dist
+
+      - name: Force-push dist/ to the dist branch
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd dist
+          git init -q -b publish
+          git config user.name  "publish-dist[bot]"
+          git config user.email "publish-dist@users.noreply.github.com"
+          git add -A
+          git commit -q -m "Publish dist for ${GITHUB_SHA::7}"
+          git push --force \
+            "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" \
+            HEAD:dist
+
+  deploy-pages:
     needs: build
     runs-on: ubuntu-latest
     environment:
