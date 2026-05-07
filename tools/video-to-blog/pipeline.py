@@ -514,6 +514,108 @@ def transcript_to_blogs(transcript_path: Path, out_dir: Path, lang_codes: list[s
 
 
 # --------------------------------------------------------------------------- #
+# Step 3.4 — classify the post into our label taxonomy
+# --------------------------------------------------------------------------- #
+# Three orthogonal axes. The reader picks chips on each axis to filter; within
+# an axis it's OR, across axes it's AND. Keep the vocabulary closed so the
+# filter bar stays manageable as the post count grows. Free-form `tags`
+# still exist alongside these — `labels` is the controlled vocabulary.
+LABEL_TAXONOMY: dict[str, list[str]] = {
+    "topic": [
+        "agents", "llm", "engineering", "product",
+        "research", "infra", "security", "business",
+    ],
+    "format": [
+        "keynote", "talk", "workshop",
+        "podcast", "interview", "paper",
+    ],
+    "speaker": [
+        "anthropic", "openai", "google", "meta",
+        "academia", "independent",
+    ],
+}
+
+
+CLASSIFY_PROMPT = """You are tagging a blog post for a reader-facing filter \
+UI. Pick the labels that best describe the post from the closed taxonomy \
+below. Your output is a single JSON object — nothing else, no prose.
+
+Rules:
+- Pick 1–3 topic labels (the post's actual subject matter).
+- Pick exactly 1 format label (how the speaker delivered the content).
+- Pick exactly 1 speaker label (the speaker's affiliation; pick "independent" \
+if they don't represent a major lab/company, "academia" for university \
+researchers).
+- Use only the values listed below. Do not invent new ones.
+- Output shape:
+  {{"topic": ["..."], "format": "...", "speaker": "..."}}
+
+Taxonomy:
+- topic ∈ {topic_values}
+- format ∈ {format_values}
+- speaker ∈ {speaker_values}
+
+POST TITLE: {title}
+POST EXCERPT:
+---
+{excerpt}
+---"""
+
+
+def classify_labels(blog_md: Path, openai_text_model: str = "gpt-4o") -> list[str]:
+    """Ask the text model to classify the post into our taxonomy. Returns a
+    flat `["topic:agents", "format:podcast", ...]` list. On any failure
+    returns []; the caller should still ship the post — the labels are
+    additive, not load-bearing."""
+    if not os.environ.get("OPENAI_API_KEY"):
+        return []
+    try:
+        from openai import OpenAI
+    except ImportError:
+        return []
+
+    text = blog_md.read_text(encoding="utf-8")
+    title, _ = _parse_blog_md(text)
+    excerpt = text[:8000]
+
+    prompt = CLASSIFY_PROMPT.format(
+        topic_values=", ".join(LABEL_TAXONOMY["topic"]),
+        format_values=", ".join(LABEL_TAXONOMY["format"]),
+        speaker_values=", ".join(LABEL_TAXONOMY["speaker"]),
+        title=title,
+        excerpt=excerpt,
+    )
+    log.info("Classifying labels via %s ...", openai_text_model)
+    try:
+        client = OpenAI()
+        resp = client.chat.completions.create(
+            model=openai_text_model,
+            messages=[{"role": "user", "content": prompt}],
+            response_format={"type": "json_object"},
+            temperature=0.1,
+        )
+        raw = (resp.choices[0].message.content or "").strip()
+        data = json.loads(raw)
+    except Exception as e:
+        log.warning("Label classification failed (%s); shipping without labels.", e)
+        return []
+
+    labels: list[str] = []
+    for v in (data.get("topic") or []):
+        if v in LABEL_TAXONOMY["topic"]:
+            labels.append(f"topic:{v}")
+    fmt = data.get("format")
+    if fmt in LABEL_TAXONOMY["format"]:
+        labels.append(f"format:{fmt}")
+    spk = data.get("speaker")
+    if spk in LABEL_TAXONOMY["speaker"]:
+        labels.append(f"speaker:{spk}")
+
+    log.info("Labels: %s", ", ".join(labels) or "(none)")
+    return labels
+
+
+# --------------------------------------------------------------------------- #
 # Step 3.5 — generate a content-aware diagram image from the EN draft
 # --------------------------------------------------------------------------- #
 # Two-step pipeline. (1) A text model reads the full post and produces a
@@ -716,6 +818,7 @@ def publish_to_blog_repo(
     tags: list[str] | None = None,
     commit: bool = True,
     cover_image: Path | None = None,
+    labels: list[str] | None = None,
 ) -> Path:
     """Drop the post into <blog_repo>/public/blog/<slug>/ and update posts.json.
 
@@ -790,6 +893,8 @@ def publish_to_blog_repo(
         meta["source"] = source_url
     if image_url:
         meta["image"] = image_url
+    if labels:
+        meta["labels"] = labels
 
     (post_dir / "meta.json").write_text(
         json.dumps(meta, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
@@ -1019,6 +1124,13 @@ def main() -> int:
             log.info("Skipping blog stage (using existing %s). Pass --from blog to redraft.",
                      blog_paths.get("en"))
 
+        # Step 3.4: classify labels from the closed taxonomy (additive — does
+        # not replace --tags, both fields persist on the post).
+        auto_labels: list[str] = []
+        if (not args.skip_blog and "en" in blog_paths
+                and blog_paths["en"].exists()):
+            auto_labels = classify_labels(blog_paths["en"])
+
         # Step 3.5: cover image (between draft and publish, so publish can
         # embed the image ref in each markdown variant).
         cover_image: Path | None = None
@@ -1060,6 +1172,7 @@ def main() -> int:
                     tags=tags,
                     commit=not args.no_commit,
                     cover_image=cover_image,
+                    labels=auto_labels,
                 )
                 log.info("Published to %s", published)
 
