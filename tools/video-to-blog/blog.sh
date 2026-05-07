@@ -145,9 +145,10 @@ $PR_BODY"
 
 # gh pr create races GitHub's branch indexing on a fresh push: the API
 # can briefly think there are "No commits between master and <branch>".
-# Retry a few times before giving up.
+# Retry with a generous budget — indexing has been observed to take >1min.
 PR_URL=""
-for attempt in 1 2 3 4 5; do
+MAX_ATTEMPTS=10
+for attempt in $(seq 1 "$MAX_ATTEMPTS"); do
   if PR_URL=$(gh pr create \
       --repo "$REPO_FULL" \
       --base master \
@@ -156,9 +157,10 @@ for attempt in 1 2 3 4 5; do
       --body "$PR_BODY" 2>&1); then
     break
   fi
-  if [[ $attempt -lt 5 ]]; then
-    sleep $(( attempt * 5 ))
-    echo "  gh pr create retry $attempt ..."
+  if [[ $attempt -lt $MAX_ATTEMPTS ]]; then
+    delay=$(( attempt < 5 ? attempt * 5 : 30 ))
+    echo "  gh pr create retry $attempt (sleep ${delay}s) ..."
+    sleep "$delay"
   else
     echo "$PR_URL" >&2
     exit 1
