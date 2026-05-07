@@ -288,7 +288,7 @@ export default function Blog() {
   return (
     <div className="page">
       <Nav />
-      <section style={{ padding: '32px 0' }}>
+      <section className="content">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
           <SectionHead num="01">Blog</SectionHead>
           {posts && posts.length > 0 && (
