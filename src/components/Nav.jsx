@@ -6,6 +6,7 @@ const NAV_ITEMS = [
   { to: '/pubs', label: 'Publications' },
   { to: '/work', label: 'Work & Projects' },
   { to: '/cv',   label: 'CV' },
+  { to: '/blog', label: 'Blog' },
 ];
 
 export default function Nav() {
