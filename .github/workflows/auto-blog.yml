@@ -91,6 +91,15 @@ jobs:
       - name: Install Python deps
         run: pip install -r tools/video-to-blog/requirements.txt
 
+      - name: Setup Deno (JS runtime for yt-dlp's n-challenge)
+        # YouTube wraps streaming URLs in a JavaScript "n challenge". yt-dlp
+        # auto-detects deno on PATH and uses it to evaluate the challenge.
+        # Without a JS runtime, format extraction fails with
+        # "Requested format is not available".
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
       - name: Cache faster-whisper model
         uses: actions/cache@v4
         with:
