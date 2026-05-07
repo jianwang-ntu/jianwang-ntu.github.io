@@ -206,9 +206,14 @@
 /* ============== Blog ============== */
 .blog-post {
   padding: 16px 0; border-bottom: var(--dash);
-  display: grid; grid-template-columns: 100px 1fr; gap: 22px;
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 22px;
+  align-items: start;
 }
+.blog-post.has-cover { grid-template-columns: 100px 1fr 160px; }
 .blog-post.feat { padding: 20px 0 22px; grid-template-columns: 200px 1fr; }
+.blog-post.feat.has-cover { grid-template-columns: 200px 1fr 240px; }
 .blog-post .when { font-family: var(--mono); font-size: 11px; opacity: 0.85; }
 .blog-post .when .meta { opacity: 0.55; margin-top: 4px; }
 .blog-post .ttl { font-family: var(--hand); font-size: 24px; font-weight: 600; line-height: 1.1; }
@@ -216,6 +221,16 @@
 .blog-post .dek { font-size: 12.5px; line-height: 1.6; margin-top: 8px; opacity: 0.9; }
 .blog-post.feat .dek { font-size: 14px; }
 .blog-post .tags { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+.blog-post .cover {
+  width: 100%; aspect-ratio: 16 / 10; object-fit: cover;
+  border: var(--line); display: block; background: var(--hatch);
+}
+@media (max-width: 720px) {
+  .blog-post.has-cover, .blog-post.feat.has-cover {
+    grid-template-columns: 100px 1fr;
+  }
+  .blog-post .cover { grid-column: 2; max-width: 240px; margin-top: 10px; }
+}
 
 /* Single-post body: long-form markdown rendered with react-markdown. */
 .blog-body { font-size: 15px; line-height: 1.7; }
