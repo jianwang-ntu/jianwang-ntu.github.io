@@ -1,9 +1,18 @@
 #!/usr/bin/env bash
-# blog.sh — generate a blog post from a video URL, then open a PR for review.
+# blog.sh — full pipeline: video URL → transcript → drafted post → PR → deploy.
 #
 # Usage:
 #   tools/video-to-blog/blog.sh "<URL>" \
-#       [--tags "a,b,c"] [--languages "en,zh"] [--issue N]
+#       [--tags "a,b,c"] [--languages "en,zh"] [--issue N] [--watch]
+#
+# Stages, all done by this one script:
+#   1. download     — yt-dlp (and friends) handled inside pipeline.py
+#   2. transcript   — youtube-transcript-api → OpenAI Whisper → faster-whisper
+#   3. generate     — claude (default) or OpenAI Chat → blog markdown EN+ZH
+#   4. publish      — drops the post into public/blog/<slug>/, opens a PR
+#   5. deploy       — once the PR is merged, GH Pages deploy workflow rebuilds
+#                     dist/ and serves it. With --watch this script polls the
+#                     PR and the deploy run, then prints the live post URL.
 #
 # First run creates a Python venv at tools/video-to-blog/.venv and installs
 # requirements. Requires ffmpeg, gh (logged in), python3 on PATH. The blog
@@ -11,17 +20,19 @@
 
 set -euo pipefail
 
-usage() { sed -n '2,11p' "${BASH_SOURCE[0]}"; exit "${1:-0}"; }
+usage() { sed -n '2,18p' "${BASH_SOURCE[0]}"; exit "${1:-0}"; }
 
 URL=""
 TAGS=""
 LANGS="en,zh"
 ISSUE=""
+WATCH=0
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --tags)      TAGS="$2";  shift 2 ;;
     --languages) LANGS="$2"; shift 2 ;;
     --issue)     ISSUE="$2"; shift 2 ;;
+    --watch)     WATCH=1;    shift   ;;
     -h|--help)   usage 0 ;;
     --)          shift; break ;;
     -*)          echo "Unknown flag: $1" >&2; usage 2 ;;
@@ -69,12 +80,16 @@ echo "Pipeline output → $OUT"
   --tags "$TAGS" \
   --no-commit
 
-# Identify the post written into the working tree.
-SLUG=$(git -C "$REPO_ROOT" status --porcelain public/blog \
-  | awk '
-    /^\?\? public\/blog\/[^/]+\/$/ { sub(/\/$/, "", $2); split($2, a, "/"); print a[3]; exit }
-    /^[ MAR]+ public\/blog\/[^/]+\/index\.en\.md$/ { split($NF, a, "/"); print a[3]; exit }
-  ')
+# Identify the post the pipeline just wrote into the working tree. We accept
+# either a brand-new folder (untracked) or an updated index.en.md inside an
+# existing folder (re-publish of the same slug).
+status=$(git -C "$REPO_ROOT" status --porcelain public/blog)
+SLUG=$(printf '%s\n' "$status" | grep -E '^\?\? public/blog/[^/]+/$' \
+  | head -1 | sed -E 's|^\?\? public/blog/([^/]+)/$|\1|')
+if [[ -z "$SLUG" ]]; then
+  SLUG=$(printf '%s\n' "$status" | grep -E ' public/blog/[^/]+/index\.en\.md$' \
+    | head -1 | sed -E 's|.* public/blog/([^/]+)/index\.en\.md$|\1|')
+fi
 [[ -n "$SLUG" ]] || { echo "Could not locate new post in working tree." >&2; exit 1; }
 
 POST_DIR="public/blog/$SLUG"
@@ -111,11 +126,66 @@ PR_URL=$(gh pr create \
 
 git -C "$REPO_ROOT" checkout master >/dev/null
 
+# Compute the eventual public URL of the post once the PR is merged. The
+# Pages site root comes from the Pages settings; for github.io project sites
+# it's https://<owner>.github.io/. We fetch it from the API for accuracy.
+SITE_URL=$(gh api "repos/$REPO_FULL/pages" --jq .html_url 2>/dev/null || true)
+[[ -z "$SITE_URL" ]] && SITE_URL="https://${REPO_FULL%%/*}.github.io/"
+SITE_URL="${SITE_URL%/}"
+LIVE_URL="$SITE_URL/blog/$SLUG"
+
 cat <<EOF
 
-✓ Done.
+✓ Drafted, pushed, PR opened.
   Slug   : $SLUG
   Files  : $POST_DIR/
   Branch : $BRANCH
   PR     : $PR_URL
+  Live   : $LIVE_URL  (after the PR is merged + Pages deploy finishes)
 EOF
+
+# Optional deploy-verification loop: poll until the PR is merged, then poll
+# the Pages deploy workflow until it reports success, then print the live URL.
+if [[ "$WATCH" -eq 1 ]]; then
+  PR_NUM=$(basename "$PR_URL")
+  echo
+  echo "Watching PR #$PR_NUM. Merge it in the browser; this will poll every 30s."
+
+  # Phase 1: wait for merge
+  while true; do
+    state=$(gh pr view "$PR_NUM" --repo "$REPO_FULL" --json state,mergedAt --jq '.state + " " + (.mergedAt // "")')
+    case "$state" in
+      MERGED*) echo "PR merged."; break ;;
+      CLOSED*) echo "PR was closed without merging — exiting."; exit 1 ;;
+      *)       printf "."; sleep 30 ;;
+    esac
+  done
+
+  # Phase 2: wait for both deploy workflows started by the merge —
+  # "Deploy to GitHub Pages" (Pages artifact) and "Publish dist branch"
+  # (force-pushes dist/ to the `dist` branch for the nginx host).
+  watch_workflow() {
+    local name="$1"
+    echo "Waiting for run of '$name'..."
+    local run_id=""
+    for _ in {1..40}; do  # ~10 min to appear
+      run_id=$(gh run list --repo "$REPO_FULL" --branch master --workflow "$name" \
+        --limit 1 --json databaseId --jq '.[0].databaseId' 2>/dev/null || true)
+      [[ -n "$run_id" ]] && break
+      sleep 15
+    done
+    if [[ -z "$run_id" ]]; then
+      echo "  ! No run for '$name' surfaced — check the Actions tab."
+      return 1
+    fi
+    gh run watch "$run_id" --repo "$REPO_FULL" --exit-status >/dev/null
+    echo "  ✓ '$name' succeeded."
+  }
+
+  watch_workflow "Deploy to GitHub Pages"   || true
+  watch_workflow "Publish dist branch"      || true
+
+  echo
+  echo "✓ All deploys complete. Post is live:"
+  echo "  $LIVE_URL"
+fi
