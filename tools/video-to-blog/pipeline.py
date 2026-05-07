@@ -514,25 +514,86 @@ def transcript_to_blogs(transcript_path: Path, out_dir: Path, lang_codes: list[s
 
 
 # --------------------------------------------------------------------------- #
-# Step 3.5 — generate a cover image from the EN draft
+# Step 3.5 — generate a content-aware diagram image from the EN draft
 # --------------------------------------------------------------------------- #
-COVER_PROMPT = """Create a clean editorial illustration for a technology blog post.
+# Two-step pipeline. (1) A text model reads the full post and produces a
+# focused visual brief — 3–5 concrete elements the diagram should depict
+# plus a composition hint. (2) The image model renders that brief as a
+# labeled diagram. Without step 1 the image model gets too much text and
+# falls back to vague editorial illustrations that don't explain anything.
 
-Title: "{title}"
+VISUAL_BRIEF_PROMPT = """You are a visual editor briefing an illustrator on a \
+diagram for a tech blog post. Read the post below and identify the 3–5 most \
+important *depictable* things — processes, components, contrasts, or analogies \
+the author actually uses. Skip pure abstractions ("trust", "innovation").
 
-What the post is about: {dek}
+Reply in this exact format, nothing else:
 
-Style notes: minimalist flat illustration, restrained palette (2–3 colors), \
-abstract conceptual metaphors over literal scenes, suitable as a header/thumbnail. \
-The composition should read clearly at small sizes. Square format. \
-Do NOT include any text, words, letters, captions, or labels anywhere in the image."""
+COMPOSITION: <one sentence: e.g. "left-to-right flow", "before/after split", \
+"hub-and-spoke around a central loop", "stacked layers".>
+ELEMENTS:
+1. <short noun-phrase label> — <one-line visual hint: what the illustrator \
+   draws for this, including any concrete object/icon to anchor it>
+2. ...
+3. ...
+RELATIONSHIPS: <one sentence on how the elements connect or contrast>
+
+POST TITLE: {title}
+POST:
+---
+{post}
+---"""
+
+DIAGRAM_PROMPT = """Create a clear, content-explaining illustration for a \
+technology blog post. The image must communicate the post's actual ideas — \
+think editorial infographic or annotated diagram rather than abstract cover art.
+
+Visual brief (from the editor):
+{brief}
+
+Style: hand-drawn editorial diagram, restrained palette (2–3 colors plus an \
+off-white background), clean line work. Lay out the labelled elements according \
+to the brief's COMPOSITION. Use short one- or two-word labels next to each \
+element — make them legible. Use simple connectors (arrows, brackets, lines) \
+to show the RELATIONSHIPS. The overall feel should be informative, like a \
+diagram from a Stripe Press book or a NYTimes explainer, not a poster. \
+Square format."""
+
+
+def _visual_brief_from_blog(text: str, title: str, openai_text_model: str) -> str | None:
+    """Ask GPT-4-class model to extract a diagram brief from the blog.
+    Returns the brief string or None if the call fails (caller should fall
+    back to the title+dek heuristic)."""
+    try:
+        from openai import OpenAI
+    except ImportError:
+        return None
+    # Trim very long posts so we stay well within context. ~15k chars is plenty
+    # for the brief — the model just needs the main ideas, not every example.
+    excerpt = text[:15000]
+    client = OpenAI()
+    try:
+        resp = client.chat.completions.create(
+            model=openai_text_model,
+            messages=[{
+                "role": "user",
+                "content": VISUAL_BRIEF_PROMPT.format(title=title, post=excerpt),
+            }],
+            temperature=0.4,
+        )
+    except Exception as e:
+        log.warning("Visual brief request failed (%s); will fall back to title+dek.", e)
+        return None
+    brief = (resp.choices[0].message.content or "").strip()
+    return brief or None
 
 
 def generate_blog_image(en_blog_md: Path, out_dir: Path,
                         model: str = "gpt-image-1",
                         size: str = "1024x1024",
-                        quality: str = "medium") -> Path | None:
-    """Generate a cover image based on the EN blog's title + first paragraph.
+                        quality: str = "medium",
+                        text_model: str = "gpt-4o") -> Path | None:
+    """Generate a content-aware diagram image for the EN blog.
     Saves to <out_dir>/cover.png. Returns the path on success, None on
     failure (caller should treat the image as optional)."""
     if not os.environ.get("OPENAI_API_KEY"):
@@ -546,13 +607,30 @@ def generate_blog_image(en_blog_md: Path, out_dir: Path,
 
     text = en_blog_md.read_text(encoding="utf-8")
     title, dek = _parse_blog_md(text)
-    prompt = COVER_PROMPT.format(title=title, dek=dek or title)
 
-    log.info("Generating cover image via OpenAI %s (%s, %s) ...", model, size, quality)
+    # Step 1: ask a text model what to draw.
+    log.info("Drafting visual brief via %s ...", text_model)
+    brief = _visual_brief_from_blog(text, title, text_model)
+    if brief is None:
+        # Last-resort fallback so we still emit *something*.
+        brief = (
+            f"COMPOSITION: simple central diagram\n"
+            f"ELEMENTS:\n1. {title} — central element\n"
+            f"RELATIONSHIPS: derived from {dek or title}"
+        )
+    # Stash the brief alongside the image — useful for inspecting why a
+    # given diagram came out the way it did, and for re-runs.
+    try:
+        (out_dir / "cover_brief.txt").write_text(brief + "\n", encoding="utf-8")
+    except Exception:
+        pass
+
+    prompt = DIAGRAM_PROMPT.format(brief=brief)
+
+    # Step 2: render the brief.
+    log.info("Generating diagram image via OpenAI %s (%s, %s) ...", model, size, quality)
     client = OpenAI()
     try:
-        # gpt-image-1 doesn't support response_format=url; it always returns b64.
-        # dall-e-3 returns urls by default. Branch on what's there.
         kwargs = {"model": model, "prompt": prompt, "size": size, "n": 1}
         if model == "gpt-image-1":
             kwargs["quality"] = quality
