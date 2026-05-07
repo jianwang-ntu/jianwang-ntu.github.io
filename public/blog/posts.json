@@ -1,5 +1,26 @@
 [
   {
+    "slug": "sequoias-ai-thesis-a-computation-revolution-not-a-faster",
+    "title_en": "Sequoia's AI Thesis: A Computation Revolution, Not a Faster Internet",
+    "date": "2026-05-08",
+    "dek_en": "![Sequoia's AI Thesis: A Computation Revolution, Not a Faster Internet](/images/blog/sequoias-ai-thesis-a-computation-revolution-not-a-faster.png)",
+    "tags": [],
+    "languages": [
+      "en",
+      "zh"
+    ],
+    "title_zh": "红杉资本三位合伙人的 AI 论断：计算革命、长周期智能体，与 99.9% 认知工作的迁移",
+    "dek_zh": "![Sequoia's AI Thesis: A Computation Revolution, Not a Faster Internet](/images/blog/sequoias-ai-thesis-a-computation-revolution-not-a-faster.png)",
+    "source": "https://www.youtube.com/watch?v=BE2CR9YT8_k",
+    "image": "/images/blog/sequoias-ai-thesis-a-computation-revolution-not-a-faster.png",
+    "labels": [
+      "topic:business",
+      "topic:agents",
+      "format:keynote",
+      "speaker:independent"
+    ]
+  },
+  {
     "slug": "ralph-loops-why-chris-parsons-stopped-orchestrating-agents",
     "title_en": "Ralph Loops: Why Chris Parsons Stopped Orchestrating Agents and Started Looping Them",
     "date": "2026-05-08",
