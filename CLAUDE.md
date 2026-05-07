@@ -19,22 +19,24 @@ content-hashed JS/CSS — no SSR.
   - `index.zh.md` — Simplified Chinese version. Optional; presence is
     declared in `meta.json["languages"]`.
   - `meta.json` — slug, titles, deks, date, tags, source URL, languages.
-- `tools/video-to-blog/` — the Python pipeline that drafts posts from a video.
-  Used by the auto-blog GitHub Action; can also be run locally.
-- `.github/workflows/auto-blog.yml` — the issue→PR automation.
-- `.github/ISSUE_TEMPLATE/video-blog.yml` — the form a user fills to trigger it.
+- `tools/video-to-blog/` — the Python pipeline + the `blog.sh` wrapper that
+  drafts posts from a video and opens a PR. Run from a residential network.
 
 ## How a blog post gets created
 
 1. **Manually:** edit `public/blog/<slug>/index.en.md` (and `index.zh.md` if you
    want a translation). Update `meta.json` and prepend an entry to `posts.json`.
    Open a PR.
-2. **From a video URL via CI:** open an issue using the "New blog from video"
-   template. The `auto-blog` workflow runs `tools/video-to-blog/pipeline.py`
-   and opens a PR for review.
-3. **From a video URL locally:** run the pipeline directly, see
-   `tools/video-to-blog/README.md` if present, otherwise `python pipeline.py
-   --url <URL> --blog-repo .` from inside the cloned repo.
+2. **From a video URL — the standard path:** run the local script
+   ```
+   tools/video-to-blog/blog.sh "<URL>" --tags "agents,llm" --languages en,zh
+   ```
+   It runs the pipeline (audio → transcript → blog draft → publish), creates
+   a `blog/<slug>` branch, pushes, and opens a PR. Run it from a residential
+   network — YouTube blocks GitHub-Actions IPs for both player and caption
+   endpoints, which is why CI was retired.
+3. **Closing an issue with the post:** add `--issue N` to the script call.
+   The PR body and commit message will reference `Closes #N`.
 
 ## Editing a single post
 
@@ -76,102 +78,43 @@ analogous file in the upstream pipeline repo.
 - Don't introduce a separate blog framework (Jekyll, Astro, etc.). The site is
   intentionally a thin React SPA reading static files.
 
-## The auto-blog workflow
+## Why no CI
 
-`.github/workflows/auto-blog.yml` triggers on issues labeled `video-blog`. It:
+YouTube fully blocks GitHub-Actions runner IPs across both the player API
+(yt-dlp) and the `/timedtext` endpoint (`youtube-transcript-api`). Cookies
+get rotated by the browser within hours; cheap residential proxies (Webshare
+$1/mo) get 429-rate-limited; player_client variants no longer help. A working
+CI would need either a paid premium-rotating-residential proxy or a
+self-hosted runner — not worth the spend or maintenance for a hobby blog.
+The local `blog.sh` runs from your residential IP and just works.
 
-1. Parses the URL/tags/languages from the issue body.
-2. Installs ffmpeg + Python deps + `claude` CLI.
-3. Runs `tools/video-to-blog/pipeline.py --url … --blog-repo …`.
-4. Pushes a `blog/<slug>` branch and opens a PR closing the issue.
-5. Comments on the issue with the PR link.
+If YouTube ever relaxes its block, the previous workflow design is in
+git history (search for `auto-blog.yml`).
 
-Required repo secret: **`OPENAI_API_KEY`** (CI runs the pipeline with
-`--llm openai`; locally you can keep using `--llm claude`, the default,
-which uses your `claude login` subscription).
+## Pipeline knobs (when running locally via `blog.sh` or `pipeline.py`)
 
-When debugging the workflow, check the run logs from the Actions tab —
-typical failures: missing/invalid `OPENAI_API_KEY`, yt-dlp 403 on
-restricted videos, Whisper model download timeout on the first run.
+**Transcript source** — three tiers, tried in order when applicable:
 
-### Transcription tiers
+1. **YouTube captions** (`try_captions`) — fastest, free. Uses
+   `youtube-transcript-api` first (less IP-locked) and yt-dlp's
+   `--write-auto-subs` as a second chance.
+2. **OpenAI Whisper API** — `~$0.006/min`. Uses `OPENAI_API_KEY`. Audio
+   >25 MB is auto-chunked.
+3. **Local faster-whisper** — CPU-only. Slow but free.
 
-Three sources of text, tried in this order when applicable:
-
-1. **YouTube captions** (`try_captions`) — fastest, free, requires the
-   video to have manual or auto captions. Uses yt-dlp `--write-auto-subs`
-   and converts the result from VTT → SRT → plain text.
-2. **OpenAI Whisper API** (`transcribe_with_openai`) — fast cloud
-   transcription, ~$0.006/min. Uses the same `OPENAI_API_KEY` the blog
-   step uses. Audio >25 MB is auto-chunked at 10-minute boundaries via
-   ffmpeg, then concatenated with offset SRT timestamps.
-3. **Local faster-whisper** (`transcribe`) — CPU-only, slow (≈ realtime
-   on a runner). Use locally only when you have neither captions nor an
-   OpenAI key.
-
-CLI flags:
-
+Flags:
 - `--captions {auto, off, only}` — default `auto`: try captions first.
-  `only` skips the Whisper fallback entirely.
 - `--transcribe {auto, local, openai}` — default `auto`: prefer the
-  OpenAI Whisper API when `OPENAI_API_KEY` is set, else fall back to
-  local faster-whisper.
+  OpenAI API when `OPENAI_API_KEY` is set, else local faster-whisper.
 
-The auto-blog workflow runs with `--captions auto --transcribe openai`,
-so a video without captions is still transcribed quickly via the API
-instead of stalling on a 30-minute CPU Whisper run.
+**Blog-drafting LLM**:
+- `--llm claude` (default) — drives the `claude` CLI in headless mode.
+  Uses `ANTHROPIC_API_KEY` if set, otherwise falls back to your `claude
+  login` subscription.
+- `--llm openai` — uses the OpenAI Chat Completions API. Model is
+  `gpt-4o` by default; override with `--openai-model` or `OPENAI_MODEL`.
 
-### Webshare residential proxy
-
-GitHub-hosted runner IPs are heavily blocked by YouTube — across both the
-player API (yt-dlp) and the `/timedtext` endpoint (youtube-transcript-api).
-The fix is a residential-proxy hop: youtube-transcript-api integrates with
-**Webshare** natively. Set two repo secrets:
-
-```bash
-gh secret set WEBSHARE_PROXY_USERNAME -R <repo>   # paste username
-gh secret set WEBSHARE_PROXY_PASSWORD -R <repo>   # paste password
-```
-
-The pipeline auto-detects them via `WEBSHARE_PROXY_USERNAME` /
-`WEBSHARE_PROXY_PASSWORD` env vars and constructs a `WebshareProxyConfig`.
-No code change needed when the secrets are present.
-
-If the secrets are missing, the pipeline falls through to direct fetches —
-which work locally but fail in CI.
-
-### YouTube anti-bot block in CI
-
-YouTube serves cloud-runner IPs (including GitHub Actions) with a
-"Sign in to confirm you're not a bot" challenge. yt-dlp can bypass this
-with authenticated cookies. To enable:
-
-1. Export your YouTube cookies (e.g. via the "Get cookies.txt LOCALLY"
-   browser extension or `yt-dlp --cookies-from-browser` locally).
-2. Upload as a repo secret named **`YT_COOKIES`** — value is the entire
-   cookies.txt content:
-   ```bash
-   gh secret set YT_COOKIES -R jianwang-ntu/jianwang-ntu.github.io \
-     < /path/to/cookies.txt
-   ```
-3. The workflow auto-detects the secret. If absent, runs without cookies
-   (works for non-YouTube sources, fails for YouTube under bot block).
-
-Cookies expire — if CI starts failing again with the bot challenge, refresh
-the secret with a freshly exported file. Treat the cookies as login
-credentials: don't commit them, don't echo them in logs.
-
-## LLM backend choice
-
-`tools/video-to-blog/pipeline.py` supports two backends for the blog-drafting
-step, selected via `--llm`:
-
-- `--llm claude` (default) — drives the `claude` CLI in headless mode. Uses
-  `ANTHROPIC_API_KEY` if set, otherwise falls back to your `claude login`
-  subscription. Best for local runs.
-- `--llm openai` — calls the OpenAI Chat Completions API directly via the
-  `openai` Python package. Uses `OPENAI_API_KEY`. Used in CI because
-  subscription login isn't viable on a fresh runner.
-
-Model defaults to `gpt-4o`; override with `--openai-model` or `OPENAI_MODEL`
-env var.
+If you ever revive CI on a self-hosted runner, the Webshare residential
+proxy hooks (`WEBSHARE_PROXY_USERNAME` / `WEBSHARE_PROXY_PASSWORD` env
+vars) and yt-dlp cookies file (`--yt-cookies`) are still wired in
+`pipeline.py` — they just aren't reached on a residential laptop.
