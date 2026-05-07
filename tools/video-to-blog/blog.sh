@@ -50,6 +50,15 @@ done
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 
+# Auto-load secrets from .env at the repo root (gitignored). Convenient
+# for OPENAI_API_KEY / ANTHROPIC_API_KEY without polluting the parent shell.
+if [[ -f "$REPO_ROOT/.env" ]]; then
+  set -a
+  # shellcheck disable=SC1091
+  source "$REPO_ROOT/.env"
+  set +a
+fi
+
 # Venv: create on first run, reuse afterwards.
 VENV="$SCRIPT_DIR/.venv"
 if [[ ! -x "$VENV/bin/python" ]]; then
