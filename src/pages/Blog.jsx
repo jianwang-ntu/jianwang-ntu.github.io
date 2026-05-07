@@ -6,15 +6,19 @@ import { SectionHead, Tag } from '../components/primitives.jsx';
 
 function BlogCard({ post, featured }) {
   const cls = ['blog-post', featured ? 'feat' : ''].filter(Boolean).join(' ');
+  const langs = post.languages || ['en'];
   return (
     <Link to={`/blog/${post.slug}`} className={cls} style={{ textDecoration: 'none', color: 'inherit' }}>
       <div className="when">
         {post.date}
-        {post.source && <div className="meta">via video</div>}
+        <div className="meta">
+          {post.source ? 'via video' : ''}
+          {langs.length > 1 && <span> · {langs.join('/').toUpperCase()}</span>}
+        </div>
       </div>
       <div>
-        <div className="ttl">{post.title}</div>
-        {post.dek && <div className="dek">{post.dek}</div>}
+        <div className="ttl">{post.title_en}</div>
+        {post.dek_en && <div className="dek">{post.dek_en}</div>}
         {post.tags?.length > 0 && (
           <div className="tags">
             {post.tags.map((t) => <Tag key={t}>{t}</Tag>)}
@@ -42,7 +46,7 @@ export default function Blog() {
       <section style={{ padding: '32px 0' }}>
         <SectionHead num="01">Blog</SectionHead>
         <div style={{ fontSize: 12, opacity: 0.7, marginBottom: 16, fontFamily: 'var(--mono)' }}>
-          Notes and summaries — some auto-drafted from talks and papers.
+          Notes and summaries — auto-drafted from talks and papers, edited by hand.
         </div>
         {error && <div style={{ color: 'crimson' }}>Could not load posts: {error}</div>}
         {posts === null && !error && <div>Loading…</div>}
