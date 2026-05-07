@@ -22,10 +22,14 @@ content-hashed JS/CSS — no SSR.
 - `tools/video-to-blog/` — the Python pipeline + the `blog.sh` wrapper that
   drafts posts from a video and opens a PR. Run from a residential network.
 - `.github/workflows/deploy.yaml` — Pages artifact deploy on master push.
-- `.github/workflows/publish-dist.yml` — force-pushes the built dist/ to
-  **both** `dist` and `dist_remote` branches on master push (different
-  deploy targets — local Pages mirror and the remote nginx host — kept
-  in lockstep).
+- `.github/workflows/publish-dist.yml` — on master push, builds dist/
+  once and force-pushes two orphan commits:
+  - **`dist`** — full build, image refs stay relative (`/images/...`).
+    Served by GitHub Pages itself.
+  - **`dist_remote`** — same build with image refs rewritten to absolute
+    GitHub Pages URLs (`https://<owner>.github.io/images/...`) and the
+    local `images/` dir dropped. Served by the remote nginx host, which
+    therefore doesn't need to store the image assets.
 
 ## How a blog post gets created
 

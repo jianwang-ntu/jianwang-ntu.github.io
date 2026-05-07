@@ -1,10 +1,19 @@
 name: Publish dist branches
 
-# Whenever master moves, build the static site and force-push the contents
-# of dist/ to BOTH `dist` and `dist_remote` as orphan commits. The two
-# branches are different deployment targets (a local mirror and the remote
-# nginx host) but should always carry identical content — keeping them in
-# lockstep with master means a merge of any PR flows through to both.
+# Whenever master moves, build the static site and force-push two orphan
+# commits — one to `dist`, one to `dist_remote`. They differ only in how
+# image URLs are resolved:
+#
+#   dist        → served by GitHub Pages itself; image refs stay relative
+#                 (`/images/...`).
+#   dist_remote → served by a self-hosted nginx on another machine; image
+#                 refs are rewritten to absolute CDN URLs pointing at
+#                 GitHub Pages (`https://<owner>.github.io/images/...`),
+#                 and the local `images/` directory is dropped so the
+#                 remote host doesn't have to store the assets.
+#
+# Everything else (HTML, JS bundles, CSS, blog markdown, PDFs in data/)
+# is identical between the two branches.
 
 on:
   push:
@@ -41,18 +50,42 @@ jobs:
       # the convention into dist too.
       - run: touch dist/.nojekyll
 
-      - name: Force-push dist/ to both deploy branches
+      - name: Build CDN-rewritten copy for dist_remote
+        # Make a sibling tree of dist/ that loads images from GH Pages instead
+        # of the nginx host. Match `/images/` as a path component preceded by
+        # a quote, paren, or =, so we never touch unrelated text. Targets
+        # only HTML/JS/CSS — markdown and JSON/PDF assets stay untouched.
+        env:
+          PAGES_BASE: https://${{ github.repository_owner }}.github.io
+        run: |
+          rm -rf dist-cdn
+          cp -r dist dist-cdn
+          find dist-cdn -type f \( -name '*.html' -o -name '*.js' -o -name '*.css' -o -name '*.md' \) \
+            -print0 \
+          | xargs -0 sed -i \
+              -e "s|\"/images/|\"${PAGES_BASE}/images/|g" \
+              -e "s|'/images/|'${PAGES_BASE}/images/|g" \
+              -e "s|(/images/|(${PAGES_BASE}/images/|g" \
+              -e "s|=/images/|=${PAGES_BASE}/images/|g"
+          # Drop the local copy of images — they now load from the CDN.
+          rm -rf dist-cdn/images
+
+      - name: Force-push to dist and dist_remote
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          cd dist
-          git init -q -b publish
-          git config user.name  "publish-dist[bot]"
-          git config user.email "publish-dist@users.noreply.github.com"
-          git add -A
-          git commit -q -m "Publish dist for ${GITHUB_SHA::7}"
-          for ref in dist dist_remote; do
-            git push --force \
-              "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" \
-              "publish:${ref}"
-          done
+          publish_orphan() {
+            local src="$1" ref="$2" label="$3"
+            ( cd "$src"
+              git init -q -b publish
+              git config user.name  "publish-dist[bot]"
+              git config user.email "publish-dist@users.noreply.github.com"
+              git add -A
+              git commit -q -m "Publish ${label} for ${GITHUB_SHA::7}"
+              git push --force \
+                "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" \
+                "publish:${ref}"
+            )
+          }
+          publish_orphan dist     dist        dist
+          publish_orphan dist-cdn dist_remote dist_remote
