@@ -1,0 +1,36 @@
+name: New blog from video
+description: Submit a video URL; CI will draft a blog post and open a PR for review.
+title: "[blog] "
+labels: ["video-blog"]
+body:
+  - type: input
+    id: url
+    attributes:
+      label: Video URL
+      description: A URL yt-dlp can fetch (YouTube, Vimeo, Twitter, etc.).
+      placeholder: "https://www.youtube.com/watch?v=..."
+    validations:
+      required: true
+  - type: input
+    id: tags
+    attributes:
+      label: Tags
+      description: Comma-separated. Used for the blog card.
+      placeholder: "agents, llm, harness-engineering"
+    validations:
+      required: false
+  - type: input
+    id: languages
+    attributes:
+      label: Languages
+      description: Comma-separated language codes for the post drafts. Default en,zh.
+      placeholder: "en,zh"
+    validations:
+      required: false
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: Anything specific to mention in the PR (optional).
+    validations:
+      required: false

@@ -1,0 +1,179 @@
+name: Auto-blog from issue
+
+# Triggered when an issue is opened/labeled with the `video-blog` label.
+# Parses a video URL from the issue body, runs the local pipeline, and
+# opens a PR with the generated post(s) for human review/merge.
+
+on:
+  issues:
+    types: [opened, labeled]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  draft:
+    if: contains(github.event.issue.labels.*.name, 'video-blog')
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Acknowledge on the issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue comment "${{ github.event.issue.number }}" \
+            --body "🤖 Picking this up. Generating transcript + blog draft — should take ~5 min for a short video. I'll comment with a PR link when the draft is ready."
+
+      - name: Parse issue body
+        id: parse
+        env:
+          BODY: ${{ github.event.issue.body }}
+        run: |
+          # Issue templates emit a section per field, separated by blank lines:
+          #   ### Video URL
+          #
+          #   <value>
+          extract_field() {
+            python3 - "$1" <<'PY'
+          import os, re, sys
+          body = os.environ.get("BODY", "")
+          field = sys.argv[1]
+          # Find "### <Field>" then the next non-empty content block.
+          pattern = re.compile(rf"###\s+{re.escape(field)}\s*\n+(.+?)(?:\n###|\Z)", re.S | re.I)
+          m = pattern.search(body)
+          if not m:
+              print("")
+              sys.exit(0)
+          val = m.group(1).strip()
+          # Strip "_No response_" placeholder used by GH Forms.
+          if val.lower() in ("_no response_", "no response"):
+              val = ""
+          print(val)
+          PY
+          }
+          url=$(extract_field "Video URL")
+          tags=$(extract_field "Tags")
+          langs=$(extract_field "Languages")
+          [ -z "$langs" ] && langs="en,zh"
+          if [ -z "$url" ]; then
+            echo "::error::Could not parse a Video URL from the issue body."
+            exit 1
+          fi
+          echo "url=$url"     >> "$GITHUB_OUTPUT"
+          echo "tags=$tags"   >> "$GITHUB_OUTPUT"
+          echo "langs=$langs" >> "$GITHUB_OUTPUT"
+
+      - name: Install ffmpeg
+        run: sudo apt-get update -qq && sudo apt-get install -y --no-install-recommends ffmpeg
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: tools/video-to-blog/requirements.txt
+
+      - name: Install Python deps
+        run: pip install -r tools/video-to-blog/requirements.txt
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install claude CLI
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Cache faster-whisper model
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: hf-whisper-${{ env.WHISPER_MODEL || 'small' }}
+
+      - name: Configure git identity
+        run: |
+          git config user.name  "auto-blog[bot]"
+          git config user.email "auto-blog@users.noreply.github.com"
+
+      - name: Run pipeline (transcribe + draft + publish)
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          mkdir -p /tmp/v2b-out
+          python tools/video-to-blog/pipeline.py \
+            --url "${{ steps.parse.outputs.url }}" \
+            --out /tmp/v2b-out \
+            --model small \
+            --blog-languages "${{ steps.parse.outputs.langs }}" \
+            --blog-repo "$GITHUB_WORKSPACE" \
+            --tags "${{ steps.parse.outputs.tags }}" \
+            --no-commit
+
+      - name: Find new post slug
+        id: slug
+        run: |
+          # The pipeline only adds files under public/blog/<slug>/ + posts.json.
+          slug=$(git status --porcelain public/blog | awk '$2 ~ /^public\/blog\/[^/]+\/$/{ sub(/\/$/,"",$2); split($2,a,"/"); print a[3]; exit }')
+          if [ -z "$slug" ]; then
+            slug=$(git status --porcelain public/blog | awk '$2 ~ /^public\/blog\/[^/]+\/index\.en\.md$/{ split($2,a,"/"); print a[3]; exit }')
+          fi
+          if [ -z "$slug" ]; then
+            echo "::error::Could not determine new post slug from git status."
+            git status --porcelain public/blog
+            exit 1
+          fi
+          title=$(head -1 "public/blog/$slug/index.en.md" | sed 's/^# //')
+          echo "slug=$slug"   >> "$GITHUB_OUTPUT"
+          echo "title=$title" >> "$GITHUB_OUTPUT"
+
+      - name: Commit and push branch
+        id: branch
+        run: |
+          branch="blog/${{ steps.slug.outputs.slug }}"
+          git checkout -b "$branch"
+          git add public/blog/posts.json "public/blog/${{ steps.slug.outputs.slug }}"
+          git commit -m "blog: ${{ steps.slug.outputs.title }}
+
+          Closes #${{ github.event.issue.number }}"
+          git push origin "$branch"
+          echo "branch=$branch" >> "$GITHUB_OUTPUT"
+
+      - name: Open PR
+        id: pr
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          pr_url=$(gh pr create \
+            --base master \
+            --head "${{ steps.branch.outputs.branch }}" \
+            --title "blog: ${{ steps.slug.outputs.title }}" \
+            --body "Auto-drafted from issue #${{ github.event.issue.number }}.
+
+          **Source video:** ${{ steps.parse.outputs.url }}
+          **Languages:** ${{ steps.parse.outputs.langs }}
+          **Tags:** ${{ steps.parse.outputs.tags }}
+
+          Review the markdown under \`public/blog/${{ steps.slug.outputs.slug }}/\` and merge when satisfied. The page will deploy automatically once master moves.")
+          echo "url=$pr_url" >> "$GITHUB_OUTPUT"
+
+      - name: Comment PR link on the issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue comment "${{ github.event.issue.number }}" \
+            --body "✅ Draft ready: ${{ steps.pr.outputs.url }}
+
+          Review the post and merge when ready."
+
+      - name: On failure, comment the run URL
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue comment "${{ github.event.issue.number }}" \
+            --body "❌ Auto-blog run failed. Logs: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
