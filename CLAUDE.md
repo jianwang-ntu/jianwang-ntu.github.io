@@ -116,6 +116,14 @@ Flags:
 - `--transcribe {auto, local, openai}` — default `auto`: prefer the
   OpenAI API when `OPENAI_API_KEY` is set, else local faster-whisper.
 
+**Cover image** — after the EN draft, the pipeline asks OpenAI's image API
+for a square editorial illustration based on the title + dek. The image is
+saved to `public/images/blog/<slug>.png` and `![title](/images/blog/<slug>.png)`
+is injected at the top of every language version's markdown. Skipped silently
+if `OPENAI_API_KEY` is unset. Disable with `--image off`. Pick a different
+model with `--image-model {gpt-image-1, dall-e-3}` (default gpt-image-1
+medium quality, ~$0.04 per post).
+
 **Blog-drafting LLM**:
 - `--llm claude` (default) — drives the `claude` CLI in headless mode.
   Uses `ANTHROPIC_API_KEY` if set, otherwise falls back to your `claude

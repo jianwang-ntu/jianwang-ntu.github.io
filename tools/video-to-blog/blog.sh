@@ -100,6 +100,11 @@ BRANCH="blog/$SLUG"
 git -C "$REPO_ROOT" checkout -B "$BRANCH" >/dev/null
 
 git -C "$REPO_ROOT" add "$POST_DIR" public/blog/posts.json
+# Stage the cover image if pipeline.py generated one.
+COVER_GLOB="public/images/blog/${SLUG}.*"
+if compgen -G "$REPO_ROOT/$COVER_GLOB" > /dev/null; then
+  git -C "$REPO_ROOT" add $COVER_GLOB
+fi
 COMMIT_MSG="blog: $TITLE"
 [[ -n "$ISSUE" ]] && COMMIT_MSG+=$'\n\nCloses #'$ISSUE
 git -C "$REPO_ROOT" -c commit.gpgsign=false commit -m "$COMMIT_MSG"

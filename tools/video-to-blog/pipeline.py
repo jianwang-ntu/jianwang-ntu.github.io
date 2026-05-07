@@ -514,6 +514,74 @@ def transcript_to_blogs(transcript_path: Path, out_dir: Path, lang_codes: list[s
 
 
 # --------------------------------------------------------------------------- #
+# Step 3.5 — generate a cover image from the EN draft
+# --------------------------------------------------------------------------- #
+COVER_PROMPT = """Create a clean editorial illustration for a technology blog post.
+
+Title: "{title}"
+
+What the post is about: {dek}
+
+Style notes: minimalist flat illustration, restrained palette (2–3 colors), \
+abstract conceptual metaphors over literal scenes, suitable as a header/thumbnail. \
+The composition should read clearly at small sizes. Square format. \
+Do NOT include any text, words, letters, captions, or labels anywhere in the image."""
+
+
+def generate_blog_image(en_blog_md: Path, out_dir: Path,
+                        model: str = "gpt-image-1",
+                        size: str = "1024x1024",
+                        quality: str = "medium") -> Path | None:
+    """Generate a cover image based on the EN blog's title + first paragraph.
+    Saves to <out_dir>/cover.png. Returns the path on success, None on
+    failure (caller should treat the image as optional)."""
+    if not os.environ.get("OPENAI_API_KEY"):
+        log.warning("OPENAI_API_KEY not set — skipping cover image.")
+        return None
+    try:
+        from openai import OpenAI
+    except ImportError:
+        log.warning("openai package not installed — skipping cover image.")
+        return None
+
+    text = en_blog_md.read_text(encoding="utf-8")
+    title, dek = _parse_blog_md(text)
+    prompt = COVER_PROMPT.format(title=title, dek=dek or title)
+
+    log.info("Generating cover image via OpenAI %s (%s, %s) ...", model, size, quality)
+    client = OpenAI()
+    try:
+        # gpt-image-1 doesn't support response_format=url; it always returns b64.
+        # dall-e-3 returns urls by default. Branch on what's there.
+        kwargs = {"model": model, "prompt": prompt, "size": size, "n": 1}
+        if model == "gpt-image-1":
+            kwargs["quality"] = quality
+        resp = client.images.generate(**kwargs)
+    except Exception as e:
+        log.warning("Image generation failed (%s); continuing without cover.", e)
+        return None
+
+    img_path = out_dir / "cover.png"
+    item = resp.data[0]
+    try:
+        if getattr(item, "b64_json", None):
+            import base64
+            img_path.write_bytes(base64.b64decode(item.b64_json))
+        elif getattr(item, "url", None):
+            import urllib.request
+            urllib.request.urlretrieve(item.url, img_path)
+        else:
+            log.warning("OpenAI image response had neither b64_json nor url.")
+            return None
+    except Exception as e:
+        log.warning("Failed to save image (%s); continuing without cover.", e)
+        return None
+
+    log.info("Cover image → %s (%d bytes)", img_path, img_path.stat().st_size)
+    return img_path
+
+
+# --------------------------------------------------------------------------- #
 # Step 4 — publish to blog-repo
 # --------------------------------------------------------------------------- #
 def _slugify(text: str, max_len: int = 60) -> str:
@@ -544,12 +612,32 @@ def _parse_blog_md(md_text: str) -> tuple[str, str]:
     return title, dek
 
 
+def _insert_cover_after_h1(md_text: str, image_url: str, alt: str) -> str:
+    """Return md_text with `![alt](image_url)` inserted right after the H1.
+    No-op if the markdown already starts with a hosted image at that URL."""
+    if image_url in md_text.split("\n", 5)[1] if "\n" in md_text else "":
+        return md_text  # already inserted
+    lines = md_text.splitlines()
+    out: list[str] = []
+    inserted = False
+    for line in lines:
+        out.append(line)
+        if not inserted and line.startswith("# "):
+            out.append("")
+            out.append(f"![{alt}]({image_url})")
+            inserted = True
+    if not inserted:
+        out = [f"![{alt}]({image_url})", ""] + out
+    return "\n".join(out) + ("\n" if md_text.endswith("\n") else "")
+
+
 def publish_to_blog_repo(
     blog_paths: dict[str, Path],
     blog_repo: Path,
     source_url: str | None = None,
     tags: list[str] | None = None,
     commit: bool = True,
+    cover_image: Path | None = None,
 ) -> Path:
     """Drop the post into <blog_repo>/public/blog/<slug>/ and update posts.json.
 
@@ -582,11 +670,25 @@ def publish_to_blog_repo(
     post_dir = public_blog / slug
     post_dir.mkdir(exist_ok=True)
 
+    # Stage the cover image first so we know its URL when injecting the
+    # markdown reference. Path stays as `/images/blog/<slug>.png` — the
+    # publish-dist workflow rewrites this to a CDN URL for dist_remote.
+    image_url: str | None = None
+    if cover_image is not None and cover_image.exists():
+        images_dir = blog_repo / "public" / "images" / "blog"
+        images_dir.mkdir(parents=True, exist_ok=True)
+        target_img = images_dir / f"{slug}{cover_image.suffix or '.png'}"
+        shutil.copyfile(cover_image, target_img)
+        image_url = f"/images/blog/{target_img.name}"
+        log.info("Cover image → %s", target_img.relative_to(blog_repo))
+
     languages: list[str] = []
     deks: dict[str, str] = {}
     titles: dict[str, str] = {}
     for code, path in blog_paths.items():
         text = path.read_text(encoding="utf-8")
+        if image_url:
+            text = _insert_cover_after_h1(text, image_url, alt=title)
         t, d = _parse_blog_md(text)
         titles[code] = t
         deks[code] = d
@@ -608,6 +710,8 @@ def publish_to_blog_repo(
         meta["dek_zh"] = deks["zh"]
     if source_url:
         meta["source"] = source_url
+    if image_url:
+        meta["image"] = image_url
 
     (post_dir / "meta.json").write_text(
         json.dumps(meta, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
@@ -629,8 +733,10 @@ def publish_to_blog_repo(
     if commit:
         rel_dir = post_dir.relative_to(blog_repo)
         rel_json = manifest.relative_to(blog_repo)
-        subprocess.run(["git", "-C", str(blog_repo), "add", str(rel_dir), str(rel_json)],
-                       check=True)
+        paths_to_add = [str(rel_dir), str(rel_json)]
+        if image_url:
+            paths_to_add.append(str(target_img.relative_to(blog_repo)))
+        subprocess.run(["git", "-C", str(blog_repo), "add", *paths_to_add], check=True)
         diff = subprocess.run(["git", "-C", str(blog_repo), "diff", "--cached", "--quiet"])
         if diff.returncode == 0:
             log.info("No changes to commit (post unchanged).")
@@ -691,6 +797,15 @@ def main() -> int:
                              "openai uses OPENAI_API_KEY.")
     parser.add_argument("--openai-model", default=os.environ.get("OPENAI_MODEL", "gpt-4o"),
                         help="OpenAI model name when --llm openai (default: gpt-4o).")
+    parser.add_argument("--image", choices=["auto", "off"], default="auto",
+                        help="auto (default): generate a cover image with OpenAI's "
+                             "image API after the EN draft, embed it as a hero image "
+                             "at the top of each language version, and store it under "
+                             "public/images/blog/<slug>.png. Skipped silently if "
+                             "OPENAI_API_KEY is unset. off: don't generate an image.")
+    parser.add_argument("--image-model", default=os.environ.get("IMAGE_MODEL", "gpt-image-1"),
+                        choices=["gpt-image-1", "dall-e-3"],
+                        help="OpenAI image model (default: gpt-image-1).")
     parser.add_argument("--yt-cookies", type=Path, default=None,
                         help="Netscape-format cookies file passed to yt-dlp. Use this "
                              "when YouTube returns 'Sign in to confirm you're not a bot' "
@@ -826,6 +941,20 @@ def main() -> int:
             log.info("Skipping blog stage (using existing %s). Pass --from blog to redraft.",
                      blog_paths.get("en"))
 
+        # Step 3.5: cover image (between draft and publish, so publish can
+        # embed the image ref in each markdown variant).
+        cover_image: Path | None = None
+        cover_path = args.out / "cover.png"
+        if (args.image == "auto" and not args.skip_blog
+                and "en" in blog_paths and blog_paths["en"].exists()):
+            if cover_path.exists() and cover_path.stat().st_size > 0:
+                log.info("Reusing existing cover image %s.", cover_path)
+                cover_image = cover_path
+            else:
+                cover_image = generate_blog_image(
+                    blog_paths["en"], args.out, model=args.image_model,
+                )
+
         # Step 4: publish (only if a blog-repo is configured, or explicitly requested).
         if args.blog_repo is not None or args.from_stage == "publish":
             if args.skip_blog:
@@ -843,12 +972,16 @@ def main() -> int:
                 if "en" not in resolved:
                     log.error("Cannot publish: %s is missing.", blog_paths.get("en"))
                     return 2
+                # If --from publish and an image was produced earlier, reuse it.
+                if cover_image is None and cover_path.exists() and cover_path.stat().st_size > 0:
+                    cover_image = cover_path
                 published = publish_to_blog_repo(
                     resolved,
                     args.blog_repo,
                     source_url=source_url,
                     tags=tags,
                     commit=not args.no_commit,
+                    cover_image=cover_image,
                 )
                 log.info("Published to %s", published)
 
