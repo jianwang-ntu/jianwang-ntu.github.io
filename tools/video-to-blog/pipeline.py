@@ -111,15 +111,91 @@ def _srt_to_plain_text(srt: str) -> str:
     return "\n".join(out)
 
 
+_YT_ID_RE = re.compile(
+    r"(?:youtube\.com/(?:watch\?v=|embed/|v/)|youtu\.be/)([A-Za-z0-9_-]{11})"
+)
+
+
+def _extract_youtube_id(url: str) -> str | None:
+    m = _YT_ID_RE.search(url)
+    return m.group(1) if m else None
+
+
+def _try_captions_via_yt_transcript_api(url: str, out_dir: Path, lang: str = "en") -> Path | None:
+    """Use the youtube-transcript-api Python package to fetch captions through
+    YouTube's /timedtext endpoint. This endpoint isn't behind the player-side
+    bot challenge that breaks yt-dlp on cloud-runner IPs, so it's the most
+    reliable path for YouTube. Returns transcript.txt path on success, None
+    otherwise."""
+    vid = _extract_youtube_id(url)
+    if not vid:
+        return None
+    try:
+        from youtube_transcript_api import YouTubeTranscriptApi
+        from youtube_transcript_api._errors import (
+            TranscriptsDisabled, NoTranscriptFound, VideoUnavailable,
+        )
+    except ImportError:
+        log.info("youtube-transcript-api not installed; skipping API caption path.")
+        return None
+
+    log.info("Fetching captions via youtube-transcript-api for %s", vid)
+    base = lang.split("-")[0]
+    candidates = [lang, base] if lang != base else [lang]
+    api = YouTubeTranscriptApi()
+    try:
+        fetched = api.fetch(vid, languages=candidates)
+        snippets = list(fetched)
+    except (TranscriptsDisabled, NoTranscriptFound, VideoUnavailable) as e:
+        log.info("youtube-transcript-api: %s — falling through.", type(e).__name__)
+        return None
+    except Exception as e:
+        log.info("youtube-transcript-api error (%s); falling through.", e)
+        return None
+
+    if not snippets:
+        return None
+
+    text = "\n".join(s.text.strip() for s in snippets if s.text and s.text.strip())
+    if not text.strip():
+        return None
+
+    srt_lines: list[str] = []
+    for i, s in enumerate(snippets, 1):
+        start = s.start
+        end = start + (s.duration or 0)
+        srt_lines.append(
+            f"{i}\n{_format_srt_timestamp(start)} --> {_format_srt_timestamp(end)}\n"
+            f"{(s.text or '').strip()}\n"
+        )
+    txt_path = out_dir / "transcript.txt"
+    srt_path = out_dir / "transcript.srt"
+    txt_path.write_text(text + "\n", encoding="utf-8")
+    srt_path.write_text("\n".join(srt_lines), encoding="utf-8")
+    (out_dir / "source.url").write_text(url + "\n", encoding="utf-8")
+    log.info("Captions (yt-transcript-api) → %s (%d bytes)", txt_path, txt_path.stat().st_size)
+    return txt_path
+
+
 def try_captions(url: str, out_dir: Path, cookies: Path | None = None,
                  lang: str = "en") -> Path | None:
-    """Best-effort: download existing captions for `url` via yt-dlp and write
-    them as transcript.txt + transcript.srt. Returns the txt path on success,
-    None if no captions exist or download failed. Lets the pipeline skip the
-    audio download + Whisper transcription when YouTube already has captions —
-    seconds instead of tens of minutes.
-    """
-    log.info("Looking for captions on %s", url)
+    """Best-effort: get existing captions for `url`. Strategy:
+
+    1. For YouTube URLs, try youtube-transcript-api first — it queries
+       YouTube's /timedtext endpoint directly and isn't blocked the way
+       yt-dlp's player-side flow is on cloud-runner IPs.
+    2. Fall back to yt-dlp's --write-(auto-)subs for non-YouTube hosts
+       and as a second chance on YouTube when the API path didn't work.
+
+    Returns transcript.txt path on success, None otherwise. Lets the
+    pipeline skip the audio download + Whisper transcription when an
+    existing transcript can be retrieved — seconds instead of minutes."""
+    if _extract_youtube_id(url):
+        result = _try_captions_via_yt_transcript_api(url, out_dir, lang)
+        if result is not None:
+            return result
+
+    log.info("Looking for captions via yt-dlp on %s", url)
     cmd = [
         "yt-dlp",
         "--skip-download",
