@@ -6,16 +6,26 @@ name: Auto-blog from issue
 
 on:
   issues:
-    types: [opened, labeled]
+    # `labeled` covers both cases: the issue template auto-applies the
+    # `video-blog` label on creation (one event), and a maintainer can
+    # re-label later to retry. We deliberately don't trigger on `opened`
+    # — that would double-fire when the template-created issue lands.
+    types: [labeled]
 
 permissions:
   contents: write
   pull-requests: write
   issues: write
 
+# One run per issue — if the user re-labels mid-run, the older run is
+# cancelled before the new one starts.
+concurrency:
+  group: auto-blog-${{ github.event.issue.number }}
+  cancel-in-progress: true
+
 jobs:
   draft:
-    if: contains(github.event.issue.labels.*.name, 'video-blog')
+    if: github.event.label.name == 'video-blog'
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
