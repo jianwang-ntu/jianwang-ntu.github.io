@@ -20,7 +20,10 @@ content-hashed JS/CSS — no SSR.
     declared in `meta.json["languages"]`.
   - `meta.json` — slug, titles, deks, date, tags, source URL, languages.
 - `tools/video-to-blog/` — the Python pipeline + the `blog.sh` wrapper that
-  drafts posts from a video and opens a PR. Run from a residential network.
+  drafts posts from a *source* and opens a PR. Despite the directory name,
+  the pipeline now accepts three source kinds (see "How a blog post gets
+  created" below). Run from a residential network when the source is a
+  YouTube video; PDF/LinkedIn paths don't need the residential IP.
 - `tools/click-counter/` — Lambda + DynamoDB backend that records global
   blog click counts. Powers the "Popular" sort on `/blog`. Endpoint:
   `https://sgwa5dhthk.execute-api.ap-southeast-1.amazonaws.com/`. Update
@@ -41,16 +44,34 @@ content-hashed JS/CSS — no SSR.
 1. **Manually:** edit `public/blog/<slug>/index.en.md` (and `index.zh.md` if you
    want a translation). Update `meta.json` and prepend an entry to `posts.json`.
    Open a PR.
-2. **From a video URL — the standard path:** run the local script
+2. **From a source — the standard path:** run the local script. One source
+   per call. The script auto-detects arXiv / LinkedIn / direct-PDF URLs from
+   the positional argument, so the simplest form just works:
    ```
-   tools/video-to-blog/blog.sh "<URL>" --tags "agents,llm" --languages en,zh
+   tools/video-to-blog/blog.sh "<youtube-url>"     --tags "agents,llm"
+   tools/video-to-blog/blog.sh "<arxiv-url>"        --tags "research"
+   tools/video-to-blog/blog.sh "<linkedin-url>"     --tags "agents"
+   tools/video-to-blog/blog.sh --pdf /path/to/paper.pdf
+   tools/video-to-blog/blog.sh --linkedin "<url>"
+   tools/video-to-blog/blog.sh --text-file /tmp/post.txt --kind post \
+                                --source-url "<url>"
    ```
-   It runs the pipeline (audio → transcript → blog draft → publish), creates
-   a `blog/<slug>` branch, pushes, and opens a PR. Run it from a residential
-   network — YouTube blocks GitHub-Actions IPs for both player and caption
-   endpoints, which is why CI was retired.
+   It picks the right intake (audio→transcript for video, pypdf for PDFs,
+   og:meta scrape for LinkedIn, raw read for `--text-file`), drafts the post
+   using a per-kind system prompt (`prompts/blog_system_<kind>.md`), creates a
+   `blog/<slug>` branch, pushes, and opens a PR. Video sources need a
+   residential network (YouTube blocks GitHub-Actions IPs for both player and
+   caption endpoints, which is why CI was retired). PDF and LinkedIn paths
+   don't.
 3. **Closing an issue with the post:** add `--issue N` to the script call.
    The PR body and commit message will reference `Closes #N`.
+
+The drafted post gets `source_kind: "video" | "paper" | "post"` in
+`meta.json`, plus `format:<kind>` in the auto-classified `labels` array
+(filterable from the `/blog` page's filter bar). LinkedIn posts often
+paywall their public HTML — if the og:description scrape comes back near
+empty, the pipeline prints a hint to copy the post body and rerun with
+`--text-file <path> --kind post --source-url <linkedin-url>`.
 
 ## Editing a single post
 
@@ -65,13 +86,14 @@ When asked to refine a published post:
 
 ## Voice and tone for blog posts
 
-Posts written from videos follow a specific style — a viewer summarising the
-talk, **never** the writer impersonating the speaker:
+The same voice rules apply to all source kinds — a *reader/viewer summarising*
+the source, **never** the writer impersonating the speaker/author/poster:
 
-- Third person throughout the writer's voice. The speaker is referred to by
-  name (e.g. "Lapopolo argues…").
+- Third person throughout the writer's voice. The speaker / paper authors /
+  original poster is referred to by name (e.g. "Lapopolo argues…",
+  "Vaswani et al. report…", "Karpathy writes…").
 - First person is allowed only inside attributed direct quotes from the
-  speaker (e.g. `He calls this out: "Every time I have to type continue is a
+  source (e.g. `He calls this out: "Every time I have to type continue is a
   failure of the harness."`).
 - No corporate filler ("In today's fast-paced world…"), no AI throat-clearing
   ("It's important to note…"), no "fascinating insights" hype.
@@ -79,9 +101,14 @@ talk, **never** the writer impersonating the speaker:
   not a separate summary. Preserve technical terms (model names, file paths,
   product names) in English where convention dictates.
 
-The full system prompt that enforces this is `tools/video-to-blog/prompts/
-blog_system.md`. If you change the tone rules, update both that file and the
-analogous file in the upstream pipeline repo.
+The system prompts live under `tools/video-to-blog/prompts/`:
+- `blog_system.md` — video sources (legacy filename; also acts as the fallback
+  when a kind-specific file is missing).
+- `blog_system_paper.md` — research papers / technical articles.
+- `blog_system_post.md` — short-form posts (LinkedIn, X threads, etc.).
+
+If you change the tone rules, update **all three** so kinds stay in sync, and
+update the analogous file(s) in the upstream pipeline repo.
 
 ## Things to avoid
 

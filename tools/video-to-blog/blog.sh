@@ -1,16 +1,28 @@
 #!/usr/bin/env bash
-# blog.sh — full pipeline: video URL → transcript → drafted post → PR → deploy.
+# blog.sh — full pipeline: source → drafted post → PR → deploy.
+#
+# Sources (one of):
+#   <video-url>           positional video URL (yt-dlp). arXiv/LinkedIn URLs
+#                          are auto-detected and routed to --pdf/--linkedin.
+#   --pdf <path-or-url>   research paper or article PDF (local or http(s);
+#                          arXiv URLs canonicalised). Skips audio+transcript.
+#   --linkedin <url>      LinkedIn post URL (best-effort og: scrape).
+#   --text-file <path>    pre-extracted source text. Requires --kind.
 #
 # Usage:
-#   tools/video-to-blog/blog.sh "<URL>" \
-#       [--tags "a,b,c"] [--languages "en,zh"] [--issue N] [--watch]
+#   tools/video-to-blog/blog.sh "<video-url>" [opts]
+#   tools/video-to-blog/blog.sh --pdf <path-or-url> [opts]
+#   tools/video-to-blog/blog.sh --linkedin <url> [opts]
+#   tools/video-to-blog/blog.sh --text-file <path> --kind {video,paper,post} \
+#                               [--source-url <url>] [opts]
+#
+# Common opts: [--tags "a,b,c"] [--languages "en,zh"] [--issue N] [--watch]
 #
 # Stages, all done by this one script:
-#   1. download     — yt-dlp (and friends) handled inside pipeline.py
-#   2. transcript   — youtube-transcript-api → OpenAI Whisper → faster-whisper
-#   3. generate     — claude (default) or OpenAI Chat → blog markdown EN+ZH
-#   4. publish      — drops the post into public/blog/<slug>/, opens a PR
-#   5. deploy       — once the PR is merged, GH Pages deploy workflow rebuilds
+#   1. acquire      — fetch+extract source text (or audio→transcript for video)
+#   2. generate     — claude (default) or OpenAI Chat → blog markdown EN+ZH
+#   3. publish      — drops the post into public/blog/<slug>/, opens a PR
+#   4. deploy       — once the PR is merged, GH Pages deploy workflow rebuilds
 #                     dist/ and serves it. With --watch this script polls the
 #                     PR and the deploy run, then prints the live post URL.
 #
@@ -20,30 +32,71 @@
 
 set -euo pipefail
 
-usage() { sed -n '2,18p' "${BASH_SOURCE[0]}"; exit "${1:-0}"; }
+usage() { sed -n '2,32p' "${BASH_SOURCE[0]}"; exit "${1:-0}"; }
 
 URL=""
+PDF=""
+LINKEDIN=""
+TEXT_FILE=""
+KIND=""
+SOURCE_URL=""
 TAGS=""
 LANGS="en,zh"
 ISSUE=""
 WATCH=0
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --tags)      TAGS="$2";  shift 2 ;;
-    --languages) LANGS="$2"; shift 2 ;;
-    --issue)     ISSUE="$2"; shift 2 ;;
-    --watch)     WATCH=1;    shift   ;;
-    -h|--help)   usage 0 ;;
-    --)          shift; break ;;
-    -*)          echo "Unknown flag: $1" >&2; usage 2 ;;
-    *)           if [[ -z "$URL" ]]; then URL="$1"; shift
-                 else echo "Multiple URLs not supported." >&2; usage 2; fi ;;
+    --pdf)        PDF="$2";        shift 2 ;;
+    --linkedin)   LINKEDIN="$2";   shift 2 ;;
+    --text-file)  TEXT_FILE="$2";  shift 2 ;;
+    --kind)       KIND="$2";       shift 2 ;;
+    --source-url) SOURCE_URL="$2"; shift 2 ;;
+    --tags)       TAGS="$2";       shift 2 ;;
+    --languages)  LANGS="$2";      shift 2 ;;
+    --issue)      ISSUE="$2";      shift 2 ;;
+    --watch)      WATCH=1;         shift   ;;
+    -h|--help)    usage 0 ;;
+    --)           shift; break ;;
+    -*)           echo "Unknown flag: $1" >&2; usage 2 ;;
+    *)            if [[ -z "$URL" ]]; then URL="$1"; shift
+                  else echo "Multiple URLs not supported." >&2; usage 2; fi ;;
   esac
 done
-[[ -n "$URL" ]] || { echo "URL required." >&2; usage 2; }
 
-# Pre-flight tools
-for bin in ffmpeg gh python3 git; do
+# Auto-route a positional URL into --pdf / --linkedin when it pattern-matches.
+# Keeps the simple `blog.sh <any-url>` ergonomic the script started with.
+if [[ -n "$URL" && -z "$PDF" && -z "$LINKEDIN" && -z "$TEXT_FILE" ]]; then
+  if [[ "$URL" =~ ^https?://(www\.)?arxiv\.org/(abs|pdf|html)/ ]]; then
+    PDF="$URL"; URL=""
+  elif [[ "$URL" =~ ^https?://([^/]+\.)?linkedin\.com/ ]]; then
+    LINKEDIN="$URL"; URL=""
+  elif [[ "$URL" =~ ^https?://.*\.pdf(\?|$) ]]; then
+    PDF="$URL"; URL=""
+  fi
+fi
+
+# Exactly one source must be provided.
+sources=0
+[[ -n "$URL"       ]] && sources=$((sources+1))
+[[ -n "$PDF"       ]] && sources=$((sources+1))
+[[ -n "$LINKEDIN"  ]] && sources=$((sources+1))
+[[ -n "$TEXT_FILE" ]] && sources=$((sources+1))
+if [[ "$sources" -ne 1 ]]; then
+  echo "Provide exactly one source: <video-url> / --pdf / --linkedin / --text-file." >&2
+  usage 2
+fi
+if [[ -n "$TEXT_FILE" && -z "$KIND" ]]; then
+  echo "--text-file requires --kind {video,paper,post}." >&2; exit 2
+fi
+
+# Single canonical source-URL string for the PR body / commit message.
+SRC_DESC="$URL$PDF$LINKEDIN$TEXT_FILE"
+
+# Pre-flight tools. ffmpeg is only needed for video sources (audio extraction
+# + transcription); skip it when the source is a PDF / LinkedIn post / text file.
+required_bins=(gh python3 git)
+[[ -n "$URL" ]] && required_bins+=(ffmpeg)
+for bin in "${required_bins[@]}"; do
   command -v "$bin" >/dev/null || { echo "$bin not found on PATH." >&2; exit 1; }
 done
 
@@ -81,10 +134,21 @@ git -C "$REPO_ROOT" pull --ff-only origin master >/dev/null 2>&1 || true
 OUT="$(mktemp -d -t v2b-XXXXXX)"
 echo "Pipeline output → $OUT"
 
+# Build the source-specific args once and inject them. Avoids passing empty
+# flag values, which argparse interprets as the literal empty string.
+PIPELINE_ARGS=()
+if   [[ -n "$URL"       ]]; then PIPELINE_ARGS+=(--url "$URL")
+elif [[ -n "$PDF"       ]]; then PIPELINE_ARGS+=(--pdf "$PDF")
+elif [[ -n "$LINKEDIN"  ]]; then PIPELINE_ARGS+=(--linkedin "$LINKEDIN")
+elif [[ -n "$TEXT_FILE" ]]; then PIPELINE_ARGS+=(--text-file "$TEXT_FILE")
+fi
+[[ -n "$KIND"       ]] && PIPELINE_ARGS+=(--kind "$KIND")
+[[ -n "$SOURCE_URL" ]] && PIPELINE_ARGS+=(--source-url "$SOURCE_URL")
+
 # Put the venv on PATH so subprocesses spawned by pipeline.py (yt-dlp,
 # ffmpeg if it's pip-installed, etc.) resolve to the venv-installed tools.
 PATH="$VENV/bin:$PATH" "$VENV/bin/python" "$SCRIPT_DIR/pipeline.py" \
-  --url "$URL" \
+  "${PIPELINE_ARGS[@]}" \
   --out "$OUT" \
   --blog-languages "$LANGS" \
   --blog-repo "$REPO_ROOT" \
@@ -133,7 +197,7 @@ git -C "$REPO_ROOT" push -u origin "$BRANCH"
 
 REPO_FULL=$(git -C "$REPO_ROOT" config --get remote.origin.url \
   | sed -E 's|.*github\.com[:/]([^/]+/[^.]+).*|\1|')
-PR_BODY="Drafted from <$URL>.
+PR_BODY="Drafted from <$SRC_DESC>.
 
 **Languages:** $LANGS
 **Tags:** $TAGS
