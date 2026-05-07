@@ -1,17 +1,26 @@
 #!/usr/bin/env python3
 """
-Video → Transcript → Blog pipeline.
+Source → Blog pipeline.
 
-Steps:
-  1. Acquire audio (yt-dlp from URL, or ffmpeg from a local video file).
-  2. Transcribe with faster-whisper → transcript.txt + transcript.srt.
-  3. Hand the transcript to Claude Code (`claude -p`) → blog.md.
-  4. (optional) Publish blog.md into a blog-repo (jianwang-ntu.github.io style).
+Three intake paths, one shared draft+publish stage:
+  • Video URL or local video file (existing path):
+        audio → transcript → blog
+  • PDF (path or http(s) URL — arXiv URLs auto-canonicalised):
+        pdf → text → blog          (kind=paper)
+  • LinkedIn / X / blog-post URL, or any pre-extracted text file:
+        html → text → blog         (kind=post)
+
+The blog stage picks a per-kind system prompt (prompts/blog_system_<kind>.md,
+falling back to prompts/blog_system.md) and a per-kind user-prompt template
+that frames the source correctly ("transcript" / "paper" / "post").
 
 Usage examples:
   python pipeline.py --url "https://www.youtube.com/watch?v=XXXXXXXXXXX"
   python pipeline.py --file /data/in/video.mp4 --language en --model small
-  python pipeline.py --url "..." --blog-language "Simplified Chinese"
+  python pipeline.py --pdf "https://arxiv.org/pdf/2604.28181"
+  python pipeline.py --pdf /papers/foo.pdf
+  python pipeline.py --linkedin "https://www.linkedin.com/feed/update/urn:li:activity:..."
+  python pipeline.py --text-file /tmp/post.txt --kind post --source-url "https://..."
   python pipeline.py --from blog --blog-repo ./blog-repo   # redraft + publish
 """
 from __future__ import annotations
@@ -28,6 +37,14 @@ import sys
 from pathlib import Path
 
 from faster_whisper import WhisperModel
+
+from sources import (
+    SourceBundle,
+    auto_detect_kind,
+    from_linkedin,
+    from_pdf,
+    from_text_file,
+)
 
 log = logging.getLogger("pipeline")
 
@@ -404,7 +421,11 @@ def transcribe(audio: Path, out_dir: Path, model_size: str, language: str | None
 # --------------------------------------------------------------------------- #
 # Step 3 — Claude Code → blog post
 # --------------------------------------------------------------------------- #
-BLOG_USER_PROMPT = """Below is a raw transcript of a video. You watched the video and \
+# Per-source-kind user prompts. The shared rules (third-person voice, no first
+# person, attribute claims, no preamble) are repeated here because the system
+# prompt enforces them but seeing them in the user prompt too is the cheapest
+# way to keep early generations from drifting.
+_BLOG_USER_PROMPT_VIDEO = """Below is a raw transcript of a video. You watched the video and \
 are now writing a blog post in {language} that summarizes its ideas for a reader who didn't.
 
 You are the writer/viewer, NOT the speaker. Write in third person throughout. Refer to the \
@@ -424,9 +445,70 @@ Requirements:
 
 TRANSCRIPT:
 ---
-{transcript}
+{source}
 ---
 """
+
+_BLOG_USER_PROMPT_PAPER = """Below is the extracted text of a research paper or technical article. \
+You have just finished reading it and are now writing a blog post in {language} that summarizes \
+its contribution for a reader who hasn't read it.
+
+You are the writer/reader, NOT one of the authors. Write in third person throughout. Refer to \
+the work as "the paper" / "the authors" or by surname if names are revealed (e.g., "Vaswani et \
+al."). Never use first person ("I", "we", "our model", "our experiments") — that voice belongs \
+to the authors, not to you. Attribute claims and findings to the paper ("the authors argue…", \
+"the experiments show…").
+
+Requirements:
+- Compelling title (H1) that names the paper's central contribution.
+- Open with a 1–3 sentence hook: what problem, what's the proposed answer, why it matters.
+- Use H2 sections with descriptive titles (avoid generic "Methodology" / "Results"). H3 only when \
+  a section genuinely splits.
+- Preserve the paper's actual numbers, model/dataset/method names, and key results. Do not \
+  invent quantitative claims.
+- Distinguish what the paper *demonstrates* from what it *claims*. Note scope honestly.
+- Tighten ruthlessly — academic prose is verbose. Reorganize if it improves clarity.
+- Use Markdown. No HTML, no code-fence wrappers around the whole document.
+- Output ONLY the blog post. No preamble like "Here is the blog post:".
+
+PAPER TEXT (may include extraction artifacts — figure captions, page numbers, references):
+---
+{source}
+---
+"""
+
+_BLOG_USER_PROMPT_POST = """Below is the text of a short-form post (LinkedIn, X/Twitter thread, \
+blog note, conference recap). You read it and are now writing a longer blog post in {language} \
+that contextualises and discusses what the original author said.
+
+You are the writer/reader, NOT the original poster. Write in third person throughout. Refer to \
+the poster by name if known (e.g., "Karpathy writes…") or as "the author" / "the post". Never \
+use first person ("I", "we", "my team") — that voice belongs to the original poster, not to you. \
+Attribute claims to the post ("the author argues…", "according to the post…").
+
+Requirements:
+- Short-form posts are SHORT. Do not pad. If the original is two paragraphs, the blog should also \
+  be short. Extend only with genuinely useful context — prior work the post implicitly references, \
+  a clarifying example, or a brief "Why this matters" — and only when you actually know it. Do \
+  NOT invent context.
+- Compelling title (H1) that names the central claim. H2 sections only if the body genuinely splits.
+- Open with a 1–3 sentence hook naming the author and central claim.
+- Preserve the post's actual examples, numbers, and assertions. A short attributed pull-quote \
+  (≤25 words, in quotes) is welcome to anchor the writer's account in the original wording.
+- Use Markdown. No HTML, no code-fence wrappers around the whole document.
+- Output ONLY the blog post. No preamble like "Here is the blog post:".
+
+POST TEXT{source_meta}:
+---
+{source}
+---
+"""
+
+_BLOG_USER_PROMPT_BY_KIND = {
+    "video": _BLOG_USER_PROMPT_VIDEO,
+    "paper": _BLOG_USER_PROMPT_PAPER,
+    "post": _BLOG_USER_PROMPT_POST,
+}
 
 
 # Two-letter language codes to match the on-disk filename suffixes (index.en.md,
@@ -502,17 +584,53 @@ def _draft_with_openai(system_prompt: str, user_prompt: str, model: str) -> str:
     return resp.choices[0].message.content or ""
 
 
-def transcript_to_blog(transcript_path: Path, out_dir: Path, blog_language: str,
-                       lang_code: str = "en", llm: str = "claude",
-                       openai_model: str = "gpt-4o") -> Path:
-    """Convert a transcript into a blog post in `blog_language`. Backend chosen
-    by `llm` (claude | openai). Writes to `<out_dir>/blog.<lang_code>.md`."""
-    transcript = transcript_path.read_text(encoding="utf-8")
-    system_prompt = (Path(__file__).parent / "prompts" / "blog_system.md").read_text(encoding="utf-8")
-    user_prompt = BLOG_USER_PROMPT.format(language=blog_language, transcript=transcript)
+def _load_system_prompt(kind: str) -> str:
+    """Pick prompts/blog_system_<kind>.md if present, else fall back to the
+    legacy prompts/blog_system.md (which is the video version)."""
+    base = Path(__file__).parent / "prompts"
+    specific = base / f"blog_system_{kind}.md"
+    if specific.exists():
+        return specific.read_text(encoding="utf-8")
+    return (base / "blog_system.md").read_text(encoding="utf-8")
+
+
+def _format_user_prompt(kind: str, language: str, source_text: str,
+                        source_url: str | None = None,
+                        author_hint: str | None = None,
+                        title_hint: str | None = None) -> str:
+    template = _BLOG_USER_PROMPT_BY_KIND.get(kind)
+    if template is None:
+        raise ValueError(f"Unknown source kind: {kind!r}. Known: {sorted(_BLOG_USER_PROMPT_BY_KIND)}")
+    if kind == "post":
+        meta_bits = []
+        if author_hint:
+            meta_bits.append(f"author: {author_hint}")
+        if title_hint:
+            meta_bits.append(f"title: {title_hint}")
+        if source_url:
+            meta_bits.append(f"url: {source_url}")
+        source_meta = f" ({'; '.join(meta_bits)})" if meta_bits else ""
+        return template.format(language=language, source=source_text, source_meta=source_meta)
+    return template.format(language=language, source=source_text)
+
+
+def text_to_blog(source_path: Path, out_dir: Path, blog_language: str,
+                 kind: str = "video", lang_code: str = "en", llm: str = "claude",
+                 openai_model: str = "gpt-4o", source_url: str | None = None,
+                 author_hint: str | None = None,
+                 title_hint: str | None = None) -> Path:
+    """Convert a source-text file into a blog post in `blog_language`. The
+    `kind` selects the system prompt and user-prompt framing (video / paper /
+    post). Writes to `<out_dir>/blog.<lang_code>.md`."""
+    source_text = source_path.read_text(encoding="utf-8")
+    system_prompt = _load_system_prompt(kind)
+    user_prompt = _format_user_prompt(
+        kind, blog_language, source_text,
+        source_url=source_url, author_hint=author_hint, title_hint=title_hint,
+    )
 
     blog_path = out_dir / f"blog.{lang_code}.md"
-    log.info("Drafting %s post via %s → %s", blog_language, llm, blog_path)
+    log.info("Drafting %s post (kind=%s) via %s → %s", blog_language, kind, llm, blog_path)
 
     if llm == "claude":
         text = _draft_with_claude(system_prompt, user_prompt)
@@ -525,17 +643,39 @@ def transcript_to_blog(transcript_path: Path, out_dir: Path, blog_language: str,
     return blog_path
 
 
-def transcript_to_blogs(transcript_path: Path, out_dir: Path, lang_codes: list[str],
-                        llm: str = "claude", openai_model: str = "gpt-4o") -> dict[str, Path]:
+def text_to_blogs(source_path: Path, out_dir: Path, lang_codes: list[str],
+                  kind: str = "video", llm: str = "claude",
+                  openai_model: str = "gpt-4o", source_url: str | None = None,
+                  author_hint: str | None = None,
+                  title_hint: str | None = None) -> dict[str, Path]:
     """Generate one blog markdown per requested language code. Returns {code: path}."""
     paths = {}
     for code in lang_codes:
         label = LANG_LABELS.get(code)
         if not label:
             raise ValueError(f"Unknown language code: {code!r}. Known: {sorted(LANG_LABELS)}")
-        paths[code] = transcript_to_blog(transcript_path, out_dir, label, code,
-                                         llm=llm, openai_model=openai_model)
+        paths[code] = text_to_blog(
+            source_path, out_dir, label, kind=kind, lang_code=code,
+            llm=llm, openai_model=openai_model,
+            source_url=source_url, author_hint=author_hint, title_hint=title_hint,
+        )
     return paths
+
+
+# Backward-compat aliases — older call sites and `--from blog` resume paths
+# still reference these names with the historical signature.
+def transcript_to_blog(transcript_path: Path, out_dir: Path, blog_language: str,
+                       lang_code: str = "en", llm: str = "claude",
+                       openai_model: str = "gpt-4o") -> Path:
+    return text_to_blog(transcript_path, out_dir, blog_language,
+                        kind="video", lang_code=lang_code, llm=llm,
+                        openai_model=openai_model)
+
+
+def transcript_to_blogs(transcript_path: Path, out_dir: Path, lang_codes: list[str],
+                        llm: str = "claude", openai_model: str = "gpt-4o") -> dict[str, Path]:
+    return text_to_blogs(transcript_path, out_dir, lang_codes,
+                         kind="video", llm=llm, openai_model=openai_model)
 
 
 # --------------------------------------------------------------------------- #
@@ -552,7 +692,7 @@ LABEL_TAXONOMY: dict[str, list[str]] = {
     ],
     "format": [
         "keynote", "talk", "workshop",
-        "podcast", "interview", "paper",
+        "podcast", "interview", "paper", "post",
     ],
     "speaker": [
         "anthropic", "openai", "google", "meta",
@@ -567,10 +707,12 @@ below. Your output is a single JSON object — nothing else, no prose.
 
 Rules:
 - Pick 1–3 topic labels (the post's actual subject matter).
-- Pick exactly 1 format label (how the speaker delivered the content).
-- Pick exactly 1 speaker label (the speaker's affiliation; pick "independent" \
-if they don't represent a major lab/company, "academia" for university \
-researchers).
+- Pick exactly 1 format label (how the original source was delivered: \
+"paper" for research papers/articles, "post" for short-form social/blog \
+posts, "keynote"/"talk"/"workshop"/"podcast"/"interview" for video formats).
+- Pick exactly 1 speaker label (the speaker or author's affiliation; pick \
+"independent" if they don't represent a major lab/company, "academia" for \
+university researchers).
 - Use only the values listed below. Do not invent new ones.
 - Output shape:
   {{"topic": ["..."], "format": "...", "speaker": "..."}}
@@ -822,6 +964,7 @@ def publish_to_blog_repo(
     commit: bool = True,
     cover_image: Path | None = None,
     labels: list[str] | None = None,
+    source_kind: str | None = None,
 ) -> Path:
     """Drop the post into <blog_repo>/public/blog/<slug>/ and update posts.json.
 
@@ -894,6 +1037,8 @@ def publish_to_blog_repo(
         meta["dek_zh"] = deks["zh"]
     if source_url:
         meta["source"] = source_url
+    if source_kind:
+        meta["source_kind"] = source_kind
     if image_url:
         meta["image"] = image_url
     if labels:
@@ -965,6 +1110,21 @@ def main() -> int:
     src = parser.add_mutually_exclusive_group(required=False)
     src.add_argument("--url", help="Video URL (anything yt-dlp supports)")
     src.add_argument("--file", type=Path, help="Path to a local video file")
+    src.add_argument("--pdf",
+                     help="PDF source (local path or http(s) URL — arXiv URLs are auto-canonicalised). "
+                          "Skips audio/transcript stages.")
+    src.add_argument("--linkedin",
+                     help="LinkedIn post URL. Skips audio/transcript stages. "
+                          "Falls back to --text-file when LinkedIn paywalls the page.")
+    src.add_argument("--text-file", dest="text_file", type=Path,
+                     help="Pre-extracted source text (manual escape hatch). "
+                          "Combine with --kind {video,paper,post}.")
+    parser.add_argument("--kind", choices=["video", "paper", "post"], default=None,
+                        help="Source kind for --text-file. Auto-set for --url/--file (video), "
+                             "--pdf (paper), --linkedin (post).")
+    parser.add_argument("--source-url", dest="source_url", default=None,
+                        help="Original URL of the source. Saved into meta.json so the post links back. "
+                             "Auto-set when --url/--linkedin/(http) --pdf is used.")
 
     parser.add_argument("--out", type=Path, default=Path("/data/out"),
                         help="Output directory (default: /data/out)")
@@ -1033,7 +1193,29 @@ def main() -> int:
 
     args.out.mkdir(parents=True, exist_ok=True)
 
-    # Decide which stages to run.
+    # ----- Decide the source kind up front --------------------------------
+    # Video remains the default (existing behaviour). The non-video paths set
+    # source_kind explicitly and skip audio/transcript entirely; the blog
+    # stage reads from `source.txt` instead of `transcript.txt`.
+    source_kind: str = "video"
+    if args.pdf:
+        source_kind = "paper"
+    elif args.linkedin:
+        source_kind = "post"
+    elif args.text_file:
+        if not args.kind:
+            log.error("--text-file requires --kind {video,paper,post}.")
+            return 2
+        source_kind = args.kind
+    elif args.kind:
+        source_kind = args.kind  # explicit override is allowed
+
+    # Persist source-bundle metadata for `--from blog` resumes.
+    src_meta_path = args.out / "source.json"
+    src_text_path = args.out / "source.txt"
+    is_non_video = source_kind != "video"
+
+    # ----- Decide which stages to run -------------------------------------
     start_idx = STAGES.index(args.from_stage) if args.from_stage else 0
     def should_run(stage: str, output_exists_fn) -> bool:
         if args.force:
@@ -1049,8 +1231,9 @@ def main() -> int:
     if args.from_stage == "transcript" and not _audio_exists(args.out):
         log.error("--from transcript requires %s to exist.", args.out / "source.mp3")
         return 2
-    if args.from_stage == "blog" and not _transcript_exists(args.out):
-        log.error("--from blog requires %s to exist.", args.out / "transcript.txt")
+    if args.from_stage == "blog" and not (_transcript_exists(args.out) or src_text_path.exists()):
+        log.error("--from blog requires %s or %s to exist.",
+                  args.out / "transcript.txt", src_text_path)
         return 2
     if args.from_stage == "publish" and not _blog_exists(args.out):
         log.error("--from publish requires %s to exist.", args.out / "blog.md")
@@ -1059,15 +1242,70 @@ def main() -> int:
         log.error("--from publish requires --blog-repo PATH.")
         return 2
 
+    # On `--from blog`/`publish` resume the source.kind/source-url may live in
+    # source.json from the original run — fall back to that.
+    resumed_source_url: str | None = None
+    resumed_title_hint: str | None = None
+    resumed_author_hint: str | None = None
+    if src_meta_path.exists():
+        try:
+            sm = json.loads(src_meta_path.read_text(encoding="utf-8"))
+            if not args.kind and not (args.pdf or args.linkedin or args.text_file or args.url or args.file):
+                source_kind = sm.get("kind", source_kind)
+            resumed_source_url = sm.get("source_url")
+            resumed_title_hint = sm.get("title_hint")
+            resumed_author_hint = sm.get("author_hint")
+            is_non_video = source_kind != "video"
+        except Exception as e:
+            log.warning("Could not read %s (%s); continuing.", src_meta_path, e)
+
+    bundle: SourceBundle | None = None
     try:
-        # Step 1: audio (with optional caption fast-path).
+        # ----- Non-video source acquisition (PDF / LinkedIn / text file) --
+        # Runs at most once. Writes source.txt and source.json into out_dir,
+        # then short-circuits the audio + transcript stages.
+        if is_non_video and not src_text_path.exists():
+            if args.pdf:
+                bundle = from_pdf(args.pdf, args.out)
+            elif args.linkedin:
+                bundle = from_linkedin(args.linkedin, args.out)
+            elif args.text_file:
+                bundle = from_text_file(
+                    str(args.text_file), kind=source_kind,
+                    source_url=args.source_url,
+                )
+            elif args.from_stage in {"blog", "publish"}:
+                # Resume case: source.txt already exists from a prior run.
+                pass
+            else:
+                log.error(
+                    "source_kind=%s but no source provided "
+                    "(--pdf / --linkedin / --text-file).", source_kind,
+                )
+                return 2
+
+            if bundle is not None:
+                src_text_path.write_text(bundle.text, encoding="utf-8")
+                src_meta_path.write_text(json.dumps({
+                    "kind": bundle.kind,
+                    "source_url": bundle.source_url,
+                    "title_hint": bundle.title_hint,
+                    "author_hint": bundle.author_hint,
+                }, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+                log.info("Source acquired (kind=%s) → %s (%d chars)",
+                         bundle.kind, src_text_path, len(bundle.text))
+
+        # Step 1: audio (with optional caption fast-path). Video sources only.
         audio = args.out / "source.mp3"
         captions_used = False
+        if is_non_video:
+            log.info("Skipping audio stage (source_kind=%s).", source_kind)
         # Try captions first when we have a URL — it's seconds vs tens of
         # minutes for whisper. Only attempt this when both audio + transcript
         # would otherwise run; if the user is already past those stages
         # (--from blog), don't redo work.
-        if (args.url and args.captions != "off"
+        if (not is_non_video
+                and args.url and args.captions != "off"
                 and should_run("audio", _audio_exists)
                 and should_run("transcript", _transcript_exists)):
             cap = try_captions(args.url, args.out, cookies=args.yt_cookies)
@@ -1077,7 +1315,7 @@ def main() -> int:
                 log.error("--captions only was set but no captions were available.")
                 return 2
 
-        if not captions_used:
+        if not is_non_video and not captions_used:
             if should_run("audio", _audio_exists):
                 if not (args.url or args.file):
                     log.error("Stage 'audio' needs --url or --file.")
@@ -1092,9 +1330,12 @@ def main() -> int:
             else:
                 log.info("Skipping audio stage (using existing %s).", audio)
 
-        # Step 2: transcript
+        # Step 2: transcript (video sources only — non-video skipped).
         transcript_path = args.out / "transcript.txt"
-        if captions_used:
+        if is_non_video:
+            log.info("Skipping transcript stage (source_kind=%s; using %s).",
+                     source_kind, src_text_path)
+        elif captions_used:
             log.info("Skipping transcribe stage (captions provided the transcript).")
         elif should_run("transcript", _transcript_exists):
             if args.transcribe == "openai":
@@ -1103,6 +1344,10 @@ def main() -> int:
                 transcript_path = transcribe(audio, args.out, args.model, args.language)
         else:
             log.info("Skipping transcript stage (using existing %s).", transcript_path)
+
+        # The blog stage reads from `source.txt` for non-video kinds, and
+        # from `transcript.txt` for video.
+        source_text_path = src_text_path if is_non_video else transcript_path
 
         # Step 3: blog (one markdown per requested language).
         lang_codes = [c.strip() for c in args.blog_languages.split(",") if c.strip()]
@@ -1113,9 +1358,15 @@ def main() -> int:
             log.info("Skipping blog step (--skip-blog).")
             blog_paths = {c: args.out / f"blog.{c}.md" for c in lang_codes}
         elif should_run("blog", _blog_exists):
-            blog_paths = transcript_to_blogs(
-                transcript_path, args.out, lang_codes,
+            blog_paths = text_to_blogs(
+                source_text_path, args.out, lang_codes,
+                kind=source_kind,
                 llm=args.llm, openai_model=args.openai_model,
+                source_url=(args.source_url or args.url or args.linkedin
+                            or (args.pdf if args.pdf and args.pdf.startswith(("http://", "https://")) else None)
+                            or resumed_source_url),
+                title_hint=(bundle.title_hint if bundle else resumed_title_hint),
+                author_hint=(bundle.author_hint if bundle else resumed_author_hint),
             )
             for code, p in blog_paths.items():
                 log.info("Drafted %s blog → %s", LANG_LABELS[code], p)
@@ -1152,8 +1403,16 @@ def main() -> int:
             else:
                 source_url = None
                 src_url_path = args.out / "source.url"
-                if args.url:
+                if args.source_url:
+                    source_url = args.source_url
+                elif args.url:
                     source_url = args.url
+                elif args.linkedin:
+                    source_url = args.linkedin
+                elif args.pdf and args.pdf.startswith(("http://", "https://")):
+                    source_url = args.pdf
+                elif resumed_source_url:
+                    source_url = resumed_source_url
                 elif src_url_path.exists():
                     source_url = src_url_path.read_text(encoding="utf-8").strip() or None
                 tags = [t.strip() for t in args.tags.split(",") if t.strip()] if args.tags else []
@@ -1173,6 +1432,7 @@ def main() -> int:
                     commit=not args.no_commit,
                     cover_image=cover_image,
                     labels=auto_labels,
+                    source_kind=source_kind,
                 )
                 log.info("Published to %s", published)
 
