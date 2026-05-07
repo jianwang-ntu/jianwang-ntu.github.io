@@ -20,29 +20,37 @@ log = logging.getLogger()
 log.setLevel(logging.INFO)
 
 TABLE_NAME = os.environ["TABLE_NAME"]
-ALLOWED_ORIGINS = {
-    o.strip()
-    for o in os.environ.get("ALLOWED_ORIGINS", "https://jianwang-ntu.github.io").split(",")
-    if o.strip()
-}
+
+# Wildcard subdomains aren't expressible in the static
+# Access-Control-Allow-Origin header — browsers want an *exact* match. So we
+# keep a list of regexes server-side, decide per-request whether the Origin
+# qualifies, and echo it back verbatim. Anything not listed gets no CORS
+# headers and the browser blocks the response.
+_ORIGIN_PATTERNS = [
+    re.compile(r"^https://jianwang-ntu\.github\.io$"),
+    re.compile(r"^https://([a-z0-9-]+\.)*wj2ai\.com$"),
+    re.compile(r"^https://([a-z0-9-]+\.)*ai2wj\.com$"),
+]
 SLUG_RE = re.compile(r"^[a-z0-9][a-z0-9-]{0,99}$")
 
 _table = boto3.resource("dynamodb").Table(TABLE_NAME)
 
 
 def _cors_headers(origin: str) -> dict[str, str]:
-    # Echo back the request origin only when it's on the allow-list — a
-    # mismatched/missing origin still gets a default so the browser can
-    # surface a CORS error rather than a server one.
-    chosen = origin if origin in ALLOWED_ORIGINS else next(iter(ALLOWED_ORIGINS))
-    return {
-        "Access-Control-Allow-Origin": chosen,
-        "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-        "Access-Control-Allow-Headers": "content-type",
-        "Access-Control-Max-Age": "600",
-        "Vary": "Origin",
-        "Content-Type": "application/json",
-    }
+    # Echo back the request origin only when it matches one of the allowed
+    # patterns. If it doesn't, omit the CORS headers entirely so the browser
+    # surfaces a clear "blocked by CORS" rather than a confusing partial OK.
+    if origin and any(p.match(origin) for p in _ORIGIN_PATTERNS):
+        return {
+            "Access-Control-Allow-Origin": origin,
+            "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+            "Access-Control-Allow-Headers": "content-type",
+            "Access-Control-Max-Age": "600",
+            "Vary": "Origin",
+            "Content-Type": "application/json",
+        }
+    # Non-CORS request (e.g. server-to-server) or disallowed origin.
+    return {"Content-Type": "application/json"}
 
 
 def _resp(status: int, body: dict | list | str, headers: dict[str, str]) -> dict:

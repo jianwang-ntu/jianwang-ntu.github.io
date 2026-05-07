@@ -104,28 +104,36 @@ git history (search for `auto-blog.yml`).
 
 ## Pipeline knobs (when running locally via `blog.sh` or `pipeline.py`)
 
-**Transcript source** — three tiers, tried in order when applicable:
+**Transcript source** — three tiers; the first that works wins:
 
 1. **YouTube captions** (`try_captions`) — fastest, free. Uses
    `youtube-transcript-api` first (less IP-locked) and yt-dlp's
    `--write-auto-subs` as a second chance.
-2. **OpenAI Whisper API** — `~$0.006/min`. Uses `OPENAI_API_KEY`. Audio
-   >25 MB is auto-chunked.
-3. **Local faster-whisper** — CPU-only. Slow but free.
+2. **Local faster-whisper** (default fallback) — CPU-only. Slow on long
+   audio but completely free.
+3. **OpenAI Whisper API** (opt-in) — `~$0.006/min`. Use only when you
+   want speed and accept the cost: pass `--transcribe openai`.
 
 Flags:
 - `--captions {auto, off, only}` — default `auto`: try captions first.
-- `--transcribe {auto, local, openai}` — default `auto`: prefer the
-  OpenAI API when `OPENAI_API_KEY` is set, else local faster-whisper.
+- `--transcribe {local, openai}` — default `local`. The local pipeline
+  reserves OpenAI for image generation only.
 
-**Cover image** — after the EN draft, the pipeline asks OpenAI's image API
-for a square editorial illustration based on the title + dek. The image is
+**Cover image** — two-step pipeline. (1) Claude reads the full EN draft and
+produces a structured visual brief (3–5 elements + composition + relationships).
+(2) OpenAI's image API renders that brief as a labeled diagram. Image is
 saved to `public/images/blog/<slug>.png` and `![title](/images/blog/<slug>.png)`
 is injected at the top of every language version's markdown. `blog.sh`
 also uploads the new cover to `s3://publicsg/github.io/images/blog/` so
-the deployed sites can resolve it before a CI run touches it. Skipped
-silently if `OPENAI_API_KEY` is unset. Disable with `--image off`. Pick a
-different model with `--image-model {gpt-image-1, dall-e-3}`.
+the deployed sites can resolve it before any CI touches it. Skipped silently
+if `OPENAI_API_KEY` is unset. Disable with `--image off`. Pick a different
+model with `--image-model {gpt-image-1, dall-e-3}`.
+
+**OpenAI usage** is intentionally limited to image generation only. The visual
+brief, label classification, and blog drafting all route through `claude`
+(headless mode, `--dangerously-skip-permissions` so non-TTY runs don't
+block on permission prompts). Transcription defaults to local faster-whisper
+when captions miss.
 
 **Blog-drafting LLM**:
 - `--llm claude` (default) — drives the `claude` CLI in headless mode.

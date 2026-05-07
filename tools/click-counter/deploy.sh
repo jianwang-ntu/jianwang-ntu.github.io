@@ -27,7 +27,12 @@
 #   aws apigatewayv2 create-api --name github-io-blog-clicks \
 #     --protocol-type HTTP \
 #     --target arn:aws:lambda:ap-southeast-1:332149362719:function:github-io-blog-clicks \
-#     --cors-configuration AllowOrigins=https://jianwang-ntu.github.io,AllowMethods=GET,POST,OPTIONS,AllowHeaders=content-type,MaxAge=600 \
+#     --cors-configuration 'AllowOrigins=https://jianwang-ntu.github.io,https://wj2ai.com,https://www.wj2ai.com,https://blog.wj2ai.com,https://app.wj2ai.com,https://ai2wj.com,https://www.ai2wj.com,https://blog.ai2wj.com,https://app.ai2wj.com,AllowMethods=GET,POST,OPTIONS,AllowHeaders=content-type,MaxAge=600' \
+#     --region ap-southeast-1
+#
+# To add more origins later:
+#   aws apigatewayv2 update-api --api-id <id> \
+#     --cors-configuration 'AllowOrigins=<comma-separated>,AllowMethods=GET,POST,OPTIONS,AllowHeaders=content-type,MaxAge=600' \
 #     --region ap-southeast-1
 #   aws lambda add-permission --function-name github-io-blog-clicks \
 #     --statement-id APIGW --action lambda:InvokeFunction \
