@@ -112,17 +112,32 @@ PR_BODY="Drafted from <$URL>.
 **Languages:** $LANGS
 **Tags:** $TAGS
 
-Review the markdown under \`$POST_DIR/\` and merge when satisfied. Pages will deploy automatically once master moves."
+Review the markdown under \`$POST_DIR/\` and merge when satisfied. Both the Pages artifact and the \`dist\` branch redeploy automatically on the merge commit."
 [[ -n "$ISSUE" ]] && PR_BODY="Closes #$ISSUE.
 
 $PR_BODY"
 
-PR_URL=$(gh pr create \
-  --repo "$REPO_FULL" \
-  --base master \
-  --head "$BRANCH" \
-  --title "blog: $TITLE" \
-  --body "$PR_BODY")
+# gh pr create races GitHub's branch indexing on a fresh push: the API
+# can briefly think there are "No commits between master and <branch>".
+# Retry a few times before giving up.
+PR_URL=""
+for attempt in 1 2 3 4 5; do
+  if PR_URL=$(gh pr create \
+      --repo "$REPO_FULL" \
+      --base master \
+      --head "$BRANCH" \
+      --title "blog: $TITLE" \
+      --body "$PR_BODY" 2>&1); then
+    break
+  fi
+  if [[ $attempt -lt 5 ]]; then
+    sleep $(( attempt * 5 ))
+    echo "  gh pr create retry $attempt ..."
+  else
+    echo "$PR_URL" >&2
+    exit 1
+  fi
+done
 
 git -C "$REPO_ROOT" checkout master >/dev/null
 
@@ -141,7 +156,7 @@ cat <<EOF
   Files  : $POST_DIR/
   Branch : $BRANCH
   PR     : $PR_URL
-  Live   : $LIVE_URL  (after the PR is merged + Pages deploy finishes)
+  Live   : $LIVE_URL  (once the PR is merged and both deploys finish — Pages + dist branch)
 EOF
 
 # Optional deploy-verification loop: poll until the PR is merged, then poll
@@ -151,31 +166,37 @@ if [[ "$WATCH" -eq 1 ]]; then
   echo
   echo "Watching PR #$PR_NUM. Merge it in the browser; this will poll every 30s."
 
-  # Phase 1: wait for merge
+  # Phase 1: wait for merge. We capture the merge commit SHA so phase 2
+  # can pick the runs triggered by *this* merge, not an older deploy.
+  MERGE_SHA=""
   while true; do
-    state=$(gh pr view "$PR_NUM" --repo "$REPO_FULL" --json state,mergedAt --jq '.state + " " + (.mergedAt // "")')
+    json=$(gh pr view "$PR_NUM" --repo "$REPO_FULL" --json state,mergeCommit \
+      --jq '.state + "|" + (.mergeCommit.oid // "")')
+    state="${json%%|*}"
+    sha="${json#*|}"
     case "$state" in
-      MERGED*) echo "PR merged."; break ;;
-      CLOSED*) echo "PR was closed without merging — exiting."; exit 1 ;;
-      *)       printf "."; sleep 30 ;;
+      MERGED) echo "PR merged ($sha)."; MERGE_SHA="$sha"; break ;;
+      CLOSED) echo "PR was closed without merging — exiting."; exit 1 ;;
+      *)      printf "."; sleep 30 ;;
     esac
   done
 
-  # Phase 2: wait for both deploy workflows started by the merge —
-  # "Deploy to GitHub Pages" (Pages artifact) and "Publish dist branch"
-  # (force-pushes dist/ to the `dist` branch for the nginx host).
+  # Phase 2: wait for both deploy workflows started by the merge commit.
+  # Filtering by headSha avoids picking an older run that already finished.
   watch_workflow() {
     local name="$1"
-    echo "Waiting for run of '$name'..."
+    echo "Waiting for '$name' on $MERGE_SHA ..."
     local run_id=""
-    for _ in {1..40}; do  # ~10 min to appear
-      run_id=$(gh run list --repo "$REPO_FULL" --branch master --workflow "$name" \
-        --limit 1 --json databaseId --jq '.[0].databaseId' 2>/dev/null || true)
+    for _ in {1..60}; do  # ~15 min to appear and complete
+      run_id=$(gh run list --repo "$REPO_FULL" --workflow "$name" \
+        --limit 20 --json databaseId,headSha,status \
+        --jq ".[] | select(.headSha == \"$MERGE_SHA\") | .databaseId" \
+        | head -1)
       [[ -n "$run_id" ]] && break
       sleep 15
     done
     if [[ -z "$run_id" ]]; then
-      echo "  ! No run for '$name' surfaced — check the Actions tab."
+      echo "  ! No run for '$name' on $MERGE_SHA — check the Actions tab."
       return 1
     fi
     gh run watch "$run_id" --repo "$REPO_FULL" --exit-status >/dev/null
