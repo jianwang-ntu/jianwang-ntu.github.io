@@ -35,8 +35,13 @@ log = logging.getLogger("pipeline")
 # --------------------------------------------------------------------------- #
 # Step 1 — acquire audio
 # --------------------------------------------------------------------------- #
-def download_audio(url: str, out_dir: Path) -> Path:
-    """Use yt-dlp to fetch best audio and convert to mp3. Returns mp3 path."""
+def download_audio(url: str, out_dir: Path, cookies: Path | None = None) -> Path:
+    """Use yt-dlp to fetch best audio and convert to mp3. Returns mp3 path.
+
+    `cookies` is an optional Netscape-format cookies file. Useful for sites
+    (notably YouTube) that block headless/unrecognised IPs with an
+    anti-bot challenge — pass authenticated cookies to bypass it.
+    """
     log.info("Downloading audio from %s", url)
     out_template = str(out_dir / "source.%(ext)s")
     cmd = [
@@ -47,8 +52,10 @@ def download_audio(url: str, out_dir: Path) -> Path:
         "-o", out_template,
         "--no-playlist",
         "--quiet", "--progress",
-        url,
     ]
+    if cookies is not None:
+        cmd += ["--cookies", str(cookies)]
+    cmd.append(url)
     subprocess.run(cmd, check=True)
     mp3 = out_dir / "source.mp3"
     if not mp3.exists():
@@ -405,6 +412,10 @@ def main() -> int:
                              "openai uses OPENAI_API_KEY.")
     parser.add_argument("--openai-model", default=os.environ.get("OPENAI_MODEL", "gpt-4o"),
                         help="OpenAI model name when --llm openai (default: gpt-4o).")
+    parser.add_argument("--yt-cookies", type=Path, default=None,
+                        help="Netscape-format cookies file passed to yt-dlp. Use this "
+                             "when YouTube returns 'Sign in to confirm you're not a bot' "
+                             "(common from cloud/CI runners).")
     parser.add_argument("--from", dest="from_stage", choices=STAGES, default=None,
                         help="Resume from this stage (audio|transcript|blog). Earlier "
                              "stages are skipped — their outputs must already exist in --out. "
@@ -465,7 +476,7 @@ def main() -> int:
                 log.error("Stage 'audio' needs --url or --file.")
                 return 2
             if args.url:
-                audio = download_audio(args.url, args.out)
+                audio = download_audio(args.url, args.out, cookies=args.yt_cookies)
             else:
                 if not args.file.exists():
                     log.error("File not found: %s", args.file)

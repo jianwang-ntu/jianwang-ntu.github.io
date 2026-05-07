@@ -94,6 +94,27 @@ When debugging the workflow, check the run logs from the Actions tab —
 typical failures: missing/invalid `OPENAI_API_KEY`, yt-dlp 403 on
 restricted videos, Whisper model download timeout on the first run.
 
+### YouTube anti-bot block in CI
+
+YouTube serves cloud-runner IPs (including GitHub Actions) with a
+"Sign in to confirm you're not a bot" challenge. yt-dlp can bypass this
+with authenticated cookies. To enable:
+
+1. Export your YouTube cookies (e.g. via the "Get cookies.txt LOCALLY"
+   browser extension or `yt-dlp --cookies-from-browser` locally).
+2. Upload as a repo secret named **`YT_COOKIES`** — value is the entire
+   cookies.txt content:
+   ```bash
+   gh secret set YT_COOKIES -R jianwang-ntu/jianwang-ntu.github.io \
+     < /path/to/cookies.txt
+   ```
+3. The workflow auto-detects the secret. If absent, runs without cookies
+   (works for non-YouTube sources, fails for YouTube under bot block).
+
+Cookies expire — if CI starts failing again with the bot challenge, refresh
+the secret with a freshly exported file. Treat the cookies as login
+credentials: don't commit them, don't echo them in logs.
+
 ## LLM backend choice
 
 `tools/video-to-blog/pipeline.py` supports two backends for the blog-drafting

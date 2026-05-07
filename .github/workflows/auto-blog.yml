@@ -102,11 +102,34 @@ jobs:
           git config user.name  "auto-blog[bot]"
           git config user.email "auto-blog@users.noreply.github.com"
 
+      - name: Stage YouTube cookies (optional)
+        # YT_COOKIES (Netscape format) lets yt-dlp bypass YouTube's anti-bot
+        # challenge that hits cloud-runner IPs. The secret is a multi-line
+        # string; we materialise it to a temp file the pipeline can pass
+        # to yt-dlp via --yt-cookies. If the secret is unset, this step
+        # is a no-op and the pipeline runs without cookies.
+        id: cookies
+        env:
+          YT_COOKIES: ${{ secrets.YT_COOKIES }}
+        run: |
+          if [ -z "$YT_COOKIES" ]; then
+            echo "yt_cookies=" >> "$GITHUB_OUTPUT"
+          else
+            f="$RUNNER_TEMP/yt-cookies.txt"
+            printf '%s' "$YT_COOKIES" > "$f"
+            chmod 600 "$f"
+            echo "yt_cookies=$f" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Run pipeline (transcribe + draft + publish)
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
           mkdir -p /tmp/v2b-out
+          extra=()
+          if [ -n "${{ steps.cookies.outputs.yt_cookies }}" ]; then
+            extra+=(--yt-cookies "${{ steps.cookies.outputs.yt_cookies }}")
+          fi
           python tools/video-to-blog/pipeline.py \
             --url "${{ steps.parse.outputs.url }}" \
             --out /tmp/v2b-out \
@@ -115,7 +138,8 @@ jobs:
             --llm openai \
             --blog-repo "$GITHUB_WORKSPACE" \
             --tags "${{ steps.parse.outputs.tags }}" \
-            --no-commit
+            --no-commit \
+            "${extra[@]}"
 
       - name: Find new post slug
         id: slug
