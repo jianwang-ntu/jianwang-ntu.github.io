@@ -2,6 +2,7 @@ import React from 'react';
 import Nav from '../components/Nav.jsx';
 import Footer from '../components/Footer.jsx';
 import PageHead from '../components/PageHead.jsx';
+import Seo from '../components/Seo.jsx';
 import { Box, Chip, Note, Tag, Thumb } from '../components/primitives.jsx';
 import { ALL_PUBS } from '../data.jsx';
 
@@ -52,6 +53,11 @@ export default function Publications() {
 
   return (
     <div className="page">
+      <Seo
+        title="Publications"
+        description={`Peer-reviewed research and preprints by Jian Wang on code LLM security, fake-content detection, and program repair. ${ALL_PUBS.length} papers across SE, ML, and security venues.`}
+        path="/pubs"
+      />
       <Nav />
       <PageHead
         kicker={`PUBLICATIONS · ${years[years.length - 1]} — ${years[0]}`}

@@ -2,11 +2,33 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- These tags are sane defaults for the SPA shell. The post-build
+         prerender step (tools/build-prerender.mjs) overrides them per route
+         in dist/<route>/index.html so social-sharing crawlers see the right
+         title/description/og:image when they fetch a blog post URL. The
+         <Seo> component (src/components/Seo.jsx) then keeps them current
+         as the user navigates client-side. -->
     <title>Jian Wang — Academic Homepage</title>
     <meta name="author" content="Jian Wang" />
-    <meta name="description" content="Jian Wang (王剑) — PhD, NTU Singapore. Research on code LLM security, automated program repair, and AI-generated code detection." />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Jian Wang (王剑) — PhD, NTU Singapore. Research on code LLM security, automated program repair, and AI-generated code detection. Notes on agents, harnesses, and engineering." />
+    <link rel="canonical" href="https://www.wj2ai.com/home" />
     <link rel="icon" type="image/x-icon" href="https://123publicdata.s3.ap-southeast-1.amazonaws.com/personal/favor.ico" />
+
+    <!-- Open Graph (Facebook, LinkedIn, Slack, Discord unfurl) -->
+    <meta property="og:site_name" content="Jian Wang" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Jian Wang — Academic Homepage" />
+    <meta property="og:description" content="Jian Wang (王剑) — PhD, NTU Singapore. Research on code LLM security, automated program repair, and AI-generated code detection. Notes on agents, harnesses, and engineering." />
+    <meta property="og:url" content="https://www.wj2ai.com/home" />
+    <meta property="og:image" content="https://123publicdata.s3.ap-southeast-1.amazonaws.com/personal/favor.ico" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Jian Wang — Academic Homepage" />
+    <meta name="twitter:description" content="Jian Wang (王剑) — PhD, NTU Singapore. Research on code LLM security, automated program repair, and AI-generated code detection." />
+    <meta name="twitter:image" content="https://123publicdata.s3.ap-southeast-1.amazonaws.com/personal/favor.ico" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

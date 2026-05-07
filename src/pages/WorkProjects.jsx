@@ -1,6 +1,7 @@
 import React from 'react';
 import Nav from '../components/Nav.jsx';
 import Footer from '../components/Footer.jsx';
+import Seo from '../components/Seo.jsx';
 import { Box, Chip, SectionHead, Status, Tag } from '../components/primitives.jsx';
 import { WORK, PROJECTS } from '../data.jsx';
 
@@ -104,6 +105,11 @@ const PAIRS = [
 export default function WorkProjects() {
   return (
     <div className="page">
+      <Seo
+        title="Work & Projects"
+        description="Engineering work and side projects — agent harnesses, blog automation, security research tooling. Eight years of shipping code, now studying what breaks when LLMs ship it."
+        path="/work"
+      />
       <Nav />
 
       <section className="wp-hero">

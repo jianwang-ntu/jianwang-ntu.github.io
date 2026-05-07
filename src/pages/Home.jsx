@@ -1,6 +1,7 @@
 import React from 'react';
 import Nav from '../components/Nav.jsx';
 import Footer from '../components/Footer.jsx';
+import Seo from '../components/Seo.jsx';
 import { Chip, Note, Tag, Thumb, SectionHead } from '../components/primitives.jsx';
 import { NEWS, FEATURED_PUBS } from '../data.jsx';
 
@@ -44,6 +45,11 @@ function NewsItem({ date, children }) {
 export default function Home() {
   return (
     <div className="page">
+      <Seo
+        title="Home"
+        description="Jian Wang — PhD, NTU Singapore. Research on code LLM security, automated program repair, and AI-generated code detection."
+        path="/home"
+      />
       <Nav />
       <section className="home-hero">
         <div>
