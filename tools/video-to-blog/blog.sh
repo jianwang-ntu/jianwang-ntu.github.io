@@ -227,8 +227,7 @@ if [[ "$WATCH" -eq 1 ]]; then
     echo "  ✓ '$name' succeeded."
   }
 
-  watch_workflow "Deploy to GitHub Pages"   || true
-  watch_workflow "Publish dist branches"    || true
+  watch_workflow "Deploy site" || true
 
   echo
   echo "✓ All deploys complete. Post is live:"
