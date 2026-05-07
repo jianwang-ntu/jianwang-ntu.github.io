@@ -35,6 +35,13 @@ log = logging.getLogger("pipeline")
 # --------------------------------------------------------------------------- #
 # Step 1 — acquire audio
 # --------------------------------------------------------------------------- #
+# Extractor args for yt-dlp's YouTube backend. Trying multiple `player_client`
+# values gives us several chances to bypass the "Sign in to confirm you're not
+# a bot" challenge without fresh cookies — different clients have different
+# anti-bot policies. Order matters: yt-dlp uses the first that works.
+_YTDLP_PLAYER_CLIENTS = "default,tv,mweb"
+
+
 def download_audio(url: str, out_dir: Path, cookies: Path | None = None) -> Path:
     """Use yt-dlp to fetch best audio and convert to mp3. Returns mp3 path.
 
@@ -57,6 +64,7 @@ def download_audio(url: str, out_dir: Path, cookies: Path | None = None) -> Path
         # this flag, format extraction fails on a JS-runtime-equipped runner
         # with "Requested format is not available".
         "--remote-components", "ejs:github",
+        "--extractor-args", f"youtube:player_client={_YTDLP_PLAYER_CLIENTS}",
     ]
     if cookies is not None:
         cmd += ["--cookies", str(cookies)]
@@ -123,6 +131,7 @@ def try_captions(url: str, out_dir: Path, cookies: Path | None = None,
         "-o", str(out_dir / "captions.%(ext)s"),
         "--quiet",
         "--remote-components", "ejs:github",
+        "--extractor-args", f"youtube:player_client={_YTDLP_PLAYER_CLIENTS}",
     ]
     if cookies is not None:
         cmd += ["--cookies", str(cookies)]
@@ -163,6 +172,104 @@ def _format_srt_timestamp(seconds: float) -> str:
     m, ms = divmod(ms, 60_000)
     s, ms = divmod(ms, 1000)
     return f"{h:02d}:{m:02d}:{s:02d},{ms:03d}"
+
+
+def _split_audio_for_api(audio: Path, out_dir: Path, max_bytes: int = 24 * 1024 * 1024,
+                         chunk_seconds: int = 600) -> list[tuple[Path, float]]:
+    """Split `audio` into chunks under `max_bytes` for the OpenAI Whisper API
+    (25MB hard limit). Returns [(chunk_path, start_seconds), ...] in order.
+    No-op (returns [(audio, 0.0)]) when the file is already small enough."""
+    if audio.stat().st_size <= max_bytes:
+        return [(audio, 0.0)]
+    chunks_dir = out_dir / "chunks"
+    if chunks_dir.exists():
+        shutil.rmtree(chunks_dir)
+    chunks_dir.mkdir()
+    log.info("Audio is %.1f MB — splitting into ~%d-second chunks for the API.",
+             audio.stat().st_size / 1e6, chunk_seconds)
+    cmd = [
+        "ffmpeg", "-y", "-i", str(audio),
+        "-f", "segment", "-segment_time", str(chunk_seconds),
+        "-ar", "16000", "-ac", "1",
+        "-c:a", "libmp3lame", "-b:a", "32k",
+        str(chunks_dir / "chunk-%03d.mp3"),
+    ]
+    subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    paths = sorted(chunks_dir.glob("chunk-*.mp3"))
+    return [(p, i * chunk_seconds) for i, p in enumerate(paths)]
+
+
+def transcribe_with_openai(audio: Path, out_dir: Path, language: str | None) -> Path:
+    """Transcribe `audio` via OpenAI's Whisper API. Handles >25MB files by
+    chunking at ~10-minute boundaries and concatenating the per-chunk SRTs
+    (offsetting timestamps). Returns transcript.txt path."""
+    if not os.environ.get("OPENAI_API_KEY"):
+        raise RuntimeError("OPENAI_API_KEY is not set in the environment.")
+    try:
+        from openai import OpenAI
+    except ImportError as e:
+        raise RuntimeError(
+            "openai package not installed. Add `openai` to requirements.txt and reinstall."
+        ) from e
+    client = OpenAI()
+
+    chunks = _split_audio_for_api(audio, out_dir)
+    log.info("Transcribing %d chunk(s) via OpenAI Whisper API ...", len(chunks))
+
+    full_srt_parts: list[str] = []
+    cue_no = 1
+    for chunk_path, start_offset in chunks:
+        with chunk_path.open("rb") as f:
+            resp = client.audio.transcriptions.create(
+                model="whisper-1",
+                file=f,
+                response_format="srt",
+                language=language,
+            )
+        srt_text = resp if isinstance(resp, str) else resp.text
+        # Re-number cues and offset timestamps so concatenation is well-formed.
+        rewritten = []
+        cur_cue: list[str] = []
+        def flush():
+            nonlocal cue_no, cur_cue
+            if cur_cue:
+                rewritten.append("\n".join(cur_cue))
+                cue_no += 1
+                cur_cue = []
+        for raw in srt_text.splitlines():
+            line = raw.rstrip()
+            if line.isdigit():
+                flush()
+                cur_cue = [str(cue_no)]
+            elif "-->" in line:
+                a, _, b = line.partition("-->")
+                cur_cue.append(_offset_srt_time(a.strip(), start_offset)
+                               + " --> "
+                               + _offset_srt_time(b.strip(), start_offset))
+            elif line.strip() == "":
+                flush()
+            else:
+                cur_cue.append(line)
+        flush()
+        full_srt_parts.append("\n\n".join(rewritten))
+    full_srt = "\n\n".join(full_srt_parts) + "\n"
+
+    srt_path = out_dir / "transcript.srt"
+    txt_path = out_dir / "transcript.txt"
+    srt_path.write_text(full_srt, encoding="utf-8")
+    txt_path.write_text(_srt_to_plain_text(full_srt) + "\n", encoding="utf-8")
+    log.info("OpenAI transcript → %s", txt_path)
+    return txt_path
+
+
+def _offset_srt_time(stamp: str, offset_seconds: float) -> str:
+    """Add `offset_seconds` to an SRT timestamp string (HH:MM:SS,mmm)."""
+    if not stamp:
+        return stamp
+    hms, _, ms = stamp.partition(",")
+    h, m, s = (int(x) for x in hms.split(":"))
+    total = h * 3600 + m * 60 + s + (int(ms) / 1000.0 if ms else 0) + offset_seconds
+    return _format_srt_timestamp(total)
 
 
 def transcribe(audio: Path, out_dir: Path, model_size: str, language: str | None) -> Path:
@@ -491,6 +598,12 @@ def main() -> int:
                         help="Netscape-format cookies file passed to yt-dlp. Use this "
                              "when YouTube returns 'Sign in to confirm you're not a bot' "
                              "(common from cloud/CI runners).")
+    parser.add_argument("--transcribe", choices=["auto", "local", "openai"], default="auto",
+                        help="Transcription engine when no captions are available. "
+                             "auto: prefer the OpenAI Whisper API when OPENAI_API_KEY is "
+                             "set (fast cloud transcription), else fall back to local "
+                             "faster-whisper. local: always use faster-whisper. "
+                             "openai: always use the OpenAI Whisper API (requires the key).")
     parser.add_argument("--captions", choices=["auto", "off", "only"], default="auto",
                         help="auto (default): try fetching the video's existing captions "
                              "first; fall back to download + whisper if none exist. "
@@ -586,7 +699,13 @@ def main() -> int:
         if captions_used:
             log.info("Skipping transcribe stage (captions provided the transcript).")
         elif should_run("transcript", _transcript_exists):
-            transcript_path = transcribe(audio, args.out, args.model, args.language)
+            engine = args.transcribe
+            if engine == "auto":
+                engine = "openai" if os.environ.get("OPENAI_API_KEY") else "local"
+            if engine == "openai":
+                transcript_path = transcribe_with_openai(audio, args.out, args.language)
+            else:
+                transcript_path = transcribe(audio, args.out, args.model, args.language)
         else:
             log.info("Skipping transcript stage (using existing %s).", transcript_path)
 

@@ -94,26 +94,32 @@ When debugging the workflow, check the run logs from the Actions tab —
 typical failures: missing/invalid `OPENAI_API_KEY`, yt-dlp 403 on
 restricted videos, Whisper model download timeout on the first run.
 
-### Whisper vs. captions
+### Transcription tiers
 
-Whisper transcription on a CPU runner takes roughly real-time-equivalent
-wall-clock (a 100-minute talk = ~30 min of CI). The pipeline avoids this
-by default for YouTube sources: `try_captions()` runs first, fetches the
-existing auto-captions via yt-dlp, and writes `transcript.txt` directly.
-The audio + transcribe stages then auto-skip.
+Three sources of text, tried in this order when applicable:
 
-Override with `--captions {auto,off,only}`:
+1. **YouTube captions** (`try_captions`) — fastest, free, requires the
+   video to have manual or auto captions. Uses yt-dlp `--write-auto-subs`
+   and converts the result from VTT → SRT → plain text.
+2. **OpenAI Whisper API** (`transcribe_with_openai`) — fast cloud
+   transcription, ~$0.006/min. Uses the same `OPENAI_API_KEY` the blog
+   step uses. Audio >25 MB is auto-chunked at 10-minute boundaries via
+   ffmpeg, then concatenated with offset SRT timestamps.
+3. **Local faster-whisper** (`transcribe`) — CPU-only, slow (≈ realtime
+   on a runner). Use locally only when you have neither captions nor an
+   OpenAI key.
 
-- `auto` (default for local): try captions first, fall back to Whisper.
-- `off`: always run audio download + Whisper (use when captions are
-  unreliable or you want a fresh transcription).
-- `only`: fail if no captions exist. The auto-blog workflow uses this
-  so CI either succeeds quickly via captions or surfaces a clean error,
-  rather than burning 30+ minutes of CI on Whisper.
+CLI flags:
 
-If you want CI to support non-captioned YouTube videos, switch the
-workflow back to `--captions auto`. Be aware the run can take 30+
-minutes for long videos.
+- `--captions {auto, off, only}` — default `auto`: try captions first.
+  `only` skips the Whisper fallback entirely.
+- `--transcribe {auto, local, openai}` — default `auto`: prefer the
+  OpenAI Whisper API when `OPENAI_API_KEY` is set, else fall back to
+  local faster-whisper.
+
+The auto-blog workflow runs with `--captions auto --transcribe openai`,
+so a video without captions is still transcribed quickly via the API
+instead of stalling on a 30-minute CPU Whisper run.
 
 ### YouTube anti-bot block in CI
 

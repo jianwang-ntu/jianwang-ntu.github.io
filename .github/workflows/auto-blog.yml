@@ -145,7 +145,8 @@ jobs:
             --model small \
             --blog-languages "${{ steps.parse.outputs.langs }}" \
             --llm openai \
-            --captions only \
+            --captions auto \
+            --transcribe openai \
             --blog-repo "$GITHUB_WORKSPACE" \
             --tags "${{ steps.parse.outputs.tags }}" \
             --no-commit \
