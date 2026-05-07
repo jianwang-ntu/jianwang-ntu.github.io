@@ -117,12 +117,27 @@ Review the markdown under \`$POST_DIR/\` and merge when satisfied. Both the Page
 
 $PR_BODY"
 
-PR_URL=$(gh pr create \
-  --repo "$REPO_FULL" \
-  --base master \
-  --head "$BRANCH" \
-  --title "blog: $TITLE" \
-  --body "$PR_BODY")
+# gh pr create races GitHub's branch indexing on a fresh push: the API
+# can briefly think there are "No commits between master and <branch>".
+# Retry a few times before giving up.
+PR_URL=""
+for attempt in 1 2 3 4 5; do
+  if PR_URL=$(gh pr create \
+      --repo "$REPO_FULL" \
+      --base master \
+      --head "$BRANCH" \
+      --title "blog: $TITLE" \
+      --body "$PR_BODY" 2>&1); then
+    break
+  fi
+  if [[ $attempt -lt 5 ]]; then
+    sleep $(( attempt * 5 ))
+    echo "  gh pr create retry $attempt ..."
+  else
+    echo "$PR_URL" >&2
+    exit 1
+  fi
+done
 
 git -C "$REPO_ROOT" checkout master >/dev/null
 
