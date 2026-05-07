@@ -121,6 +121,25 @@ The auto-blog workflow runs with `--captions auto --transcribe openai`,
 so a video without captions is still transcribed quickly via the API
 instead of stalling on a 30-minute CPU Whisper run.
 
+### Webshare residential proxy
+
+GitHub-hosted runner IPs are heavily blocked by YouTube — across both the
+player API (yt-dlp) and the `/timedtext` endpoint (youtube-transcript-api).
+The fix is a residential-proxy hop: youtube-transcript-api integrates with
+**Webshare** natively. Set two repo secrets:
+
+```bash
+gh secret set WEBSHARE_PROXY_USERNAME -R <repo>   # paste username
+gh secret set WEBSHARE_PROXY_PASSWORD -R <repo>   # paste password
+```
+
+The pipeline auto-detects them via `WEBSHARE_PROXY_USERNAME` /
+`WEBSHARE_PROXY_PASSWORD` env vars and constructs a `WebshareProxyConfig`.
+No code change needed when the secrets are present.
+
+If the secrets are missing, the pipeline falls through to direct fetches —
+which work locally but fail in CI.
+
 ### YouTube anti-bot block in CI
 
 YouTube serves cloud-runner IPs (including GitHub Actions) with a

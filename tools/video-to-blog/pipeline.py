@@ -142,7 +142,28 @@ def _try_captions_via_yt_transcript_api(url: str, out_dir: Path, lang: str = "en
     log.info("Fetching captions via youtube-transcript-api for %s", vid)
     base = lang.split("-")[0]
     candidates = [lang, base] if lang != base else [lang]
-    api = YouTubeTranscriptApi()
+
+    # On cloud-runner IPs, YouTube blocks both the player API and /timedtext.
+    # WebshareProxyConfig routes through residential IPs and is the
+    # library-recommended workaround. Activated when both env vars are set.
+    proxy_user = os.environ.get("WEBSHARE_PROXY_USERNAME")
+    proxy_pass = os.environ.get("WEBSHARE_PROXY_PASSWORD")
+    if proxy_user and proxy_pass:
+        try:
+            from youtube_transcript_api.proxies import WebshareProxyConfig
+            api = YouTubeTranscriptApi(
+                proxy_config=WebshareProxyConfig(
+                    proxy_username=proxy_user,
+                    proxy_password=proxy_pass,
+                )
+            )
+            log.info("Using Webshare residential proxy for caption fetch.")
+        except ImportError:
+            log.info("youtube-transcript-api proxies module unavailable; using direct.")
+            api = YouTubeTranscriptApi()
+    else:
+        api = YouTubeTranscriptApi()
+
     try:
         fetched = api.fetch(vid, languages=candidates)
         snippets = list(fetched)

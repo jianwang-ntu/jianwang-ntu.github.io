@@ -133,6 +133,11 @@ jobs:
       - name: Run pipeline (transcribe + draft + publish)
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          # Optional: residential proxy creds. youtube-transcript-api uses
+          # them automatically; without them the API call will be IP-blocked
+          # from cloud-runner ranges. Cheapest Webshare plan ($1/mo) suffices.
+          WEBSHARE_PROXY_USERNAME: ${{ secrets.WEBSHARE_PROXY_USERNAME }}
+          WEBSHARE_PROXY_PASSWORD: ${{ secrets.WEBSHARE_PROXY_PASSWORD }}
         run: |
           mkdir -p /tmp/v2b-out
           extra=()
