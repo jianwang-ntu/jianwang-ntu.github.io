@@ -31,7 +31,10 @@ content-hashed JS/CSS — no SSR.
   github.io/images/...`), drops `dist/images/`, then both deploys to
   GitHub Pages and force-pushes the dist as an orphan commit on the
   `dist` branch. Both targets carry identical content. The `dist_remote`
-  branch is no longer used — image hosting moved to S3.
+  branch is no longer used — image hosting moved to S3. The rewrite
+  step covers `*.html *.js *.css *.json *.md` — `*.json` matters because
+  `posts.json` carries each post's `image` field as `/images/blog/<slug>.png`,
+  and missing it from the glob causes live 404s on the index thumbnails.
 
 ## How a blog post gets created
 
@@ -82,8 +85,13 @@ analogous file in the upstream pipeline repo.
 
 ## Things to avoid
 
-- Don't push to `master` directly for blog content — open a PR. Push directly
-  is reserved for site/structural changes (workflows, components, CSS).
+- Don't push to `master` directly — the repo's branch protection blocks it
+  for *all* changes (blog content, workflows, components, CSS). Always open
+  a PR and squash-merge. After pushing extra commits to an existing PR,
+  GitHub's PR head pointer sometimes lags the branch ref, so a `gh pr merge
+  --squash` immediately after a push can drop the latest commit. Verify
+  every intended commit landed on master after the merge; if not, open a
+  follow-up PR rather than amending.
 - Don't add a top-level CLAUDE.md inside each post folder. The metadata in
   `meta.json` is the right place for per-post facts; tone rules live here.
 - Don't introduce a separate blog framework (Jekyll, Astro, etc.). The site is
