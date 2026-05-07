@@ -52,6 +52,11 @@ def download_audio(url: str, out_dir: Path, cookies: Path | None = None) -> Path
         "-o", out_template,
         "--no-playlist",
         "--quiet", "--progress",
+        # YouTube's "n challenge" needs a JS runtime + the EJS solver
+        # script. yt-dlp can fetch the solver from GitHub at runtime; without
+        # this flag, format extraction fails on a JS-runtime-equipped runner
+        # with "Requested format is not available".
+        "--remote-components", "ejs:github",
     ]
     if cookies is not None:
         cmd += ["--cookies", str(cookies)]
