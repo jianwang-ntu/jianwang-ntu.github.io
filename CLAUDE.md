@@ -94,6 +94,27 @@ When debugging the workflow, check the run logs from the Actions tab —
 typical failures: missing/invalid `OPENAI_API_KEY`, yt-dlp 403 on
 restricted videos, Whisper model download timeout on the first run.
 
+### Whisper vs. captions
+
+Whisper transcription on a CPU runner takes roughly real-time-equivalent
+wall-clock (a 100-minute talk = ~30 min of CI). The pipeline avoids this
+by default for YouTube sources: `try_captions()` runs first, fetches the
+existing auto-captions via yt-dlp, and writes `transcript.txt` directly.
+The audio + transcribe stages then auto-skip.
+
+Override with `--captions {auto,off,only}`:
+
+- `auto` (default for local): try captions first, fall back to Whisper.
+- `off`: always run audio download + Whisper (use when captions are
+  unreliable or you want a fresh transcription).
+- `only`: fail if no captions exist. The auto-blog workflow uses this
+  so CI either succeeds quickly via captions or surfaces a clean error,
+  rather than burning 30+ minutes of CI on Whisper.
+
+If you want CI to support non-captioned YouTube videos, switch the
+workflow back to `--captions auto`. Be aware the run can take 30+
+minutes for long videos.
+
 ### YouTube anti-bot block in CI
 
 YouTube serves cloud-runner IPs (including GitHub Actions) with a
