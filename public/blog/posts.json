@@ -1,5 +1,32 @@
 [
   {
+    "slug": "synthetic-computers-at-scale-microsofts-substrate-for",
+    "title_en": "Synthetic Computers at Scale: Microsoft's Substrate for Training Long-Horizon Productivity Agents",
+    "date": "2026-05-08",
+    "dek_en": "Productivity agents need rich user-specific context — files, project history, collaborator threads — to do realistic work, but real trajectories of that work are private and costly to collect. A Microsoft technical report by Ge, Peng, Cheng",
+    "tags": [
+      "research",
+      "paper-reading",
+      "agents"
+    ],
+    "languages": [
+      "en",
+      "zh"
+    ],
+    "title_zh": "从\"合成电脑\"出发：微软用1,000台虚拟工作环境训练长周期生产力Agent",
+    "dek_zh": "当生产力Agent的目标从\"完成单个任务\"变成\"在用户的整台电脑上工作一个月\"时，训练数据从哪里来？微软的Tao Ge、Baolin Peng等人在技术报告《Synthetic Computers at Scale for Long-Horizon Productivity Simulation》中提出了一条路径：先合成出贴近真人的用户电脑环境，再让Agent在其中模拟一个月的工作，把过程轨迹和最终交付物都用作经验信号。论文报告了在1,000台合成电脑上的初步实验，并表明从中",
+    "source": "https://arxiv.org/pdf/2604.28181",
+    "source_kind": "paper",
+    "image": "/images/blog/synthetic-computers-at-scale-microsofts-substrate-for.png",
+    "labels": [
+      "topic:agents",
+      "topic:research",
+      "topic:llm",
+      "format:paper",
+      "speaker:independent"
+    ]
+  },
+  {
     "slug": "sequoias-ai-thesis-a-computation-revolution-not-a-faster",
     "title_en": "Sequoia's AI Thesis: A Computation Revolution, Not a Faster Internet",
     "date": "2026-05-08",
