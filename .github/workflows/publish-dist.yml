@@ -1,10 +1,10 @@
-name: Publish dist branch
+name: Publish dist branches
 
 # Whenever master moves, build the static site and force-push the contents
-# of dist/ to the `dist` branch as a single orphan commit. This branch is
-# what the self-hosted nginx host pulls (see README's "Self-hosted nginx"
-# section) — keeping it in lockstep with master means a merge of any PR
-# (blog post or otherwise) flows through to the deployed site.
+# of dist/ to BOTH `dist` and `dist_remote` as orphan commits. The two
+# branches are different deployment targets (a local mirror and the remote
+# nginx host) but should always carry identical content — keeping them in
+# lockstep with master means a merge of any PR flows through to both.
 
 on:
   push:
@@ -35,16 +35,24 @@ jobs:
       # SPA fallback — same trick as the Pages workflow.
       - run: cp dist/index.html dist/404.html
 
-      - name: Force-push dist/ to the dist branch
+      # Tell GitHub Pages / static hosts to skip Jekyll. Without this any
+      # path containing `_` (none today, but cheap insurance) gets dropped
+      # by Jekyll's default rules. dist_remote already had this file; mirror
+      # the convention into dist too.
+      - run: touch dist/.nojekyll
+
+      - name: Force-push dist/ to both deploy branches
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           cd dist
-          git init -q -b dist
+          git init -q -b publish
           git config user.name  "publish-dist[bot]"
           git config user.email "publish-dist@users.noreply.github.com"
           git add -A
           git commit -q -m "Publish dist for ${GITHUB_SHA::7}"
-          git push --force \
-            "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" \
-            HEAD:dist
+          for ref in dist dist_remote; do
+            git push --force \
+              "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" \
+              "publish:${ref}"
+          done

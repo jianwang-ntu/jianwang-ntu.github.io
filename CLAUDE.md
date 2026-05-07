@@ -21,6 +21,11 @@ content-hashed JS/CSS — no SSR.
   - `meta.json` — slug, titles, deks, date, tags, source URL, languages.
 - `tools/video-to-blog/` — the Python pipeline + the `blog.sh` wrapper that
   drafts posts from a video and opens a PR. Run from a residential network.
+- `.github/workflows/deploy.yaml` — Pages artifact deploy on master push.
+- `.github/workflows/publish-dist.yml` — force-pushes the built dist/ to
+  **both** `dist` and `dist_remote` branches on master push (different
+  deploy targets — local Pages mirror and the remote nginx host — kept
+  in lockstep).
 
 ## How a blog post gets created
 
