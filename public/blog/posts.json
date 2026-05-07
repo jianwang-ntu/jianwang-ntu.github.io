@@ -1,5 +1,31 @@
 [
   {
+    "slug": "the-harness-as-a-distributed-context-management-system",
+    "title_en": "The Harness as a Distributed Context Management System",
+    "date": "2026-05-08",
+    "dek_en": "In a recent LinkedIn post, Glean co-founder Tony Gentilcore argues that the central engineering challenge in agent design has shifted from prompting to context management — and that the agent harness is increasingly the place where that wor",
+    "tags": [
+      "agents",
+      "llm",
+      "context-management"
+    ],
+    "languages": [
+      "en",
+      "zh"
+    ],
+    "title_zh": "Glean 把系统提示词砍掉了 45%:Tony Gentilcore 谈 harness 如何变成\"分布式上下文管理系统\"",
+    "dek_zh": "Glean 联合创始人 Tony Gentilcore 在 LinkedIn 上分享了一个看似反直觉的数字:他们把自家 agent 的系统提示词缩减了 45% 以上,但能力并未因此减少。Gentilcore 把这件事归因于 harness 设计正在发生的一次范式转变——当上下文管理成为主要工程挑战时,harness 本身正在演化成一个\"分布式上下文管理系统\"。",
+    "source": "https://www.linkedin.com/feed/update/urn:li:activity:7455275727588864000/",
+    "source_kind": "post",
+    "image": "/images/blog/the-harness-as-a-distributed-context-management-system.png",
+    "labels": [
+      "topic:agents",
+      "topic:engineering",
+      "format:post",
+      "speaker:independent"
+    ]
+  },
+  {
     "slug": "synthetic-computers-at-scale-microsofts-substrate-for",
     "title_en": "Synthetic Computers at Scale: Microsoft's Substrate for Training Long-Horizon Productivity Agents",
     "date": "2026-05-08",
