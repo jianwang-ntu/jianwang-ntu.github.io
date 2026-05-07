@@ -152,44 +152,78 @@ LANG_LABELS = {
 }
 
 
-def transcript_to_blog(transcript_path: Path, out_dir: Path, blog_language: str,
-                       lang_code: str = "en") -> Path:
-    """Invoke Claude Code in headless mode to convert transcript → blog.<lang>.md."""
+def _draft_with_claude(system_prompt: str, user_prompt: str) -> str:
+    """Drive the `claude` CLI in headless mode. Auth: ANTHROPIC_API_KEY in env,
+    or a prior `claude login` (subscription). We don't enforce either — let the
+    CLI surface its own error."""
     if shutil.which("claude") is None:
         raise RuntimeError(
             "`claude` CLI not found on PATH. Install with: "
             "npm install -g @anthropic-ai/claude-code"
         )
-    # Auth: either ANTHROPIC_API_KEY in env, or a prior `claude login` (subscription).
-    # We don't enforce either here — let the claude CLI surface its own auth error.
+    result = subprocess.run(
+        ["claude", "-p", user_prompt,
+         "--append-system-prompt", system_prompt,
+         "--max-turns", "1"],
+        check=True, capture_output=True, text=True,
+    )
+    return result.stdout
 
+
+def _draft_with_openai(system_prompt: str, user_prompt: str, model: str) -> str:
+    """Call OpenAI Chat Completions. Reads OPENAI_API_KEY from env."""
+    if not os.environ.get("OPENAI_API_KEY"):
+        raise RuntimeError("OPENAI_API_KEY is not set in the environment.")
+    try:
+        from openai import OpenAI
+    except ImportError as e:
+        raise RuntimeError(
+            "openai package not installed. Add `openai` to requirements.txt and reinstall."
+        ) from e
+    client = OpenAI()
+    resp = client.chat.completions.create(
+        model=model,
+        messages=[
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt},
+        ],
+    )
+    return resp.choices[0].message.content or ""
+
+
+def transcript_to_blog(transcript_path: Path, out_dir: Path, blog_language: str,
+                       lang_code: str = "en", llm: str = "claude",
+                       openai_model: str = "gpt-4o") -> Path:
+    """Convert a transcript into a blog post in `blog_language`. Backend chosen
+    by `llm` (claude | openai). Writes to `<out_dir>/blog.<lang_code>.md`."""
     transcript = transcript_path.read_text(encoding="utf-8")
-    system_prompt_path = Path(__file__).parent / "prompts" / "blog_system.md"
-    system_prompt = system_prompt_path.read_text(encoding="utf-8")
+    system_prompt = (Path(__file__).parent / "prompts" / "blog_system.md").read_text(encoding="utf-8")
     user_prompt = BLOG_USER_PROMPT.format(language=blog_language, transcript=transcript)
 
     blog_path = out_dir / f"blog.{lang_code}.md"
-    log.info("Calling Claude Code to draft blog post (%s) → %s", blog_language, blog_path)
+    log.info("Drafting %s post via %s → %s", blog_language, llm, blog_path)
 
-    cmd = [
-        "claude", "-p", user_prompt,
-        "--append-system-prompt", system_prompt,
-        "--max-turns", "1",
-    ]
-    with blog_path.open("w", encoding="utf-8") as f_out:
-        subprocess.run(cmd, check=True, stdout=f_out)
+    if llm == "claude":
+        text = _draft_with_claude(system_prompt, user_prompt)
+    elif llm == "openai":
+        text = _draft_with_openai(system_prompt, user_prompt, openai_model)
+    else:
+        raise ValueError(f"Unknown llm backend: {llm!r}. Known: claude, openai.")
 
+    blog_path.write_text(text, encoding="utf-8")
     return blog_path
 
 
-def transcript_to_blogs(transcript_path: Path, out_dir: Path, lang_codes: list[str]) -> dict[str, Path]:
+def transcript_to_blogs(transcript_path: Path, out_dir: Path, lang_codes: list[str],
+                        llm: str = "claude", openai_model: str = "gpt-4o") -> dict[str, Path]:
     """Generate one blog markdown per requested language code. Returns {code: path}."""
     paths = {}
     for code in lang_codes:
         label = LANG_LABELS.get(code)
         if not label:
             raise ValueError(f"Unknown language code: {code!r}. Known: {sorted(LANG_LABELS)}")
-        paths[code] = transcript_to_blog(transcript_path, out_dir, label, code)
+        paths[code] = transcript_to_blog(transcript_path, out_dir, label, code,
+                                         llm=llm, openai_model=openai_model)
     return paths
 
 
@@ -364,6 +398,13 @@ def main() -> int:
     parser.add_argument("--blog-languages", default="en,zh",
                         help="Comma-separated language codes for the blog drafts. "
                              f"Known: {','.join(sorted(LANG_LABELS))}. Default: en,zh.")
+    parser.add_argument("--llm", choices=["claude", "openai"],
+                        default=os.environ.get("LLM_BACKEND", "claude"),
+                        help="LLM backend for the blog step. claude (CLI, "
+                             "default) uses ANTHROPIC_API_KEY or `claude login`; "
+                             "openai uses OPENAI_API_KEY.")
+    parser.add_argument("--openai-model", default=os.environ.get("OPENAI_MODEL", "gpt-4o"),
+                        help="OpenAI model name when --llm openai (default: gpt-4o).")
     parser.add_argument("--from", dest="from_stage", choices=STAGES, default=None,
                         help="Resume from this stage (audio|transcript|blog). Earlier "
                              "stages are skipped — their outputs must already exist in --out. "
@@ -449,7 +490,10 @@ def main() -> int:
             log.info("Skipping blog step (--skip-blog).")
             blog_paths = {c: args.out / f"blog.{c}.md" for c in lang_codes}
         elif should_run("blog", _blog_exists):
-            blog_paths = transcript_to_blogs(transcript_path, args.out, lang_codes)
+            blog_paths = transcript_to_blogs(
+                transcript_path, args.out, lang_codes,
+                llm=args.llm, openai_model=args.openai_model,
+            )
             for code, p in blog_paths.items():
                 log.info("Drafted %s blog → %s", LANG_LABELS[code], p)
         else:

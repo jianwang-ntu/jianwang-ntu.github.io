@@ -86,9 +86,25 @@ analogous file in the upstream pipeline repo.
 4. Pushes a `blog/<slug>` branch and opens a PR closing the issue.
 5. Comments on the issue with the PR link.
 
-Required repo secret: **`ANTHROPIC_API_KEY`** (the pipeline calls Claude Code
-in headless mode; in CI it uses API-key auth, not subscription login).
+Required repo secret: **`OPENAI_API_KEY`** (CI runs the pipeline with
+`--llm openai`; locally you can keep using `--llm claude`, the default,
+which uses your `claude login` subscription).
 
 When debugging the workflow, check the run logs from the Actions tab —
-typical failures: missing/invalid `ANTHROPIC_API_KEY`, yt-dlp 403 on
+typical failures: missing/invalid `OPENAI_API_KEY`, yt-dlp 403 on
 restricted videos, Whisper model download timeout on the first run.
+
+## LLM backend choice
+
+`tools/video-to-blog/pipeline.py` supports two backends for the blog-drafting
+step, selected via `--llm`:
+
+- `--llm claude` (default) — drives the `claude` CLI in headless mode. Uses
+  `ANTHROPIC_API_KEY` if set, otherwise falls back to your `claude login`
+  subscription. Best for local runs.
+- `--llm openai` — calls the OpenAI Chat Completions API directly via the
+  `openai` Python package. Uses `OPENAI_API_KEY`. Used in CI because
+  subscription login isn't viable on a fresh runner.
+
+Model defaults to `gpt-4o`; override with `--openai-model` or `OPENAI_MODEL`
+env var.

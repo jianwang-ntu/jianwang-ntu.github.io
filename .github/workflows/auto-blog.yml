@@ -81,14 +81,6 @@ jobs:
       - name: Install Python deps
         run: pip install -r tools/video-to-blog/requirements.txt
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-
-      - name: Install claude CLI
-        run: npm install -g @anthropic-ai/claude-code
-
       - name: Cache faster-whisper model
         uses: actions/cache@v4
         with:
@@ -102,7 +94,7 @@ jobs:
 
       - name: Run pipeline (transcribe + draft + publish)
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
           mkdir -p /tmp/v2b-out
           python tools/video-to-blog/pipeline.py \
@@ -110,6 +102,7 @@ jobs:
             --out /tmp/v2b-out \
             --model small \
             --blog-languages "${{ steps.parse.outputs.langs }}" \
+            --llm openai \
             --blog-repo "$GITHUB_WORKSPACE" \
             --tags "${{ steps.parse.outputs.tags }}" \
             --no-commit
