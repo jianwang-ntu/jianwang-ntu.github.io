@@ -21,6 +21,10 @@ content-hashed JS/CSS — no SSR.
   - `meta.json` — slug, titles, deks, date, tags, source URL, languages.
 - `tools/video-to-blog/` — the Python pipeline + the `blog.sh` wrapper that
   drafts posts from a video and opens a PR. Run from a residential network.
+- `tools/click-counter/` — Lambda + DynamoDB backend that records global
+  blog click counts. Powers the "Popular" sort on `/blog`. Endpoint:
+  `https://sgwa5dhthk.execute-api.ap-southeast-1.amazonaws.com/`. Update
+  the Lambda code with `tools/click-counter/deploy.sh`.
 - `.github/workflows/deploy.yaml` — single deploy workflow on master push.
   Builds once, rewrites `/images/` paths in the built dist to point at
   the public S3 bucket (`https://publicsg.s3.ap-southeast-1.amazonaws.com/

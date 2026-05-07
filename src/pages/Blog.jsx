@@ -15,18 +15,28 @@ const AXES = [
   { key: 'speaker', label: 'Speaker' },
 ];
 
-const CLICK_KEY = 'blog/clicks';
+// Click counter API — Lambda + DynamoDB behind API Gateway. Anyone with
+// the URL can POST a slug; rate-limit/dedup is handled client-side via the
+// per-session Set below so a refresh-spammer can't stack the chart.
+const CLICK_API = 'https://sgwa5dhthk.execute-api.ap-southeast-1.amazonaws.com/';
+const LOCAL_KEY = 'blog/clicks';
+const SESSION_KEY = 'blog/posted-this-session';
 
-function readClicks() {
-  try {
-    return JSON.parse(localStorage.getItem(CLICK_KEY) || '{}') || {};
-  } catch {
-    return {};
-  }
+function readLocal() {
+  try { return JSON.parse(localStorage.getItem(LOCAL_KEY) || '{}') || {}; }
+  catch { return {}; }
 }
-
-function writeClicks(obj) {
-  try { localStorage.setItem(CLICK_KEY, JSON.stringify(obj)); } catch {}
+function writeLocal(obj) {
+  try { localStorage.setItem(LOCAL_KEY, JSON.stringify(obj)); } catch {}
+}
+function postedSet() {
+  try { return new Set(JSON.parse(sessionStorage.getItem(SESSION_KEY) || '[]')); }
+  catch { return new Set(); }
+}
+function rememberPosted(slug) {
+  const s = postedSet();
+  s.add(slug);
+  try { sessionStorage.setItem(SESSION_KEY, JSON.stringify([...s])); } catch {}
 }
 
 // Group a post's `labels` array (e.g. ["topic:agents", "format:podcast"]) by
@@ -43,15 +53,17 @@ function groupLabels(labels = []) {
   return out;
 }
 
-// Score a post by the reader's tag affinity — sum of clicks across other
-// posts they've opened that share at least one label with this one.
-function affinityScore(post, clicks, allPosts) {
+// Score a post by the reader's tag affinity — sum of *local* clicks across
+// other posts they've opened that share at least one label with this one.
+// We deliberately use local (per-reader) clicks here, not global counts:
+// "For you" should reflect *this* reader's reading history, not crowd taste.
+function affinityScore(post, localClicks, allPosts) {
   const myLabels = new Set(post.labels || []);
   if (myLabels.size === 0) return 0;
   let score = 0;
   for (const other of allPosts) {
     if (other.slug === post.slug) continue;
-    const otherClicks = clicks[other.slug] || 0;
+    const otherClicks = localClicks[other.slug] || 0;
     if (!otherClicks) continue;
     let overlap = 0;
     for (const lab of (other.labels || [])) {
@@ -142,10 +154,9 @@ function FilterBar({ posts, selected, onToggle, onClear }) {
 }
 
 
-function BlogCard({ post, featured, clicks, onClick }) {
+function BlogCard({ post, featured, globalCount, onClick }) {
   const cls = ['blog-post', featured ? 'feat' : ''].filter(Boolean).join(' ');
   const langs = post.languages || ['en'];
-  const opens = clicks[post.slug] || 0;
   return (
     <Link
       to={`/blog/${post.slug}`}
@@ -158,7 +169,7 @@ function BlogCard({ post, featured, clicks, onClick }) {
         <div className="meta">
           {post.source ? 'via video' : ''}
           {langs.length > 1 && <span> · {langs.join('/').toUpperCase()}</span>}
-          {opens > 0 && <span> · {opens} read{opens > 1 ? 's' : ''}</span>}
+          {globalCount > 0 && <span> · {globalCount} read{globalCount > 1 ? 's' : ''}</span>}
         </div>
       </div>
       <div>
@@ -181,13 +192,21 @@ export default function Blog() {
   const [error, setError] = useState(null);
   const [selected, setSelected] = useState({ topic: new Set(), format: new Set(), speaker: new Set() });
   const [sort, setSort] = useState('latest');
-  const [clicks, setClicks] = useState(readClicks);
+  const [localClicks, setLocalClicks] = useState(readLocal);
+  const [globalCounts, setGlobalCounts] = useState({});
 
   useEffect(() => {
     fetch(`${import.meta.env.BASE_URL}blog/posts.json`)
       .then((r) => (r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`))))
       .then(setPosts)
       .catch((e) => setError(e.message));
+
+    // Best-effort: pull global counts. Failure is silent — without it the
+    // "Popular" sort just shows nothing and "N reads" hides on cards.
+    fetch(CLICK_API)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => { if (data && typeof data === 'object') setGlobalCounts(data); })
+      .catch(() => {});
   }, []);
 
   function toggle(axis, value) {
@@ -205,9 +224,22 @@ export default function Blog() {
   }
 
   function trackClick(slug) {
-    const next = { ...clicks, [slug]: (clicks[slug] || 0) + 1 };
-    setClicks(next);
-    writeClicks(next);
+    // Local: bumped immediately so "For you" reflects this read.
+    const nextLocal = { ...localClicks, [slug]: (localClicks[slug] || 0) + 1 };
+    setLocalClicks(nextLocal);
+    writeLocal(nextLocal);
+    // Global: optimistic UI bump, fire-and-forget POST. Throttled to one
+    // POST per slug per session so reload-spam doesn't pollute the chart.
+    setGlobalCounts((g) => ({ ...g, [slug]: (g[slug] || 0) + 1 }));
+    if (!postedSet().has(slug)) {
+      rememberPosted(slug);
+      fetch(CLICK_API, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ slug }),
+        keepalive: true,
+      }).catch(() => {});
+    }
   }
 
   // Filter: AND across axes, OR within axis. An axis with no selected chips
@@ -229,18 +261,20 @@ export default function Blog() {
     if (!filtered) return null;
     const arr = filtered.slice();
     if (sort === 'popular') {
+      // Global counts — what every reader has clicked.
       arr.sort((a, b) =>
-        (clicks[b.slug] || 0) - (clicks[a.slug] || 0)
+        (globalCounts[b.slug] || 0) - (globalCounts[a.slug] || 0)
         || (b.date || '').localeCompare(a.date || ''));
     } else if (sort === 'foryou') {
+      // Local affinity — what *this* reader's history suggests.
       arr.sort((a, b) =>
-        affinityScore(b, clicks, posts) - affinityScore(a, clicks, posts)
+        affinityScore(b, localClicks, posts) - affinityScore(a, localClicks, posts)
         || (b.date || '').localeCompare(a.date || ''));
     } else {
       arr.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
     }
     return arr;
-  }, [filtered, sort, clicks, posts]);
+  }, [filtered, sort, globalCounts, localClicks, posts]);
 
   return (
     <div className="page">
@@ -292,7 +326,7 @@ export default function Blog() {
                 key={p.slug}
                 post={p}
                 featured={i === 0 && sort === 'latest'}
-                clicks={clicks}
+                globalCount={globalCounts[p.slug] || 0}
                 onClick={trackClick}
               />
             ))}
