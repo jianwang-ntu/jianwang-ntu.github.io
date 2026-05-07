@@ -16,6 +16,7 @@
     "title_zh": "Ralph Loop：把 AI 当成\"同一个工程师\"无限循环跑下去",
     "dek_zh": "在 AI Engineer 大会的一场两小时工作坊里，资深 CTO、连续创业者 Chris Parsons 提出一个看似简单到荒谬的主张：与其费劲编排多代理工作流，不如让 AI 在一个循环里反复挑下一个最重要的任务来做。他认为，这是大多数知识工作未来的真实形态——从写代码、写新闻邮件，到运营整个创业公司。",
     "source": "https://www.youtube.com/watch?v=2TLXsxkz0zI",
+    "image": "/images/blog/ralph-loops-why-chris-parsons-stopped-orchestrating-agents.png",
     "labels": [
       "topic:agents",
       "topic:engineering",
@@ -37,6 +38,7 @@
     "title_zh": "在最前沿做产品经理：Anthropic 的 Cat Woo 谈如何在 AI 时代造产品",
     "dek_zh": "在 Lenny 的播客上，Anthropic Claude Code 与 co-work 产品负责人 Cat Woo 描述了一种与传统 PM 几乎截然相反的工作方式：发布周期从季度压缩到一周甚至一天，团队几乎没有流程，PRD 大多被淘汰，工程师可以从在 Twitter 上看到一条反馈一路独立交付到上线。她认为 AI 让代码变便宜，于是真正稀缺的能力变成了\"决定要写什么\"。",
     "source": "https://www.youtube.com/watch?v=PplmzlgE0kg&t=226s",
+    "image": "/images/blog/how-anthropics-claude-code-team-ships-features-in-a-week.png",
     "labels": [
       "topic:product",
       "topic:engineering",

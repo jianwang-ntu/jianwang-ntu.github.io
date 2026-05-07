@@ -1,5 +1,7 @@
 # 在最前沿做产品经理：Anthropic 的 Cat Woo 谈如何在 AI 时代造产品
 
+![How Anthropic's Claude Code Team Ships Features in a Week — and What It Means for the PM Role](/images/blog/how-anthropics-claude-code-team-ships-features-in-a-week.png)
+
 在 Lenny 的播客上，Anthropic Claude Code 与 co-work 产品负责人 Cat Woo 描述了一种与传统 PM 几乎截然相反的工作方式：发布周期从季度压缩到一周甚至一天，团队几乎没有流程，PRD 大多被淘汰，工程师可以从在 Twitter 上看到一条反馈一路独立交付到上线。她认为 AI 让代码变便宜，于是真正稀缺的能力变成了"决定要写什么"。
 
 ## Boris 与 Cat：80% 心意相通
