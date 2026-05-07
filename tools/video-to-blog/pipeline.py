@@ -85,6 +85,76 @@ def extract_audio_from_file(video_path: Path, out_dir: Path) -> Path:
 
 
 # --------------------------------------------------------------------------- #
+# Step 1.5 — caption fast path (skip audio + whisper if captions exist)
+# --------------------------------------------------------------------------- #
+def _srt_to_plain_text(srt: str) -> str:
+    """Strip SRT numbers, timestamps, inline tags. Dedupe consecutive repeats."""
+    out: list[str] = []
+    for raw in srt.splitlines():
+        line = raw.strip()
+        if not line or line.isdigit() or "-->" in line:
+            continue
+        line = re.sub(r"<[^>]+>", "", line).strip()
+        if not line:
+            continue
+        if out and out[-1] == line:
+            continue
+        out.append(line)
+    return "\n".join(out)
+
+
+def try_captions(url: str, out_dir: Path, cookies: Path | None = None,
+                 lang: str = "en") -> Path | None:
+    """Best-effort: download existing captions for `url` via yt-dlp and write
+    them as transcript.txt + transcript.srt. Returns the txt path on success,
+    None if no captions exist or download failed. Lets the pipeline skip the
+    audio download + Whisper transcription when YouTube already has captions —
+    seconds instead of tens of minutes.
+    """
+    log.info("Looking for captions on %s", url)
+    cmd = [
+        "yt-dlp",
+        "--skip-download",
+        "--write-subs",            # manually-uploaded subs first
+        "--write-auto-subs",       # YouTube auto-captions fallback
+        "--sub-langs", f"{lang}.*,{lang}",
+        "--sub-format", "vtt",
+        "--convert-subs", "srt",   # normalise rolling auto-cap format
+        "-o", str(out_dir / "captions.%(ext)s"),
+        "--quiet",
+        "--remote-components", "ejs:github",
+    ]
+    if cookies is not None:
+        cmd += ["--cookies", str(cookies)]
+    cmd.append(url)
+    try:
+        subprocess.run(cmd, check=True, timeout=120)
+    except (subprocess.CalledProcessError, subprocess.TimeoutExpired) as e:
+        log.warning("Caption fetch failed (%s); will try the audio + whisper path.",
+                    type(e).__name__)
+        return None
+
+    srts = sorted(out_dir.glob("captions*.srt"))
+    if not srts:
+        log.info("No captions available for this video.")
+        return None
+
+    text = _srt_to_plain_text(srts[0].read_text(encoding="utf-8"))
+    if not text.strip():
+        log.info("Caption file was empty after stripping.")
+        return None
+
+    txt_path = out_dir / "transcript.txt"
+    srt_path = out_dir / "transcript.srt"
+    txt_path.write_text(text + "\n", encoding="utf-8")
+    srt_path.write_text(srts[0].read_text(encoding="utf-8"), encoding="utf-8")
+    # Stash the source URL so a later --from publish run can attribute it.
+    (out_dir / "source.url").write_text(url + "\n", encoding="utf-8")
+    log.info("Captions saved → %s (%d bytes)", txt_path, txt_path.stat().st_size)
+    return txt_path
+
+
+# --------------------------------------------------------------------------- #
 # Step 2 — transcribe
 # --------------------------------------------------------------------------- #
 def _format_srt_timestamp(seconds: float) -> str:
@@ -421,6 +491,11 @@ def main() -> int:
                         help="Netscape-format cookies file passed to yt-dlp. Use this "
                              "when YouTube returns 'Sign in to confirm you're not a bot' "
                              "(common from cloud/CI runners).")
+    parser.add_argument("--captions", choices=["auto", "off", "only"], default="auto",
+                        help="auto (default): try fetching the video's existing captions "
+                             "first; fall back to download + whisper if none exist. "
+                             "off: skip captions, always download audio and transcribe. "
+                             "only: fail if no captions are available (no whisper fallback).")
     parser.add_argument("--from", dest="from_stage", choices=STAGES, default=None,
                         help="Resume from this stage (audio|transcript|blog). Earlier "
                              "stages are skipped — their outputs must already exist in --out. "
@@ -474,25 +549,43 @@ def main() -> int:
         return 2
 
     try:
-        # Step 1: audio
+        # Step 1: audio (with optional caption fast-path).
         audio = args.out / "source.mp3"
-        if should_run("audio", _audio_exists):
-            if not (args.url or args.file):
-                log.error("Stage 'audio' needs --url or --file.")
+        captions_used = False
+        # Try captions first when we have a URL — it's seconds vs tens of
+        # minutes for whisper. Only attempt this when both audio + transcript
+        # would otherwise run; if the user is already past those stages
+        # (--from blog), don't redo work.
+        if (args.url and args.captions != "off"
+                and should_run("audio", _audio_exists)
+                and should_run("transcript", _transcript_exists)):
+            cap = try_captions(args.url, args.out, cookies=args.yt_cookies)
+            if cap is not None:
+                captions_used = True
+            elif args.captions == "only":
+                log.error("--captions only was set but no captions were available.")
                 return 2
-            if args.url:
-                audio = download_audio(args.url, args.out, cookies=args.yt_cookies)
-            else:
-                if not args.file.exists():
-                    log.error("File not found: %s", args.file)
+
+        if not captions_used:
+            if should_run("audio", _audio_exists):
+                if not (args.url or args.file):
+                    log.error("Stage 'audio' needs --url or --file.")
                     return 2
-                audio = extract_audio_from_file(args.file, args.out)
-        else:
-            log.info("Skipping audio stage (using existing %s).", audio)
+                if args.url:
+                    audio = download_audio(args.url, args.out, cookies=args.yt_cookies)
+                else:
+                    if not args.file.exists():
+                        log.error("File not found: %s", args.file)
+                        return 2
+                    audio = extract_audio_from_file(args.file, args.out)
+            else:
+                log.info("Skipping audio stage (using existing %s).", audio)
 
         # Step 2: transcript
         transcript_path = args.out / "transcript.txt"
-        if should_run("transcript", _transcript_exists):
+        if captions_used:
+            log.info("Skipping transcribe stage (captions provided the transcript).")
+        elif should_run("transcript", _transcript_exists):
             transcript_path = transcribe(audio, args.out, args.model, args.language)
         else:
             log.info("Skipping transcript stage (using existing %s).", transcript_path)
