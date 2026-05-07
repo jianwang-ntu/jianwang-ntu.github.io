@@ -438,22 +438,47 @@ LANG_LABELS = {
 }
 
 
-def _draft_with_claude(system_prompt: str, user_prompt: str) -> str:
+def _run_claude(user_prompt: str, system_prompt: str | None = None) -> str:
     """Drive the `claude` CLI in headless mode. Auth: ANTHROPIC_API_KEY in env,
     or a prior `claude login` (subscription). We don't enforce either — let the
-    CLI surface its own error."""
+    CLI surface its own error.
+
+    `--dangerously-skip-permissions` is set so the script never blocks on a
+    per-tool approval prompt; this matters when claude is invoked from
+    non-TTY contexts like blog.sh.
+    """
     if shutil.which("claude") is None:
         raise RuntimeError(
             "`claude` CLI not found on PATH. Install with: "
             "npm install -g @anthropic-ai/claude-code"
         )
-    result = subprocess.run(
-        ["claude", "-p", user_prompt,
-         "--append-system-prompt", system_prompt,
-         "--max-turns", "1"],
-        check=True, capture_output=True, text=True,
-    )
+    cmd = [
+        "claude", "-p", user_prompt,
+        "--dangerously-skip-permissions",
+        "--max-turns", "1",
+    ]
+    if system_prompt:
+        cmd += ["--append-system-prompt", system_prompt]
+    result = subprocess.run(cmd, check=True, capture_output=True, text=True)
     return result.stdout
+
+
+def _draft_with_claude(system_prompt: str, user_prompt: str) -> str:
+    return _run_claude(user_prompt, system_prompt=system_prompt)
+
+
+def _strip_codefence(s: str) -> str:
+    """Some models wrap JSON output in ```json fences; peel them if present."""
+    s = s.strip()
+    if not s.startswith("```"):
+        return s
+    nl = s.find("\n")
+    if nl < 0:
+        return s
+    s = s[nl + 1:]
+    if s.endswith("```"):
+        s = s[:-3]
+    return s.strip()
 
 
 def _draft_with_openai(system_prompt: str, user_prompt: str, model: str) -> str:
@@ -514,6 +539,95 @@ def transcript_to_blogs(transcript_path: Path, out_dir: Path, lang_codes: list[s
 
 
 # --------------------------------------------------------------------------- #
+# Step 3.4 — classify the post into our label taxonomy
+# --------------------------------------------------------------------------- #
+# Three orthogonal axes. The reader picks chips on each axis to filter; within
+# an axis it's OR, across axes it's AND. Keep the vocabulary closed so the
+# filter bar stays manageable as the post count grows. Free-form `tags`
+# still exist alongside these — `labels` is the controlled vocabulary.
+LABEL_TAXONOMY: dict[str, list[str]] = {
+    "topic": [
+        "agents", "llm", "engineering", "product",
+        "research", "infra", "security", "business",
+    ],
+    "format": [
+        "keynote", "talk", "workshop",
+        "podcast", "interview", "paper",
+    ],
+    "speaker": [
+        "anthropic", "openai", "google", "meta",
+        "academia", "independent",
+    ],
+}
+
+
+CLASSIFY_PROMPT = """You are tagging a blog post for a reader-facing filter \
+UI. Pick the labels that best describe the post from the closed taxonomy \
+below. Your output is a single JSON object — nothing else, no prose.
+
+Rules:
+- Pick 1–3 topic labels (the post's actual subject matter).
+- Pick exactly 1 format label (how the speaker delivered the content).
+- Pick exactly 1 speaker label (the speaker's affiliation; pick "independent" \
+if they don't represent a major lab/company, "academia" for university \
+researchers).
+- Use only the values listed below. Do not invent new ones.
+- Output shape:
+  {{"topic": ["..."], "format": "...", "speaker": "..."}}
+
+Taxonomy:
+- topic ∈ {topic_values}
+- format ∈ {format_values}
+- speaker ∈ {speaker_values}
+
+POST TITLE: {title}
+POST EXCERPT:
+---
+{excerpt}
+---"""
+
+
+def classify_labels(blog_md: Path) -> list[str]:
+    """Ask claude to classify the post into our taxonomy. Returns a flat
+    `["topic:agents", "format:podcast", ...]` list. On any failure returns
+    []; the caller should still ship the post — labels are additive, not
+    load-bearing. Local pipeline keeps OpenAI use to image gen only, so
+    classification goes through claude."""
+    text = blog_md.read_text(encoding="utf-8")
+    title, _ = _parse_blog_md(text)
+    excerpt = text[:8000]
+
+    prompt = CLASSIFY_PROMPT.format(
+        topic_values=", ".join(LABEL_TAXONOMY["topic"]),
+        format_values=", ".join(LABEL_TAXONOMY["format"]),
+        speaker_values=", ".join(LABEL_TAXONOMY["speaker"]),
+        title=title,
+        excerpt=excerpt,
+    )
+    log.info("Classifying labels via claude ...")
+    try:
+        raw = _strip_codefence(_run_claude(prompt))
+        data = json.loads(raw)
+    except Exception as e:
+        log.warning("Label classification failed (%s); shipping without labels.", e)
+        return []
+
+    labels: list[str] = []
+    for v in (data.get("topic") or []):
+        if v in LABEL_TAXONOMY["topic"]:
+            labels.append(f"topic:{v}")
+    fmt = data.get("format")
+    if fmt in LABEL_TAXONOMY["format"]:
+        labels.append(f"format:{fmt}")
+    spk = data.get("speaker")
+    if spk in LABEL_TAXONOMY["speaker"]:
+        labels.append(f"speaker:{spk}")
+
+    log.info("Labels: %s", ", ".join(labels) or "(none)")
+    return labels
+
+
+# --------------------------------------------------------------------------- #
 # Step 3.5 — generate a content-aware diagram image from the EN draft
 # --------------------------------------------------------------------------- #
 # Two-step pipeline. (1) A text model reads the full post and produces a
@@ -560,42 +674,29 @@ diagram from a Stripe Press book or a NYTimes explainer, not a poster. \
 Square format."""
 
 
-def _visual_brief_from_blog(text: str, title: str, openai_text_model: str) -> str | None:
-    """Ask GPT-4-class model to extract a diagram brief from the blog.
-    Returns the brief string or None if the call fails (caller should fall
-    back to the title+dek heuristic)."""
-    try:
-        from openai import OpenAI
-    except ImportError:
-        return None
-    # Trim very long posts so we stay well within context. ~15k chars is plenty
-    # for the brief — the model just needs the main ideas, not every example.
+def _visual_brief_from_blog(text: str, title: str) -> str | None:
+    """Ask claude to extract a diagram brief from the blog. Returns the brief
+    string or None if the call fails (caller should fall back to title+dek).
+    Routed through claude (not OpenAI) to keep the local pipeline OpenAI-free
+    except for image generation itself."""
     excerpt = text[:15000]
-    client = OpenAI()
+    prompt = VISUAL_BRIEF_PROMPT.format(title=title, post=excerpt)
     try:
-        resp = client.chat.completions.create(
-            model=openai_text_model,
-            messages=[{
-                "role": "user",
-                "content": VISUAL_BRIEF_PROMPT.format(title=title, post=excerpt),
-            }],
-            temperature=0.4,
-        )
+        brief = _run_claude(prompt).strip()
     except Exception as e:
         log.warning("Visual brief request failed (%s); will fall back to title+dek.", e)
         return None
-    brief = (resp.choices[0].message.content or "").strip()
     return brief or None
 
 
 def generate_blog_image(en_blog_md: Path, out_dir: Path,
                         model: str = "gpt-image-1",
                         size: str = "1024x1024",
-                        quality: str = "medium",
-                        text_model: str = "gpt-4o") -> Path | None:
+                        quality: str = "medium") -> Path | None:
     """Generate a content-aware diagram image for the EN blog.
     Saves to <out_dir>/cover.png. Returns the path on success, None on
-    failure (caller should treat the image as optional)."""
+    failure (caller should treat the image as optional). The visual brief
+    is drafted with claude; only the actual image render uses OpenAI."""
     if not os.environ.get("OPENAI_API_KEY"):
         log.warning("OPENAI_API_KEY not set — skipping cover image.")
         return None
@@ -608,9 +709,9 @@ def generate_blog_image(en_blog_md: Path, out_dir: Path,
     text = en_blog_md.read_text(encoding="utf-8")
     title, dek = _parse_blog_md(text)
 
-    # Step 1: ask a text model what to draw.
-    log.info("Drafting visual brief via %s ...", text_model)
-    brief = _visual_brief_from_blog(text, title, text_model)
+    # Step 1: ask claude what to draw.
+    log.info("Drafting visual brief via claude ...")
+    brief = _visual_brief_from_blog(text, title)
     if brief is None:
         # Last-resort fallback so we still emit *something*.
         brief = (
@@ -716,6 +817,7 @@ def publish_to_blog_repo(
     tags: list[str] | None = None,
     commit: bool = True,
     cover_image: Path | None = None,
+    labels: list[str] | None = None,
 ) -> Path:
     """Drop the post into <blog_repo>/public/blog/<slug>/ and update posts.json.
 
@@ -790,6 +892,8 @@ def publish_to_blog_repo(
         meta["source"] = source_url
     if image_url:
         meta["image"] = image_url
+    if labels:
+        meta["labels"] = labels
 
     (post_dir / "meta.json").write_text(
         json.dumps(meta, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
@@ -888,12 +992,12 @@ def main() -> int:
                         help="Netscape-format cookies file passed to yt-dlp. Use this "
                              "when YouTube returns 'Sign in to confirm you're not a bot' "
                              "(common from cloud/CI runners).")
-    parser.add_argument("--transcribe", choices=["auto", "local", "openai"], default="auto",
+    parser.add_argument("--transcribe", choices=["local", "openai"], default="local",
                         help="Transcription engine when no captions are available. "
-                             "auto: prefer the OpenAI Whisper API when OPENAI_API_KEY is "
-                             "set (fast cloud transcription), else fall back to local "
-                             "faster-whisper. local: always use faster-whisper. "
-                             "openai: always use the OpenAI Whisper API (requires the key).")
+                             "local (default): faster-whisper on CPU — free, slow on long "
+                             "audio. openai: OpenAI Whisper API — fast, ~$0.006/min. "
+                             "Local runs default to local so OpenAI is reserved for "
+                             "image generation only.")
     parser.add_argument("--captions", choices=["auto", "off", "only"], default="auto",
                         help="auto (default): try fetching the video's existing captions "
                              "first; fall back to download + whisper if none exist. "
@@ -989,10 +1093,7 @@ def main() -> int:
         if captions_used:
             log.info("Skipping transcribe stage (captions provided the transcript).")
         elif should_run("transcript", _transcript_exists):
-            engine = args.transcribe
-            if engine == "auto":
-                engine = "openai" if os.environ.get("OPENAI_API_KEY") else "local"
-            if engine == "openai":
+            if args.transcribe == "openai":
                 transcript_path = transcribe_with_openai(audio, args.out, args.language)
             else:
                 transcript_path = transcribe(audio, args.out, args.model, args.language)
@@ -1018,6 +1119,13 @@ def main() -> int:
             blog_paths = {c: args.out / f"blog.{c}.md" for c in lang_codes}
             log.info("Skipping blog stage (using existing %s). Pass --from blog to redraft.",
                      blog_paths.get("en"))
+
+        # Step 3.4: classify labels from the closed taxonomy (additive — does
+        # not replace --tags, both fields persist on the post).
+        auto_labels: list[str] = []
+        if (not args.skip_blog and "en" in blog_paths
+                and blog_paths["en"].exists()):
+            auto_labels = classify_labels(blog_paths["en"])
 
         # Step 3.5: cover image (between draft and publish, so publish can
         # embed the image ref in each markdown variant).
@@ -1060,6 +1168,7 @@ def main() -> int:
                     tags=tags,
                     commit=not args.no_commit,
                     cover_image=cover_image,
+                    labels=auto_labels,
                 )
                 log.info("Published to %s", published)
 

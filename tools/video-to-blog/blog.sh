@@ -81,7 +81,9 @@ git -C "$REPO_ROOT" pull --ff-only origin master >/dev/null 2>&1 || true
 OUT="$(mktemp -d -t v2b-XXXXXX)"
 echo "Pipeline output → $OUT"
 
-"$VENV/bin/python" "$SCRIPT_DIR/pipeline.py" \
+# Put the venv on PATH so subprocesses spawned by pipeline.py (yt-dlp,
+# ffmpeg if it's pip-installed, etc.) resolve to the venv-installed tools.
+PATH="$VENV/bin:$PATH" "$VENV/bin/python" "$SCRIPT_DIR/pipeline.py" \
   --url "$URL" \
   --out "$OUT" \
   --blog-languages "$LANGS" \

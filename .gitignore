@@ -5,3 +5,4 @@ dist
 .DS_Store
 *.log
 .vite
+tools/video-to-blog/__pycache__/

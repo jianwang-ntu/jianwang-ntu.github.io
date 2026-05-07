@@ -1,0 +1,14 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "DDBCounter",
+      "Effect": "Allow",
+      "Action": [
+        "dynamodb:UpdateItem",
+        "dynamodb:Scan"
+      ],
+      "Resource": "arn:aws:dynamodb:ap-southeast-1:332149362719:table/github-io-blog-clicks"
+    }
+  ]
+}
