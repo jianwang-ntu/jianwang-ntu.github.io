@@ -1,5 +1,7 @@
 # Ralph Loops: Why Chris Parsons Stopped Orchestrating Agents and Started Looping Them
 
+![Ralph Loops: Why Chris Parsons Stopped Orchestrating Agents and Started Looping Them](/images/blog/ralph-loops-why-chris-parsons-stopped-orchestrating-agents.png)
+
 In a two-hour workshop at what appears to be an AI engineering conference, Chris Parsons argued that the future of working with AI is not elaborate orchestration but a deceptively simple pattern: a loop that does one thing, picks the next most important thing, and goes again. Parsons — a CTO with about 30 years of software experience, now consulting on AI adoption — claimed he runs these loops 24 hours a day across his email, calendar, newsletter, client work, and code, and that the pattern scales from fixing a Pomodoro timer to running, in his words, "an entire startup."
 
 ## What a Ralph Loop Actually Is

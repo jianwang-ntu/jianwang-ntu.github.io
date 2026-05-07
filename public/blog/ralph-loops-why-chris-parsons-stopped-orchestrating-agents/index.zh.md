@@ -1,5 +1,7 @@
 # Ralph Loop：把 AI 当成"同一个工程师"无限循环跑下去
 
+![Ralph Loops: Why Chris Parsons Stopped Orchestrating Agents and Started Looping Them](/images/blog/ralph-loops-why-chris-parsons-stopped-orchestrating-agents.png)
+
 在 AI Engineer 大会的一场两小时工作坊里，资深 CTO、连续创业者 Chris Parsons 提出一个看似简单到荒谬的主张：与其费劲编排多代理工作流，不如让 AI 在一个循环里反复挑下一个最重要的任务来做。他认为，这是大多数知识工作未来的真实形态——从写代码、写新闻邮件，到运营整个创业公司。
 
 ## 名字的来由：辛普森一家里的 Ralph Wigum

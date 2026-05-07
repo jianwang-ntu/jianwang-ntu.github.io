@@ -1,5 +1,7 @@
 # How Anthropic's Claude Code Team Ships Features in a Week — and What It Means for the PM Role
 
+![How Anthropic's Claude Code Team Ships Features in a Week — and What It Means for the PM Role](/images/blog/how-anthropics-claude-code-team-ships-features-in-a-week.png)
+
 In a recent appearance on Lenny's Podcast, Cat Woo, head of product for Claude Code and Co-work at Anthropic, lays out how her team has compressed product timelines from quarters to days, why "product taste" has overtaken project management as the central PM skill, and where she thinks human judgment still beats the model. Her central claim: the PM role isn't disappearing — it's mutating, and most candidates she interviews are still approaching it with pre-AI assumptions.
 
 ## A team built for one-week features
