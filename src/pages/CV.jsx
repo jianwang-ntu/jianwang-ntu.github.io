@@ -2,6 +2,7 @@ import React from 'react';
 import Nav from '../components/Nav.jsx';
 import Footer from '../components/Footer.jsx';
 import PageHead from '../components/PageHead.jsx';
+import Seo from '../components/Seo.jsx';
 import { Box, Chip, Tag } from '../components/primitives.jsx';
 
 function CVBlock({ left, right, title, sub, body }) {
@@ -33,6 +34,11 @@ function CVH({ num, children }) {
 export default function CV() {
   return (
     <div className="page">
+      <Seo
+        title="CV"
+        description="Curriculum vitae of Jian Wang — education, employment, talks, awards. PhD conferred Mar 2026."
+        path="/cv"
+      />
       <Nav />
       <PageHead
         kicker="CURRICULUM VITAE · WEB EDITION"

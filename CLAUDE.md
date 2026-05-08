@@ -28,6 +28,32 @@ content-hashed JS/CSS — no SSR.
   blog click counts. Powers the "Popular" sort on `/blog`. Endpoint:
   `https://sgwa5dhthk.execute-api.ap-southeast-1.amazonaws.com/`. Update
   the Lambda code with `tools/click-counter/deploy.sh`.
+- `public/robots.txt` + `public/sitemap.xml` — SEO basics. The sitemap is
+  auto-generated from `public/blog/posts.json` + the static routes by
+  `tools/build-sitemap.mjs` (npm `prebuild` lifecycle, also runs on every
+  CI deploy). Robots allows everything and points crawlers at the canonical
+  `https://www.wj2ai.com/sitemap.xml`.
+- `tools/build-sitemap.mjs` — pre-build sitemap generator. Reads
+  `posts.json`, writes `public/sitemap.xml` (then Vite copies it into
+  `dist/`). Canonical site URL via `SITE_URL` env var (default
+  `https://www.wj2ai.com`).
+- `tools/build-prerender.mjs` — post-build SEO prerender. Vite outputs a
+  single `dist/index.html` SPA shell; social-sharing crawlers (LinkedIn,
+  Twitter, FB, Slack unfurl) don't run JS, so without this step every
+  shared link would show the homepage's title/description. The script
+  writes `dist/<route>/index.html` for each top-level route + each blog
+  post, with a route-specific `<head>` (title, description, canonical,
+  Open Graph, Twitter Card, plus JSON-LD `BlogPosting` for posts). Body
+  is unchanged — the SPA still mounts and React Router takes over once
+  JS executes. Both deploy targets serve `dist/<route>/index.html`
+  directly via `try_files` when present.
+- `src/components/Seo.jsx` — runtime head updater. Used by every page
+  component (Home, Publications, WorkProjects, CV, Blog, BlogPost) to
+  keep `<title>` / meta tags / canonical / og: / twitter: / JSON-LD in
+  sync as the user navigates client-side. Googlebot runs JS so it picks
+  up these post-mount updates; static crawlers see the prerendered
+  `<head>` instead. The two layers carry the same content so they don't
+  contradict.
 - `.github/workflows/deploy.yaml` — single deploy workflow on master push.
   Builds once, rewrites `/images/` paths in the built dist to point at
   the public S3 bucket (`https://publicsg.s3.ap-southeast-1.amazonaws.com/

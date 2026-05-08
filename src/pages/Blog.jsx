@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Nav from '../components/Nav.jsx';
 import Footer from '../components/Footer.jsx';
+import Seo from '../components/Seo.jsx';
 import { SectionHead, Tag } from '../components/primitives.jsx';
 
 // --------------------------------------------------------------------------- //
@@ -287,6 +288,11 @@ export default function Blog() {
 
   return (
     <div className="page">
+      <Seo
+        title="Blog"
+        description="Notes and summaries on agents, harnesses, and engineering — auto-drafted from talks, papers, and posts; edited by hand."
+        path="/blog"
+      />
       <Nav />
       <section className="content">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>

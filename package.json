@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 0.0.0.0 --port 9002",
+    "prebuild": "node tools/build-sitemap.mjs",
     "build": "vite build",
+    "postbuild": "node tools/build-prerender.mjs",
     "preview": "vite preview --host 0.0.0.0 --port 9002"
   },
   "dependencies": {

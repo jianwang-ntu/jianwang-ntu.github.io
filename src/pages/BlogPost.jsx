@@ -4,7 +4,20 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import Nav from '../components/Nav.jsx';
 import Footer from '../components/Footer.jsx';
+import Seo from '../components/Seo.jsx';
 import { Tag } from '../components/primitives.jsx';
+
+// Cover-image URLs in meta.json are stored as `/images/blog/<slug>.png` for
+// local dev. The deploy workflow rewrites them to S3 URLs in dist/, but the
+// runtime image we use for og:image must always be absolute. Match the deploy
+// rewrite so the og:image works on every endpoint, including a fresh first
+// load before the prerendered <head> takes over.
+const S3_IMAGE_BASE = 'https://publicsg.s3.ap-southeast-1.amazonaws.com/github.io';
+function absoluteImage(image) {
+  if (!image) return undefined;
+  if (image.startsWith('http')) return image;
+  return `${S3_IMAGE_BASE}${image}`;
+}
 
 function pickInitialLang(meta) {
   const langs = meta?.languages || ['en'];
@@ -67,8 +80,34 @@ export default function BlogPost() {
   const langs = meta?.languages || [];
   const title = meta && (meta[`title_${lang}`] || meta.title_en || meta.title);
 
+  // Per-post head tags — only render Seo once meta has loaded so we don't
+  // overwrite the prerendered head with empty defaults.
+  const seo = meta && (
+    <Seo
+      title={meta.title_en || meta.slug}
+      description={meta.dek_en}
+      image={absoluteImage(meta.image)}
+      path={`/blog/${meta.slug}`}
+      type="article"
+      ldJson={{
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        headline: meta.title_en || meta.slug,
+        description: meta.dek_en,
+        image: absoluteImage(meta.image),
+        author: { '@type': 'Person', name: 'Jian Wang' },
+        publisher: { '@type': 'Person', name: 'Jian Wang' },
+        datePublished: meta.date,
+        dateModified: meta.date,
+        mainEntityOfPage: `https://www.wj2ai.com/blog/${meta.slug}`,
+        ...(meta.source ? { isBasedOn: meta.source } : {}),
+      }}
+    />
+  );
+
   return (
     <div className="page">
+      {seo}
       <Nav />
       <section style={{ padding: '32px 0', maxWidth: 760, margin: '0 auto' }}>
         <div style={{ fontSize: 11, fontFamily: 'var(--mono)', marginBottom: 16, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
