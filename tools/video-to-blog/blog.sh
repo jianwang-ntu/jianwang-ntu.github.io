@@ -18,6 +18,14 @@
 #
 # Common opts: [--tags "a,b,c"] [--languages "en,zh"] [--issue N] [--watch]
 #
+# Batch opts (used by watch-issues.sh — accumulate several drafts on one
+# branch and open a single PR for all of them, to dodge GitHub's
+# per-PR rate limits when draining a queue):
+#   --branch <name>       commit on this branch instead of `blog/<slug>`.
+#                          Created from master if it does not yet exist.
+#   --no-pr               commit but do not push and do not open a PR.
+#                          Caller pushes + opens PR after batching.
+#
 # Stages, all done by this one script:
 #   1. acquire      — fetch+extract source text (or audio→transcript for video)
 #   2. generate     — claude (default) or OpenAI Chat → blog markdown EN+ZH
@@ -32,7 +40,7 @@
 
 set -euo pipefail
 
-usage() { sed -n '2,32p' "${BASH_SOURCE[0]}"; exit "${1:-0}"; }
+usage() { sed -n '2,39p' "${BASH_SOURCE[0]}"; exit "${1:-0}"; }
 
 URL=""
 PDF=""
@@ -44,6 +52,8 @@ TAGS=""
 LANGS="en,zh"
 ISSUE=""
 WATCH=0
+BRANCH_OVERRIDE=""
+NO_PR=0
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --pdf)        PDF="$2";        shift 2 ;;
@@ -55,6 +65,8 @@ while [[ $# -gt 0 ]]; do
     --languages)  LANGS="$2";      shift 2 ;;
     --issue)      ISSUE="$2";      shift 2 ;;
     --watch)      WATCH=1;         shift   ;;
+    --branch)     BRANCH_OVERRIDE="$2"; shift 2 ;;
+    --no-pr)      NO_PR=1;         shift   ;;
     -h|--help)    usage 0 ;;
     --)           shift; break ;;
     -*)           echo "Unknown flag: $1" >&2; usage 2 ;;
@@ -128,8 +140,24 @@ if [[ -n "$(git -C "$REPO_ROOT" status --porcelain)" ]]; then
   exit 1
 fi
 git -C "$REPO_ROOT" fetch origin >/dev/null 2>&1 || true
-git -C "$REPO_ROOT" checkout master >/dev/null
-git -C "$REPO_ROOT" pull --ff-only origin master >/dev/null 2>&1 || true
+if [[ -n "$BRANCH_OVERRIDE" ]]; then
+  # Batch mode: caller picks the branch. Create from CURRENT HEAD (not
+  # master) if it does not yet exist, otherwise switch to it. Branching
+  # off HEAD matters because, on a single working tree, switching to a
+  # different commit ALSO swaps the on-disk script files. If we branched
+  # from master, the second blog.sh invocation in a batch would read a
+  # stale on-disk blog.sh that doesn't know about --branch / --no-pr and
+  # die with "Unknown flag". The caller (watch-issues.sh) is responsible
+  # for being on a sane base before invoking us.
+  if git -C "$REPO_ROOT" rev-parse --verify "$BRANCH_OVERRIDE" >/dev/null 2>&1; then
+    git -C "$REPO_ROOT" checkout "$BRANCH_OVERRIDE" >/dev/null
+  else
+    git -C "$REPO_ROOT" checkout -b "$BRANCH_OVERRIDE" >/dev/null
+  fi
+else
+  git -C "$REPO_ROOT" checkout master >/dev/null
+  git -C "$REPO_ROOT" pull --ff-only origin master >/dev/null 2>&1 || true
+fi
 
 OUT="$(mktemp -d -t v2b-XXXXXX)"
 echo "Pipeline output → $OUT"
@@ -170,9 +198,14 @@ fi
 POST_DIR="public/blog/$SLUG"
 TITLE="$(head -1 "$REPO_ROOT/$POST_DIR/index.en.md" | sed 's/^# //')"
 
-BRANCH="blog/$SLUG"
-# Reuse a stale branch if the same slug was attempted earlier.
-git -C "$REPO_ROOT" checkout -B "$BRANCH" >/dev/null
+if [[ -n "$BRANCH_OVERRIDE" ]]; then
+  # Already on $BRANCH_OVERRIDE from the checkout above; just record it.
+  BRANCH="$BRANCH_OVERRIDE"
+else
+  BRANCH="blog/$SLUG"
+  # Reuse a stale branch if the same slug was attempted earlier.
+  git -C "$REPO_ROOT" checkout -B "$BRANCH" >/dev/null
+fi
 
 git -C "$REPO_ROOT" add "$POST_DIR" public/blog/posts.json
 # Stage the cover image if pipeline.py generated one, and ship it to S3
@@ -193,6 +226,22 @@ fi
 COMMIT_MSG="blog: $TITLE"
 [[ -n "$ISSUE" ]] && COMMIT_MSG+=$'\n\nCloses #'$ISSUE
 git -C "$REPO_ROOT" -c commit.gpgsign=false commit -m "$COMMIT_MSG"
+
+# In batch mode the caller (watch-issues.sh) accumulates several drafts on
+# one branch and opens a single PR at the end. We stop after the commit:
+# no push, no PR, stay on the batch branch so the next iteration can add
+# its own commit on top.
+if [[ "$NO_PR" -eq 1 ]]; then
+  cat <<EOF
+
+✓ Drafted and committed (batch mode — no push, no PR).
+  Slug   : $SLUG
+  Files  : $POST_DIR/
+  Branch : $BRANCH
+EOF
+  exit 0
+fi
+
 git -C "$REPO_ROOT" push -u origin "$BRANCH"
 
 REPO_FULL=$(git -C "$REPO_ROOT" config --get remote.origin.url \

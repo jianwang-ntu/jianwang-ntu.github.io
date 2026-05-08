@@ -97,18 +97,27 @@ content-hashed JS/CSS — no SSR.
    arXiv / LinkedIn / direct PDF / blog post URL — plus optional tags,
    languages, and a `Pasted source body` for paywalled inputs. Then run:
    ```
-   tools/video-to-blog/watch-issues.sh         # default poll interval 60s
+   tools/video-to-blog/watch-issues.sh         # default poll 60s, batch≤10
    WATCH_INTERVAL=30 tools/video-to-blog/watch-issues.sh
-   tools/video-to-blog/watch-issues.sh --once  # drain a single issue and exit
+   BATCH_MAX=20      tools/video-to-blog/watch-issues.sh
+   tools/video-to-blog/watch-issues.sh --once  # one tick, then exit
    ```
-   The poller picks the oldest unassigned issue, claims it (assigns to
-   yourself so a parallel watcher won't double-process), parses the form
-   body into `--pdf`/`--linkedin`/positional URL or `--text-file --kind …`,
-   then invokes `blog.sh` with `--issue N`. The PR's `Closes #N` closes
-   the issue on merge. On failure the watcher comments the error and
-   un-assigns so the next tick retries. Best run on a residential box
-   (cron or systemd-unit) — YouTube blocks GitHub-Actions ranges, and
-   the same machine should hold the gh / claude / aws creds.
+   On each tick the watcher fetches up to `BATCH_MAX` oldest unassigned
+   `blog-request` issues. **One issue → single PR** (current single-issue
+   path: `blog/<slug>` branch, one PR, `Closes #N`). **Two or more →
+   batched into ONE PR** to dodge GitHub's per-PR rate limit and reduce
+   review noise: a shared `blog/batch-<timestamp>` branch holds one commit
+   per drafted post, and the single PR body lists every `Closes #N`. If
+   one draft inside the batch fails, that issue gets a comment + is
+   unassigned for retry, the working tree is reset, and the rest of the
+   batch continues; successful posts still ship in the batch PR. The
+   watcher remembers the branch you started it on (`START_BRANCH`) and
+   returns there at the end of every batch, so running it from a feature
+   branch does not silently revert to master mid-run. blog.sh in
+   `--branch <name> --no-pr` mode is what the watcher invokes per-post.
+   Best run on a residential box (cron or systemd-unit) — YouTube
+   blocks GitHub-Actions ranges, and the same machine should hold the
+   gh / claude / aws creds.
 
 The drafted post gets `source_kind: "video" | "paper" | "post"` in
 `meta.json`, plus `format:<kind>` in the auto-classified `labels` array
