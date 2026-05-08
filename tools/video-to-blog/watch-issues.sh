@@ -35,8 +35,12 @@ done
 INTERVAL="${WATCH_INTERVAL:-60}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
-REPO_FULL=$(git -C "$REPO_ROOT" config --get remote.origin.url \
-  | sed -E 's|.*github\.com[:/]([^/]+/[^.]+).*|\1|')
+# Resolve owner/repo. We prefer `gh` over the raw remote URL because repo
+# names can contain dots (e.g. `jianwang-ntu.github.io`), and a naive
+# `[^.]+` regex on the URL would truncate at the first dot.
+REPO_FULL=$(gh repo view --json nameWithOwner -q .nameWithOwner 2>/dev/null) \
+  || REPO_FULL=$(git -C "$REPO_ROOT" config --get remote.origin.url \
+       | sed -E 's|^.*github\.com[:/](.+)\.git$|\1|; s|^.*github\.com[:/](.+)$|\1|')
 
 # Pre-flight: gh logged in, blog.sh executable, claude on PATH (drafting fails
 # fast if claude is missing, but better to surface early than mid-run).
@@ -56,7 +60,12 @@ echo "watch-issues: $REPO_FULL  interval=${INTERVAL}s  user=$ME"
 # "Source URL" / "Source kind" headers and the legacy "Video URL" header so the
 # watcher works against issues filed before the source-diversity expansion.
 parse_issue() {
-  python3 - <<'PY'
+  # NOTE: the script is passed via `-c`, NOT a heredoc. `python3 - <<'PY'`
+  # redirects stdin to the heredoc, which conflicts with the body we pipe
+  # in — Python ends up reading the body as if it were source code (or
+  # reading nothing) instead of letting the script consume it via
+  # sys.stdin.read(). Using `-c` keeps stdin free for the body.
+  python3 -c '
 import json, re, sys
 body = sys.stdin.read()
 fields = {}
@@ -72,10 +81,19 @@ kind  = (fields.get("source kind") or "auto").strip().lower()
 tags  = fields.get("tags", "").strip()
 langs = (fields.get("languages") or "en,zh").strip()
 text  = fields.get("pasted source body", "")
+# The form renders `Pasted source body` as a code block (`render: text`),
+# so even an empty submission comes back as "```text\n\n```". Strip the
+# fences and treat all-whitespace as empty so we do not invoke
+# `--text-file` with a placeholder.
+m = re.match(r"^```[a-zA-Z0-9_-]*\n(.*?)\n?```\s*$", text, flags=re.S)
+if m:
+    text = m.group(1)
+if not text.strip():
+    text = ""
 print(json.dumps({
     "url": url, "kind": kind, "tags": tags, "langs": langs, "text": text,
 }))
-PY
+'
 }
 
 # One iteration: returns 0 if it processed an issue, 1 if there was nothing
