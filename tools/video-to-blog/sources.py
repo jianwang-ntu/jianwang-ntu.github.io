@@ -143,6 +143,83 @@ def from_pdf(path_or_url: str, out_dir: Path) -> SourceBundle:
     )
 
 
+def extract_pdf_figures(
+    pdf_path: Path,
+    out_dir: Path,
+    max_pages: int = 8,
+    min_width: int = 300,
+    min_height: int = 200,
+    max_candidates: int = 5,
+) -> list[Path]:
+    """Extract candidate overview/architecture figures from a PDF.
+
+    Scans the first *max_pages* pages, filters embedded images by minimum
+    pixel dimensions, converts them to RGB PNG, saves each to
+    ``out_dir/fig_p{page}_{n}.png``, and returns paths sorted so the
+    largest images on the earliest pages come first (up to *max_candidates*).
+
+    Returns an empty list when pypdf or Pillow is unavailable, or when no
+    qualifying images are found — callers should fall back to generative cover.
+    """
+    try:
+        from pypdf import PdfReader
+        from PIL import Image
+        import io
+    except ImportError:
+        log.warning("pypdf[image] or Pillow not installed — skipping PDF figure extraction.")
+        return []
+
+    try:
+        reader = PdfReader(str(pdf_path))
+    except Exception as e:
+        log.warning("Could not open PDF for figure extraction (%s).", e)
+        return []
+
+    candidates: list[tuple[int, int, int, Path]] = []  # (page_idx, -area, seq, path)
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    for page_idx, page in enumerate(reader.pages[:max_pages]):
+        try:
+            page_images = list(page.images)
+        except Exception as e:
+            log.debug("Page %d image extraction failed: %s", page_idx + 1, e)
+            continue
+
+        for seq, img_obj in enumerate(page_images):
+            try:
+                pil_img = img_obj.image  # PIL Image from pypdf
+                w, h = pil_img.size
+                if w < min_width or h < min_height:
+                    continue
+
+                # Convert to plain RGB PNG (handles RGBA transparency, CMYK, etc.)
+                if pil_img.mode not in ("RGB", "L"):
+                    bg = Image.new("RGB", pil_img.size, (255, 255, 255))
+                    if pil_img.mode == "RGBA":
+                        bg.paste(pil_img, mask=pil_img.split()[3])
+                    else:
+                        bg.paste(pil_img.convert("RGB"))
+                    pil_img = bg
+                elif pil_img.mode == "L":
+                    pil_img = pil_img.convert("RGB")
+
+                out_path = out_dir / f"fig_p{page_idx + 1}_{seq}.png"
+                pil_img.save(str(out_path), format="PNG")
+                area = w * h
+                candidates.append((page_idx, -area, seq, out_path))
+                log.debug("Figure candidate: page %d, %dx%d → %s", page_idx + 1, w, h, out_path.name)
+            except Exception as e:
+                log.debug("Skipping image on page %d seq %d: %s", page_idx + 1, seq, e)
+
+    # Sort: earlier pages first; within same page, larger images first.
+    candidates.sort(key=lambda t: (t[0], t[1]))
+    result = [t[3] for t in candidates[:max_candidates]]
+    if result:
+        log.info("Extracted %d figure candidate(s) from PDF (kept top %d).",
+                 len(candidates), len(result))
+    return result
+
+
 # --------------------------------------------------------------------------- #
 # LinkedIn (and other social posts) — best-effort og: meta scrape
 # --------------------------------------------------------------------------- #

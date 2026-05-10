@@ -41,6 +41,7 @@ from faster_whisper import WhisperModel
 from sources import (
     SourceBundle,
     auto_detect_kind,
+    extract_pdf_figures,
     from_linkedin,
     from_pdf,
     from_text_file,
@@ -902,6 +903,97 @@ def generate_blog_image(en_blog_md: Path, out_dir: Path,
     return img_path
 
 
+def select_best_paper_figure(candidates: list[Path], title: str) -> Path | None:
+    """Use Claude vision to pick the best overview / architecture / workflow figure
+    from a list of candidate image paths extracted from a PDF.
+
+    Returns the chosen Path, or None if no candidate looks like a useful cover.
+    Falls back to the largest candidate when the Anthropic API key is absent or
+    the SDK is not installed.
+    """
+    if not candidates:
+        return None
+
+    # Fast-path: single candidate, skip API call.
+    if len(candidates) == 1:
+        log.info("Single PDF figure candidate — using it directly: %s", candidates[0].name)
+        return candidates[0]
+
+    # Try Anthropic vision to pick the best figure.
+    api_key = os.environ.get("ANTHROPIC_API_KEY")
+    if not api_key:
+        # No API key — heuristic: pick the largest file (usually the most detailed figure).
+        best = max(candidates, key=lambda p: p.stat().st_size)
+        log.info("No ANTHROPIC_API_KEY — choosing largest PDF figure heuristically: %s", best.name)
+        return best
+
+    try:
+        import anthropic
+        import base64
+        from PIL import Image
+    except ImportError:
+        best = max(candidates, key=lambda p: p.stat().st_size)
+        log.warning("anthropic/pillow not installed — choosing largest PDF figure: %s", best.name)
+        return best
+
+    # Resize candidates for the API call (cap at 1024px on the long side to
+    # keep token cost low while keeping the diagram legible).
+    def _thumb_b64(path: Path) -> tuple[str, str]:
+        with Image.open(path) as img:
+            img = img.convert("RGB")
+            w, h = img.size
+            if max(w, h) > 1024:
+                scale = 1024 / max(w, h)
+                img = img.resize((int(w * scale), int(h * scale)), Image.LANCZOS)
+            buf = __import__("io").BytesIO()
+            img.save(buf, format="JPEG", quality=85)
+            return base64.standard_b64encode(buf.getvalue()).decode(), "image/jpeg"
+
+    content: list[dict] = [
+        {
+            "type": "text",
+            "text": (
+                f'The following figures come from a research paper titled: "{title}"\n\n'
+                "Identify the figure that best serves as an overview, system architecture, "
+                "workflow diagram, or framework illustration for the paper. "
+                "Reply with ONLY the zero-based index of the best figure (e.g. 0, 1, 2…). "
+                "If none of the figures are suitable as a blog cover image "
+                "(e.g. all are small inline plots, tables, or decorative elements), reply with -1."
+            ),
+        }
+    ]
+    for i, path in enumerate(candidates):
+        try:
+            b64, media_type = _thumb_b64(path)
+        except Exception as e:
+            log.debug("Could not thumbnail %s: %s", path.name, e)
+            continue
+        content.append({"type": "text", "text": f"Figure {i}:"})
+        content.append({"type": "image", "source": {"type": "base64",
+                                                     "media_type": media_type,
+                                                     "data": b64}})
+
+    try:
+        client = anthropic.Anthropic(api_key=api_key)
+        msg = client.messages.create(
+            model="claude-haiku-4-5",
+            max_tokens=16,
+            messages=[{"role": "user", "content": content}],
+        )
+        raw = msg.content[0].text.strip()
+        log.info("Claude figure selection response: %r", raw)
+        m = re.search(r"-?\d+", raw)
+        idx = int(m.group()) if m else -1
+        if idx == -1 or idx >= len(candidates):
+            log.info("Claude found no suitable figure — will fall back to generated cover.")
+            return None
+        log.info("Claude selected PDF figure %d: %s", idx, candidates[idx].name)
+        return candidates[idx]
+    except Exception as e:
+        log.warning("Claude figure selection failed (%s) — using largest candidate.", e)
+        return max(candidates, key=lambda p: p.stat().st_size)
+
+
 # --------------------------------------------------------------------------- #
 # Step 4 — publish to blog-repo
 # --------------------------------------------------------------------------- #
@@ -1384,6 +1476,11 @@ def main() -> int:
 
         # Step 3.5: cover image (between draft and publish, so publish can
         # embed the image ref in each markdown variant).
+        #
+        # For papers (PDFs), we first try to extract an existing overview /
+        # architecture figure from the PDF itself. This is cheaper and more
+        # informative than a generated image. Claude vision selects the best
+        # candidate; if none are suitable we fall back to generative cover.
         cover_image: Path | None = None
         cover_path = args.out / "cover.png"
         if (args.image == "auto" and not args.skip_blog
@@ -1391,6 +1488,26 @@ def main() -> int:
             if cover_path.exists() and cover_path.stat().st_size > 0:
                 log.info("Reusing existing cover image %s.", cover_path)
                 cover_image = cover_path
+            elif source_kind == "paper":
+                # Paper path: try to use an actual figure from the PDF.
+                pdf_src = args.out / "source.pdf"
+                if pdf_src.exists():
+                    log.info("Extracting figures from PDF for cover selection ...")
+                    candidates = extract_pdf_figures(pdf_src, args.out)
+                    if candidates:
+                        en_text = blog_paths["en"].read_text(encoding="utf-8")
+                        title_for_fig, _ = _parse_blog_md(en_text)
+                        best_fig = select_best_paper_figure(candidates, title_for_fig)
+                        if best_fig is not None:
+                            shutil.copyfile(best_fig, cover_path)
+                            cover_image = cover_path
+                            log.info("Cover image from PDF figure → %s (%d bytes)",
+                                     cover_path, cover_path.stat().st_size)
+                if cover_image is None:
+                    log.info("No suitable PDF figure found — generating cover image.")
+                    cover_image = generate_blog_image(
+                        blog_paths["en"], args.out, model=args.image_model,
+                    )
             else:
                 cover_image = generate_blog_image(
                     blog_paths["en"], args.out, model=args.image_model,
