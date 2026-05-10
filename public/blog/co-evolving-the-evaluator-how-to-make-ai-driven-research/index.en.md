@@ -8,6 +8,9 @@ A new paper by Cheng et al. (UC Berkeley, KTH, Meta, Workday, U-Michigan, Maven 
 
 ADRS — AI-Driven Research for Systems — refers to frameworks like AlphaEvolve, GEPA, and OpenEvolve that wrap an LLM in an evolutionary loop: generate code, benchmark it, feed the score back into the prompt, repeat. Unlike learned-model approaches that embed neural networks into the runtime path, ADRS produces auditable source code with no inference overhead at deployment. The authors note that ADRS has already discovered, for instance, a Mixture-of-Experts load balancer 13× faster than the previous best.
 
+![Co-Evolving the Evaluator: How to Make AI-Driven Research Actually Work for Databases — overview diagram](/images/blog/co-evolving-the-evaluator-how-to-make-ai-driven-research_diagram.png)
+
+
 For databases, though, naive ADRS doesn't work. The paper points out that optimizing PostgreSQL's buffer policy with full-system evaluation would mean roughly 3 minutes to recompile, 30 minutes to load TPC-H at SF=10, and another 30 minutes to run the workload — over an hour per iteration, when convergence needs hundreds. Computational cost models are faster but routinely diverge from real latency. The paper frames the choices as four standard techniques — simulators, E2E performance models, workload subsetting, and search-space pruning — each of which is "as difficult to apply as solving the underlying optimization problem itself."
 
 ## The co-evolution framework

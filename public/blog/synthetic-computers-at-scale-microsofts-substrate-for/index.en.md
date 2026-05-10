@@ -8,6 +8,9 @@ Productivity agents need rich user-specific context — files, project history, 
 
 The authors frame three guiding principles. Productivity work is grounded in accumulated artifacts and history; success depends on using that context over long horizons; and synthetic data therefore has to synthesise the *context*, not just the task, or it degenerates into "generic, toy workflows." Prior persona-driven synthetic data work (Ge et al., 2024) gives them a billion-scale persona pool to start from. The contribution here is the pipeline that turns each persona into a fully populated computer and uses it as the environment for a month-long simulated work episode.
 
+![Synthetic Computers at Scale: Microsoft's Substrate for Training Long-Horizon Productivity Agents — overview diagram](/images/blog/synthetic-computers-at-scale-microsofts-substrate-for_diagram.png)
+
+
 ## How a synthetic computer is built
 
 Construction proceeds in four stages, each conditioned on the last:

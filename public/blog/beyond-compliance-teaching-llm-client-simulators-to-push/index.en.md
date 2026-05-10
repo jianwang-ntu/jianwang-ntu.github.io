@@ -8,6 +8,9 @@ Counselor-training simulators have a credibility problem: the LLM-based "clients
 
 The authors frame the gap precisely. Pre-aligned LLMs are trained to be helpful, polite, and forthcoming — exactly the opposite of what real clients often are. Existing simulators (Patient-Ψ, AnnaAgent, Yang et al. 2025) try to inject difficulty through prompt-level tricks: random emotion tags, low-receptivity flags, or instructions to withhold information. The paper argues these produce only "surface-level difficulty," because the underlying model has never been exposed to authentic resistance during pretraining.
 
+![Beyond Compliance: Teaching LLM Client Simulators to Push Back — overview diagram](/images/blog/beyond-compliance-teaching-llm-client-simulators-to-push_diagram.png)
+
+
 The deeper critique is theoretical: clinical literature treats resistance as a cognitive-affective process — a self-protective response to an intervention that touches a vulnerability — not as an isolated rude behavior. Simulators that only fit surface response patterns can't capture this, even when prompted to "be difficult."
 
 ## RPC: a dataset where clients actually resist

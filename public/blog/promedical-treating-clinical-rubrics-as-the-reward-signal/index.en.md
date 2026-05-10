@@ -8,6 +8,9 @@ A team from Xunfei Healthcare argues that the standard recipe for aligning medic
 
 The paper frames the problem as a structural mismatch: medical evaluation benchmarks have moved toward fine-grained, rubric-driven scoring (HealthBench, K-QA, DAHL), while training pipelines still rely on holistic binary preferences. The authors argue this forces models to *implicitly* infer complex clinical rationales from a single bit of supervision, encouraging spurious correlations — most consequentially, conflating safety with surface fluency. They cite reward-model benchmarks (RewardBench, InfiMed-ORBIT) that show poor generalization once structured constraints are introduced.
 
+![ProMedical: Treating Clinical Rubrics as the Reward Signal, Not a Post-Hoc Check — overview diagram](/images/blog/promedical-treating-clinical-rubrics-as-the-reward-signal_diagram.png)
+
+
 Their answer is to stop treating rubrics as a post-hoc evaluator and use them as the actual training signal.
 
 ## A tripartite rubric, scored lexicographically
