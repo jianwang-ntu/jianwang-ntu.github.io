@@ -1,5 +1,28 @@
 [
   {
+    "slug": "a16zs-case-for-continual-learning-llms-are-stuck-in-memento",
+    "title_en": "A16Z's Case for Continual Learning: LLMs Are Stuck in *Memento*",
+    "date": "2026-05-10",
+    "dek_en": "In a new essay for a16z, Malika Aubakirova and Matt Bornstein argue that today’s large language models live in the same fractured present as Leonard Shelby in Christopher Nolan’s *Memento* — capable in any single scene, but unable to compou",
+    "tags": [],
+    "languages": [
+      "en",
+      "zh"
+    ],
+    "title_zh": "困在《记忆碎片》里的大模型：a16z 为何押注\"持续学习\"",
+    "dek_zh": "a16z 的 Malika Aubakirova 与 Matt Bornstein 在 2026 年 4 月发表的长文中，把今天的大语言模型比作 Christopher Nolan 电影《记忆碎片》中患有顺行性遗忘症的 Leonard：能力惊人，却无法形成新的记忆，只能依靠纤身和宝丽来照片维系一个\"永恒的当下\"",
+    "source": "https://a16z.com/why-we-need-continual-learning/",
+    "source_kind": "post",
+    "image": "/images/blog/a16zs-case-for-continual-learning-llms-are-stuck-in-memento.png",
+    "labels": [
+      "topic:llm",
+      "topic:research",
+      "topic:agents",
+      "format:post",
+      "speaker:independent"
+    ]
+  },
+  {
     "slug": "how-deepseek-v4-squeezed-a-trillion-parameter-model-out-of",
     "title_en": "How DeepSeek V4 Squeezed a Trillion-Parameter Model Out of Limited Hardware",
     "date": "2026-05-10",

@@ -1,0 +1,23 @@
+{
+  "slug": "a16zs-case-for-continual-learning-llms-are-stuck-in-memento",
+  "title_en": "A16Z's Case for Continual Learning: LLMs Are Stuck in *Memento*",
+  "date": "2026-05-10",
+  "dek_en": "In a new essay for a16z, Malika Aubakirova and Matt Bornstein argue that today's large language models live in the same fractured present as Leonard Shelby in Christopher Nolan's *Memento* — capable in any single scene, but unable to compou",
+  "tags": [],
+  "languages": [
+    "en",
+    "zh"
+  ],
+  "title_zh": "困在《记忆碎片》里的大模型：a16z 为何押注\"持续学习\"",
+  "dek_zh": "a16z 的 Malika Aubakirova 与 Matt Bornstein 在 2026 年 4 月发表的长文中，把今天的大语言模型比作 Christopher Nolan 电影《记忆碎片》中患有顺行性遗忘症的 Leonard：能力惊人，却无法形成新的记忆，只能依赖纹身和宝丽来照片维系一个\"永恒的当下\"。两位作者认为，仅靠上下文窗口、检索系统与系统提示这套\"外部脚手架\"远远不够——要让 AI 真正进步，必须允许它在部署之后也能像训练时那样，把新经验直接压缩进权重。",
+  "source": "https://a16z.com/why-we-need-continual-learning/",
+  "source_kind": "post",
+  "image": "/images/blog/a16zs-case-for-continual-learning-llms-are-stuck-in-memento.png",
+  "labels": [
+    "topic:llm",
+    "topic:research",
+    "topic:agents",
+    "format:post",
+    "speaker:independent"
+  ]
+}
