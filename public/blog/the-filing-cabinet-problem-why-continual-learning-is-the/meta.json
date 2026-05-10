@@ -1,0 +1,23 @@
+{
+  "slug": "the-filing-cabinet-problem-why-continual-learning-is-the",
+  "title_en": "The Filing Cabinet Problem: Why Continual Learning Is the Real Bottleneck for AI",
+  "date": "2026-05-10",
+  "dek_en": "In a recent episode of *最佳拍档* (Best Partner), the host Da Fei walks viewers through an A16Z long-read published on April 22 that puts continual learning at the center of the next phase of AI infrastructure. His central claim, borrowed from ",
+  "tags": [],
+  "languages": [
+    "en",
+    "zh"
+  ],
+  "title_zh": "持续学习：让大模型走出\"记忆碎片\"的下一道关口",
+  "dek_zh": "在最佳拍档的这期节目里，主持人大飞拆解了 A16Z 在 4 月 22 日发布的一篇关于持续学习（Continual Learning）的万字长文。他的核心论点很直接：今天再强的大模型，本质上仍然是一个\"失忆患者\"，而持续学习才是 AI 从工具走向智能的必经之路。",
+  "source": "https://www.youtube.com/watch?v=zGpQ4WAGMMI",
+  "source_kind": "video",
+  "image": "/images/blog/the-filing-cabinet-problem-why-continual-learning-is-the.png",
+  "labels": [
+    "topic:llm",
+    "topic:research",
+    "topic:agents",
+    "format:post",
+    "speaker:independent"
+  ]
+}
