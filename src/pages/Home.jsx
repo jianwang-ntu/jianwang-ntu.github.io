@@ -2,42 +2,29 @@ import React from 'react';
 import Nav from '../components/Nav.jsx';
 import Footer from '../components/Footer.jsx';
 import Seo from '../components/Seo.jsx';
-import { Chip, Note, Tag, Thumb, SectionHead } from '../components/primitives.jsx';
 import { NEWS, FEATURED_PUBS } from '../data.jsx';
 
-function PubBadge({ b }) {
-  if (b.href) {
-    return (
-      <a href={b.href} target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>
-        <Tag>{b.label}</Tag>
-      </a>
-    );
-  }
-  return <Tag>{b.label}</Tag>;
-}
-
-function PubRow({ p }) {
+function PubEntry({ p }) {
+  const firstLink = p.badges?.[0];
   return (
-    <div className="pub-row">
-      <Thumb label={p.thumb} w={90} h={64} />
-      <div style={{ flex: 1 }}>
-        <div className="pub-title">{p.title}</div>
-        <div className="pub-authors">{p.authors}</div>
-        <div className="pub-meta">
-          <span className="venue">{p.venue} · {p.year}</span>
-          {p.badges?.map((b, i) => <PubBadge key={i} b={b} />)}
-          {p.note && <Note>{p.note}</Note>}
-        </div>
+    <div className="home-pub-entry">
+      <div className="home-pub-title">
+        {firstLink?.href
+          ? <a href={firstLink.href} target="_blank" rel="noreferrer">{p.title}</a>
+          : p.title}
+        {p.note && <span className="home-pub-featured">{p.note}</span>}
       </div>
-    </div>
-  );
-}
-
-function NewsItem({ date, children }) {
-  return (
-    <div className="news-item">
-      <span className="date">{date}</span>
-      <span style={{ flex: 1 }}>{children}</span>
+      <div className="home-pub-authors">{p.authors}</div>
+      <div className="home-pub-venue">{p.venue} · {p.year}</div>
+      {p.badges && p.badges.length > 0 && (
+        <div className="home-pub-links">
+          {p.badges.map((b, i) =>
+            b.href
+              ? <a key={i} href={b.href} target="_blank" rel="noreferrer" className="pub-lnk">{b.label}</a>
+              : <span key={i} className="pub-lnk">{b.label}</span>
+          )}
+        </div>
+      )}
     </div>
   );
 }
@@ -51,78 +38,84 @@ export default function Home() {
         path="/home"
       />
       <Nav />
-      <section className="home-hero">
-        <div>
-          <div className="kicker" style={{ letterSpacing: 2 }}>
-            NTU PhD · SMU RESEARCH · CODE LLM SECURITY
+
+      {/* ── Profile / About ─────────────────────────────────────────── */}
+      <section className="about-section">
+
+        {/* Left: profile card */}
+        <div className="profile-card">
+          <img
+            src="/images/jornbowrl_circle.jpg"
+            alt="Jian Wang"
+            className="profile-avatar"
+            onError={(e) => {
+              e.currentTarget.src = '/images/headshot-ai.png';
+            }}
+          />
+          <h2 className="profile-name">Jian Wang</h2>
+          <p className="profile-sub">王剑</p>
+          <p className="profile-sub">PhD · NTU Singapore</p>
+          <p className="profile-sub">Code LLM Security</p>
+          <div className="profile-links">
+            <a href="mailto:jian004@e.ntu.edu.sg" className="soc-link">Email</a>
+            <a href="https://scholar.google.com/citations?hl=en&user=GAe_mJUAAAAJ" target="_blank" rel="noreferrer" className="soc-link">Scholar</a>
+            <a href="https://github.com/jianwang-ntu" target="_blank" rel="noreferrer" className="soc-link">GitHub</a>
+            <a href="https://twitter.com/jornbowrl" target="_blank" rel="noreferrer" className="soc-link">Twitter</a>
           </div>
-          <h1>Code LLM security<br /><u>and intelligence.</u></h1>
-          <div className="lede">
-            I'm <b>Jian Wang (王剑)</b>, a recent PhD from the College of Computing
-            and Data Science (CCDS), <b>Nanyang Technological University</b>,
-            advised by{' '}
+          <a href="/data/JianWang_cv.pdf" target="_blank" rel="noreferrer" className="cv-download">↓ Download CV</a>
+        </div>
+
+        {/* Right: bio + interests + news */}
+        <div className="bio-column">
+          <h2 className="bio-section-h">Biography</h2>
+          <p className="bio-text">
+            I'm a recent PhD from the College of Computing and Data Science (CCDS) at{' '}
+            <b>Nanyang Technological University</b>, advised by{' '}
             <a href="https://personal.ntu.edu.sg/yi_li/" target="_blank" rel="noreferrer">Prof. Li Yi</a>.
             My research sits at the intersection of <b>software engineering</b>,{' '}
             <b>large language models</b>, and <b>trustworthy AI systems</b> — from
             automated program repair and AIGC code detection to execution-grounded
-            reasoning over programs. Before research I spent <b>~8 years</b> in
-            industry: AI Lab at Xiaomi (trained GANs for portrait background removal
-            and face cartoonisation) and a backend role at 58.com (high-performance
-            async web framework serving 100M+ daily requests).
+            reasoning over programs.
+          </p>
+          <p className="bio-text">
+            Before research I spent <b>~8 years</b> in industry: AI Lab at Xiaomi (trained
+            GANs for portrait background removal and face cartoonisation) and a backend role
+            at 58.com (high-performance async web framework serving 100M+ daily requests).
+          </p>
+
+          <h2 className="bio-section-h" style={{ marginTop: 22 }}>Research Interests</h2>
+          <ul className="bio-interests">
+            <li>Automated program repair (LLM-based)</li>
+            <li>AI-generated code detection</li>
+            <li>Execution-trace reasoning for code LLMs</li>
+            <li>Robustness &amp; fairness of neural systems</li>
+          </ul>
+
+          <h2 className="bio-section-h">News</h2>
+          <div className="bio-news">
+            {NEWS.slice(0, 7).map(([d, t], i) => (
+              <div key={i} className="news-row">
+                <span className="news-date">{d}</span>
+                <span>{t}</span>
+              </div>
+            ))}
           </div>
-          <div className="ctas">
-            <Chip solid href="/data/JianWang_cv.pdf">↓ Download CV</Chip>
-            <Chip href="mailto:jian004@e.ntu.edu.sg">Email →</Chip>
-            <Chip href="https://scholar.google.com/citations?hl=en&user=GAe_mJUAAAAJ">Scholar</Chip>
-            <Chip href="https://twitter.com/jornbowrl">Twitter</Chip>
-          </div>
-        </div>
-        <div className="headshot" style={{ background: 'var(--bg)', padding: 0 }}>
-          <img
-            src="/images/headshot-ai.png"
-            alt="Jian Wang"
-            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-            onError={(e) => {
-              e.currentTarget.style.display = 'none';
-              e.currentTarget.parentElement.innerHTML =
-                '<span style="background: rgba(250,250,247,0.6); padding: 4px; font-family: var(--mono); font-size: 10px;">[photo]</span>';
-            }}
-          />
+
+          <p style={{ marginTop: 18, fontFamily: 'var(--mono)', fontSize: 11, lineHeight: 1.6 }}>
+            ★ <b>S$100,000 prize</b> · 3rd place · AI Singapore Deepfake Detection Challenge · 2022
+          </p>
         </div>
       </section>
 
-      <section className="home-body">
-        <div>
-          <SectionHead>Featured work</SectionHead>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-            {FEATURED_PUBS.map((p, i) => <PubRow key={i} p={p} />)}
-          </div>
-          <div style={{ marginTop: 14, fontFamily: 'var(--mono)', fontSize: 11 }}>
-            → <a href="/pubs">see all publications</a> · <a href="/work">see the work behind them</a>
-          </div>
-        </div>
-        <div>
-          <SectionHead>News</SectionHead>
-          <div className="news-list">
-            {NEWS.slice(0, 7).map(([d, t], i) => <NewsItem key={i} date={d}>{t}</NewsItem>)}
-          </div>
-          <div style={{ marginTop: 24 }}>
-            <SectionHead>Awards</SectionHead>
-            <div style={{ fontSize: 11.5, lineHeight: 1.7 }}>
-              <div>★ <b>S$100,000 prize</b> · 3rd place · AI Singapore Deepfake Detection Challenge · 2022</div>
-              <div>★ AI / Computer Vision certification · Tsinghua University · 2019</div>
-            </div>
-          </div>
-          <div style={{ marginTop: 24 }}>
-            <SectionHead>Research interests</SectionHead>
-            <div style={{ fontSize: 11.5, lineHeight: 1.7 }}>
-              <div>· Automated program repair (LLM-based)</div>
-              <div>· AI-generated code detection</div>
-              <div>· Execution-trace reasoning for code LLMs</div>
-              <div>· Robustness & fairness of neural systems</div>
-            </div>
-          </div>
-        </div>
+      {/* ── Selected Publications ──────────────────────────────────── */}
+      <section className="home-pubs-section">
+        <h2 className="bio-section-h">Selected Publications</h2>
+        <p className="home-pubs-intro">
+          <b>Bold</b> author is me. →{' '}
+          <a href="/pubs">see all publications</a> ·{' '}
+          <a href="/work">see the work behind them</a>
+        </p>
+        {FEATURED_PUBS.map((p, i) => <PubEntry key={i} p={p} />)}
       </section>
 
       <Footer />

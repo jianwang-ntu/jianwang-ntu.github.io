@@ -50,4 +50,7 @@
 
   /* accent (kept neutral to match the wireframe vibe) */
   --accent: var(--ink);
+
+  /* academic link blue — used in Home & Publications academic redesign */
+  --link: #2962ff;
 }
