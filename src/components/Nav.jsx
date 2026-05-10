@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { useStyleMode } from '../context/StyleCtx.jsx';
 
 const NAV_ITEMS = [
   { to: '/home', label: 'Home' },
@@ -10,6 +11,7 @@ const NAV_ITEMS = [
 ];
 
 export default function Nav() {
+  const { mode, toggle } = useStyleMode();
   return (
     <nav className="nav">
       <NavLink to="/home" className="brand" style={{ textDecoration: 'none', color: 'var(--ink)' }}>
@@ -25,6 +27,13 @@ export default function Nav() {
             {n.label}
           </NavLink>
         ))}
+        <button
+          className="style-toggle"
+          onClick={toggle}
+          title={mode === 'academic' ? 'Switch to classic style' : 'Switch to academic style'}
+        >
+          {mode === 'academic' ? '◧ classic' : '◨ academic'}
+        </button>
       </div>
     </nav>
   );
