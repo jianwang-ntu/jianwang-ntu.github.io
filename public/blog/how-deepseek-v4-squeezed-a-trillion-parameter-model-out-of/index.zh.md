@@ -10,6 +10,8 @@
 
 作者强调，这两个数字单独看都很漂亮，但同时实现却异常困难。视频接下来花了大半篇幅讨论：DeepSeek 在没有顶级 NVIDIA 芯片、团队规模约为 OpenAI 四十分之一的前提下，是怎么硬把这两件事同时做到的。
 
+![DeepSeek V4 架构概览图](/images/blog/how-deepseek-v4-squeezed-a-trillion-parameter-model-out-of_diagram.png)
+
 ## 注意力的瓶颈：算不过来，也存不下
 
 视频先解释了 100 万 token 上下文为什么难。Transformer 每读到一个新 token，都要回头和之前的所有 token 比较一次相关性——这是 Google "Attention Is All You Need" 论文奠定的范式。第 10 个 token 比 10 次没问题，第 10 万个 token 就要比 10 万次，到 100 万 token 时计算量呈现"天文级别"。
