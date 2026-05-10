@@ -6,3 +6,4 @@ dist
 *.log
 .vite
 tools/video-to-blog/__pycache__/
+.claude/
