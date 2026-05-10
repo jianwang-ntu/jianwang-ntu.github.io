@@ -121,6 +121,12 @@ the one matching the mode you're fixing. Never collapse back to a single layout.
    don't.
 3. **Closing an issue with the post:** add `--issue N` to the script call.
    The PR body and commit message will reference `Closes #N`.
+   The watcher also runs a **duplicate check** before claiming each issue:
+   it normalises the source URL (YouTube video ID, arXiv paper ID, or bare
+   path) and compares it against every `source` entry in `posts.json`. On a
+   match it adds the `duplicate` label, posts a comment linking the existing
+   post, unassigns the issue, and skips it — no draft is produced.
+
 4. **Issue-driven (`watch-issues.sh`):** file an issue using the
    `Blog draft request` form (`.github/ISSUE_TEMPLATE/blog-request.yml`,
    auto-applies the `blog-request` label) with a Source URL — YouTube /
