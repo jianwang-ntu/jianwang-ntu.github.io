@@ -17,6 +17,8 @@
 #                               [--source-url <url>] [opts]
 #
 # Common opts: [--tags "a,b,c"] [--languages "en,zh"] [--issue N] [--watch]
+#              [--yt-cookies <path>]   Netscape cookies.txt for authenticated
+#                                      YouTube transcript/audio fetch.
 #
 # Batch opts (used by watch-issues.sh — accumulate several drafts on one
 # branch and open a single PR for all of them, to dodge GitHub's
@@ -54,6 +56,7 @@ ISSUE=""
 WATCH=0
 BRANCH_OVERRIDE=""
 NO_PR=0
+YT_COOKIES=""
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --pdf)        PDF="$2";        shift 2 ;;
@@ -67,6 +70,7 @@ while [[ $# -gt 0 ]]; do
     --watch)      WATCH=1;         shift   ;;
     --branch)     BRANCH_OVERRIDE="$2"; shift 2 ;;
     --no-pr)      NO_PR=1;         shift   ;;
+    --yt-cookies) YT_COOKIES="$2"; shift 2 ;;
     -h|--help)    usage 0 ;;
     --)           shift; break ;;
     -*)           echo "Unknown flag: $1" >&2; usage 2 ;;
@@ -172,6 +176,7 @@ elif [[ -n "$TEXT_FILE" ]]; then PIPELINE_ARGS+=(--text-file "$TEXT_FILE")
 fi
 [[ -n "$KIND"       ]] && PIPELINE_ARGS+=(--kind "$KIND")
 [[ -n "$SOURCE_URL" ]] && PIPELINE_ARGS+=(--source-url "$SOURCE_URL")
+[[ -n "$YT_COOKIES" ]] && PIPELINE_ARGS+=(--yt-cookies "$YT_COOKIES")
 
 # Put the venv on PATH so subprocesses spawned by pipeline.py (yt-dlp,
 # ffmpeg if it's pip-installed, etc.) resolve to the venv-installed tools.
