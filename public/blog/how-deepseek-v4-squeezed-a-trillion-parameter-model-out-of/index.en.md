@@ -10,8 +10,6 @@ The speaker frames V4 Pro by its two headline numbers. It carries 1.6 trillion p
 
 Both numbers are easy to advertise and brutal to actually engineer. The talk argues that the parameter count makes training unstable, while the context length blows up the cost of attention. Most of the video is about how DeepSeek dodged each of those walls.
 
-![DeepSeek V4 — architecture overview diagram](/images/blog/how-deepseek-v4-squeezed-a-trillion-parameter-model-out-of_diagram.png)
-
 ## The Attention Problem at One Million Tokens
 
 The speaker walks through the bottleneck slowly. Every transformer asks, for each new token, how it relates to every prior token. At ten words, that's ten comparisons. At 100,000 words, it's 100,000 comparisons. At a million, the number of comparisons is "astronomical," and even high-end hardware chokes.

@@ -1,6 +1,8 @@
 # Synthetic Computers at Scale: Microsoft's Substrate for Training Long-Horizon Productivity Agents
 
 ![Synthetic Computers at Scale: Microsoft's Substrate for Training Long-Horizon Productivity Agents](/images/blog/synthetic-computers-at-scale-microsofts-substrate-for.png)
+*Image from [https://arxiv.org/pdf/2604.28181](https://arxiv.org/pdf/2604.28181)*
+
 
 Productivity agents need rich user-specific context — files, project history, collaborator threads — to do realistic work, but real trajectories of that work are private and costly to collect. A Microsoft technical report by Ge, Peng, Cheng, and Gao proposes generating the *environment itself*: synthetic, persona-grounded computers populated with directory hierarchies and content-rich documents, then running long-horizon agent simulations on top of them to produce experiential training signal at scale.
 

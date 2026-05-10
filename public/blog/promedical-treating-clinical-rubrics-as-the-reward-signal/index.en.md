@@ -1,6 +1,8 @@
 # ProMedical: Treating Clinical Rubrics as the Reward Signal, Not a Post-Hoc Check
 
 ![ProMedical: Treating Clinical Rubrics as the Reward Signal, Not a Post-Hoc Check](/images/blog/promedical-treating-clinical-rubrics-as-the-reward-signal.png)
+*Image from [https://arxiv.org/pdf/2604.08326](https://arxiv.org/pdf/2604.08326)*
+
 
 A team from Xunfei Healthcare argues that the standard recipe for aligning medical LLMs — collect pairwise preferences, train a scalar reward model, run RLHF/DPO — is fundamentally mismatched with how clinicians actually evaluate medical answers. Their proposed fix, ProMedical, pushes physician-written rubrics directly into preference construction, reward modeling, and the optimization objective itself, with safety enforced as a hard veto rather than a soft penalty. The authors report a 22.3% overall accuracy gain and 21.7% safety-compliance gain when ProMedical-RM is used to steer GRPO on a Qwen3-8B base.
 

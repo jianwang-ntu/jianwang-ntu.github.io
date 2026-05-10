@@ -1,6 +1,8 @@
 # 从"合成电脑"出发：微软用1,000台虚拟工作环境训练长周期生产力Agent
 
 ![Synthetic Computers at Scale: Microsoft's Substrate for Training Long-Horizon Productivity Agents](/images/blog/synthetic-computers-at-scale-microsofts-substrate-for.png)
+*Image from [https://arxiv.org/pdf/2604.28181](https://arxiv.org/pdf/2604.28181)*
+
 
 当生产力Agent的目标从"完成单个任务"变成"在用户的整台电脑上工作一个月"时，训练数据从哪里来？微软的Tao Ge、Baolin Peng等人在技术报告《Synthetic Computers at Scale for Long-Horizon Productivity Simulation》中提出了一条路径：先合成出贴近真人的用户电脑环境，再让Agent在其中模拟一个月的工作，把过程轨迹和最终交付物都用作经验信号。论文报告了在1,000台合成电脑上的初步实验，并表明从中提炼出的技能能在同分布测试集和外部GDPVal基准上都带来可量化的提升。
 

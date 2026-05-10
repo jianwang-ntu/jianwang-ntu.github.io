@@ -1,6 +1,8 @@
 # WebForge: Generating Browser Agent Benchmarks That Are Realistic, Reproducible, and Scalable at the Same Time
 
 ![WebForge: Generating Browser Agent Benchmarks That Are Realistic, Reproducible, and Scalable at the Same Time](/images/blog/webforge-generating-browser-agent-benchmarks-that-are.png)
+*Image from [https://arxiv.org/pdf/2604.10988](https://arxiv.org/pdf/2604.10988)*
+
 
 Browser agent benchmarks force a three-way tradeoff: live websites give realism but rot within months, sandboxed environments give reproducibility but feel sterile, and both demand expensive manual curation. A new paper from Tencent BAC and Tsinghua, *WebForge: Breaking the Realism-Reproducibility-Scalability Trilemma in Browser Agent Benchmark* (Yuan et al., arXiv:2604.10988), proposes a four-agent generation pipeline that tries to satisfy all three constraints at once, and uses it to build WebForge-Bench — 934 tasks across 7 domains and 3 difficulty levels.
 

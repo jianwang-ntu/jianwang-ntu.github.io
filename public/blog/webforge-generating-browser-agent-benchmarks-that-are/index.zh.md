@@ -1,6 +1,8 @@
 # WebForge：一个把"真实—可复现—可扩展"三难困局打开的浏览器智能体评测框架
 
 ![WebForge: Generating Browser Agent Benchmarks That Are Realistic, Reproducible, and Scalable at the Same Time](/images/blog/webforge-generating-browser-agent-benchmarks-that-are.png)
+*Image from [https://arxiv.org/pdf/2604.10988](https://arxiv.org/pdf/2604.10988)*
+
 
 腾讯 BAC 与清华联合发布的论文 *WebForge* 提出了一个观察：现有的浏览器智能体基准在真实性、可复现性与可扩展性三者之间始终只能取其二。作者把这一矛盾命名为 **benchmark trilemma**(基准三难),并给出一条完全自动化的解法——一个由 Plan、Generate、Refine、Validate 四个智能体串起来的流水线,可以端到端地造出"自带噪声、自带答案、自带验证机制"的可交互网页环境。基于这个流水线生成的 WebForge-Bench 包含 934 个任务,横跨 7 个领域和 3 个难度等级。
 

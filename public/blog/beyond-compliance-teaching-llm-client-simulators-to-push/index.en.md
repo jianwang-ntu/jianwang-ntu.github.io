@@ -1,6 +1,8 @@
 # Beyond Compliance: Teaching LLM Client Simulators to Push Back
 
 ![Beyond Compliance: Teaching LLM Client Simulators to Push Back](/images/blog/beyond-compliance-teaching-llm-client-simulators-to-push.png)
+*Image from [https://arxiv.org/pdf/2604.10507](https://arxiv.org/pdf/2604.10507)*
+
 
 Counselor-training simulators have a credibility problem: the LLM-based "clients" used to rehearse therapeutic conversations are too agreeable, leaving trainees unprepared for the resistance that pervades real practice. A new paper from Liu et al. at Southeast University proposes **ResistClient**, a simulator that models challenging client behavior by grounding it in Client Resistance Theory and training the model to reason about *why* a client would resist before deciding how to respond.
 

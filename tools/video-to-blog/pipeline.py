@@ -1097,6 +1097,7 @@ def publish_to_blog_repo(
     diagram_image: Path | None = None,
     labels: list[str] | None = None,
     source_kind: str | None = None,
+    cover_from_source: bool = False,
 ) -> Path:
     """Drop the post into <blog_repo>/public/blog/<slug>/ and update posts.json.
 
@@ -1109,6 +1110,13 @@ def publish_to_blog_repo(
             index.zh.md      (if 'zh' in blog_paths)
             meta.json
         public/blog/posts.json   # top-level manifest, listing all slugs
+
+    `cover_from_source`: set True when the cover image was extracted from the
+    original source (PDF figure, blog screenshot, etc.) rather than generated
+    by the AI pipeline.  When True and `source_url` is set, a small attribution
+    line — "*Image from [<url>](<url>)*" — is injected into each language
+    version immediately after the cover image.  YouTube-sourced posts use the
+    AI-generated cover and should leave this False.
 
     Optionally creates a local commit. Never pushes — user pushes manually.
     """
@@ -1159,6 +1167,18 @@ def publish_to_blog_repo(
         text = path.read_text(encoding="utf-8")
         if image_url:
             text = _insert_cover_after_h1(text, image_url, alt=title)
+            # For source-extracted covers (paper figures, blog screenshots)
+            # add an attribution line directly beneath the cover image so
+            # readers know where the image comes from.  AI-generated covers
+            # (video posts) do not need attribution.
+            if cover_from_source and source_url and image_url not in text.split("\n")[0]:
+                attr_line = f"*Image from [{source_url}]({source_url})*"
+                if attr_line not in text:
+                    text = text.replace(
+                        f"![{title}]({image_url})\n",
+                        f"![{title}]({image_url})\n{attr_line}\n",
+                        1,
+                    )
         if diagram_url:
             text = _insert_diagram_after_first_section(text, diagram_url, alt=f"{title} — overview diagram")
         t, d = _parse_blog_md(text)
@@ -1542,6 +1562,7 @@ def main() -> int:
         #   3. If no PDF figure is found, fall back to generative cover only.
         cover_image: Path | None = None
         diagram_image: Path | None = None
+        cover_from_source: bool = False  # True when cover is from PDF/blog, not AI
         cover_path = args.out / "cover.png"
         generated_path = args.out / "cover_generated.png"
         if (args.image == "auto" and not args.skip_blog
@@ -1566,6 +1587,7 @@ def main() -> int:
                         if best_fig is not None:
                             shutil.copyfile(best_fig, cover_path)
                             cover_image = cover_path
+                            cover_from_source = True  # PDF figure, not AI-generated
                             log.info("Cover image from PDF figure → %s (%d bytes)",
                                      cover_path, cover_path.stat().st_size)
                             # Also generate an overview diagram to embed inline.
@@ -1625,6 +1647,7 @@ def main() -> int:
                     diagram_image=diagram_image,
                     labels=auto_labels,
                     source_kind=source_kind,
+                    cover_from_source=cover_from_source,
                 )
                 log.info("Published to %s", published)
 
