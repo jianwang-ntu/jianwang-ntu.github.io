@@ -1,5 +1,28 @@
 [
   {
+    "slug": "anthropics-2026-developer-conference-no-new-model-but-a",
+    "title_en": "Anthropic's 2026 Developer Conference: No New Model, But a Surprise Compute Deal With Musk",
+    "date": "2026-05-10",
+    "dek_en": "In a recap of Anthropic's May 6 developer conference, Dafei — host of the Chinese tech show *Best Partners* — argues the headline news was not a next-generation foundation model but two things the industry did not see coming: a full lease o",
+    "tags": [],
+    "languages": [
+      "en",
+      "zh"
+    ],
+    "title_zh": "Anthropic 2026 开发者大会:不发新模型,却押注开发者生态与马斯克的算力",
+    "dek_zh": "2026 年 5 月 6 日,Anthropic 在旧金山召开了 2026 年全球开发者大会。视频博主\"大飞\"在最佳拍档频道梳理了这场大会的核心信息:Anthropic 没有像外界预期那样发布新一代基础模型,而是用一整套覆盖算力、智能体、编程工具、平台能力与成本优化的组合拳,重新定义了 Claude 面向开发者与企业级用户的生态价值。更出人意料的是,曾被视为直接竞争对手的埃隆·马斯克,把 SpaceX 旗下超大规模 AI 数据中心 Colossus 1 的全部算力一次性租给了",
+    "source": "https://www.youtube.com/watch?v=Z7t-XgNBvck",
+    "source_kind": "video",
+    "image": "/images/blog/anthropics-2026-developer-conference-no-new-model-but-a.png",
+    "labels": [
+      "topic:agents",
+      "topic:business",
+      "topic:infra",
+      "format:podcast",
+      "speaker:independent"
+    ]
+  },
+  {
     "slug": "co-evolving-the-evaluator-how-to-make-ai-driven-research",
     "title_en": "Co-Evolving the Evaluator: How to Make AI-Driven Research Actually Work for Databases",
     "date": "2026-05-08",
