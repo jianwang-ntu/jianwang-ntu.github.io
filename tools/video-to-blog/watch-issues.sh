@@ -108,6 +108,104 @@ print(json.dumps({
 '
 }
 
+# ---------------------------------------------------------------------------
+# Duplicate detection helpers
+# ---------------------------------------------------------------------------
+
+# Ensure the `duplicate` label exists in the repo (idempotent).
+ensure_duplicate_label() {
+  gh label create "duplicate" \
+      --repo "$REPO_FULL" \
+      --description "Source already exists as a published blog post" \
+      --color "cfd3d7" >/dev/null 2>&1 || true
+}
+
+# Normalise a source URL to a canonical dedup key:
+#   YouTube  → "youtube:<video_id>"   (strips timestamp, playlist params)
+#   arXiv    → "arxiv:<paper_id>"     (abs/pdf/html forms all collapse)
+#   other    → "scheme://host/path"   (query string stripped)
+# Echoes the key; returns 0 always.
+normalise_source_url() {
+  python3 -c "
+import sys, urllib.parse, re
+url = sys.argv[1].strip()
+p = urllib.parse.urlparse(url)
+host = p.netloc.lower()
+if 'youtube.com' in host:
+    qs = urllib.parse.parse_qs(p.query)
+    vid = (qs.get('v') or [''])[0]
+    if vid: print('youtube:' + vid); sys.exit(0)
+if 'youtu.be' in host:
+    vid = p.path.lstrip('/')
+    if vid: print('youtube:' + vid); sys.exit(0)
+if 'arxiv.org' in host:
+    m = re.match(r'/(abs|pdf|html)/(.+?)(?:\\.pdf)?/?$', p.path)
+    if m: print('arxiv:' + m.group(2)); sys.exit(0)
+print(p.scheme + '://' + p.netloc + p.path)
+" "$1"
+}
+
+# Compare the given URL against every source in public/blog/posts.json using
+# the same normalisation. Echoes the slug of the first match, or nothing.
+find_duplicate_post() {
+  local url="$1"
+  local canonical
+  canonical=$(normalise_source_url "$url") || return 0
+  [[ -z "$canonical" ]] && return 0
+  python3 -c "
+import json, sys, urllib.parse, re
+
+canonical = sys.argv[1]
+try:
+    posts = json.load(open('public/blog/posts.json'))
+except Exception:
+    sys.exit(0)
+
+def norm(u):
+    if not u: return ''
+    p = urllib.parse.urlparse(u.strip())
+    host = p.netloc.lower()
+    if 'youtube.com' in host:
+        qs = urllib.parse.parse_qs(p.query)
+        vid = (qs.get('v') or [''])[0]
+        if vid: return 'youtube:' + vid
+    if 'youtu.be' in host:
+        vid = p.path.lstrip('/')
+        if vid: return 'youtube:' + vid
+    if 'arxiv.org' in host:
+        m = re.match(r'/(abs|pdf|html)/(.+?)(?:\\.pdf)?/?$', p.path)
+        if m: return 'arxiv:' + m.group(2)
+    return p.scheme + '://' + p.netloc + p.path
+
+for post in posts:
+    if norm(post.get('source','')) == canonical:
+        print(post['slug'])
+        sys.exit(0)
+" "$canonical"
+}
+
+# Comment on the issue explaining the duplicate, add `duplicate` label,
+# and unassign. Called from build_blogsh_args_for_issue; returns 3 so
+# callers can distinguish "duplicate skipped" from other non-0 returns.
+mark_issue_duplicate() {
+  local n="$1" dup_slug="$2" url="$3"
+  ensure_duplicate_label
+  local post_link="https://www.wj2ai.com/blog/${dup_slug}"
+  gh issue comment "$n" --repo "$REPO_FULL" --body \
+"**Duplicate source detected — skipping.**
+
+This URL has already been drafted as a blog post:
+→ [\`${dup_slug}\`](${post_link})
+
+If the new post covers substantially different content (e.g. a follow-up video), please unassign and update the issue notes, then the watcher will retry." \
+    >/dev/null 2>&1 || true
+  gh issue edit "$n" --repo "$REPO_FULL" \
+      --add-label "duplicate" \
+      --remove-assignee "$ME" >/dev/null 2>&1 || true
+  echo "  ⚠ #$n duplicate of '${dup_slug}' — labelled and skipped"
+}
+
+# ---------------------------------------------------------------------------
 # Pull the oldest unassigned issues. Echoes the JSON array (possibly empty).
 fetch_queue() {
   local raw
@@ -155,6 +253,17 @@ build_blogsh_args_for_issue() {
       --body "Watcher couldn't find a Source URL or Pasted source body. Add one and unassign me." >/dev/null
     gh issue edit "$n" --repo "$REPO_FULL" --remove-assignee "$ME" >/dev/null 2>&1 || true
     return 2
+  fi
+
+  # Duplicate check — compare source URL against existing posts.json entries.
+  # Exit code 3 = duplicate found; callers treat it as a clean skip.
+  if [[ -n "$URL" ]]; then
+    local dup_slug
+    dup_slug=$(cd "$REPO_ROOT" && find_duplicate_post "$URL")
+    if [[ -n "$dup_slug" ]]; then
+      mark_issue_duplicate "$n" "$dup_slug" "$URL"
+      return 3
+    fi
   fi
 
   # Pasted source wins over URL (for paywalled posts).

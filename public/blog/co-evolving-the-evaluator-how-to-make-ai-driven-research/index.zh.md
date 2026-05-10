@@ -1,6 +1,8 @@
 # 让评估器自己进化:ADRS 如何把 LLM 推向数据库优化的前线
 
 ![Co-Evolving the Evaluator: How to Make AI-Driven Research Actually Work for Databases](/images/blog/co-evolving-the-evaluator-how-to-make-ai-driven-research.png)
+*Image from [https://arxiv.org/pdf/2604.06566](https://arxiv.org/pdf/2604.06566)*
+
 
 数据库性能优化长期受困于人力瓶颈,而把 LLM 接入"自动算法发现"循环——即所谓的 AI-Driven Research for Systems (ADRS)——本可以把这件事自动化,但论文指出真正卡脖子的不是生成,而是评估:LLM 几分钟就能产出几百个候选方案,人工搭好的评估器跟不上。来自 UC Berkeley、KTH、Meta、Workday、密歇根大学和 Maven AGI 的 Cheng 等人在这篇 PVLDB 文章中提出,把评估器本身当作一个可演化对象,与解一起共同进化,并通过三个数据库经典问题验证这一思路。
 

@@ -1,6 +1,8 @@
 # 当心理咨询模拟器学会"不配合":ResistClient 用动机推理重建真实临床张力
 
 ![Beyond Compliance: Teaching LLM Client Simulators to Push Back](/images/blog/beyond-compliance-teaching-llm-client-simulators-to-push.png)
+*Image from [https://arxiv.org/pdf/2604.10507](https://arxiv.org/pdf/2604.10507)*
+
 
 心理咨询训练长期被一个尴尬的事实拖累:用大模型扮演的"虚拟来访者"几乎都太听话了。东南大学 Liu 等人的这篇论文提出 **ResistClient**,把临床心理学中的"客户阻抗理论"(Client Resistance Theory)塞进训练流程,用一个两阶段框架 **RIMR**(Resistance-Informed Motivation Reasoning)让模型先做动机推理、再生成回应,从而把"过度顺从"的模拟器拉回真实临床场景。
 

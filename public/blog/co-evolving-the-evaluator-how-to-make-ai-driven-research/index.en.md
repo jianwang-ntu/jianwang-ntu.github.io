@@ -1,6 +1,8 @@
 # Co-Evolving the Evaluator: How to Make AI-Driven Research Actually Work for Databases
 
 ![Co-Evolving the Evaluator: How to Make AI-Driven Research Actually Work for Databases](/images/blog/co-evolving-the-evaluator-how-to-make-ai-driven-research.png)
+*Image from [https://arxiv.org/pdf/2604.06566](https://arxiv.org/pdf/2604.06566)*
+
 
 A new paper by Cheng et al. (UC Berkeley, KTH, Meta, Workday, U-Michigan, Maven AGI) argues that the bottleneck in applying LLM-driven algorithm discovery to databases is no longer solution generation — it's evaluation. The authors propose co-evolving the evaluator alongside the candidate algorithms, and back the claim with three case studies that beat state-of-the-art baselines on buffer management, index selection, and query rewriting.
 

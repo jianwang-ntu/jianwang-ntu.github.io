@@ -30,7 +30,8 @@ npm run preview  # sanity-check the static bundle on :9002
 Push to `master` — `.github/workflows/deploy.yaml` builds and publishes to
 <https://jianwang-ntu.github.io/>. The workflow copies `dist/index.html` to
 `dist/404.html` so SPA clean URLs (`/home`, `/pubs`, `/work`, `/cv`) resolve
-on direct hits.
+on direct hits. It also rewrites `/images/` paths to point at the S3 bucket
+and drops `dist/images/` from the Pages payload.
 
 The repo must be **public** for Pages to publish on a free account, and the
 Pages source must be set to **GitHub Actions** under `Settings → Pages`.
@@ -51,8 +52,8 @@ rsync -avz --delete \
 
 All copy lives in `src/data.jsx`:
 
-- `NEWS` — hero column on the home page
-- `FEATURED_PUBS` — top three on the home page
+- `NEWS` — timeline items shown on Home (both style modes)
+- `FEATURED_PUBS` — top three papers shown on Home (both style modes)
 - `ALL_PUBS` — full Publications page (auto-grouped by year)
 - `WORK` — the spine on Work & Projects
 - `PROJECTS` — open-source artifact grid
@@ -60,9 +61,34 @@ All copy lives in `src/data.jsx`:
 `public/data/` and `public/images/` ship verbatim — drop the CV PDF, bio.txt,
 and headshot variants there.
 
-## Headshot
+## Style toggle (classic ↔ academic)
 
-`public/images/headshot-ai.png` is the AI-stylised wireframe portrait used in
-the hero. Three additional locally-generated variants live next to it
-(`headshot-sketch.jpg`, `headshot-cartoon.jpg`, `headshot-ink.png`) — swap by
-editing the `<img src>` in `src/pages/Home.jsx`.
+The Home and Publications pages carry two full layout variants that the visitor
+can switch between using the **`◧ classic` / `◨ academic` button** in the nav.
+
+| Mode | Description |
+|---|---|
+| **academic** | Academic portfolio look (default): circular photo, Bio / Research Interests / News column, clean text-based publication list with blue PDF links — inspired by [liuyang12.github.io](https://liuyang12.github.io/) and [franklinliu.github.io/publications](https://franklinliu.github.io/publications/) |
+| **classic** | Original wireframe aesthetic: Caveat display headings, thumbnail placeholder boxes, dashed borders, editorial two-column hero |
+
+The choice persists in `localStorage` (key: `wj-style-mode`).
+
+**Where the wiring lives:**
+
+- `src/context/StyleCtx.jsx` — `StyleProvider` + `useStyleMode()` hook
+- `src/App.jsx` — wraps the route tree with `<StyleProvider>`
+- `src/components/Nav.jsx` — reads `{ mode, toggle }` and renders the button
+- `src/pages/Home.jsx` — exports `ClassicHome` and `AcademicHome` sub-components;
+  the page shell picks one based on `mode`
+- `src/pages/Publications.jsx` — same pattern: `ClassicPublications` /
+  `AcademicPublications`
+- `src/styles/pages.css` — both sets of layout classes live in the sheet
+  simultaneously; switching is purely a React-rendered DOM swap
+
+## Photos
+
+| File | Used in |
+|---|---|
+| `public/images/jornbowrl_circle.jpg` | Academic mode profile avatar (pre-cropped circle) |
+| `public/images/headshot-ai.png` | Classic mode hero (AI-stylised portrait, 220×260 px box) |
+| `headshot-sketch.jpg`, `headshot-cartoon.jpg`, `headshot-ink.png` | Spares — swap by editing `<img src>` in `Home.jsx` |

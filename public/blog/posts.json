@@ -1,5 +1,51 @@
 [
   {
+    "slug": "demis-hassabis-on-the-through-line-from-theme-park-to-agi",
+    "title_en": "Demis Hassabis on the Through-line from Theme Park to AGI",
+    "date": "2026-05-11",
+    "dek_en": "In a wide-ranging interview, DeepMind founder and CEO Demis Hassabis traces his path from teenage chess prodigy to running one of the most consequential AI labs in the world, and lays out a thesis that reframes what AI is for: a tool for do",
+    "tags": [],
+    "languages": [
+      "en",
+      "zh"
+    ],
+    "title_zh": "Demis Hassabis 谈 AGI、AI for Science 与\"信息即宇宙基底\"",
+    "dek_zh": "在一场创始人聚会的炉边对话中，DeepMind 创始人 Demis Hassabis 回顾了自己从游戏开发者到神经科学家、再到 AGI 追逐者的轨迹。他给出了对 AGI 时间表的一个具体押注——**2030 年**——并阐述了一个更大胆的看法：信息可能比物质和能量更接近宇宙的基本结构。",
+    "source": "https://www.youtube.com/watch?v=AFpeWo1GTeg",
+    "source_kind": "video",
+    "image": "/images/blog/demis-hassabis-on-the-through-line-from-theme-park-to-agi.png",
+    "labels": [
+      "topic:research",
+      "topic:agents",
+      "topic:llm",
+      "format:interview",
+      "speaker:google"
+    ]
+  },
+  {
+    "slug": "andrej-karpathy-on-ai-psychosis-auto-research-and-why-he",
+    "title_en": "Andrej Karpathy on AI Psychosis, Auto-Research, and Why He Hasn't Typed Code Since December",
+    "date": "2026-05-11",
+    "dek_en": "On a recent *No Priors* episode, Andrej Karpathy described being in a sustained state of what he calls \"AI psychosis\" — a frantic attempt to keep up with a capability shift in coding agents that, in his telling, fundamentally changed how an",
+    "tags": [],
+    "languages": [
+      "en",
+      "zh"
+    ],
+    "title_zh": "Karpathy 谈\"AI 精神错乱\"：当代码不再是动词，新游戏是榨干你的 token 吞吐量",
+    "dek_zh": "在 No Priors 播客这期节目里，Andrej Karpathy 描述自己长期处在一种\"AI 精神错乱\"状态——自 2025 年 12 月以来，他几乎没有亲手敲过一行代码，而是每天花 16 个小时把自己的意图\"显化\"给代理。他的核心观点是：能力的瓶颈已经从打字速度、甚至从计算资源，转移到了人本身——能不能把自己从循环里拿掉，决定了你能调动多少智能。",
+    "source": "https://www.youtube.com/watch?v=kwSVtQ7dziU&t=1550s",
+    "source_kind": "video",
+    "image": "/images/blog/andrej-karpathy-on-ai-psychosis-auto-research-and-why-he.png",
+    "labels": [
+      "topic:agents",
+      "topic:engineering",
+      "topic:llm",
+      "format:podcast",
+      "speaker:independent"
+    ]
+  },
+  {
     "slug": "a16zs-case-for-continual-learning-llms-are-stuck-in-memento",
     "title_en": "A16Z's Case for Continual Learning: LLMs Are Stuck in *Memento*",
     "date": "2026-05-10",

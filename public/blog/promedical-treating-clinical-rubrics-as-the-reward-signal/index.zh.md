@@ -1,6 +1,8 @@
 # ProMedical：用细粒度临床量规把"安全"硬约束写进医疗大模型的奖励信号
 
 ![ProMedical: Treating Clinical Rubrics as the Reward Signal, Not a Post-Hoc Check](/images/blog/promedical-treating-clinical-rubrics-as-the-reward-signal.png)
+*Image from [https://arxiv.org/pdf/2604.08326](https://arxiv.org/pdf/2604.08326)*
+
 
 He Geng、Yangmin Huang 等人(科大讯飞医疗)的这篇论文针对一个日益突出的问题:医疗大模型的训练信号(粗粒度二元偏好)和评测标准(细粒度临床量规)之间存在显著错位。作者提出 **ProMedical**——一套把临床量规直接嵌入偏好数据、奖励建模与评测的统一框架,并用其训练出的 8B 奖励模型在自建基准上把 Qwen3-8B 的整体准确率推高 22.3%、安全合规率推高 21.7%。
 

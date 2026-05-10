@@ -2,33 +2,111 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.wj2ai.com/home</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://www.wj2ai.com/pubs</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.wj2ai.com/work</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.wj2ai.com/cv</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.wj2ai.com/blog</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.wj2ai.com/blog/a16zs-case-for-continual-learning-llms-are-stuck-in-memento</loc>
+    <lastmod>2026-05-10</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.wj2ai.com/blog/how-deepseek-v4-squeezed-a-trillion-parameter-model-out-of</loc>
+    <lastmod>2026-05-10</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.wj2ai.com/blog/pets-cattle-and-the-quiet-choice-that-defines-your-ai</loc>
+    <lastmod>2026-05-10</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.wj2ai.com/blog/the-filing-cabinet-problem-why-continual-learning-is-the</loc>
+    <lastmod>2026-05-10</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.wj2ai.com/blog/autonomous-ai-hackers-have-arrived-and-the-defenders-have</loc>
+    <lastmod>2026-05-10</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.wj2ai.com/blog/boris-on-claude-code-compute-and-why-software-will-become-a</loc>
+    <lastmod>2026-05-10</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.wj2ai.com/blog/anthropics-2026-developer-conference-no-new-model-but-a</loc>
+    <lastmod>2026-05-10</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.wj2ai.com/blog/co-evolving-the-evaluator-how-to-make-ai-driven-research</loc>
+    <lastmod>2026-05-08</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.wj2ai.com/blog/promedical-treating-clinical-rubrics-as-the-reward-signal</loc>
+    <lastmod>2026-05-08</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.wj2ai.com/blog/beyond-compliance-teaching-llm-client-simulators-to-push</loc>
+    <lastmod>2026-05-08</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.wj2ai.com/blog/atbench-stress-testing-agent-safety-across-long</loc>
+    <lastmod>2026-05-08</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.wj2ai.com/blog/webforge-generating-browser-agent-benchmarks-that-are</loc>
+    <lastmod>2026-05-08</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.wj2ai.com/blog/the-harness-as-a-distributed-context-management-system</loc>
+    <lastmod>2026-05-08</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.wj2ai.com/blog/synthetic-computers-at-scale-microsofts-substrate-for</loc>
