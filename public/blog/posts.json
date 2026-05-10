@@ -1,5 +1,28 @@
 [
   {
+    "slug": "boris-on-claude-code-compute-and-why-software-will-become-a",
+    "title_en": "Boris on Claude Code, Compute, and Why Software Will Become a Basic Literacy",
+    "date": "2026-05-10",
+    "dek_en": "In a conversation at Anthropic's developer day, Boris — the creator of Claude Code — argues that AI coding agents are not just speeding engineers up, they are restructuring how companies work. The throughline of the talk: organizations that",
+    "tags": [],
+    "languages": [
+      "en",
+      "zh"
+    ],
+    "title_zh": "Claude Code 创造者 Boris：编程将成为像识字一样的基础技能",
+    "dek_zh": "在 Anthropic 开发者大会的炉边谈话中，Claude Code 的创造者 Boris 接受了主持人 Kate 的采访。他提出一个核心论断：当下正经历一场堪比\"印刷术问世\"的变革——AI 代理（agent）已经在重塑软件开发，而真正能享受到生产力红利的企业，必须像 1990 年代那样重新围绕这项新技术重构整个业务流程。",
+    "source": "https://www.youtube.com/watch?v=kRgdkOw82F0",
+    "source_kind": "video",
+    "image": "/images/blog/boris-on-claude-code-compute-and-why-software-will-become-a.png",
+    "labels": [
+      "topic:agents",
+      "topic:business",
+      "topic:product",
+      "format:interview",
+      "speaker:anthropic"
+    ]
+  },
+  {
     "slug": "anthropics-2026-developer-conference-no-new-model-but-a",
     "title_en": "Anthropic's 2026 Developer Conference: No New Model, But a Surprise Compute Deal With Musk",
     "date": "2026-05-10",
