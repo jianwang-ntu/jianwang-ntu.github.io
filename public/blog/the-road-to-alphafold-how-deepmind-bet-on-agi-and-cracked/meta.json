@@ -1,0 +1,26 @@
+{
+  "slug": "the-road-to-alphafold-how-deepmind-bet-on-agi-and-cracked",
+  "title_en": "The Road to AlphaFold: How DeepMind Bet on AGI and Cracked Biology's Hardest Problem",
+  "date": "2026-05-11",
+  "dek_en": "A documentary-style talk traces Demis Hassabis and Shane Legg from a stealth London startup pitching \"solve intelligence\" to investors, through AlphaGo's Sputnik moment, to AlphaFold's solution of the 50-year-old protein folding problem. Th",
+  "tags": [
+    "llm",
+    "agents",
+    "research"
+  ],
+  "languages": [
+    "en",
+    "zh"
+  ],
+  "title_zh": "从游戏到蛋白质：DeepMind 通往 AGI 的二十年",
+  "dek_zh": "这是一部关于 DeepMind 创始人 Demis Hassabis 与 Shane Legg 如何把\"解决智能本身\"作为人生目标的纪录片。片中两人反复主张：通用人工智能（AGI）已不再是遥远的科幻命题，而是一场正在他们手中加速的工程竞赛——可能比互联网、比移动互联网更重要，\"更像是电或火的出现\"。",
+  "source": "https://www.youtube.com/watch?v=d95J8yzvjbQ",
+  "source_kind": "video",
+  "image": "/images/blog/the-road-to-alphafold-how-deepmind-bet-on-agi-and-cracked.png",
+  "labels": [
+    "topic:research",
+    "topic:agents",
+    "format:talk",
+    "speaker:google"
+  ]
+}
