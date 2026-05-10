@@ -41,6 +41,7 @@ from faster_whisper import WhisperModel
 from sources import (
     SourceBundle,
     auto_detect_kind,
+    extract_pdf_figures,
     from_linkedin,
     from_pdf,
     from_text_file,
@@ -902,6 +903,97 @@ def generate_blog_image(en_blog_md: Path, out_dir: Path,
     return img_path
 
 
+def select_best_paper_figure(candidates: list[Path], title: str) -> Path | None:
+    """Use Claude vision to pick the best overview / architecture / workflow figure
+    from a list of candidate image paths extracted from a PDF.
+
+    Returns the chosen Path, or None if no candidate looks like a useful cover.
+    Falls back to the largest candidate when the Anthropic API key is absent or
+    the SDK is not installed.
+    """
+    if not candidates:
+        return None
+
+    # Fast-path: single candidate, skip API call.
+    if len(candidates) == 1:
+        log.info("Single PDF figure candidate — using it directly: %s", candidates[0].name)
+        return candidates[0]
+
+    # Try Anthropic vision to pick the best figure.
+    api_key = os.environ.get("ANTHROPIC_API_KEY")
+    if not api_key:
+        # No API key — heuristic: pick the largest file (usually the most detailed figure).
+        best = max(candidates, key=lambda p: p.stat().st_size)
+        log.info("No ANTHROPIC_API_KEY — choosing largest PDF figure heuristically: %s", best.name)
+        return best
+
+    try:
+        import anthropic
+        import base64
+        from PIL import Image
+    except ImportError:
+        best = max(candidates, key=lambda p: p.stat().st_size)
+        log.warning("anthropic/pillow not installed — choosing largest PDF figure: %s", best.name)
+        return best
+
+    # Resize candidates for the API call (cap at 1024px on the long side to
+    # keep token cost low while keeping the diagram legible).
+    def _thumb_b64(path: Path) -> tuple[str, str]:
+        with Image.open(path) as img:
+            img = img.convert("RGB")
+            w, h = img.size
+            if max(w, h) > 1024:
+                scale = 1024 / max(w, h)
+                img = img.resize((int(w * scale), int(h * scale)), Image.LANCZOS)
+            buf = __import__("io").BytesIO()
+            img.save(buf, format="JPEG", quality=85)
+            return base64.standard_b64encode(buf.getvalue()).decode(), "image/jpeg"
+
+    content: list[dict] = [
+        {
+            "type": "text",
+            "text": (
+                f'The following figures come from a research paper titled: "{title}"\n\n'
+                "Identify the figure that best serves as an overview, system architecture, "
+                "workflow diagram, or framework illustration for the paper. "
+                "Reply with ONLY the zero-based index of the best figure (e.g. 0, 1, 2…). "
+                "If none of the figures are suitable as a blog cover image "
+                "(e.g. all are small inline plots, tables, or decorative elements), reply with -1."
+            ),
+        }
+    ]
+    for i, path in enumerate(candidates):
+        try:
+            b64, media_type = _thumb_b64(path)
+        except Exception as e:
+            log.debug("Could not thumbnail %s: %s", path.name, e)
+            continue
+        content.append({"type": "text", "text": f"Figure {i}:"})
+        content.append({"type": "image", "source": {"type": "base64",
+                                                     "media_type": media_type,
+                                                     "data": b64}})
+
+    try:
+        client = anthropic.Anthropic(api_key=api_key)
+        msg = client.messages.create(
+            model="claude-haiku-4-5",
+            max_tokens=16,
+            messages=[{"role": "user", "content": content}],
+        )
+        raw = msg.content[0].text.strip()
+        log.info("Claude figure selection response: %r", raw)
+        m = re.search(r"-?\d+", raw)
+        idx = int(m.group()) if m else -1
+        if idx == -1 or idx >= len(candidates):
+            log.info("Claude found no suitable figure — will fall back to generated cover.")
+            return None
+        log.info("Claude selected PDF figure %d: %s", idx, candidates[idx].name)
+        return candidates[idx]
+    except Exception as e:
+        log.warning("Claude figure selection failed (%s) — using largest candidate.", e)
+        return max(candidates, key=lambda p: p.stat().st_size)
+
+
 # --------------------------------------------------------------------------- #
 # Step 4 — publish to blog-repo
 # --------------------------------------------------------------------------- #
@@ -956,6 +1048,45 @@ def _insert_cover_after_h1(md_text: str, image_url: str, alt: str) -> str:
     return "\n".join(out) + ("\n" if md_text.endswith("\n") else "")
 
 
+def _insert_diagram_after_first_section(md_text: str, image_url: str, alt: str) -> str:
+    """Insert ``![alt](image_url)`` after the first body paragraph that follows
+    the first ``##`` section heading.
+
+    Placement heuristic: find the first ``##`` heading, skip it and its
+    immediately following paragraph, then inject the image after that
+    paragraph so the diagram lands at a natural reading break.  If no ``##``
+    is found, append at the end.  No-op if the URL is already present.
+    """
+    if image_url in md_text:
+        return md_text  # already present
+
+    lines = md_text.splitlines()
+    insert_after: int | None = None
+    state = "before_section"  # → "in_section" → "after_para"
+
+    for i, line in enumerate(lines):
+        if state == "before_section":
+            if line.startswith("## "):
+                state = "in_section"
+        elif state == "in_section":
+            # Wait for a non-empty paragraph line after the heading.
+            if line.strip() and not line.startswith("#"):
+                state = "after_para"
+        elif state == "after_para":
+            # The blank line (or next heading) after the paragraph.
+            if not line.strip() or line.startswith("#"):
+                insert_after = i
+                break
+
+    if insert_after is None:
+        # Fallback: append at end.
+        out = lines + ["", f"![{alt}]({image_url})", ""]
+    else:
+        out = lines[:insert_after] + ["", f"![{alt}]({image_url})", ""] + lines[insert_after:]
+
+    return "\n".join(out) + ("\n" if md_text.endswith("\n") else "")
+
+
 def publish_to_blog_repo(
     blog_paths: dict[str, Path],
     blog_repo: Path,
@@ -963,6 +1094,7 @@ def publish_to_blog_repo(
     tags: list[str] | None = None,
     commit: bool = True,
     cover_image: Path | None = None,
+    diagram_image: Path | None = None,
     labels: list[str] | None = None,
     source_kind: str | None = None,
 ) -> Path:
@@ -997,17 +1129,28 @@ def publish_to_blog_repo(
     post_dir = public_blog / slug
     post_dir.mkdir(exist_ok=True)
 
+    images_dir = blog_repo / "public" / "images" / "blog"
+    images_dir.mkdir(parents=True, exist_ok=True)
+
     # Stage the cover image first so we know its URL when injecting the
     # markdown reference. Path stays as `/images/blog/<slug>.png` — the
     # publish-dist workflow rewrites this to a CDN URL for dist_remote.
     image_url: str | None = None
     if cover_image is not None and cover_image.exists():
-        images_dir = blog_repo / "public" / "images" / "blog"
-        images_dir.mkdir(parents=True, exist_ok=True)
         target_img = images_dir / f"{slug}{cover_image.suffix or '.png'}"
         shutil.copyfile(cover_image, target_img)
         image_url = f"/images/blog/{target_img.name}"
         log.info("Cover image → %s", target_img.relative_to(blog_repo))
+
+    # Stage the optional generated diagram image (second image, embedded in
+    # the post body after the first section). Used when a PDF figure is
+    # selected as the cover and the generated overview diagram also exists.
+    diagram_url: str | None = None
+    if diagram_image is not None and diagram_image.exists():
+        diagram_target = images_dir / f"{slug}_diagram{diagram_image.suffix or '.png'}"
+        shutil.copyfile(diagram_image, diagram_target)
+        diagram_url = f"/images/blog/{diagram_target.name}"
+        log.info("Diagram image → %s", diagram_target.relative_to(blog_repo))
 
     languages: list[str] = []
     deks: dict[str, str] = {}
@@ -1016,6 +1159,8 @@ def publish_to_blog_repo(
         text = path.read_text(encoding="utf-8")
         if image_url:
             text = _insert_cover_after_h1(text, image_url, alt=title)
+        if diagram_url:
+            text = _insert_diagram_after_first_section(text, diagram_url, alt=f"{title} — overview diagram")
         t, d = _parse_blog_md(text)
         titles[code] = t
         deks[code] = d
@@ -1067,6 +1212,8 @@ def publish_to_blog_repo(
         paths_to_add = [str(rel_dir), str(rel_json)]
         if image_url:
             paths_to_add.append(str(target_img.relative_to(blog_repo)))
+        if diagram_url:
+            paths_to_add.append(str(diagram_target.relative_to(blog_repo)))
         subprocess.run(["git", "-C", str(blog_repo), "add", *paths_to_add], check=True)
         diff = subprocess.run(["git", "-C", str(blog_repo), "diff", "--cached", "--quiet"])
         if diff.returncode == 0:
@@ -1384,13 +1531,57 @@ def main() -> int:
 
         # Step 3.5: cover image (between draft and publish, so publish can
         # embed the image ref in each markdown variant).
+        #
+        # For papers (PDFs):
+        #   1. Try to extract an existing overview / architecture figure from
+        #      the PDF and use it as the hero cover (card thumbnail).
+        #   2. If a suitable figure is found AND OPENAI_API_KEY is set, also
+        #      run generate_blog_image → save as cover_generated.png.  Both
+        #      images co-exist in the post: the PDF figure is the cover, the
+        #      generated diagram is embedded inline after the first section.
+        #   3. If no PDF figure is found, fall back to generative cover only.
         cover_image: Path | None = None
+        diagram_image: Path | None = None
         cover_path = args.out / "cover.png"
+        generated_path = args.out / "cover_generated.png"
         if (args.image == "auto" and not args.skip_blog
                 and "en" in blog_paths and blog_paths["en"].exists()):
             if cover_path.exists() and cover_path.stat().st_size > 0:
                 log.info("Reusing existing cover image %s.", cover_path)
                 cover_image = cover_path
+                # Also reuse a previously generated diagram if present.
+                if generated_path.exists() and generated_path.stat().st_size > 0:
+                    log.info("Reusing existing diagram image %s.", generated_path)
+                    diagram_image = generated_path
+            elif source_kind == "paper":
+                # Paper path: try to use an actual figure from the PDF.
+                pdf_src = args.out / "source.pdf"
+                if pdf_src.exists():
+                    log.info("Extracting figures from PDF for cover selection ...")
+                    candidates = extract_pdf_figures(pdf_src, args.out)
+                    if candidates:
+                        en_text = blog_paths["en"].read_text(encoding="utf-8")
+                        title_for_fig, _ = _parse_blog_md(en_text)
+                        best_fig = select_best_paper_figure(candidates, title_for_fig)
+                        if best_fig is not None:
+                            shutil.copyfile(best_fig, cover_path)
+                            cover_image = cover_path
+                            log.info("Cover image from PDF figure → %s (%d bytes)",
+                                     cover_path, cover_path.stat().st_size)
+                            # Also generate an overview diagram to embed inline.
+                            if os.environ.get("OPENAI_API_KEY"):
+                                log.info("Generating additional overview diagram ...")
+                                gen = generate_blog_image(
+                                    blog_paths["en"], args.out, model=args.image_model,
+                                )
+                                if gen is not None:
+                                    gen.rename(generated_path)
+                                    diagram_image = generated_path
+                if cover_image is None:
+                    log.info("No suitable PDF figure found — generating cover image.")
+                    cover_image = generate_blog_image(
+                        blog_paths["en"], args.out, model=args.image_model,
+                    )
             else:
                 cover_image = generate_blog_image(
                     blog_paths["en"], args.out, model=args.image_model,
@@ -1431,6 +1622,7 @@ def main() -> int:
                     tags=tags,
                     commit=not args.no_commit,
                     cover_image=cover_image,
+                    diagram_image=diagram_image,
                     labels=auto_labels,
                     source_kind=source_kind,
                 )
