@@ -139,12 +139,20 @@ def _extract_youtube_id(url: str) -> str | None:
     return m.group(1) if m else None
 
 
-def _try_captions_via_yt_transcript_api(url: str, out_dir: Path, lang: str = "en") -> Path | None:
+def _try_captions_via_yt_transcript_api(
+    url: str, out_dir: Path, lang: str = "en", cookies: Path | None = None
+) -> Path | None:
     """Use the youtube-transcript-api Python package to fetch captions through
-    YouTube's /timedtext endpoint. This endpoint isn't behind the player-side
-    bot challenge that breaks yt-dlp on cloud-runner IPs, so it's the most
-    reliable path for YouTube. Returns transcript.txt path on success, None
-    otherwise."""
+    YouTube's innertube API. This path isn't behind the player-side bot
+    challenge that breaks yt-dlp on cloud-runner IPs, so it's the most
+    reliable first try for YouTube. Returns transcript.txt path on success,
+    None otherwise.
+
+    `cookies` is an optional Netscape-format cookies file. When provided it is
+    loaded into a requests.Session and passed as ``http_client`` so YouTube
+    treats the request as an authenticated user — helpful for age-restricted
+    videos or when running from a cloud IP that YouTube flags.
+    """
     vid = _extract_youtube_id(url)
     if not vid:
         return None
@@ -161,6 +169,21 @@ def _try_captions_via_yt_transcript_api(url: str, out_dir: Path, lang: str = "en
     base = lang.split("-")[0]
     candidates = [lang, base] if lang != base else [lang]
 
+    # Build http_client with cookies if a cookies file was provided.
+    http_client = None
+    if cookies is not None and cookies.exists():
+        try:
+            import requests
+            from http.cookiejar import MozillaCookieJar
+            session = requests.Session()
+            jar = MozillaCookieJar()
+            jar.load(str(cookies), ignore_discard=True, ignore_expires=True)
+            session.cookies = jar  # type: ignore[assignment]
+            http_client = session
+            log.info("Loaded YouTube cookies from %s for authenticated fetch.", cookies)
+        except Exception as e:
+            log.warning("Could not load cookies file %s (%s); continuing unauthenticated.", cookies, e)
+
     # On cloud-runner IPs, YouTube blocks both the player API and /timedtext.
     # WebshareProxyConfig routes through residential IPs and is the
     # library-recommended workaround. Activated when both env vars are set.
@@ -173,14 +196,15 @@ def _try_captions_via_yt_transcript_api(url: str, out_dir: Path, lang: str = "en
                 proxy_config=WebshareProxyConfig(
                     proxy_username=proxy_user,
                     proxy_password=proxy_pass,
-                )
+                ),
+                http_client=http_client,
             )
             log.info("Using Webshare residential proxy for caption fetch.")
         except ImportError:
             log.info("youtube-transcript-api proxies module unavailable; using direct.")
-            api = YouTubeTranscriptApi()
+            api = YouTubeTranscriptApi(http_client=http_client)
     else:
-        api = YouTubeTranscriptApi()
+        api = YouTubeTranscriptApi(http_client=http_client)
 
     try:
         fetched = api.fetch(vid, languages=candidates)
@@ -230,7 +254,7 @@ def try_captions(url: str, out_dir: Path, cookies: Path | None = None,
     pipeline skip the audio download + Whisper transcription when an
     existing transcript can be retrieved — seconds instead of minutes."""
     if _extract_youtube_id(url):
-        result = _try_captions_via_yt_transcript_api(url, out_dir, lang)
+        result = _try_captions_via_yt_transcript_api(url, out_dir, lang, cookies=cookies)
         if result is not None:
             return result
 
@@ -1320,9 +1344,11 @@ def main() -> int:
                         choices=["gpt-image-1", "dall-e-3"],
                         help="OpenAI image model (default: gpt-image-1).")
     parser.add_argument("--yt-cookies", type=Path, default=None,
-                        help="Netscape-format cookies file passed to yt-dlp. Use this "
-                             "when YouTube returns 'Sign in to confirm you're not a bot' "
-                             "(common from cloud/CI runners).")
+                        help="Netscape-format cookies file. Passed to both "
+                             "youtube-transcript-api (as an authenticated requests.Session) "
+                             "and yt-dlp. Use this when YouTube returns 'Sign in to confirm "
+                             "you're not a bot' or for age-restricted videos. Export from "
+                             "Chrome/Firefox with the 'Get cookies.txt LOCALLY' extension.")
     parser.add_argument("--transcribe", choices=["local", "openai"], default="local",
                         help="Transcription engine when no captions are available. "
                              "local (default): faster-whisper on CPU — free, slow on long "

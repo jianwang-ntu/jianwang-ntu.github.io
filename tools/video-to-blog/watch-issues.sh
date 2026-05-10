@@ -17,6 +17,7 @@
 #   tools/video-to-blog/watch-issues.sh
 #   WATCH_INTERVAL=30 tools/video-to-blog/watch-issues.sh
 #   BATCH_MAX=20      tools/video-to-blog/watch-issues.sh
+#   YT_COOKIES=/path/to/cookies.txt tools/video-to-blog/watch-issues.sh
 #   tools/video-to-blog/watch-issues.sh --once   # single pass for testing
 #
 # Why local instead of CI: drafting from a video URL needs a residential IP
@@ -284,6 +285,10 @@ build_blogsh_args_for_issue() {
   fi
   [[ -n "$TAGS"  ]] && BLOGSH_ARGS+=(--tags  "$TAGS")
   [[ -n "$LANGS" ]] && BLOGSH_ARGS+=(--languages "$LANGS")
+  # Authenticated YouTube transcript fetch: set YT_COOKIES env var to a
+  # Netscape-format cookies file (exported from Chrome/Firefox) and the
+  # watcher forwards it to every blog.sh call automatically.
+  [[ -n "${YT_COOKIES:-}" ]] && BLOGSH_ARGS+=(--yt-cookies "$YT_COOKIES")
   BLOGSH_ARGS+=(--issue "$n")
 
   # Caller-supplied extras (e.g. --branch <name> --no-pr for batch mode).

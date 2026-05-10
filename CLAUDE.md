@@ -242,6 +242,12 @@ Flags:
 - `--captions {auto, off, only}` — default `auto`: try captions first.
 - `--transcribe {local, openai}` — default `local`. The local pipeline
   reserves OpenAI for image generation only.
+- `--yt-cookies <path>` — Netscape-format cookies file (export from Chrome /
+  Firefox with the "Get cookies.txt LOCALLY" extension). Passed to **both**
+  `youtube-transcript-api` (loaded into a `requests.Session` as `http_client`)
+  and `yt-dlp`. Useful for age-restricted videos or when running from a cloud
+  IP that YouTube flags. In `watch-issues.sh`, set the `YT_COOKIES` env var
+  instead and every job in the batch will use it automatically.
 
 **Cover image** — two-step pipeline. (1) Claude reads the full EN draft and
 produces a structured visual brief (3–5 elements + composition + relationships).
@@ -268,5 +274,5 @@ when captions miss.
 
 If you ever revive CI on a self-hosted runner, the Webshare residential
 proxy hooks (`WEBSHARE_PROXY_USERNAME` / `WEBSHARE_PROXY_PASSWORD` env
-vars) and yt-dlp cookies file (`--yt-cookies`) are still wired in
-`pipeline.py` — they just aren't reached on a residential laptop.
+vars) and `--yt-cookies` are still wired in `pipeline.py` — they just
+aren't reached on a residential laptop.
