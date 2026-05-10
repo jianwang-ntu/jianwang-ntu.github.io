@@ -28,6 +28,20 @@
   text-decoration: underline;
   text-underline-offset: 4px;
 }
+.style-toggle {
+  font-family: var(--mono);
+  font-size: 10px;
+  background: none;
+  border: 1px solid var(--ink);
+  color: var(--ink);
+  padding: 3px 8px;
+  cursor: pointer;
+  border-radius: 2px;
+  letter-spacing: 0.4px;
+  opacity: 0.7;
+  transition: opacity 0.15s;
+}
+.style-toggle:hover { opacity: 1; background: var(--ink); color: var(--bg); }
 
 /* dark footer */
 .foot {

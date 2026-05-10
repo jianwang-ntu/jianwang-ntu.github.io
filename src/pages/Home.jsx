@@ -2,9 +2,131 @@ import React from 'react';
 import Nav from '../components/Nav.jsx';
 import Footer from '../components/Footer.jsx';
 import Seo from '../components/Seo.jsx';
+import { Chip, Note, Tag, Thumb, SectionHead } from '../components/primitives.jsx';
+import { useStyleMode } from '../context/StyleCtx.jsx';
 import { NEWS, FEATURED_PUBS } from '../data.jsx';
 
-function PubEntry({ p }) {
+/* ─── shared badge renderer ───────────────────────────────────────── */
+function PubBadge({ b }) {
+  if (b.href) {
+    return (
+      <a href={b.href} target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>
+        <Tag>{b.label}</Tag>
+      </a>
+    );
+  }
+  return <Tag>{b.label}</Tag>;
+}
+
+/* ─── Classic layout pieces ─────────────────────────────────────── */
+function ClassicPubRow({ p }) {
+  return (
+    <div className="pub-row">
+      <Thumb label={p.thumb} w={90} h={64} />
+      <div style={{ flex: 1 }}>
+        <div className="pub-title">{p.title}</div>
+        <div className="pub-authors">{p.authors}</div>
+        <div className="pub-meta">
+          <span className="venue">{p.venue} · {p.year}</span>
+          {p.badges?.map((b, i) => <PubBadge key={i} b={b} />)}
+          {p.note && <Note>{p.note}</Note>}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ClassicNewsItem({ date, children }) {
+  return (
+    <div className="news-item">
+      <span className="date">{date}</span>
+      <span style={{ flex: 1 }}>{children}</span>
+    </div>
+  );
+}
+
+function ClassicHome() {
+  return (
+    <>
+      <section className="home-hero">
+        <div>
+          <div className="kicker" style={{ letterSpacing: 2 }}>
+            NTU PhD · SMU RESEARCH · CODE LLM SECURITY
+          </div>
+          <h1>Code LLM security<br /><u>and intelligence.</u></h1>
+          <div className="lede">
+            I'm <b>Jian Wang (王剑)</b>, a recent PhD from the College of Computing
+            and Data Science (CCDS), <b>Nanyang Technological University</b>,
+            advised by{' '}
+            <a href="https://personal.ntu.edu.sg/yi_li/" target="_blank" rel="noreferrer">Prof. Li Yi</a>.
+            My research sits at the intersection of <b>software engineering</b>,{' '}
+            <b>large language models</b>, and <b>trustworthy AI systems</b> — from
+            automated program repair and AIGC code detection to execution-grounded
+            reasoning over programs. Before research I spent <b>~8 years</b> in
+            industry: AI Lab at Xiaomi (trained GANs for portrait background removal
+            and face cartoonisation) and a backend role at 58.com (high-performance
+            async web framework serving 100M+ daily requests).
+          </div>
+          <div className="ctas">
+            <Chip solid href="/data/JianWang_cv.pdf">↓ Download CV</Chip>
+            <Chip href="mailto:jian004@e.ntu.edu.sg">Email →</Chip>
+            <Chip href="https://scholar.google.com/citations?hl=en&user=GAe_mJUAAAAJ">Scholar</Chip>
+            <Chip href="https://twitter.com/jornbowrl">Twitter</Chip>
+          </div>
+        </div>
+        <div className="headshot" style={{ background: 'var(--bg)', padding: 0 }}>
+          <img
+            src="/images/headshot-ai.png"
+            alt="Jian Wang"
+            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+            onError={(e) => {
+              e.currentTarget.style.display = 'none';
+              e.currentTarget.parentElement.innerHTML =
+                '<span style="background:rgba(250,250,247,0.6);padding:4px;font-family:var(--mono);font-size:10px">[photo]</span>';
+            }}
+          />
+        </div>
+      </section>
+
+      <section className="home-body">
+        <div>
+          <SectionHead>Featured work</SectionHead>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+            {FEATURED_PUBS.map((p, i) => <ClassicPubRow key={i} p={p} />)}
+          </div>
+          <div style={{ marginTop: 14, fontFamily: 'var(--mono)', fontSize: 11 }}>
+            → <a href="/pubs">see all publications</a> · <a href="/work">see the work behind them</a>
+          </div>
+        </div>
+        <div>
+          <SectionHead>News</SectionHead>
+          <div className="news-list">
+            {NEWS.slice(0, 7).map(([d, t], i) => <ClassicNewsItem key={i} date={d}>{t}</ClassicNewsItem>)}
+          </div>
+          <div style={{ marginTop: 24 }}>
+            <SectionHead>Awards</SectionHead>
+            <div style={{ fontSize: 11.5, lineHeight: 1.7 }}>
+              <div>★ <b>S$100,000 prize</b> · 3rd place · AI Singapore Deepfake Detection Challenge · 2022</div>
+              <div>★ AI / Computer Vision certification · Tsinghua University · 2019</div>
+            </div>
+          </div>
+          <div style={{ marginTop: 24 }}>
+            <SectionHead>Research interests</SectionHead>
+            <div style={{ fontSize: 11.5, lineHeight: 1.7 }}>
+              <div>· Automated program repair (LLM-based)</div>
+              <div>· AI-generated code detection</div>
+              <div>· Execution-trace reasoning for code LLMs</div>
+              <div>· Robustness & fairness of neural systems</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}
+
+/* ─── Academic layout pieces ────────────────────────────────────── */
+function AcademicPubEntry({ p }) {
   const firstLink = p.badges?.[0];
   return (
     <div className="home-pub-entry">
@@ -29,28 +151,17 @@ function PubEntry({ p }) {
   );
 }
 
-export default function Home() {
+function AcademicHome() {
   return (
-    <div className="page">
-      <Seo
-        title="Home"
-        description="Jian Wang — PhD, NTU Singapore. Research on code LLM security, automated program repair, and AI-generated code detection."
-        path="/home"
-      />
-      <Nav />
-
-      {/* ── Profile / About ─────────────────────────────────────────── */}
+    <>
       <section className="about-section">
-
         {/* Left: profile card */}
         <div className="profile-card">
           <img
             src="/images/jornbowrl_circle.jpg"
             alt="Jian Wang"
             className="profile-avatar"
-            onError={(e) => {
-              e.currentTarget.src = '/images/headshot-ai.png';
-            }}
+            onError={(e) => { e.currentTarget.src = '/images/headshot-ai.png'; }}
           />
           <h2 className="profile-name">Jian Wang</h2>
           <p className="profile-sub">王剑</p>
@@ -107,7 +218,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Selected Publications ──────────────────────────────────── */}
       <section className="home-pubs-section">
         <h2 className="bio-section-h">Selected Publications</h2>
         <p className="home-pubs-intro">
@@ -115,9 +225,24 @@ export default function Home() {
           <a href="/pubs">see all publications</a> ·{' '}
           <a href="/work">see the work behind them</a>
         </p>
-        {FEATURED_PUBS.map((p, i) => <PubEntry key={i} p={p} />)}
+        {FEATURED_PUBS.map((p, i) => <AcademicPubEntry key={i} p={p} />)}
       </section>
+    </>
+  );
+}
 
+/* ─── Page shell ──────────────────────────────────────────────────── */
+export default function Home() {
+  const { mode } = useStyleMode();
+  return (
+    <div className="page">
+      <Seo
+        title="Home"
+        description="Jian Wang — PhD, NTU Singapore. Research on code LLM security, automated program repair, and AI-generated code detection."
+        path="/home"
+      />
+      <Nav />
+      {mode === 'academic' ? <AcademicHome /> : <ClassicHome />}
       <Footer />
     </div>
   );
