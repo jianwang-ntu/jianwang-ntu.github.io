@@ -1,5 +1,28 @@
 [
   {
+    "slug": "how-deepseek-v4-squeezed-a-trillion-parameter-model-out-of",
+    "title_en": "How DeepSeek V4 Squeezed a Trillion-Parameter Model Out of Limited Hardware",
+    "date": "2026-05-10",
+    "dek_en": "A new explainer video walks through the architecture paper behind DeepSeek V4, the latest open-source model from a Chinese lab that the speaker repeatedly calls \"cracked.\" The central claim: with a team roughly 40 times smaller than OpenAI'",
+    "tags": [],
+    "languages": [
+      "en",
+      "zh"
+    ],
+    "title_zh": "DeepSeek V4 拆解：一支资源紧张的小团队，如何造出能与闭源旗舰掰手腕的万亿参数模型",
+    "dek_zh": "视频作者带读者通读了 DeepSeek 新发布的 V4 论文，核心论点是：在算力、芯片和团队规模都远不及 OpenAI 的情况下，DeepSeek 通过一连串精巧的工程权衡，做出了一款能与最强闭源模型对标的开源模型，并把所有方法都写在了论文里。这篇博客把视频里讲到的设计取舍，按\"注意力—架构稳定性—训练优化—数据中心调度—训练课程\"这条主线重新梳理一遍。",
+    "source": "https://www.youtube.com/watch?v=XJUpuOBpT-4",
+    "source_kind": "video",
+    "image": "/images/blog/how-deepseek-v4-squeezed-a-trillion-parameter-model-out-of.png",
+    "labels": [
+      "topic:llm",
+      "topic:research",
+      "topic:infra",
+      "format:talk",
+      "speaker:independent"
+    ]
+  },
+  {
     "slug": "pets-cattle-and-the-quiet-choice-that-defines-your-ai",
     "title_en": "Pets, Cattle, and the Quiet Choice That Defines Your AI Agent's Architecture",
     "date": "2026-05-10",
