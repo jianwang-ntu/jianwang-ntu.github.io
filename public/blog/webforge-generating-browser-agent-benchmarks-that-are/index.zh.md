@@ -8,6 +8,9 @@
 
 论文把现有基准分成两类:
 
+![WebForge: Generating Browser Agent Benchmarks That Are Realistic, Reproducible, and Scalable at the Same Time — overview diagram](/images/blog/webforge-generating-browser-agent-benchmarks-that-are_diagram.png)
+
+
 - **真实网站类**(Mind2Web、WebVoyager、BrowseComp、GAIA):贴近真实网络环境,但任务会随网站内容漂移而失效——作者引用 Online-Mind2Web 的统计:Mind2Web 接近一半的原始任务在两年内已经过期;WebCanvas 报告其抽样的 Mind2Web 任务一年内有 12% 失效。同时评测一致性也成问题,BrowserArena 显示 GPT-4o 作为评判与人类一致率仅 68%。
 - **沙盒受控类**(WebArena、VisualWebArena、WorkArena++、EntWorld):可复现,但环境太"干净"——没有弹窗、没有 cookie 同意框、没有网络延迟,而且需要昂贵的人工标注。
 

@@ -8,6 +8,9 @@ He Geng、Yangmin Huang 等人(科大讯飞医疗)的这篇论文针对一个日
 
 作者把现状描述为"对齐鸿沟":主流医疗对齐管线依赖整体偏好对(chosen vs. rejected)的二元监督信号,而临床评测越来越强调按条目核查的细粒度量规。论文论证,这种粗粒度信号迫使模型从二元标签里隐式推断复杂的医学逻辑,容易把"安全"和"流畅度"混为一谈,在长尾临床错误上失灵。论文称之为 *scalar conflation*(标量混淆)。
 
+![ProMedical: Treating Clinical Rubrics as the Reward Signal, Not a Post-Hoc Check — overview diagram](/images/blog/promedical-treating-clinical-rubrics-as-the-reward-signal_diagram.png)
+
+
 ## 三件套:数据、算法、评测
 
 论文的贡献以三个组件呈现,围绕同一套量规体系展开。

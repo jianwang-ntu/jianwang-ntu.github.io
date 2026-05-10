@@ -8,6 +8,9 @@
 
 论文一开始就把现实生产力工作的特征提了出来：它高度依赖累积的上下文——已有文档、项目历史、合作者反馈、不断变化的工作状态。作者由此引出三条原则：生产力工作天然是上下文密集的；难点在于在长周期内有效地利用用户的私人上下文；因此合成数据必须把**环境**也合成出来,而不只是合成一个孤立任务。否则数据会退化成与真实工作相去甚远的玩具流程。
 
+![Synthetic Computers at Scale: Microsoft's Substrate for Training Long-Horizon Productivity Agents — overview diagram](/images/blog/synthetic-computers-at-scale-microsofts-substrate-for_diagram.png)
+
+
 真实轨迹的代价又太高——它们扎根于私有电脑环境中的个人文件、企业文档、项目状态和交互历史。Synthetic Computers at Scale正是为了解决这个矛盾。
 
 ## 从一个persona,到一台填满文件的电脑

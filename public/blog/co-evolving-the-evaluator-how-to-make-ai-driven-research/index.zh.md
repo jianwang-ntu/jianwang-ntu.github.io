@@ -8,6 +8,9 @@
 
 ADRS 的标准流程是 LLM 生成候选代码 → 评估器打分 → 反馈进入下一轮提示。作者强调,在数据库领域这个评估环节比在其他系统问题里更难:数据库状态相关、组件耦合紧、搜索空间巨大。文中以 PostgreSQL 为例:改一次 buffer 替换策略,要重新编译 (~3 分钟)、装载 TPC-H SF=10 数据 (~30 分钟)、跑 workload (~30 分钟),单轮超过一小时,数百轮根本不可行。
 
+![Co-Evolving the Evaluator: How to Make AI-Driven Research Actually Work for Databases — overview diagram](/images/blog/co-evolving-the-evaluator-how-to-make-ai-driven-research_diagram.png)
+
+
 社区已有四类常用技巧来在"评估速度"和"评估保真度"之间取舍——模拟器、端到端性能模型、负载子集、搜索空间剪枝——但这些手段本身往往跟原问题一样难做。论文的提议是:让 LLM 在外层循环里自动设计、迭代这些评估手段,内层循环继续用现有 ADRS 框架(他们用了 OpenEvolve)生成解。
 
 ## 三个案例,三条经验

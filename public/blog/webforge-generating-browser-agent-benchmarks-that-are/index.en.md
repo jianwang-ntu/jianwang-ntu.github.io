@@ -8,6 +8,9 @@ Browser agent benchmarks force a three-way tradeoff: live websites give realism 
 
 The paper opens with a concrete framing of why current benchmarks are stuck. Real-website suites like WebVoyager and Mind2Web suffer continuous content drift — Xue et al. (2025) found that nearly half of Mind2Web's tasks expired within two years, and WebCanvas reported 12% expiration in a single year. Controlled environments like WebArena are reproducible but, as the authors put it, "sterile": no pop-ups, no cookie dialogs, no network delays, and they require costly manual curation. Prior automated approaches (BenchAgents, AutoBencher, DyVal, OS-Genesis) handle text-only tasks or GUI trajectories, but none generate complete interactive web environments.
 
+![WebForge: Generating Browser Agent Benchmarks That Are Realistic, Reproducible, and Scalable at the Same Time — overview diagram](/images/blog/webforge-generating-browser-agent-benchmarks-that-are_diagram.png)
+
+
 The authors call this the *benchmark trilemma* and argue that no existing benchmark satisfies all three corners simultaneously. WebForge is their attempt to do so.
 
 ## The four-agent pipeline

@@ -8,6 +8,9 @@
 
 论文开篇引用 WHO 的数据:全球超过 10 亿人受心理障碍困扰,但合格咨询师严重短缺,因此 LLM 客户模拟器被广泛用于训练学员、评测心理类 LLM。问题在于,现有模拟器几乎都建立在"profile + prompt 条件生成"的范式上,而预对齐 LLM 内置的"顺从偏置"与真实临床中的非合作行为根本冲突。作者指出,Patient-Ψ、AnnaAgent、Yang et al. (2025b) 等工作只能在 prompt 层面做出"表面困难度",无法复现真实来访者由认知—情感冲突驱动的阻抗行为。
 
+![Beyond Compliance: Teaching LLM Client Simulators to Push Back — overview diagram](/images/blog/beyond-compliance-teaching-llm-client-simulators-to-push_diagram.png)
+
+
 更关键的是,既有方法只拟合外显回答,不建模阻抗背后的动机机制——而 Otani(1989)和 Chamberlain 等人早就把阻抗定义为认知—情感过程,而非孤立行为。
 
 ## 论文的两个判断
