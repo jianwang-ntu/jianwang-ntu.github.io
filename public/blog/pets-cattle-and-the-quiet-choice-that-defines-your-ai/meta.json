@@ -1,0 +1,22 @@
+{
+  "slug": "pets-cattle-and-the-quiet-choice-that-defines-your-ai",
+  "title_en": "Pets, Cattle, and the Quiet Choice That Defines Your AI Agent's Architecture",
+  "date": "2026-05-10",
+  "dek_en": "A developer who has shipped an AI agent to production argues that the industry's hottest abstractions — Anthropic's \"session, sandbox, harness\" trio, the \"don't treat agents as pets, treat them as cattle\" slogan — only become useful once yo",
+  "tags": [],
+  "languages": [
+    "en",
+    "zh"
+  ],
+  "title_zh": "当“别把AI agent当宠物”这种话不再悬浮：一次踩坑后的架构反思",
+  "dek_zh": "最近 Anthropic 的 Managed Agents 让“AI agent 不应该是被精心呵护的宠物，而应该是日夜工作的牛马”这类说法再次刷屏。一位独立开发者在自己的视频里坦言：这些抽象表述听起来都对，但真要动手做时，反而无从下手。他选择从自己实际踩过的坑出发，用一段 Human-in-the-loop 的实现经历，反推这些“高大上”的概念到底在指什么。",
+  "source": "https://www.youtube.com/watch?v=n0YA3dptsK0",
+  "source_kind": "video",
+  "image": "/images/blog/pets-cattle-and-the-quiet-choice-that-defines-your-ai.png",
+  "labels": [
+    "topic:agents",
+    "topic:engineering",
+    "format:talk",
+    "speaker:independent"
+  ]
+}
