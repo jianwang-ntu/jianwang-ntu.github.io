@@ -1,5 +1,27 @@
 [
   {
+    "slug": "hitting-breakouts-perfect-score-without-training-a-single",
+    "title_en": "Hitting Breakout's Perfect Score Without Training a Single Neuron",
+    "date": "2026-05-12",
+    "dek_en": "In a recent explainer video, the presenter walks through a result that cuts against deep reinforcement learning's reigning orthodoxy: an AI that updates no weights, runs no backprop, and still pushes Atari Breakout to its theoretical maximu",
+    "tags": [],
+    "languages": [
+      "en",
+      "zh"
+    ],
+    "title_zh": "不训练神经网络也能打满分:翁嘉义如何用纯代码刷爆 Atari",
+    "dek_zh": "视频作者 \"为什么叫 QQ\" 在这期硬核拆解中介绍了一个反直觉的发现:OpenAI Post Training 团队的研究工程师**翁嘉义**没有训练任何神经网络,仅靠让 Coding Agent 反复看失败回放、改代码、跑测试,就把 Atari 打砖块(Breakout)从平庸分数推到了 864 分的理论上限。视频主张,这不是手写规则的怀旧复辟,而是 Coding Agent 把\"启发式规则\"的维护成本曲线彻底改写之后,强化学习可能出现的新范式。",
+    "source": "https://www.youtube.com/watch?v=FFX0sng67RI",
+    "source_kind": "video",
+    "image": "/images/blog/hitting-breakouts-perfect-score-without-training-a-single.png",
+    "labels": [
+      "topic:agents",
+      "topic:research",
+      "format:talk",
+      "speaker:independent"
+    ]
+  },
+  {
     "slug": "the-road-to-alphafold-how-deepmind-bet-on-agi-and-cracked",
     "title_en": "The Road to AlphaFold: How DeepMind Bet on AGI and Cracked Biology's Hardest Problem",
     "date": "2026-05-11",
