@@ -1,5 +1,27 @@
 [
   {
+    "slug": "meta-harness-letting-a-coding-agent-redesign-its-own",
+    "title_en": "Meta-Harness: Letting a Coding Agent Redesign Its Own Scaffolding",
+    "date": "2026-05-13",
+    "dek_en": "A new paper from Lee et al. (Stanford, KRAFTON, MIT) argues that the code wrapping an LLM — the *harness* that decides what to store, retrieve, and show the model — can be optimized end-to-end by a coding agent that reads the full filesyste",
+    "tags": [],
+    "languages": [
+      "en",
+      "zh"
+    ],
+    "title_zh": "Meta-Harness：让编码 Agent 自动优化 LLM 的\"骨架代码\"",
+    "dek_zh": "Stanford、KRAFTON 和 MIT 团队（Lee 等人）提出的这篇论文把\"harness 工程\"——围绕大模型编写的存储、检索和上下文构造代码——变成了一个可自动搜索的问题。作者们的核心主张是：现有文本优化器之所以不擅长这件事，是因为它们把反馈压缩得太狠；只要让一个编码 Agent 通过文件系统读到所有历史代码、分数和执行轨迹，自动化的 harness 搜索就能在三个差异巨大的领域上击败手工设计的最强方案。",
+    "source": "https://arxiv.org/pdf/2603.28052",
+    "source_kind": "paper",
+    "labels": [
+      "topic:agents",
+      "topic:research",
+      "topic:engineering",
+      "format:paper",
+      "speaker:academia"
+    ]
+  },
+  {
     "slug": "code-world-models-asking-the-llm-to-write-the-game-not-play",
     "title_en": "Code World Models: Asking the LLM to Write the Game, Not Play It",
     "date": "2026-05-13",
