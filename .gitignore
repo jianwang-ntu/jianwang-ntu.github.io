@@ -7,3 +7,4 @@ dist
 .vite
 tools/video-to-blog/__pycache__/
 .claude/
+AGENTS.md
