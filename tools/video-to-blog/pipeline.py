@@ -832,13 +832,15 @@ think editorial infographic or annotated diagram rather than abstract cover art.
 Visual brief (from the editor):
 {brief}
 
-Style: hand-drawn editorial diagram, restrained palette (2–3 colors plus an \
-off-white background), clean line work. Lay out the labelled elements according \
-to the brief's COMPOSITION. Use short one- or two-word labels next to each \
-element — make them legible. Use simple connectors (arrows, brackets, lines) \
-to show the RELATIONSHIPS. The overall feel should be informative, like a \
-diagram from a Stripe Press book or a NYTimes explainer, not a poster. \
-Square format."""
+Style: clean, precise editorial diagram — crisp vector-like line work, sharp \
+rendering, restrained palette (2–3 accent colors plus an off-white or white \
+background). Lay out the labelled elements according to the brief's \
+COMPOSITION. Every label must be short (1–3 words), spelled correctly, and \
+clearly legible at normal viewing size — no decorative or distressed fonts. \
+Use clean connectors (arrows, brackets, lines) to show the RELATIONSHIPS. \
+The overall feel should be polished and informative, like a precision diagram \
+from a Stripe Press book or a NYTimes explainer — professional and precise, \
+not sketchy or hand-drawn. Square format."""
 
 
 def _visual_brief_from_blog(text: str, title: str) -> str | None:
@@ -859,7 +861,7 @@ def _visual_brief_from_blog(text: str, title: str) -> str | None:
 def generate_blog_image(en_blog_md: Path, out_dir: Path,
                         model: str = "gpt-image-1",
                         size: str = "1024x1024",
-                        quality: str = "medium") -> Path | None:
+                        quality: str = "high") -> Path | None:
     """Generate a content-aware diagram image for the EN blog.
     Saves to <out_dir>/cover.png. Returns the path on success, None on
     failure (caller should treat the image as optional). The visual brief
