@@ -1,5 +1,73 @@
 [
   {
+    "slug": "thinking-machines-labs-interaction-model-making",
+    "title_en": "Thinking Machines Lab's Interaction Model: Making Conversation Native to the Model",
+    "date": "2026-05-14",
+    "dek_en": "On May 11, Thinking Machines Lab — the venture founded by former OpenAI CTO Mira Murati — published research on what it calls the **Interaction Model**. The central claim, as relayed in the video: every frontier AI lab has optimized for the",
+    "tags": [],
+    "languages": [
+      "en",
+      "zh"
+    ],
+    "title_zh": "Thinking Machines Lab 的交互模型:让 AI 从\"发邮件\"变成\"面对面对话\"",
+    "dek_zh": "5 月 11 日,前 OpenAI 首席技术官 Mira Murati 创办的 Thinking Machines Lab 发布了一项新研究,名为\"交互模型\"(Interaction Model)。在最佳拍档频道一期由主持人大飞带来的解读中,这次发布被定位为对人机协作底层逻辑的重构——把\"交互\"从一项外挂功能,变成大模型的原生基因。大飞在视频中梳理了 Thinking Machines Lab 的核心论点、技术路径和基准数据,以下是这场解读的要点。",
+    "source": "https://www.youtube.com/watch?v=PTN9oPdLtUA",
+    "source_kind": "video",
+    "image": "/images/blog/thinking-machines-labs-interaction-model-making.png",
+    "labels": [
+      "topic:research",
+      "topic:llm",
+      "topic:engineering",
+      "format:talk",
+      "speaker:independent"
+    ]
+  },
+  {
+    "slug": "builders-win-information-movers-dont-nikhyl-singhal-on-the",
+    "title_en": "Builders Win, Information Movers Don't: Nikhyl Singhal on the Next Two Years of Product Management",
+    "date": "2026-05-14",
+    "dek_en": "In a return appearance on Lenny's Podcast, Nikhyl Singhal — former exec at Meta and Google, ex-CPO at Credit Karma, and convener of the Skip community of heads of product — argues that the product industry is in a renaissance for builders a",
+    "tags": [],
+    "languages": [
+      "en",
+      "zh"
+    ],
+    "title_zh": "建造者的黄金时代:Nikhyl Singhal 谈 AI 时代产品经理的重塑",
+    "dek_zh": "在 Lenny's Podcast 最新一期节目中,The Skip 社区创始人、前 Credit Karma CPO、Meta 和 Google 资深产品高管 Nikhyl Singhal 给出了一个不加粉饰的判断:产品行业正在经历一场彻底的洗牌——\"信息搬运工\"型产品经理将成为恐龙,而热爱亲手建造的人将迎来职业生涯中最快乐的两年。他同时警告,未来 12 到 24 个月将出现大规模的\"先裁员、再招聘\",一家公司可能裁掉三万人后再招聘八千人,而这八千人将全部是\"AI 优先\"的",
+    "source": "https://www.youtube.com/watch?v=yUohoaC8_Hs",
+    "source_kind": "video",
+    "image": "/images/blog/builders-win-information-movers-dont-nikhyl-singhal-on-the.png",
+    "labels": [
+      "topic:product",
+      "topic:business",
+      "format:podcast",
+      "speaker:independent"
+    ]
+  },
+  {
+    "slug": "drive-it-like-its-stolen-max-shying-on-agency-malleable",
+    "title_en": "Drive It Like It's Stolen: Max Shying on Agency, Malleable Software, and the Tiny Core",
+    "date": "2026-05-14",
+    "dek_en": "On *Lenny's Podcast*, Notion's head of product Max Shying makes a flat claim: in a world where AI has compressed most skill gaps, the thing that separates people who thrive from people who stall is agency. Almost everything else he argues a",
+    "tags": [],
+    "languages": [
+      "en",
+      "zh"
+    ],
+    "title_zh": "Agency 比技能更重要：Max Schoening 谈 AI 时代的产品打造",
+    "dek_zh": "在 Lenny's Podcast 的一期访谈中，Notion 产品负责人 Max Schoening 抛出了一个反直觉的论点：当 AI 把技能门槛降到几乎为零时，真正决定一个人能否做事的不是能力，而是 agency——主动改造周围世界的意愿。他还把多个被业界奉为圭臬的概念——\"品味\"、\"SaaS 末日\"、\"通用基本收入\"——重新拆解了一遍。Schoening 曾任职于 Google、Heroku、GitHub，目前在 Notion 推动设计师和产品经理直接写代码。",
+    "source": "https://www.youtube.com/watch?v=mCO-D3pkviM",
+    "source_kind": "video",
+    "image": "/images/blog/drive-it-like-its-stolen-max-shying-on-agency-malleable.png",
+    "labels": [
+      "topic:product",
+      "topic:agents",
+      "topic:engineering",
+      "format:podcast",
+      "speaker:independent"
+    ]
+  },
+  {
     "slug": "meta-harness-letting-a-coding-agent-redesign-its-own",
     "title_en": "Meta-Harness: Letting a Coding Agent Redesign Its Own Scaffolding",
     "date": "2026-05-13",
