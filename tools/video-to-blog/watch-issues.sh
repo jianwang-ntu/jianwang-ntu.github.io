@@ -393,6 +393,14 @@ process_batch() {
     return 2
   fi
 
+  # Ensure the batch branch forks from up-to-date master, not from whatever
+  # branch the watcher was started on. If the watcher was launched from a
+  # feature branch, the batch branch would carry those extra commits; after
+  # that branch is squash-merged into master the batch PR conflicts on rebase.
+  # blog.sh branches from HEAD, so we just need HEAD to be master here.
+  git -C "$REPO_ROOT" checkout master >/dev/null 2>&1
+  git -C "$REPO_ROOT" pull --ff-only origin master >/dev/null 2>&1 || true
+
   local closed_issues=()        # numbers of issues whose drafts succeeded
   local successful_titles=()    # post titles, parallel array to closed_issues
   local successful_slugs=()     # slugs, parallel array to closed_issues
