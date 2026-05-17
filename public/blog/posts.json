@@ -1,5 +1,28 @@
 [
   {
+    "slug": "eric-schmidt-ai-warfare-china",
+    "title_en": "Eric Schmidt: AI Is Already Reshaping Warfare, and China Is Closer Than You Think",
+    "date": "2026-05-17",
+    "dek_en": "Former Google CEO Eric Schmidt argues in a conversation with Tom Shanker that Ukraine has revealed the future of drone-dominated warfare, that China has closed the AI gap to roughly six months, and that traditional programming is functionally over.",
+    "tags": [],
+    "languages": [
+      "en",
+      "zh"
+    ],
+    "title_zh": "埃里克·施密特：AI 正在重塑战争，中国比你想象的更接近",
+    "dek_zh": "谷歌前 CEO 埃里克·施密特在与汤姆·尚克的对话中指出，乌克兰已揭示无人机主导战争的未来，中国已将 AI 差距缩小至约六个月，传统编程实际上已走到尽头。",
+    "source": "https://chatgpt.com/share/6a08c1da-7b6c-83ec-919d-e8dece491e5d",
+    "source_kind": "post",
+    "image": "/images/blog/eric-schmidt-ai-warfare-china.png",
+    "labels": [
+      "topic:ai",
+      "topic:security",
+      "topic:llm",
+      "format:talk",
+      "speaker:eric-schmidt"
+    ]
+  },
+  {
     "slug": "thinking-machines-labs-interaction-model-making",
     "title_en": "Thinking Machines Lab's Interaction Model: Making Conversation Native to the Model",
     "date": "2026-05-14",
