@@ -1,5 +1,21 @@
 [
   {
+    "slug": "how-ai-agents-are-defining-the-future-of-technology",
+    "title_en": "How AI Agents are Defining the Future of Technology",
+    "date": "2026-05-18",
+    "dek_en": "In a recent keynote, speakers delivered a comprehensive analysis of the current AI wave, highlighting its significance as different from previous technology shifts, and underscoring the pivotal role that AI agents are predicted to play by 2",
+    "tags": [],
+    "languages": [
+      "en",
+      "zh"
+    ],
+    "title_zh": "AI智能代理：2026年的行业主题",
+    "dek_zh": "在一场关于当前AI技术浪潮的开幕主题演讲中，演讲者围绕为何AI不同于以往的技术变革以及为何智能代理将成为2026年的行业主题展开了讨论。这次演讲强调，AI不仅是科技行业中最大且最快速的浪潮，还因为其将软件的机会扩展到服务领域，可能释放数万亿美元的价值。",
+    "source": "https://chatgpt.com/share/6a08c287-ded4-83ec-a9a8-1765d1506755",
+    "source_kind": "post",
+    "image": "/images/blog/how-ai-agents-are-defining-the-future-of-technology.png"
+  },
+  {
     "slug": "leworldmodel-simplifying-joint-embedding-predictive",
     "title_en": "LeWorldModel: Simplifying Joint-Embedding Predictive Architectures for World Models",
     "date": "2026-05-17",
