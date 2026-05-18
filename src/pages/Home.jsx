@@ -68,7 +68,8 @@ function ClassicHome() {
             async web framework serving 100M+ daily requests).
           </div>
           <div className="ctas">
-            <Chip solid href="/data/Jian_Wang_CV_Academic_202605.pdf">↓ Download CV</Chip>
+            <Chip solid href="/data/Jian_Wang_CV_Academic_202605.pdf">↓ CV (EN)</Chip>
+            <Chip solid href="/data/Jian_Wang_CV_Chinese_202605.pdf">↓ CV (中文)</Chip>
             <Chip href="/data/Jian_Wang_Research_Statement.pdf">Research statement</Chip>
             <Chip href="mailto:jian004@e.ntu.edu.sg">Email →</Chip>
             <Chip href="https://scholar.google.com/citations?hl=en&user=GAe_mJUAAAAJ">Scholar</Chip>
@@ -175,7 +176,10 @@ function AcademicHome() {
             <a href="https://github.com/jianwang-ntu" target="_blank" rel="noreferrer" className="soc-link">GitHub</a>
             <a href="https://twitter.com/jornbowrl" target="_blank" rel="noreferrer" className="soc-link">Twitter</a>
           </div>
-          <a href="/data/Jian_Wang_CV_Academic_202605.pdf" target="_blank" rel="noreferrer" className="cv-download">↓ Download CV</a>
+          <div className="cv-downloads">
+            <a href="/data/Jian_Wang_CV_Academic_202605.pdf" target="_blank" rel="noreferrer" className="cv-download">↓ CV (EN)</a>
+            <a href="/data/Jian_Wang_CV_Chinese_202605.pdf" target="_blank" rel="noreferrer" className="cv-download">↓ CV (中文)</a>
+          </div>
           <a href="/data/Jian_Wang_Research_Statement.pdf" target="_blank" rel="noreferrer" className="cv-download" style={{ marginTop: 6 }}>↓ Research statement</a>
         </div>
 

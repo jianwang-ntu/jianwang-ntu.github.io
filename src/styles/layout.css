@@ -96,3 +96,42 @@
 .between { justify-content: space-between; }
 .mono { font-family: var(--mono); font-size: 11px; }
 .faint { opacity: 0.6; }
+
+/* ============== Mobile (≤720 px) — nav / footer / page-head ============== */
+/* The desktop layouts above assume ≥820 px of width; below that they cram
+   into a single column or overflow. Keep the desktop block intact and
+   override just what breaks on iPhone Safari. */
+@media (max-width: 720px) {
+  .nav {
+    padding: 14px var(--page-pad-x);
+    flex-wrap: wrap;
+    gap: 12px;
+    row-gap: 8px;
+  }
+  .nav .brand { font-size: 20px; }
+  .nav .links { gap: 14px; font-size: 11px; flex-wrap: wrap; }
+  .style-toggle { font-size: 9.5px; padding: 4px 9px; }
+
+  .foot {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 16px var(--page-pad-x);
+    /* On notched iPhones in standalone mode, lift the footer above the
+       home-indicator bar. */
+    padding-bottom: calc(16px + env(safe-area-inset-bottom));
+    line-height: 1.6;
+  }
+
+  .page-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+    padding: 28px var(--page-pad-x) 22px;
+  }
+  .page-head h1 { font-size: 40px; }
+  .page-head .ph-main { max-width: 100%; }
+  .page-head .blurb { font-size: 13px; }
+
+  .content { padding: 24px var(--page-pad-x) 36px; }
+}

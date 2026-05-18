@@ -135,6 +135,17 @@
   display: inline-block;
 }
 .cv-download:hover { background: var(--ink); color: var(--bg); }
+/* Inline pair of CV chips (EN + 中文). Sits where the single CV chip used to
+   sit; wraps to a column on very narrow screens but otherwise stays inline so
+   the sidebar profile card stays compact. */
+.cv-downloads {
+  display: flex;
+  gap: 6px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.cv-downloads .cv-download { margin-top: 0; }
 /* Bio column */
 .bio-column {
   flex: 1;
@@ -455,6 +466,81 @@
     grid-template-columns: 80px 1fr;
   }
   .blog-post .cover { grid-column: 2; max-width: 240px; margin-top: 10px; }
+
+  /* ----- Classic Home — stack hero, shrink headshot, single-column body */
+  .home-hero {
+    grid-template-columns: 1fr;
+    gap: 22px;
+    padding: 28px var(--page-pad-x);
+  }
+  .home-hero h1 { font-size: 36px; }
+  .home-hero .lede { font-size: 13.5px; max-width: 100%; }
+  .home-hero .ctas { gap: 8px; }
+  .headshot {
+    width: 160px; height: 200px;
+    margin: 0 auto;
+    order: -1;            /* photo above the headline on phones */
+  }
+  .home-body {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 28px var(--page-pad-x) 36px;
+  }
+
+  /* ----- Academic Home — already has a 820 px breakpoint; tighten further
+     so the avatar + bio doesn't feel cramped on a 375 px iPhone. */
+  .about-section {
+    padding: 28px var(--page-pad-x) 28px;
+    gap: 22px;
+  }
+  .profile-card { flex-direction: column; text-align: center; align-items: center; gap: 14px; }
+  .profile-avatar { width: 140px; height: 140px; }
+  .profile-links { justify-content: center; }
+  .bio-section-h { font-size: 18px; }
+  .bio-text { font-size: 14.5px; }
+  .bio-interests { font-size: 14px; }
+  .home-pubs-section { padding: 28px var(--page-pad-x) 40px; }
+
+  /* ----- Publications — already mostly handled at 820 px, but tap targets
+     and font sizes need a touch more care on phones. */
+  .pubs-sidebar { flex-direction: column; gap: 12px; padding: 22px var(--page-pad-x); }
+  .pubs-page-title { font-size: 22px; }
+
+  /* ----- Work & Projects — desktop assumes ≥820 px and starts to overflow
+     below that. Stack the grid, soften the timeline indent, and let the
+     two-column body inside each row collapse. */
+  .wp-hero { padding: 28px var(--page-pad-x) 22px; }
+  .wp-hero h1 { font-size: 40px; }
+  .wp-grid { grid-template-columns: 1fr; gap: 22px; margin-top: 14px; }
+  .wp-stats {
+    border-left: none; padding-left: 0;
+    border-top: var(--dash); padding-top: 18px;
+  }
+  .wp-stat .v { font-size: 40px; }
+  .wp-view { padding: 12px var(--page-pad-x); font-size: 10.5px; }
+  .wp-row { grid-template-columns: 72px 20px 1fr; }
+  .wp-row .wp-when { padding-right: 8px; }
+  .wp-row .body .role { font-size: 22px; }
+  .wp-row .body .two { grid-template-columns: 1fr; gap: 12px; }
+
+  /* ----- Matrix — 4 columns is too wide for a phone. Two columns + drop
+     the inner vertical rule. */
+  .matrix { grid-template-columns: 1fr 1fr; font-size: 11.5px; }
+  .matrix .cell.r { border-right: none; }
+  .matrix .cell { padding: 8px 10px; }
+
+  /* ----- CV — the desktop two-column "when | body" layout doesn't fit
+     under a 375 px viewport. Stack instead. */
+  .cv-block { grid-template-columns: 1fr; gap: 6px; padding: 12px 0; }
+  .cv-block .when { font-size: 10.5px; }
+  .cv-section-h h2 { font-size: 26px; }
+
+  /* ----- Blog single-post body — keep code blocks scrollable, not breaking
+     the page on iOS Safari. */
+  .blog-body { font-size: 14.5px; line-height: 1.7; }
+  .blog-body h1 { font-size: 30px; }
+  .blog-body h2 { font-size: 22px; }
+  .blog-body pre { font-size: 12px; -webkit-overflow-scrolling: touch; }
 }
 
 /* Single-post body: long-form markdown rendered with react-markdown. */
