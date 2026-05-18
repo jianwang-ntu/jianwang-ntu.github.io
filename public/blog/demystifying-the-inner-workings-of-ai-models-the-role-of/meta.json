@@ -1,0 +1,16 @@
+{
+  "slug": "demystifying-the-inner-workings-of-ai-models-the-role-of",
+  "title_en": "Demystifying the Inner Workings of AI Models: The Role of Natural Language Autoencoders",
+  "date": "2026-05-18",
+  "dek_en": "In a recent talk, Dafei from Zui Jia Pai Dang discussed Ansobic's groundbreaking research on mechanistic interpretability in AI models. The study introduces the Natural Language Autoencoder (NLA) which aims to translate the complex and inde",
+  "tags": [],
+  "languages": [
+    "en",
+    "zh"
+  ],
+  "title_zh": "自然语言自编码器：解密大模型的黑盒子",
+  "dek_zh": "大飞在最近的视频中探讨了一项由安索卫克发布的关于机制可解释性的最新研究——自然语言自编码器（NLA）。他指出，NLA开创性地将大语言模型内部复杂的激活项量翻译成可读的自然语言，从而使大模型的内在运作更加透明。这一研究可能为AI行业解决久未攻克的可解释性难题带来突破。",
+  "source": "https://www.youtube.com/watch?v=aOWdyqUHkmc",
+  "source_kind": "video",
+  "image": "/images/blog/demystifying-the-inner-workings-of-ai-models-the-role-of.png"
+}
