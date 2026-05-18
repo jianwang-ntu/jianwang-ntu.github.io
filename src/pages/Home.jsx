@@ -68,7 +68,8 @@ function ClassicHome() {
             async web framework serving 100M+ daily requests).
           </div>
           <div className="ctas">
-            <Chip solid href="/data/JianWang_cv.pdf">↓ Download CV</Chip>
+            <Chip solid href="/data/Jian_Wang_CV_Academic_202605.pdf">↓ Download CV</Chip>
+            <Chip href="/data/Jian_Wang_Research_Statement.pdf">Research statement</Chip>
             <Chip href="mailto:jian004@e.ntu.edu.sg">Email →</Chip>
             <Chip href="https://scholar.google.com/citations?hl=en&user=GAe_mJUAAAAJ">Scholar</Chip>
             <Chip href="https://twitter.com/jornbowrl">Twitter</Chip>
@@ -113,10 +114,11 @@ function ClassicHome() {
           <div style={{ marginTop: 24 }}>
             <SectionHead>Research interests</SectionHead>
             <div style={{ fontSize: 11.5, lineHeight: 1.7 }}>
-              <div>· Automated program repair (LLM-based)</div>
-              <div>· AI-generated code detection</div>
-              <div>· Execution-trace reasoning for code LLMs</div>
-              <div>· Robustness & fairness of neural systems</div>
+              <div>· Trustworthy Code Intelligence (TCI)</div>
+              <div>· AI-generated code detection (provenance & robustness)</div>
+              <div>· Automated program repair at scale (Defects4C, RATCHET)</div>
+              <div>· Execution-semantics-grounded reasoning for code LLMs</div>
+              <div>· Long-horizon AI for software maintenance</div>
             </div>
           </div>
         </div>
@@ -173,7 +175,8 @@ function AcademicHome() {
             <a href="https://github.com/jianwang-ntu" target="_blank" rel="noreferrer" className="soc-link">GitHub</a>
             <a href="https://twitter.com/jornbowrl" target="_blank" rel="noreferrer" className="soc-link">Twitter</a>
           </div>
-          <a href="/data/JianWang_cv.pdf" target="_blank" rel="noreferrer" className="cv-download">↓ Download CV</a>
+          <a href="/data/Jian_Wang_CV_Academic_202605.pdf" target="_blank" rel="noreferrer" className="cv-download">↓ Download CV</a>
+          <a href="/data/Jian_Wang_Research_Statement.pdf" target="_blank" rel="noreferrer" className="cv-download" style={{ marginTop: 6 }}>↓ Research statement</a>
         </div>
 
         {/* Right: bio + interests + news */}
@@ -196,10 +199,11 @@ function AcademicHome() {
 
           <h2 className="bio-section-h" style={{ marginTop: 22 }}>Research Interests</h2>
           <ul className="bio-interests">
-            <li>Automated program repair (LLM-based)</li>
-            <li>AI-generated code detection</li>
-            <li>Execution-trace reasoning for code LLMs</li>
-            <li>Robustness &amp; fairness of neural systems</li>
+            <li>Trustworthy Code Intelligence (TCI)</li>
+            <li>AI-generated code detection (provenance &amp; robustness)</li>
+            <li>Automated program repair at scale (Defects4C, RATCHET)</li>
+            <li>Execution-semantics-grounded reasoning for code LLMs</li>
+            <li>Long-horizon AI for software maintenance</li>
           </ul>
 
           <h2 className="bio-section-h">News</h2>
