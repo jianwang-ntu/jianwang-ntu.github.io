@@ -46,7 +46,7 @@ export default function CV() {
         blurb={<>Web rendering of the canonical PDF. PDF is the source of truth for committees; this page is for everyone else. PhD conferred Mar 2026.</>}
         right={
           <div style={{ display: 'flex', flexDirection: 'column', gap: 6, alignItems: 'flex-end' }}>
-            <Chip solid href="/data/JianWang_cv.pdf">↓ cv.pdf</Chip>
+            <Chip solid href="/data/Jian_Wang_CV_Academic_202605.pdf">↓ cv.pdf</Chip>
             <Chip sm href="/data/jornbowrl-bio.txt">↓ bio.txt</Chip>
           </div>
         }
@@ -143,7 +143,7 @@ export default function CV() {
 
         <Box dashed style={{ marginTop: 32, padding: 14, fontFamily: 'var(--mono)', fontSize: 11, display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>
           <span>References on request — typically advisor + 2 collaborators.</span>
-          <span>↓ <a href="/data/JianWang_cv.pdf" target="_blank" rel="noreferrer">cv.pdf</a> · ↓ <a href="/data/jornbowrl-bio.txt" target="_blank" rel="noreferrer">bio.txt</a></span>
+          <span>↓ <a href="/data/Jian_Wang_CV_Academic_202605.pdf" target="_blank" rel="noreferrer">cv.pdf</a> · ↓ <a href="/data/jornbowrl-bio.txt" target="_blank" rel="noreferrer">bio.txt</a></span>
         </Box>
       </section>
 

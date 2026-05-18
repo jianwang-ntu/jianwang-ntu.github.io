@@ -97,7 +97,7 @@ function ClassicPublications({ byYear, years, kindCount }) {
         ))}
         <Box dashed style={{ marginTop: 36, padding: 16, display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--mono)', fontSize: 11, gap: 16, flexWrap: 'wrap' }}>
           <span>For older / co-authored work, see <a href="https://scholar.google.com/citations?hl=en&user=GAe_mJUAAAAJ" target="_blank" rel="noreferrer">Google Scholar</a>.</span>
-          <span><a href="/data/JianWang_cv.pdf" target="_blank" rel="noreferrer">↓ cv.pdf</a></span>
+          <span><a href="/data/Jian_Wang_CV_Academic_202605.pdf" target="_blank" rel="noreferrer">↓ cv.pdf</a></span>
         </Box>
       </section>
     </>
@@ -151,7 +151,7 @@ function AcademicPublications({ byYear, years }) {
           <a href="https://scholar.google.com/citations?hl=en&user=GAe_mJUAAAAJ" target="_blank" rel="noreferrer">Google Scholar</a>
           <a href="https://github.com/jianwang-ntu" target="_blank" rel="noreferrer">GitHub</a>
           <a href="https://twitter.com/jornbowrl" target="_blank" rel="noreferrer">Twitter</a>
-          <a href="/data/JianWang_cv.pdf" target="_blank" rel="noreferrer">CV (PDF)</a>
+          <a href="/data/Jian_Wang_CV_Academic_202605.pdf" target="_blank" rel="noreferrer">CV (PDF)</a>
         </div>
       </div>
 
@@ -173,7 +173,7 @@ function AcademicPublications({ byYear, years }) {
         <p style={{ marginTop: 36, fontFamily: 'var(--mono)', fontSize: 11, opacity: 0.55, lineHeight: 1.6 }}>
           For older / co-authored work, see{' '}
           <a href="https://scholar.google.com/citations?hl=en&user=GAe_mJUAAAAJ" target="_blank" rel="noreferrer">Google Scholar</a>.{' '}·{' '}
-          <a href="/data/JianWang_cv.pdf" target="_blank" rel="noreferrer">↓ cv.pdf</a>
+          <a href="/data/Jian_Wang_CV_Academic_202605.pdf" target="_blank" rel="noreferrer">↓ cv.pdf</a>
         </p>
       </div>
     </div>

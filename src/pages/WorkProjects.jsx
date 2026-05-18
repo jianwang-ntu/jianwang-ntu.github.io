@@ -207,7 +207,7 @@ export default function WorkProjects() {
 
         <Box dashed style={{ marginTop: 22, padding: 14, display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--mono)', fontSize: 11, flexWrap: 'wrap', gap: 16 }}>
           <span><b>How this page is organized.</b> Experience is the spine; projects and papers hang off it. For canonical chronology see <a href="/cv">CV</a>; for the full paper list see <a href="/pubs">Publications</a>.</span>
-          <span>↓ <a href="/data/JianWang_cv.pdf" target="_blank" rel="noreferrer">cv.pdf</a></span>
+          <span>↓ <a href="/data/Jian_Wang_CV_Academic_202605.pdf" target="_blank" rel="noreferrer">cv.pdf</a></span>
         </Box>
       </section>
 
