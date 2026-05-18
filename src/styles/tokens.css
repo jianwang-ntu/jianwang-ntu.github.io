@@ -47,6 +47,17 @@
   /* layout */
   --page-w: 1180px;
   --page-pad-x: 56px;
+}
+
+/* Tablet — slightly tighter side padding so the content has room. */
+@media (max-width: 900px) {
+  :root { --page-pad-x: 32px; }
+}
+
+/* Phone — 56 px of side padding on a 375 px iPhone leaves under 270 px of
+   usable content. Drop to 18 px and let lines breathe. */
+@media (max-width: 560px) {
+  :root { --page-pad-x: 18px; }
 
   /* accent (kept neutral to match the wireframe vibe) */
   --accent: var(--ink);
