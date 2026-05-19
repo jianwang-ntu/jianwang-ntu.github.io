@@ -726,6 +726,7 @@
       "topic:llm",
       "format:keynote",
       "speaker:openai"
-    ]
+    ],
+    "image": "/images/blog/harness-engineering-how-openais-ryan-lapopolo-builds.png"
   }
 ]
