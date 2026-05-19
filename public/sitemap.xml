@@ -2,33 +2,123 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.wj2ai.com/home</loc>
-    <lastmod>2026-05-10</lastmod>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://www.wj2ai.com/pubs</loc>
-    <lastmod>2026-05-10</lastmod>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.wj2ai.com/work</loc>
-    <lastmod>2026-05-10</lastmod>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.wj2ai.com/cv</loc>
-    <lastmod>2026-05-10</lastmod>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.wj2ai.com/blog</loc>
-    <lastmod>2026-05-10</lastmod>
+    <lastmod>2026-05-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.wj2ai.com/blog/demystifying-the-inner-workings-of-ai-models-the-role-of</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.wj2ai.com/blog/airbnb-ceo-brian-chesky-advocates-for-founder-mode</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.wj2ai.com/blog/how-ai-agents-are-defining-the-future-of-technology</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.wj2ai.com/blog/leworldmodel-simplifying-joint-embedding-predictive</loc>
+    <lastmod>2026-05-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.wj2ai.com/blog/riding-the-exponential-how-anthropic-navigates-rapid-growth</loc>
+    <lastmod>2026-05-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.wj2ai.com/blog/eric-schmidt-ai-warfare-china</loc>
+    <lastmod>2026-05-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.wj2ai.com/blog/thinking-machines-labs-interaction-model-making</loc>
+    <lastmod>2026-05-14</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.wj2ai.com/blog/builders-win-information-movers-dont-nikhyl-singhal-on-the</loc>
+    <lastmod>2026-05-14</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.wj2ai.com/blog/drive-it-like-its-stolen-max-shying-on-agency-malleable</loc>
+    <lastmod>2026-05-14</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.wj2ai.com/blog/meta-harness-letting-a-coding-agent-redesign-its-own</loc>
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.wj2ai.com/blog/code-world-models-asking-the-llm-to-write-the-game-not-play</loc>
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.wj2ai.com/blog/hitting-breakouts-perfect-score-without-training-a-single</loc>
+    <lastmod>2026-05-12</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.wj2ai.com/blog/the-road-to-alphafold-how-deepmind-bet-on-agi-and-cracked</loc>
+    <lastmod>2026-05-11</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.wj2ai.com/blog/demis-hassabis-on-the-through-line-from-theme-park-to-agi</loc>
+    <lastmod>2026-05-11</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.wj2ai.com/blog/andrej-karpathy-on-ai-psychosis-auto-research-and-why-he</loc>
+    <lastmod>2026-05-11</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.wj2ai.com/blog/a16zs-case-for-continual-learning-llms-are-stuck-in-memento</loc>
