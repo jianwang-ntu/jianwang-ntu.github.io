@@ -12,6 +12,7 @@
     "en",
     "zh"
   ],
+  "image": "/images/blog/harness-engineering-how-openais-ryan-lapopolo-builds.png",
   "title_zh": "代码已经免费：Ryan Lapopolo 谈如何让代理\"做完整的工作\"",
   "dek_zh": "在伦敦一场以\"Harness 工程\"为题的演讲中，OpenAI 技术员工 Ryan Lapopolo 抛出了一个挑衅性的论断：实现层面的代码不再是软件工程的稀缺资源——稀缺的是人类的时间和注意力，以及模型的上下文窗口。他把过去九个月称为自己\"完全用代理写代码\"的实验，并禁止团队成员触碰编辑器，所有工作必须经由模型完成。",
   "labels": [

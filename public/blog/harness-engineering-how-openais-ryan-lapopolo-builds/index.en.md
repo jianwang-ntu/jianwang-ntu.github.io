@@ -1,5 +1,7 @@
 # Harness Engineering: How OpenAI's Ryan Lapopolo Builds Software Without Touching the Editor
 
+![Harness Engineering: How OpenAI's Ryan Lapopolo Builds Software Without Touching the Editor](/images/blog/harness-engineering-how-openais-ryan-lapopolo-builds.png)
+
 In a London keynote, OpenAI's Ryan Lapopolo argues that implementation has stopped being the scarce resource in software engineering. The job now, he says, is to build the scaffolding — documentation, lints, review agents, repo structure — that lets coding agents do the full job while humans move up to defining the work and steering it.
 
 ## The central claim: code is free
