@@ -115,11 +115,9 @@ function ClassicHome() {
           <div style={{ marginTop: 24 }}>
             <SectionHead>Research interests</SectionHead>
             <div style={{ fontSize: 11.5, lineHeight: 1.7 }}>
-              <div>· Trustworthy Code Intelligence (TCI)</div>
-              <div>· AI-generated code detection (provenance & robustness)</div>
-              <div>· Automated program repair at scale (Defects4C, RATCHET)</div>
-              <div>· Execution-semantics-grounded reasoning for code LLMs</div>
-              <div>· Long-horizon AI for software maintenance</div>
+              <div>· Code LLM intelligence and trustworthiness (APR, semantics reasoning)</div>
+              <div>· AI-generated code (AIGC) detection</div>
+              <div>· Long-horizon AI for software maintenance (agentic, automatic, reliable, trustworthy)</div>
             </div>
           </div>
         </div>
@@ -203,11 +201,9 @@ function AcademicHome() {
 
           <h2 className="bio-section-h" style={{ marginTop: 22 }}>Research Interests</h2>
           <ul className="bio-interests">
-            <li>Trustworthy Code Intelligence (TCI)</li>
-            <li>AI-generated code detection (provenance &amp; robustness)</li>
-            <li>Automated program repair at scale (Defects4C, RATCHET)</li>
-            <li>Execution-semantics-grounded reasoning for code LLMs</li>
-            <li>Long-horizon AI for software maintenance</li>
+            <li>Code LLM intelligence and trustworthiness (APR, semantics reasoning)</li>
+            <li>AI-generated code (AIGC) detection</li>
+            <li>Long-horizon AI for software maintenance (agentic, automatic, reliable, trustworthy)</li>
           </ul>
 
           <h2 className="bio-section-h">News</h2>
