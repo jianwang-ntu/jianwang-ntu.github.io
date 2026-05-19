@@ -1,18 +1,28 @@
 import React from 'react';
 
-// News — most recent first.
+// News — most recent first. Trimmed to the last two years.
 export const NEWS = [
+  ['2026', <span>Thesis summary "<i>Trustworthy AI-Assisted Programming</i>" published in <b>Proceedings of AAAI 2026</b>.</span>],
   ['2026', <span>PhD conferred at <b>NTU Singapore</b> — research on code LLM security and program repair.</span>],
   ['2025', <span>Paper "<i>Defects4C</i>" accepted to <b>ASE 2025</b> — comprehensive C/C++ APR benchmark for LLMs.</span>],
   ['2025', <span>Paper "<i>Do Code Semantics Help?</i>" accepted to <b>EMNLP Findings 2025</b>.</span>],
   ['2024', <span>Paper "<i>RATCHET</i>" accepted to <b>ISSRE 2024</b>; "<i>AIGC Detectors on Code</i>" to <b>ASE 2024</b>.</span>],
   ['2024', <span>Paper "<i>FGVulDet</i>" (vulnerability detection) at <b>LCTES 2024</b>.</span>],
-  ['2023', <span>Joined <b>SMU</b> as Research Assistant — Code Intelligence & Code LLM Security.</span>],
-  ['2022', <span><b>3rd place</b> + <b>S$100,000 prize</b> in the AI Singapore deepfake detection challenge.</span>],
 ];
 
 // Featured publications.
 export const FEATURED_PUBS = [
+  {
+    thumb: "AAAI'26",
+    title: 'Trustworthy AI-Assisted Programming: Detection and Repair of Unreliable Code',
+    authors: <><b>Wang J.</b></>,
+    venue: 'AAAI', year: '2026',
+    badges: [
+      { label: 'pdf', href: 'https://ojs.aaai.org/index.php/AAAI/article/view/42174' },
+      { label: 'doi', href: 'https://doi.org/10.1609/aaai.v40i48.42174' },
+    ],
+    note: 'THESIS SUMMARY',
+  },
   {
     thumb: "ASE'25",
     title: 'Defects4C: Benchmarking Large Language Model Repair Capability with C/C++ Bugs',
@@ -49,6 +59,15 @@ export const FEATURED_PUBS = [
 ];
 
 export const ALL_PUBS = [
+  { id: 'C6', year: 2026, kind: 'conference',
+    title: 'Trustworthy AI-Assisted Programming: Detection and Repair of Unreliable Code',
+    authors: <><b>Wang J.</b></>,
+    venue: 'AAAI',
+    badges: [
+      { label: 'pdf', href: 'https://ojs.aaai.org/index.php/AAAI/article/view/42174' },
+      { label: 'doi', href: 'https://doi.org/10.1609/aaai.v40i48.42174' },
+    ],
+    note: 'THESIS SUMMARY' },
   { id: 'C5', year: 2025, kind: 'conference',
     title: 'Defects4C: Benchmarking Large Language Model Repair Capability with C/C++ Bugs',
     authors: <><b>Wang J.</b>, Xie X., Hu Q., Liu S., Yu J., Kong J., Li Y.</>,
