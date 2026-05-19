@@ -42,9 +42,20 @@ try {
 
 const escape = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
+// The /blog index page changes whenever a new post lands. Track its lastmod
+// to the newest post's date rather than today — that way the sitemap doesn't
+// claim freshness it doesn't have on a quiet day, and a crawler reading the
+// sitemap weekly sees the index move only when content actually moves.
+const newestPostDate = posts
+  .map((p) => p?.date)
+  .filter(Boolean)
+  .sort()
+  .at(-1) || today;
+
 const urls = [];
 for (const r of STATIC_ROUTES) {
-  urls.push({ loc: `${SITE_URL}${r.path}`, lastmod: today, changefreq: r.changefreq, priority: r.priority });
+  const lastmod = r.path === '/blog' ? newestPostDate : today;
+  urls.push({ loc: `${SITE_URL}${r.path}`, lastmod, changefreq: r.changefreq, priority: r.priority });
 }
 for (const p of posts) {
   if (!p?.slug) continue;
