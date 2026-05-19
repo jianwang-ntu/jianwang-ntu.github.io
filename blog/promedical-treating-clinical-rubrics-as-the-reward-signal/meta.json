@@ -1,0 +1,22 @@
+{
+  "slug": "promedical-treating-clinical-rubrics-as-the-reward-signal",
+  "title_en": "ProMedical: Treating Clinical Rubrics as the Reward Signal, Not a Post-Hoc Check",
+  "date": "2026-05-08",
+  "dek_en": "A team from Xunfei Healthcare argues that the standard recipe for aligning medical LLMs — collect pairwise preferences, train a scalar reward model, run RLHF/DPO — is fundamentally mismatched with how clinicians actually evaluate medical an",
+  "tags": [],
+  "languages": [
+    "en",
+    "zh"
+  ],
+  "title_zh": "ProMedical：用细粒度临床量规把\"安全\"硬约束写进医疗大模型的奖励信号",
+  "dek_zh": "He Geng、Yangmin Huang 等人(科大讯飞医疗)的这篇论文针对一个日益突出的问题:医疗大模型的训练信号(粗粒度二元偏好)和评测标准(细粒度临床量规)之间存在显著错位。作者提出 **ProMedical**——一套把临床量规直接嵌入偏好数据、奖励建模与评测的统一框架,并用其训练出的 8B 奖励模型在自建基准上把 Qwen3-8B 的整体准确率推高 22.3%、安全合规率推高 21.7%。",
+  "source": "https://arxiv.org/pdf/2604.08326",
+  "source_kind": "paper",
+  "image": "https://publicsg.s3.ap-southeast-1.amazonaws.com/github.io/images/blog/promedical-treating-clinical-rubrics-as-the-reward-signal.png",
+  "labels": [
+    "topic:llm",
+    "topic:research",
+    "format:paper",
+    "speaker:independent"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "slug": "sequoias-ai-thesis-a-computation-revolution-not-a-faster",
+  "title_en": "Sequoia's AI Thesis: A Computation Revolution, Not a Faster Internet",
+  "date": "2026-05-08",
+  "dek_en": "At Sequoia Capital's AI Summit, partners Pat Grady, Sonya Huang, and Konstantine Buhler argued that the AI wave is categorically different from every prior tech cycle — large enough to swallow software *and* services, fast enough to compres",
+  "tags": [],
+  "languages": [
+    "en",
+    "zh"
+  ],
+  "title_zh": "红杉资本三位合伙人的 AI 论断：计算革命、长周期智能体，与 99.9% 认知工作的迁移",
+  "dek_zh": "在最近一场红杉资本主办的 AI 峰会上，红杉的三位核心合伙人帕特·格雷迪（Pat Grady）、索尼娅·黄（Sonya Huang）与康斯坦丁·布勒（Konstantine Buhler）联合给出了他们对这一波 AI 浪潮的整体判断：这不是又一次通信革命，而是一次**计算革命**；长周期智能体已经到位，服务正在变成新的软件；最终，99.9% 的认知工作会像当年的体力劳动一样被机器接管。这篇博客整理了三位合伙人在演讲中的核心观点。",
+  "source": "https://www.youtube.com/watch?v=BE2CR9YT8_k",
+  "image": "https://publicsg.s3.ap-southeast-1.amazonaws.com/github.io/images/blog/sequoias-ai-thesis-a-computation-revolution-not-a-faster.png",
+  "labels": [
+    "topic:business",
+    "topic:agents",
+    "format:keynote",
+    "speaker:independent"
+  ]
+}

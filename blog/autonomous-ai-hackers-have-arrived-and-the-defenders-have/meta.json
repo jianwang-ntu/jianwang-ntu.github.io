@@ -1,0 +1,22 @@
+{
+  "slug": "autonomous-ai-hackers-have-arrived-and-the-defenders-have",
+  "title_en": "Autonomous AI Hackers Have Arrived — and the Defenders Have Six Months",
+  "date": "2026-05-10",
+  "dek_en": "In a short, pointed talk, the speaker — the founder of an AI offensive-security company called XBOW (rendered \"Xbo\" in the transcript) — argues that fully autonomous AI hacking is no longer hypothetical. His central claim: a bot given nothi",
+  "tags": [],
+  "languages": [
+    "en",
+    "zh"
+  ],
+  "title_zh": "当 AI 自己当黑客：Xbo 登顶 HackerOne 背后的攻防新格局",
+  "dek_zh": "在一场关于网络安全未来走向的演讲中，Xbo 公司的演讲者把当下的攻防态势比作 1575 年日本的长筱之战：装备最新火枪的织田信长击溃了名声显赫的武田骑兵，\"拥有 AI 的一方将获胜\"是他贯穿全场的核心论点。他声称，自家产品 Xbo 已经能在完全无人参与的情况下完成端到端的渗透，并据此呼吁安全行业必须在 6 到 9 个月内行动起来。",
+  "source": "https://www.youtube.com/watch?v=eHsr1Fl2jNA",
+  "source_kind": "video",
+  "image": "https://publicsg.s3.ap-southeast-1.amazonaws.com/github.io/images/blog/autonomous-ai-hackers-have-arrived-and-the-defenders-have.png",
+  "labels": [
+    "topic:security",
+    "topic:agents",
+    "format:talk",
+    "speaker:independent"
+  ]
+}

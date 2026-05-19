@@ -1,0 +1,23 @@
+{
+  "slug": "atbench-stress-testing-agent-safety-across-long",
+  "title_en": "ATBench: Stress-Testing Agent Safety Across Long Trajectories, Not Single Prompts",
+  "date": "2026-05-08",
+  "dek_en": "A new benchmark from Shanghai AI Lab and collaborators argues that agent safety can't be judged from a single response. The paper introduces **ATBench**, 1,000 multi-turn trajectories built around an explicit three-axis taxonomy of risk sou",
+  "tags": [],
+  "languages": [
+    "en",
+    "zh"
+  ],
+  "title_zh": "ATBench：用 1000 条长轨迹给智能体安全评测“补课”",
+  "dek_zh": "LLM 智能体的安全风险往往不在单条回复里，而在多步交互的链条上累积。这篇论文提出 **ATBench**——一个轨迹级智能体安全基准，从 *风险来源、失败模式、现实危害* 三个正交维度来组织风险，并通过分类指引下的合成与人工全审来兼顾多样性与真实性。其结果是：哪怕是 GPT‑5.4，在二分类安全判定上也只拿到 76.7% F1，在风险来源细粒度归因上更是只有 33.6%。",
+  "source": "https://arxiv.org/pdf/2604.02022",
+  "source_kind": "paper",
+  "image": "https://publicsg.s3.ap-southeast-1.amazonaws.com/github.io/images/blog/atbench-stress-testing-agent-safety-across-long.png",
+  "labels": [
+    "topic:agents",
+    "topic:security",
+    "topic:research",
+    "format:paper",
+    "speaker:academia"
+  ]
+}
