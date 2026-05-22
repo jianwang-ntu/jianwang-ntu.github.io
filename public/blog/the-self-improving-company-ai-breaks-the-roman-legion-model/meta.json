@@ -1,0 +1,27 @@
+{
+  "slug": "the-self-improving-company-ai-breaks-the-roman-legion-model",
+  "title_en": "The Self-Improving Company: Why AI Will Break the Roman Legion Model of Business",
+  "date": "2026-05-19",
+  "dek_en": "A talk argues companies are still built like Roman legions — hierarchies where information flows up and orders flow down through people. AI breaks that model: rather than bolting on copilots, companies should redesign themselves as AI-native systems built around recursive self-improving loops.",
+  "tags": [
+    "agents",
+    "business",
+    "product"
+  ],
+  "languages": [
+    "en",
+    "zh"
+  ],
+  "title_zh": "自我进化的公司：AI 如何改写组织的底层逻辑",
+  "dek_zh": "演讲指出传统公司像\"罗马军团\"一样依靠层级运作。AI 正在打破这种模式——与其把 AI 当作\"副驾驶\"，不如把公司重新设计成围绕\"递归自我改进循环\"构建的 AI 原生系统。",
+  "source": "https://www.youtube.com/watch?v=X_JsIHUfUjc",
+  "source_kind": "video",
+  "image": "/images/blog/the-self-improving-company-ai-breaks-the-roman-legion-model.png",
+  "labels": [
+    "topic:business",
+    "topic:agents",
+    "topic:product",
+    "format:talk",
+    "speaker:independent"
+  ]
+}
