@@ -1,5 +1,59 @@
 [
   {
+    "slug": "the-self-improving-company-ai-breaks-the-roman-legion-model",
+    "title_en": "The Self-Improving Company: Why AI Will Break the Roman Legion Model of Business",
+    "date": "2026-05-19",
+    "dek_en": "A talk argues companies are still built like Roman legions — hierarchies where information flows up and orders flow down through people. AI breaks that model: rather than bolting on copilots, companies should redesign themselves as AI-native systems built around recursive self-improving loops.",
+    "tags": [
+      "agents",
+      "business",
+      "product"
+    ],
+    "languages": [
+      "en",
+      "zh"
+    ],
+    "title_zh": "自我进化的公司：AI 如何改写组织的底层逻辑",
+    "dek_zh": "演讲指出传统公司像\"罗马军团\"一样依靠层级运作。AI 正在打破这种模式——与其把 AI 当作\"副驾驶\"，不如把公司重新设计成围绕\"递归自我改进循环\"构建的 AI 原生系统。",
+    "source": "https://www.youtube.com/watch?v=X_JsIHUfUjc",
+    "source_kind": "video",
+    "image": "/images/blog/the-self-improving-company-ai-breaks-the-roman-legion-model.png",
+    "labels": [
+      "topic:business",
+      "topic:agents",
+      "topic:product",
+      "format:talk",
+      "speaker:independent"
+    ]
+  },
+  {
+    "slug": "the-ai-tipping-point-in-software-engineering",
+    "title_en": "The AI Tipping Point in Software Engineering: Why Teams Need to Think in Ecosystems, Not Tools",
+    "date": "2026-05-19",
+    "dek_en": "Adam Bender argues software engineering is hitting a 10x moment — but generating code faster is not engineering faster. Through the lens of \"software ecology\", he warns AI amplifies a team's existing strengths and weaknesses alike, and the bottleneck simply moves to review, testing, builds, and releases.",
+    "tags": [
+      "agents",
+      "engineering",
+      "llm"
+    ],
+    "languages": [
+      "en",
+      "zh"
+    ],
+    "title_zh": "AI 正在把软件工程推向临界点：为什么团队需要像管理生态系统一样管理开发",
+    "dek_zh": "Adam Bender 指出软件工程正迎来\"10x 时刻\"——但代码写得更快不等于工程更快。他用\"软件生态学\"的视角警告：AI 会同时放大团队既有的优点与缺点，瓶颈只会转移到审查、测试、构建与发布。",
+    "source": "https://www.youtube.com/watch?v=2n41YjR5QfU",
+    "source_kind": "video",
+    "image": "/images/blog/the-ai-tipping-point-in-software-engineering.png",
+    "labels": [
+      "topic:engineering",
+      "topic:agents",
+      "topic:infra",
+      "format:talk",
+      "speaker:google"
+    ]
+  },
+  {
     "slug": "the-future-of-software-engineering-is-more-intentional",
     "title_en": "The Future of Software Engineering Is Not Less Human — It Is More Intentional",
     "date": "2026-05-19",
