@@ -1,5 +1,53 @@
 [
   {
+    "slug": "exploring-the-advancements-in-ai-with-jan-leike",
+    "title_en": "Exploring the Advancements in AI with Jan Leike",
+    "date": "2026-05-28",
+    "dek_en": "In a recent discussion hosted by Matt Turk on the Mad Podcast, Jan Leike, who co-leads the post-training frontiers team at OpenAI, shared insights into the latest developments in AI, particularly focusing on GPT-5.5. Leike argues that while",
+    "tags": [],
+    "languages": [
+      "en",
+      "zh"
+    ],
+    "title_zh": "Jan Leike谈GPT-5.5的突破与未来展望",
+    "dek_zh": "Jan Leike是OpenAI的后训练前沿团队的共同负责人。他在一次采访中分享了关于最近发布的GPT-5.5的看法，其中涉及人工智能技术的可靠性、强化学习的实际应用以及AI未来的发展方向。",
+    "source": "https://www.youtube.com/watch?v=DhD1zZ8w8Mw",
+    "source_kind": "video",
+    "image": "/images/blog/exploring-the-advancements-in-ai-with-jan-leike.png"
+  },
+  {
+    "slug": "software-engineering-in-the-ai-native-era-insights-from",
+    "title_en": "Software Engineering in the AI-Native Era: Insights from Andrew MacVean and Nicole Forsgren",
+    "date": "2026-05-28",
+    "dek_en": "In a recent presentation, Andrew MacVean and Nicole Forsgren of Google's Developer Intelligence Team explored the evolving role of software engineering in the AI-native era. They argue that while AI tools are increasingly writing code, the ",
+    "tags": [],
+    "languages": [
+      "en",
+      "zh"
+    ],
+    "title_zh": "如何在 AI 原生时代中蓬勃发展：Andrew MacVean 和 Nicole Forsgren 的见解",
+    "dek_zh": "Andrew MacVean 和 Nicole Forsgren在一次演讲中探讨了软件工程师在AI时代蓬勃发展的途径。他们是谷歌开发者智能团队的负责人，致力于研究软件工程师的工作方式和技能需求。两人分享了当前AI技术如何重塑软件工程领域的见解，并提供了多项关于提升专业能力的实用建议。",
+    "source": "https://www.youtube.com/watch?v=q_Jq4IgYImk",
+    "source_kind": "post",
+    "image": "/images/blog/software-engineering-in-the-ai-native-era-insights-from.png"
+  },
+  {
+    "slug": "reinventing-the-company-how-ai-is-reshaping-business",
+    "title_en": "Reinventing the Company: How AI is Reshaping Business Structures",
+    "date": "2026-05-28",
+    "dek_en": "In a transformative talk drawing inspiration from both historical and modern concepts, the speaker explores how the rise of AI is fundamentally altering traditional organizational structures. By reimagining the ways companies are built and ",
+    "tags": [],
+    "languages": [
+      "en",
+      "zh"
+    ],
+    "title_zh": "重塑企业：如何利用AI重构商业模式",
+    "dek_zh": "在这次演讲中，发言者讨论了人工智能（AI）如何可能重塑企业组织结构。演讲的中心观点是，传统的层级式公司结构，如同古罗马军团般的组织方式，可能被AI所打破。发言者认为，通过AI驱动的自我优化，公司可以实现前所未有的效率和灵活性。",
+    "source": "https://www.youtube.com/watch?v=t-G67yKAHBQ",
+    "source_kind": "video",
+    "image": "/images/blog/reinventing-the-company-how-ai-is-reshaping-business.png"
+  },
+  {
     "slug": "the-self-improving-company-ai-breaks-the-roman-legion-model",
     "title_en": "The Self-Improving Company: Why AI Will Break the Roman Legion Model of Business",
     "date": "2026-05-19",
