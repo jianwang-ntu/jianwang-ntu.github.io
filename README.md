@@ -89,7 +89,7 @@ The choice persists in `localStorage` (key: `wj-style-mode`).
 
 | File | Used in |
 |---|---|
-| `public/images/jornbowrl_circle2.jpg` | Academic mode profile avatar on Home (pre-cropped circle) |
+| `public/images/jornbowrl_circle3.jpg` | Academic mode profile avatar on Home (pre-cropped circle) |
 | `public/images/jornbowrl_circle.jpg` | Academic mode profile avatar on Publications sidebar (pre-cropped circle) |
 | `public/images/headshot-ai.png` | Classic mode hero (AI-stylised portrait, 220×260 px box) |
 | `headshot-sketch.jpg`, `headshot-cartoon.jpg`, `headshot-ink.png` | Spares — swap by editing `<img src>` in `Home.jsx` |
