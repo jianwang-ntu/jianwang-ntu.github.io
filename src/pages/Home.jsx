@@ -159,7 +159,7 @@ function AcademicHome() {
         {/* Left: profile card */}
         <div className="profile-card">
           <img
-            src="/images/jornbowrl_circle.jpg"
+            src="/images/jornbowrl_circle2.jpg"
             alt="Jian Wang"
             className="profile-avatar"
             onError={(e) => { e.currentTarget.src = '/images/headshot-ai.png'; }}
