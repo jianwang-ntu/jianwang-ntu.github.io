@@ -23,7 +23,8 @@ in the nav bar. The choice persists in `localStorage` (key: `wj-style-mode`).
 - `src/styles/pages.css` — both sets of CSS classes coexist; switching is a React DOM swap, no class juggling
 
 **Photos used:**
-- `public/images/jornbowrl_circle.jpg` — pre-cropped circle; academic mode avatar on Home + Publications sidebar
+- `public/images/jornbowrl_circle2.jpg` — pre-cropped circle; academic mode avatar on Home
+- `public/images/jornbowrl_circle.jpg` — pre-cropped circle; academic mode avatar on Publications sidebar
 - `public/images/headshot-ai.png` — AI-stylised portrait; classic mode hero box (220×260 px)
 
 When editing Home or Publications, preserve both sub-components and only change
