@@ -747,3 +747,11 @@
   .ap-avatar { width: 84px; height: 84px; }
   .ap-name { font-size: 20px; }
 }
+
+/* real figures lifted from the paper PDFs */
+.ap-fig-photo { margin: 0 0 var(--gap-3); overflow: hidden; }
+.ap-fig-img { display: block; width: 100%; height: auto; border-radius: 3px; background: #fff; }
+.ap-fig-credit {
+  font-family: var(--mono); font-size: var(--t-mono-xs);
+  color: var(--ap-muted); margin-top: 7px; letter-spacing: 0.3px;
+}
