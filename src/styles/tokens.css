@@ -58,10 +58,25 @@
    usable content. Drop to 18 px and let lines breathe. */
 @media (max-width: 560px) {
   :root { --page-pad-x: 18px; }
+}
 
+/* NOTE: --accent and --link previously sat as bare declarations inside the
+   560px media block, outside any selector, so browsers dropped them and
+   var(--link) resolved to nothing. Hoisted into :root so the academic blue
+   actually renders (and at every viewport, not just phones). */
+:root {
   /* accent (kept neutral to match the wireframe vibe) */
   --accent: var(--ink);
 
   /* academic link blue — used in Home & Publications academic redesign */
   --link: #2962ff;
+
+  /* academicpages mode — sidebar + content, cooler and denser than academic */
+  --ap-sidebar-w: 280px;
+  --ap-rule: rgba(26, 26, 26, 0.14);
+  --ap-muted: rgba(26, 26, 26, 0.58);
+  --ap-chip-bg: rgba(41, 98, 255, 0.08);
+  --ap-fig-stroke: rgba(26, 26, 26, 0.75);
+  --ap-fig-fill: rgba(41, 98, 255, 0.10);
+  --ap-fig-accent: #2962ff;
 }

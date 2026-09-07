@@ -4,6 +4,8 @@ import Footer from '../components/Footer.jsx';
 import Seo from '../components/Seo.jsx';
 import { Box, Chip, SectionHead, Status, Tag } from '../components/primitives.jsx';
 import { WORK, PROJECTS } from '../data.jsx';
+import { useStyleMode } from '../context/StyleCtx.jsx';
+import Figure from '../components/figures.jsx';
 
 function Stat({ v, l, s }) {
   return (
@@ -102,15 +104,76 @@ const PAIRS = [
   { paper: 'FakeSpotter / ABBA · deepfake & blur attack', venue: "IJCAI '20 · NeurIPS '20", source: 'Output of the AI Singapore deepfake challenge (S$100K, 3rd place)', role: 'NTU (2019–23)' },
 ];
 
-export default function WorkProjects() {
+
+/* ─── academicpages mode ─────────────────────────────────────────────
+   Projects lead with their schematic: on a portfolio page the diagram is
+   the fastest way to convey what an artefact actually does. */
+function AcademicPagesWork() {
+  const shipped = PROJECTS.filter((p) => p.status !== 'archived').length;
   return (
-    <div className="page">
-      <Seo
-        title="Work & Projects"
-        description="Engineering work and side projects — agent harnesses, blog automation, security research tooling. Eight years of shipping code, now studying what breaks when LLMs ship it."
-        path="/work"
-      />
-      <Nav />
+    <div className="ap-shell">
+      <aside className="ap-sidebar">
+        <h1 className="ap-name">Work &amp; Projects</h1>
+        <p className="ap-role">2011 — 2026</p>
+        <p className="ap-role ap-role-muted">industry → research</p>
+        <ul className="ap-meta">
+          <li><span className="ap-meta-k">Roles</span> {WORK.length}</li>
+          <li><span className="ap-meta-k">Artefacts</span> {PROJECTS.length}</li>
+          <li><span className="ap-meta-k">Active</span> {shipped}</li>
+          <li><span className="ap-meta-k">Code</span>{' '}
+            <a href="https://github.com/jianwang-ntu" target="_blank" rel="noreferrer">GitHub</a></li>
+        </ul>
+        <div className="ap-dl">
+          <a href="/pubs">→ publications</a>
+          <a href="/cv">→ full CV</a>
+        </div>
+      </aside>
+
+      <main className="ap-main">
+        <h2 className="ap-h2">Open-source artefacts</h2>
+        <p className="ap-note">
+          Each diagram sketches how the artefact actually works, drawn from its paper.
+        </p>
+        {PROJECTS.map((p, i) => (
+          <article className="ap-proj" key={i}>
+            {p.figure && <Figure id={p.figure} />}
+            <div className="ap-pub-body">
+              <h3 className="ap-pub-title">
+                {p.href ? <a href={p.href} target="_blank" rel="noreferrer">{p.title}</a> : p.title}
+              </h3>
+              <p className="ap-pub-venue">
+                <span className="ap-venue-chip">{p.kind}</span>
+                <span className="ap-pub-kind">{p.status}</span>
+                {p.stats && <span className="ap-pub-note">{p.stats}</span>}
+              </p>
+              <p className="ap-text ap-text-s">{p.blurb}</p>
+              <p className="ap-pub-links"><span className="ap-slug">{p.slug}</span></p>
+            </div>
+          </article>
+        ))}
+
+        <h2 className="ap-h2">Roles</h2>
+        {WORK.map((w, i) => (
+          <section className="ap-role-row" key={i}>
+            <div className="ap-role-when">{w.year}</div>
+            <div>
+              <h3 className="ap-pub-title">{w.role}</h3>
+              <p className="ap-pub-authors">{w.where}</p>
+              <p className="ap-text ap-text-s">{w.what}</p>
+              {w.stack?.length > 0 && (
+                <p className="ap-stack">{w.stack.map((t, j) => <span key={j}>{t}</span>)}</p>
+              )}
+            </div>
+          </section>
+        ))}
+      </main>
+    </div>
+  );
+}
+
+function DefaultWork() {
+  return (
+    <>
 
       <section className="wp-hero">
         <div className="kicker" style={{ letterSpacing: 2 }}>WORK & PROJECTS · 2011 — 2026</div>
@@ -211,6 +274,21 @@ export default function WorkProjects() {
         </Box>
       </section>
 
+    </>
+  );
+}
+
+export default function WorkProjects() {
+  const { mode } = useStyleMode();
+  return (
+    <div className="page">
+      <Seo
+        title="Work & Projects"
+        description="Engineering work and side projects — agent harnesses, blog automation, security research tooling. Eight years of shipping code, now studying what breaks when LLMs ship it."
+        path="/work"
+      />
+      <Nav />
+      {mode === 'apages' ? <AcademicPagesWork /> : <DefaultWork />}
       <Footer />
     </div>
   );
