@@ -6,6 +6,7 @@ import Seo from '../components/Seo.jsx';
 import { Box, Chip, Note, Tag, Thumb } from '../components/primitives.jsx';
 import { useStyleMode } from '../context/StyleCtx.jsx';
 import { ALL_PUBS } from '../data.jsx';
+import Figure from '../components/figures.jsx';
 
 /* ─── shared badge ──────────────────────────────────────────────── */
 function PubBadge({ b }) {
@@ -180,6 +181,73 @@ function AcademicPublications({ byYear, years }) {
   );
 }
 
+
+/* ─── academicpages mode ─────────────────────────────────────────── */
+
+function ApPubRow({ p }) {
+  return (
+    <article className="ap-pub">
+      {p.figure && <Figure id={p.figure} />}
+      <div className="ap-pub-body">
+        <h3 className="ap-pub-title">{p.title}</h3>
+        <p className="ap-pub-authors">{p.authors}</p>
+        <p className="ap-pub-venue">
+          <span className="ap-venue-chip">{p.venue} {p.year}</span>
+          <span className="ap-pub-kind">{p.kind}</span>
+          {p.note && <span className="ap-pub-note">{p.note}</span>}
+        </p>
+        <p className="ap-pub-links">
+          {(p.badges || []).map((b, i) => (
+            <a key={i} href={b.href} target="_blank" rel="noreferrer" className="ap-lnk">{b.label}</a>
+          ))}
+        </p>
+      </div>
+    </article>
+  );
+}
+
+function AcademicPagesPublications({ byYear, years }) {
+  const withFig = ALL_PUBS.filter((p) => p.figure).length;
+  return (
+    <div className="ap-shell">
+      <aside className="ap-sidebar">
+        <img
+          src="/images/jornbowrl_circle3.jpg"
+          alt="Jian Wang"
+          className="ap-avatar"
+          onError={(e) => { e.currentTarget.src = '/images/headshot-ai.png'; e.currentTarget.onerror = null; }}
+        />
+        <h1 className="ap-name">Jian Wang</h1>
+        <p className="ap-role">PhD, NTU Singapore</p>
+        <p className="ap-role ap-role-muted">Code LLM security · program repair</p>
+        <ul className="ap-meta">
+          <li><span className="ap-meta-k">Papers</span> {ALL_PUBS.length}</li>
+          <li><span className="ap-meta-k">Diagrams</span> {withFig}</li>
+          <li><span className="ap-meta-k">Scholar</span>{' '}
+            <a href="https://scholar.google.com/citations?hl=en&user=GAe_mJUAAAAJ" target="_blank" rel="noreferrer">citations</a></li>
+        </ul>
+        <div className="ap-dl">
+          <a href="/data/Jian_Wang_CV_Academic_202605.pdf" target="_blank" rel="noreferrer">↓ CV (PDF)</a>
+        </div>
+      </aside>
+
+      <main className="ap-main">
+        <h2 className="ap-h2">Publications</h2>
+        <p className="ap-note">
+          <b>Bold</b> author is me. {ALL_PUBS.length} papers across SE, ML and security venues;
+          {' '}{withFig} carry a schematic of the method.
+        </p>
+        {years.map((y) => (
+          <React.Fragment key={y}>
+            <h3 className="ap-year">{y}</h3>
+            {byYear[y].map((p) => <ApPubRow key={p.id} p={p} />)}
+          </React.Fragment>
+        ))}
+      </main>
+    </div>
+  );
+}
+
 /* ─── Page shell ──────────────────────────────────────────────────── */
 export default function Publications() {
   const { mode } = useStyleMode();
@@ -197,9 +265,11 @@ export default function Publications() {
         path="/pubs"
       />
       <Nav />
-      {mode === 'academic'
-        ? <AcademicPublications byYear={byYear} years={years} />
-        : <ClassicPublications byYear={byYear} years={years} kindCount={kindCount} />
+      {mode === 'apages'
+        ? <AcademicPagesPublications byYear={byYear} years={years} />
+        : mode === 'academic'
+          ? <AcademicPublications byYear={byYear} years={years} />
+          : <ClassicPublications byYear={byYear} years={years} kindCount={kindCount} />
       }
       <Footer />
     </div>
