@@ -28,6 +28,21 @@ const PAPER_IMAGES = {
     alt: 'FGVulDet framework: data collection and vulnerability-preserving mutation produce an augmented dataset, consumed by an edge-aware GGNN detector with per-CWE classifiers.',
     caption: 'Framework — FGVulDet, LCTES ’24 (Fig. 2)',
   },
+  rnnrepair: {
+    src: '/images/papers/rnnrepair.png',
+    alt: 'Fault localisation and repair: influence-based localisation of the responsible training samples, then fine-tuning, with MNIST examples of corrected predictions.',
+    caption: 'Fault localisation and repair — Automatic RNN Repair, ICML ’21 (Fig. 2)',
+  },
+  abba: {
+    src: '/images/papers/abba.png',
+    alt: 'Motion-based adversarial blur attack: saliency detection splits background and object, sub-motion generation and a spatial transformer synthesise motion, combined with adversarial kernels into the attacked image.',
+    caption: 'Attack pipeline — ABBA, NeurIPS ’20 (Fig. 3)',
+  },
+  fakespotter: {
+    src: '/images/papers/fakespotter.png',
+    alt: 'FakeSpotter monitors layer-wise neuron behaviour to separate real from synthesised faces, contrasted with a traditional detector that reads only the final layer.',
+    caption: 'Method overview — FakeSpotter, IJCAI ’20 (Fig. 2)',
+  },
 };
 
 /* ── hand-drawn fallbacks ───────────────────────────────────────────────
