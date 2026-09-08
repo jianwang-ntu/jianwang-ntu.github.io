@@ -1,0 +1,245 @@
+/* ══════════════════════════════════════════════════════════════════════
+   academicpages theme — applies to the WHOLE site when the active style
+   mode is `apages` (now the default). Scoped under the root [data-style]
+   attribute stamped by StyleProvider, so the classic and academic modes
+   keep the original cream aesthetic untouched.
+
+   Values below were measured from academicpages.github.io's rendered
+   output (white ground, #494e52 ink, #52adc8 links, 18px/27px body,
+   65px masthead, #f2f3f3 footer) and re-implemented here; none of the
+   upstream stylesheet is copied.
+   ══════════════════════════════════════════════════════════════════════ */
+
+[data-style="apages"] {
+  --ap-ink: #494e52;
+  --ap-ink-muted: #7a8288;
+  --ap-blue: #52adc8;
+  --ap-ground: #ffffff;
+  --ap-foot-bg: #f2f3f3;
+  --ap-foot-ink: #898c8f;
+  --ap-hair: #f2f3f3;
+  --ap-hair-strong: #dcdee0;
+  --ap-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+             "Helvetica Neue", Arial, sans-serif;
+
+  /* Redefine the base design tokens inside this theme. The wireframe look —
+     the Caveat script headings and dashed rules — is driven by --hand and
+     --dash, which every stylesheet already consumes. Overriding the tokens
+     here restyles CV, Blog and the primitives too, without per-class rules
+     and without touching the classic/academic modes. */
+  --hand: var(--ap-sans);
+  --body: var(--ap-sans);
+  --dash: 1px solid #f2f3f3;
+  --dash-thick: 1px solid #dcdee0;
+  --line: 1px solid #dcdee0;
+  --line-thin: 1px solid #f2f3f3;
+  --bg: #ffffff;
+  --bg-alt: #fbfbfb;
+  --bg-frame: #ffffff;
+  --ink: #494e52;
+  --ink-soft: #6b7075;
+  --ink-faint: #8b9096;
+  --accent: #52adc8;
+  --link: #52adc8;
+  --hatch: rgba(0, 0, 0, 0.03);
+  /* script sizes were tuned for a handwriting face; sans needs less */
+  --t-hand-s: 17px;
+  --t-hand: 22px;
+  --t-hand-l: 26px;
+  --t-hand-xl: 30px;
+}
+
+/* ── ground ────────────────────────────────────────────────────────── */
+[data-style="apages"],
+[data-style="apages"] body,
+[data-style="apages"] #root { background: var(--ap-ground); }
+
+[data-style="apages"] body {
+  font-family: var(--ap-sans);
+  color: var(--ap-ink);
+  font-size: 16px;
+  line-height: 1.6;
+}
+[data-style="apages"] .page {
+  width: 100%;
+  max-width: 1180px;
+  background: var(--ap-ground);
+  color: var(--ap-ink);
+}
+[data-style="apages"] p { font-size: 16px; line-height: 1.62; margin: 0 0 16px; }
+[data-style="apages"] a { color: var(--ap-blue); text-decoration: none; }
+[data-style="apages"] a:visited { color: var(--ap-blue); }
+[data-style="apages"] a:hover { text-decoration: underline; }
+[data-style="apages"] h1, [data-style="apages"] h2,
+[data-style="apages"] h3, [data-style="apages"] h4 {
+  font-family: var(--ap-sans); color: var(--ap-ink); font-weight: 700;
+}
+[data-style="apages"] h1 { font-size: 28px; line-height: 1.25; }
+[data-style="apages"] h2 { font-size: 22px; line-height: 1.3; }
+[data-style="apages"] h3 { font-size: 18px; line-height: 1.35; }
+[data-style="apages"] hr { border-top: 1px solid var(--ap-hair-strong); }
+
+/* ── masthead ──────────────────────────────────────────────────────── */
+[data-style="apages"] .nav {
+  background: var(--ap-ground);
+  border-bottom: 1px solid var(--ap-hair);
+  padding: 0 var(--page-pad-x);
+  min-height: 65px;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+[data-style="apages"] .nav .brand {
+  font-family: var(--ap-sans);
+  font-size: 17px; font-weight: 700; color: var(--ap-ink);
+  border-bottom: 3px solid var(--ap-blue);
+  padding: 4px 0 6px;
+}
+[data-style="apages"] .nav .links {
+  font-family: var(--ap-sans);
+  font-size: 15px; gap: 26px; align-items: center;
+}
+[data-style="apages"] .nav .links a { color: var(--ap-ink); text-decoration: none; }
+[data-style="apages"] .nav .links a:hover { color: var(--ap-blue); }
+[data-style="apages"] .nav .links a.active {
+  color: var(--ap-ink); text-decoration: none; box-shadow: inset 0 -2px 0 var(--ap-blue);
+}
+[data-style="apages"] .style-toggle {
+  font-family: var(--ap-sans); font-size: 12px;
+  border: 1px solid var(--ap-hair-strong); color: var(--ap-ink-muted);
+  border-radius: 3px; padding: 4px 9px;
+}
+[data-style="apages"] .style-toggle:hover { color: var(--ap-blue); border-color: var(--ap-blue); }
+
+/* ── footer ────────────────────────────────────────────────────────── */
+[data-style="apages"] .foot {
+  background: var(--ap-foot-bg);
+  border-top: 1px solid var(--ap-hair-strong);
+  color: var(--ap-foot-ink);
+  font-family: var(--ap-sans); font-size: 13px;
+  padding: 22px var(--page-pad-x);
+}
+[data-style="apages"] .foot a { color: var(--ap-foot-ink); }
+[data-style="apages"] .foot a:hover { color: var(--ap-blue); }
+
+/* ── shell: identity rail + content column ─────────────────────────── */
+[data-style="apages"] .ap-shell {
+  grid-template-columns: 230px minmax(0, 1fr);
+  gap: 46px;
+  max-width: 1180px;
+  padding-top: 34px;
+}
+[data-style="apages"] .ap-avatar {
+  width: 163px; height: 163px; border: none;
+}
+[data-style="apages"] .ap-name { font-size: 19px; font-weight: 700; }
+[data-style="apages"] .ap-name-alt,
+[data-style="apages"] .ap-role { font-size: 14px; color: var(--ap-ink-muted); }
+[data-style="apages"] .ap-meta {
+  border-top: 1px solid var(--ap-hair-strong);
+  font-size: 14px; line-height: 2;
+}
+[data-style="apages"] .ap-meta-k {
+  font-family: var(--ap-sans); font-size: 11px; letter-spacing: 0.7px;
+  color: var(--ap-ink-muted); min-width: 66px;
+}
+[data-style="apages"] .ap-meta a { color: var(--ap-blue); }
+[data-style="apages"] .ap-dl { border-top: 1px solid var(--ap-hair-strong); }
+[data-style="apages"] .ap-dl a {
+  font-family: var(--ap-sans); font-size: 13px;
+  border-color: var(--ap-hair-strong); color: var(--ap-blue);
+}
+[data-style="apages"] .ap-dl a:hover { background: var(--ap-blue); border-color: var(--ap-blue); color: #fff; }
+
+/* ── content blocks ────────────────────────────────────────────────── */
+[data-style="apages"] .ap-h2 {
+  font-size: 22px; font-weight: 700;
+  border-bottom: 1px solid var(--ap-hair-strong);
+  padding-bottom: 8px; margin: 34px 0 16px;
+}
+[data-style="apages"] .ap-text { font-size: 16px; line-height: 1.62; }
+[data-style="apages"] .ap-list { font-size: 16px; line-height: 1.75; }
+[data-style="apages"] .ap-note { font-size: 14px; color: var(--ap-ink-muted); }
+[data-style="apages"] .ap-year {
+  font-family: var(--ap-sans); font-size: 13px; font-weight: 700;
+  letter-spacing: 0.6px; color: var(--ap-ink-muted);
+}
+[data-style="apages"] .ap-pub,
+[data-style="apages"] .ap-proj {
+  border: 1px solid var(--ap-hair); border-radius: 4px; background: var(--ap-ground);
+  padding: 18px;
+}
+[data-style="apages"] .ap-pub-title { font-size: 17px; font-weight: 700; }
+[data-style="apages"] .ap-pub-title a { color: var(--ap-blue); }
+[data-style="apages"] .ap-pub-authors { font-size: 14.5px; color: var(--ap-ink); }
+[data-style="apages"] .ap-author { color: var(--ap-blue); }
+[data-style="apages"] .ap-author-me { color: var(--ap-ink); }
+[data-style="apages"] .ap-pub-venue { font-size: 14px; color: var(--ap-ink-muted); }
+[data-style="apages"] .ap-venue-chip {
+  background: rgba(82, 173, 200, 0.12); color: #35818f;
+  font-family: var(--ap-sans); font-size: 11px; font-weight: 600;
+}
+[data-style="apages"] .ap-pub-kind,
+[data-style="apages"] .ap-pub-note { font-family: var(--ap-sans); font-size: 11px; }
+[data-style="apages"] .ap-lnk {
+  font-family: var(--ap-sans); font-size: 12px;
+  color: var(--ap-blue); border-color: var(--ap-hair-strong);
+}
+[data-style="apages"] .ap-lnk:hover { background: var(--ap-blue); border-color: var(--ap-blue); }
+[data-style="apages"] .ap-pub-brief { font-size: 14.5px; color: var(--ap-ink-muted); }
+[data-style="apages"] .ap-fig-wrap { background: #fbfbfb; border-color: var(--ap-hair); }
+[data-style="apages"] .ap-fig-none { background: #fbfbfb; border-color: var(--ap-hair); color: var(--ap-ink-muted); }
+[data-style="apages"] .ap-news-row { font-size: 15px; }
+[data-style="apages"] .ap-news-date { font-family: var(--ap-sans); font-size: 12px; color: var(--ap-ink-muted); }
+[data-style="apages"] .ap-award { font-family: var(--ap-sans); font-size: 14px; }
+[data-style="apages"] .ap-role-when { font-family: var(--ap-sans); font-size: 12.5px; color: var(--ap-ink-muted); }
+[data-style="apages"] .ap-stack span { font-family: var(--ap-sans); font-size: 11px; border-color: var(--ap-hair-strong); }
+
+/* ── single publication page ───────────────────────────────────────── */
+[data-style="apages"] .pub-detail { max-width: 800px; }
+[data-style="apages"] .pub-detail-title { font-size: 27px; font-weight: 700; }
+[data-style="apages"] .pub-detail-authors { font-size: 16px; }
+[data-style="apages"] .pub-detail-venue { font-size: 15px; color: var(--ap-ink-muted); }
+[data-style="apages"] .pub-detail-brief {
+  font-size: 16px; border-left-color: var(--ap-blue); color: var(--ap-ink);
+}
+[data-style="apages"] .pub-back { font-family: var(--ap-sans); font-size: 13px; color: var(--ap-blue); }
+[data-style="apages"] .pub-bibtex {
+  background: #fbfbfb; border-color: var(--ap-hair-strong); font-size: 12.5px;
+}
+[data-style="apages"] .pub-cite-copy {
+  font-family: var(--ap-sans); font-size: 11px;
+  color: var(--ap-blue); border-color: var(--ap-hair-strong);
+}
+[data-style="apages"] .pub-cite-copy:hover { background: var(--ap-blue); border-color: var(--ap-blue); }
+
+/* ── CV / Blog / post: inherit the theme, soften the wireframe chrome ── */
+[data-style="apages"] .kicker,
+[data-style="apages"] .sec-head,
+[data-style="apages"] .page-head { font-family: var(--ap-sans); }
+[data-style="apages"] .blog-post {
+  border-color: var(--ap-hair-strong); border-radius: 4px; background: var(--ap-ground);
+}
+[data-style="apages"] .blog-post h3 a { color: var(--ap-blue); }
+[data-style="apages"] .blog-body { font-size: 16px; line-height: 1.7; }
+[data-style="apages"] .blog-body h2 { font-size: 22px; }
+[data-style="apages"] .blog-body a { color: var(--ap-blue); }
+
+@media (max-width: 900px) {
+  [data-style="apages"] .ap-shell { grid-template-columns: minmax(0, 1fr); gap: 26px; }
+  [data-style="apages"] .ap-avatar { width: 120px; height: 120px; }
+}
+@media (max-width: 560px) {
+  [data-style="apages"] .ap-avatar { width: 88px; height: 88px; }
+  [data-style="apages"] .nav .links { font-size: 13px; gap: 14px; }
+}
+
+/* Headings that hard-code script-font sizes need taming once the face is sans. */
+[data-style="apages"] .home-hero h1,
+[data-style="apages"] .wp-hero h1,
+[data-style="apages"] .cv-hero h1 { font-size: 30px; line-height: 1.2; font-weight: 700; }
+[data-style="apages"] .blog-post h3,
+[data-style="apages"] .blog-hero h1 { font-size: 20px; line-height: 1.3; font-weight: 700; }
+[data-style="apages"] .sec-head,
+[data-style="apages"] .page-head h1 { font-size: 24px; font-weight: 700; }
+[data-style="apages"] .blog-body h1 { font-size: 26px; }
+[data-style="apages"] .kicker { letter-spacing: 1px; font-size: 11px; color: var(--ap-ink-muted); }
