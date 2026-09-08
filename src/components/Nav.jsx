@@ -1,6 +1,5 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { useStyleMode, MODES } from '../context/StyleCtx.jsx';
 
 const NAV_ITEMS = [
   { to: '/home', label: 'Home' },
@@ -11,7 +10,6 @@ const NAV_ITEMS = [
 ];
 
 export default function Nav() {
-  const { toggle, next } = useStyleMode();
   return (
     <nav className="nav">
       <NavLink to="/home" className="brand" style={{ textDecoration: 'none', color: 'var(--ink)' }}>
@@ -27,13 +25,6 @@ export default function Nav() {
             {n.label}
           </NavLink>
         ))}
-        <button
-          className="style-toggle"
-          onClick={toggle}
-          title={MODES.find((m) => m.id === next)?.title}
-        >
-          {MODES.find((m) => m.id === next)?.label}
-        </button>
       </div>
     </nav>
   );

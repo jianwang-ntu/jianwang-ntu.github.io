@@ -61,29 +61,21 @@ All copy lives in `src/data.jsx`:
 `public/data/` and `public/images/` ship verbatim — drop the CV PDF, bio.txt,
 and headshot variants there.
 
-## Style toggle (classic ↔ academic)
+## Style: academicpages
 
-The Home and Publications pages carry two full layout variants that the visitor
-can switch between using the **`◧ classic` / `◨ academic` button** in the nav.
+The site has a single style, modelled on
+[academicpages.github.io](https://academicpages.github.io/): a sticky identity
+rail on the left, a content column on the right, white ground, `#494e52` ink
+and `#52adc8` links.
 
-| Mode | Description |
-|---|---|
-| **academic** | Academic portfolio look (default): circular photo, Bio / Research Interests / News column, clean text-based publication list with blue PDF links — inspired by [liuyang12.github.io](https://liuyang12.github.io/) and [franklinliu.github.io/publications](https://franklinliu.github.io/publications/) |
-| **classic** | Original wireframe aesthetic: Caveat display headings, thumbnail placeholder boxes, dashed borders, editorial two-column hero |
+`index.html` carries `data-style="apages"` on the root element, and
+`src/styles/apages.css` is scoped under that attribute. The theme redefines the
+base design tokens (`--hand`, `--dash`, `--bg`, `--ink`, `--accent`), which is
+how CV, Blog and the shared primitives inherit the look without needing their
+own variants.
 
-The choice persists in `localStorage` (key: `wj-style-mode`).
-
-**Where the wiring lives:**
-
-- `src/context/StyleCtx.jsx` — `StyleProvider` + `useStyleMode()` hook
-- `src/App.jsx` — wraps the route tree with `<StyleProvider>`
-- `src/components/Nav.jsx` — reads `{ mode, toggle }` and renders the button
-- `src/pages/Home.jsx` — exports `ClassicHome` and `AcademicHome` sub-components;
-  the page shell picks one based on `mode`
-- `src/pages/Publications.jsx` — same pattern: `ClassicPublications` /
-  `AcademicPublications`
-- `src/styles/pages.css` — both sets of layout classes live in the sheet
-  simultaneously; switching is purely a React-rendered DOM swap
+The earlier classic ↔ academic toggle has been removed — there is no
+`StyleCtx.jsx`, no nav toggle, and no per-mode sub-layouts.
 
 ## Photos
 
