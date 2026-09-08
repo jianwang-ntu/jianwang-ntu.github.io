@@ -21,7 +21,7 @@
  */
 import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync } from 'node:fs';
 import { resolve, dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const SITE_URL = (process.env.SITE_URL || 'https://www.wj2ai.com').replace(/\/$/, '');
 const S3_IMAGE_BASE = (process.env.S3_IMAGE_BASE
@@ -129,6 +129,16 @@ const STATIC_ROUTES = [
 ];
 
 console.log(`build-prerender: SITE_URL=${SITE_URL}`);
+
+// 1a) One route per publication, so /pubs/<key> has real HTML and meta tags.
+const pubMod = await import(pathToFileURL(resolve(repoRoot, 'src', 'data-pubs.js')).href);
+for (const [, m] of Object.entries(pubMod.PUB_META)) {
+  STATIC_ROUTES.push({
+    path: `/pubs/${m.key}`,
+    title: 'Publication',
+    desc: m.brief,
+  });
+}
 
 // 1) Static top-level routes.
 for (const r of STATIC_ROUTES) {

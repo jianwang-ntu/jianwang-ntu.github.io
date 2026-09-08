@@ -7,6 +7,9 @@ import { Box, Chip, Note, Tag, Thumb } from '../components/primitives.jsx';
 import { useStyleMode } from '../context/StyleCtx.jsx';
 import { ALL_PUBS } from '../data.jsx';
 import Figure from '../components/figures.jsx';
+import Authors from '../components/Authors.jsx';
+import { Link } from 'react-router-dom';
+import { PUB_META } from '../data-pubs.js';
 
 /* ─── shared badge ──────────────────────────────────────────────── */
 function PubBadge({ b }) {
@@ -185,22 +188,34 @@ function AcademicPublications({ byYear, years }) {
 /* ─── academicpages mode ─────────────────────────────────────────── */
 
 function ApPubRow({ p }) {
+  const meta = PUB_META[p.id];
   return (
-    <article className="ap-pub">
-      {p.figure && <Figure id={p.figure} />}
+    <article className="ap-pub ap-pub-2col">
+      <div className="ap-pub-figcol">
+        {p.figure
+          ? <Figure id={p.figure} />
+          : <div className="ap-fig-none">{p.venue}<span>{p.year}</span></div>}
+      </div>
       <div className="ap-pub-body">
-        <h3 className="ap-pub-title">{p.title}</h3>
-        <p className="ap-pub-authors">{p.authors}</p>
+        <h3 className="ap-pub-title">
+          {meta
+            ? <Link to={`/pubs/${meta.key}`}>{p.title}</Link>
+            : p.title}
+        </h3>
+        <p className="ap-pub-authors">
+          {meta ? <Authors names={meta.authors} /> : p.authors}
+        </p>
         <p className="ap-pub-venue">
-          <span className="ap-venue-chip">{p.venue} {p.year}</span>
-          <span className="ap-pub-kind">{p.kind}</span>
-          {p.note && <span className="ap-pub-note">{p.note}</span>}
+          <i>{p.venue}</i>, {p.year}
+          {p.note && <span className="ap-pub-note"> · {p.note}</span>}
         </p>
         <p className="ap-pub-links">
           {(p.badges || []).map((b, i) => (
             <a key={i} href={b.href} target="_blank" rel="noreferrer" className="ap-lnk">{b.label}</a>
           ))}
+          {meta && <Link to={`/pubs/${meta.key}`} className="ap-lnk ap-lnk-more">details</Link>}
         </p>
+        {meta?.brief && <p className="ap-pub-brief">{meta.brief}</p>}
       </div>
     </article>
   );

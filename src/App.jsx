@@ -7,6 +7,7 @@ import WorkProjects from './pages/WorkProjects.jsx';
 import CV from './pages/CV.jsx';
 import Blog from './pages/Blog.jsx';
 import BlogPost from './pages/BlogPost.jsx';
+import PublicationDetail from './pages/PublicationDetail.jsx';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -22,6 +23,7 @@ export default function App() {
         <Route path="/" element={<Navigate to="/home" replace />} />
         <Route path="/home" element={<Home />} />
         <Route path="/pubs" element={<Publications />} />
+        <Route path="/pubs/:key" element={<PublicationDetail />} />
         <Route path="/work" element={<WorkProjects />} />
         <Route path="/cv" element={<CV />} />
         <Route path="/blog" element={<Blog />} />
