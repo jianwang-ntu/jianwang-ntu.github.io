@@ -4,44 +4,34 @@ This is **Jian Wang's personal site**: a Vite + React SPA deployed to GitHub Pag
 Pages: `/home`, `/pubs`, `/work`, `/cv`, `/blog`. Build output is plain HTML +
 content-hashed JS/CSS — no SSR.
 
-## Style toggle (classic ↔ academic)
+## Single style: academicpages
 
-Home and Publications carry **two full layout variants** switchable via a button
-in the nav bar. The choice persists in `localStorage` (key: `wj-style-mode`).
+The site has **one** style. `index.html` carries `data-style="apages"` on the
+root element and `src/styles/apages.css` is scoped under that attribute,
+theming every page including CV and Blog.
 
-| Mode | Default | Description |
-|---|---|---|
-| `academic` | ✓ | Academic portfolio: circular photo, Bio/Research/News column, clean text pub list with `--link: #2962ff` blue. Inspired by liuyang12.github.io + franklinliu.github.io/publications |
-| `classic` | | Original wireframe: Caveat headings, placeholder thumbnail boxes, dashed borders, two-column hero with `headshot-ai.png` |
+The former classic ↔ academic toggle was removed: `StyleCtx.jsx`, the nav
+toggle button, and the `ClassicHome` / `AcademicHome` / `ClassicPublications`
+/ `AcademicPublications` / `DefaultWork` layouts are all gone. Do not
+reintroduce a mode switch — earlier revisions of this file forbade collapsing
+to a single layout, and that rule no longer applies.
 
-**Wiring:**
-- `src/context/StyleCtx.jsx` — `StyleProvider` + `useStyleMode()` hook (reads/writes localStorage)
-- `src/App.jsx` — `<StyleProvider>` wraps the entire route tree
-- `src/components/Nav.jsx` — `◧ classic` / `◨ academic` toggle button; label = the mode you'll switch TO
-- `src/pages/Home.jsx` — `ClassicHome` + `AcademicHome` sub-components; page shell picks via `mode`
-- `src/pages/Publications.jsx` — `ClassicPublications` + `AcademicPublications`; same pattern
-- `src/styles/pages.css` — both sets of CSS classes coexist; switching is a React DOM swap, no class juggling
+`apages.css` redefines the base tokens (`--hand`, `--dash`, `--bg`, `--ink`,
+`--accent`) inside the theme, which is how CV, Blog and the shared primitives
+pick up the look without per-page variants.
 
 **Photos used:**
-- `public/images/jornbowrl_circle3.jpg` — pre-cropped circle; academic mode avatar on Home
-- `public/images/jornbowrl_circle.jpg` — pre-cropped circle; academic mode avatar on Publications sidebar
-- `public/images/headshot-ai.png` — AI-stylised portrait; classic mode hero box (220×260 px)
-
-When editing Home or Publications, preserve both sub-components and only change
-the one matching the mode you're fixing. Never collapse back to a single layout.
+- `public/images/jornbowrl_circle3.jpg` — circular avatar in the sidebar rail
+- `public/images/papers/*.png` — figures lifted from paper PDFs
 
 ## Where things live
 
 - `src/pages/` — top-level routes. `Blog.jsx` (index list) and `BlogPost.jsx`
-  (single post with EN/中文 switcher) are the blog pair. `Home.jsx` and
-  `Publications.jsx` each contain two named sub-layouts (Classic + Academic)
-  selected by the style toggle.
-- `src/context/StyleCtx.jsx` — style-mode context; see "Style toggle" section above.
+  (single post with EN/中文 switcher) are the blog pair. `Home.jsx`, `Publications.jsx` and
+  `WorkProjects.jsx` each carry a single academicpages layout.
 - `src/data.jsx` — hand-edited content for Home/Publications/Work/CV.
-- `src/styles/pages.css` — all styles. Classic wireframe classes
-  (`.home-hero`, `.pub-item`, …) and academic classes (`.about-section`,
-  `.pub-entry`, …) coexist. `.blog-post` (cards) + `.blog-body`
-  (long-form markdown) live near the bottom.
+- `src/styles/pages.css` — shared page styles; `src/styles/apages.css` layers
+  the academicpages theme on top, scoped to `[data-style="apages"]`.
 - `public/blog/posts.json` — manifest, newest first. The Blog index page
   reads this directly.
 - `public/blog/<slug>/` — one folder per post. **This is the unit of work** —

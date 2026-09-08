@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
-import { StyleProvider } from './context/StyleCtx.jsx';
 import Home from './pages/Home.jsx';
 import Publications from './pages/Publications.jsx';
 import WorkProjects from './pages/WorkProjects.jsx';
@@ -17,7 +16,7 @@ function ScrollToTop() {
 
 export default function App() {
   return (
-    <StyleProvider>
+    <>
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Navigate to="/home" replace />} />
@@ -30,6 +29,6 @@ export default function App() {
         <Route path="/blog/:slug" element={<BlogPost />} />
         <Route path="*" element={<Navigate to="/home" replace />} />
       </Routes>
-    </StyleProvider>
+    </>
   );
 }
