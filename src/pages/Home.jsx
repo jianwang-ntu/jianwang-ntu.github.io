@@ -25,38 +25,30 @@ function PubBadge({ b }) {
    the layout convention academicpages.github.io popularised. Markup and
    styles are original to this repo; only the arrangement is borrowed. */
 
-function ApSidebar() {
+function ApHomeHead() {
   return (
-    <aside className="ap-sidebar">
+    <header className="ap-home-head">
       <img
         src="/images/jornbowrl_circle3.jpg"
         alt="Jian Wang"
-        className="ap-avatar"
-        onError={(e) => { e.currentTarget.src = '/images/headshot-ai.png'; }}
+        className="ap-home-avatar"
+        onError={(e) => { e.currentTarget.src = '/images/headshot-ai.png'; e.currentTarget.onerror = null; }}
       />
-      <h1 className="ap-name">Jian Wang</h1>
-      <p className="ap-name-alt">王剑</p>
-      <p className="ap-role">PhD, Nanyang Technological University</p>
-      <p className="ap-role ap-role-muted">Code LLM security · program repair</p>
-
-      <ul className="ap-meta">
-        <li><span className="ap-meta-k">Location</span> Singapore</li>
-        <li><span className="ap-meta-k">Email</span>{' '}
-          <a href="mailto:jian004@e.ntu.edu.sg">jian004@e.ntu.edu.sg</a></li>
-        <li><span className="ap-meta-k">Scholar</span>{' '}
-          <a href="https://scholar.google.com/citations?hl=en&user=GAe_mJUAAAAJ" target="_blank" rel="noreferrer">citations</a></li>
-        <li><span className="ap-meta-k">GitHub</span>{' '}
-          <a href="https://github.com/jianwang-ntu" target="_blank" rel="noreferrer">jianwang-ntu</a></li>
-        <li><span className="ap-meta-k">Twitter</span>{' '}
-          <a href="https://twitter.com/jornbowrl" target="_blank" rel="noreferrer">@jornbowrl</a></li>
-      </ul>
-
-      <div className="ap-dl">
-        <a href="/data/Jian_Wang_CV_Academic_202605.pdf" target="_blank" rel="noreferrer">↓ CV (EN)</a>
-        <a href="/data/Jian_Wang_CV_Chinese_202605.pdf" target="_blank" rel="noreferrer">↓ CV (中文)</a>
-        <a href="/data/Jian_Wang_Research_Statement.pdf" target="_blank" rel="noreferrer">↓ Research statement</a>
-      </div>
-    </aside>
+      <h1 className="ap-home-name">Jian Wang · 王剑</h1>
+      <p className="ap-home-meta">
+        <a href="mailto:jian004@e.ntu.edu.sg">jian004@e.ntu.edu.sg</a><br />
+        College of Computing and Data Science<br />
+        Nanyang Technological University<br />
+        Singapore
+      </p>
+      <nav className="ap-home-links">
+        <a href="https://scholar.google.com/citations?hl=en&user=GAe_mJUAAAAJ" target="_blank" rel="noreferrer">Google Scholar</a>
+        <a href="https://github.com/jianwang-ntu" target="_blank" rel="noreferrer">GitHub</a>
+        <a href="https://twitter.com/jornbowrl" target="_blank" rel="noreferrer">Twitter</a>
+        <a href="/data/Jian_Wang_CV_Academic_202605.pdf" target="_blank" rel="noreferrer">CV</a>
+        <a href="/data/Jian_Wang_Research_Statement.pdf" target="_blank" rel="noreferrer">Research statement</a>
+      </nav>
+    </header>
   );
 }
 
@@ -83,57 +75,55 @@ function ApPubEntry({ p }) {
 
 function AcademicPagesHome() {
   return (
-    <div className="ap-shell">
-      <ApSidebar />
-      <main className="ap-main">
-        <h2 className="ap-h2">About</h2>
-        <p className="ap-text">
-          Recent PhD from the College of Computing and Data Science (CCDS) at{' '}
+    <div className="ap-home">
+      <ApHomeHead />
+
+      <div className="ap-home-body">
+        <p>
+          I am a recent PhD from the College of Computing and Data Science (CCDS) at{' '}
           <b>Nanyang Technological University</b>, advised by{' '}
           <a href="https://personal.ntu.edu.sg/yi_li/" target="_blank" rel="noreferrer">Prof. Li Yi</a>.
-          Research sits at the intersection of <b>software engineering</b>,{' '}
-          <b>large language models</b> and <b>trustworthy AI systems</b> — automated
-          program repair, AIGC code detection, and execution-grounded reasoning over programs.
+          My research sits at the intersection of <b>software engineering</b>,{' '}
+          <b>large language models</b> and <b>trustworthy AI systems</b> — with a focus on{' '}
+          <b>automated program repair</b>, <b>AI-generated code detection</b> and{' '}
+          <b>execution-grounded reasoning</b> over programs.
         </p>
-        <p className="ap-text">
-          Before research: <b>~8 years</b> in industry — AI Lab at Xiaomi (GANs for portrait
-          background removal and face cartoonisation) and a backend role at 58.com
-          (async web framework serving 100M+ daily requests).
+        <p>
+          Before research I spent <b>~8 years in industry</b>: the AI Lab at <b>Xiaomi</b>,
+          training GANs for portrait background removal and face cartoonisation, and a backend
+          role at <b>58.com</b>, building an async web framework serving 100M+ daily requests.
         </p>
 
-        <h2 className="ap-h2">Research interests</h2>
-        <ul className="ap-list">
-          <li>Code LLM intelligence and trustworthiness (APR, semantics reasoning)</li>
-          <li>AI-generated code (AIGC) detection</li>
-          <li>Long-horizon AI for software maintenance — agentic, automatic, reliable</li>
+        <h2 className="ap-home-h2">Research Interests</h2>
+        <ul className="ap-home-list">
+          <li><b>Code LLM trustworthiness</b>: automated program repair, execution semantics</li>
+          <li><b>AI-generated code detection</b>: how detection built for prose holds up on code</li>
+          <li><b>Long-horizon AI for software maintenance</b>: agentic, automatic, reliable</li>
         </ul>
 
-        <h2 className="ap-h2">Selected publications</h2>
-        <p className="ap-note">
-          <b>Bold</b> author is me. Each figure sketches the paper's actual pipeline. →{' '}
+        <h2 className="ap-home-h2">Selected Publications</h2>
+        <p style={{ marginBottom: 18 }}>
+          <b>Bold</b> author is me. Each figure is the paper&rsquo;s own. →{' '}
           <a href="/pubs">all publications</a> · <a href="/work">the work behind them</a>
         </p>
         {FEATURED_PUBS.map((p, i) => <ApPubEntry key={i} p={p} />)}
 
-        <h2 className="ap-h2">News</h2>
-        <div className="ap-news">
+        <h2 className="ap-home-h2">News</h2>
+        <div className="ap-home-news">
           {NEWS.slice(0, 7).map(([d, t], i) => (
-            <div key={i} className="ap-news-row">
-              <span className="ap-news-date">{d}</span>
-              <span>{t}</span>
-            </div>
+            <div key={i}><span className="d">{d}</span>{t}</div>
           ))}
         </div>
 
-        <p className="ap-award">
-          ★ <b>S$100,000 prize</b> · 3rd place · AI Singapore Deepfake Detection Challenge · 2022
-        </p>
-      </main>
+        <h2 className="ap-home-h2">Awards</h2>
+        <ul className="ap-home-list">
+          <li><b>S$100,000 prize</b> — 3rd place, AI Singapore Deepfake Detection Challenge, 2022</li>
+        </ul>
+      </div>
     </div>
   );
 }
 
-/* ─── Page shell ──────────────────────────────────────────────────── */
 export default function Home() {
   return (
     <div className="page">

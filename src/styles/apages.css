@@ -10,8 +10,8 @@
    ══════════════════════════════════════════════════════════════════════ */
 
 [data-style="apages"] {
-  --ap-ink: #494e52;
-  --ap-ink-muted: #7a8288;
+  --ap-ink: #222222;
+  --ap-ink-muted: #555a5e;
   --ap-blue: #52adc8;
   --ap-ground: #ffffff;
   --ap-foot-bg: #f2f3f3;
@@ -35,9 +35,9 @@
   --bg: #ffffff;
   --bg-alt: #fbfbfb;
   --bg-frame: #ffffff;
-  --ink: #494e52;
-  --ink-soft: #6b7075;
-  --ink-faint: #8b9096;
+  --ink: #222222;
+  --ink-soft: #3a3f43;
+  --ink-faint: #5a5f64;
   --accent: #52adc8;
   --link: #52adc8;
   --hatch: rgba(0, 0, 0, 0.03);
@@ -235,3 +235,76 @@
 [data-style="apages"] .page-head h1 { font-size: 24px; font-weight: 700; }
 [data-style="apages"] .blog-body h1 { font-size: 26px; }
 [data-style="apages"] .kicker { letter-spacing: 1px; font-size: 11px; color: var(--ap-ink-muted); }
+
+/* ══════════════════════════════════════════════════════════════════════
+   Home — centred single column.
+   Measured against cs.stanford.edu/~diyiy: 900px column, 200px round
+   avatar, 32px/700 name, 24px/700 section heads, #222 ink, bold runs at
+   700 in the same colour rather than a lighter tint. Written here; none
+   of that site's CSS is copied.
+   ══════════════════════════════════════════════════════════════════════ */
+
+[data-style="apages"] .ap-home {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px var(--page-pad-x) 64px;
+}
+
+/* identity block */
+[data-style="apages"] .ap-home-head { text-align: center; margin-bottom: 26px; }
+[data-style="apages"] .ap-home-avatar {
+  width: 200px; height: 200px; border-radius: 50%;
+  object-fit: cover; margin: 0 auto 16px; display: block;
+}
+[data-style="apages"] .ap-home-name {
+  font-size: 32px; font-weight: 700; letter-spacing: -0.2px;
+  margin: 0 0 10px; color: var(--ap-ink);
+}
+[data-style="apages"] .ap-home-meta {
+  font-size: 15px; line-height: 1.75; color: var(--ap-ink); margin: 0;
+}
+[data-style="apages"] .ap-home-meta a { color: var(--ap-ink); text-decoration: none; }
+[data-style="apages"] .ap-home-meta a:hover { text-decoration: underline; }
+
+/* rule-bounded quick links, echoing the reference's nav strip */
+[data-style="apages"] .ap-home-links {
+  display: flex; justify-content: space-around; flex-wrap: wrap; gap: 10px;
+  border-top: 1px solid #ddd; border-bottom: 1px solid #ddd;
+  padding: 11px 0; margin: 22px 0 30px;
+}
+[data-style="apages"] .ap-home-links a {
+  font-size: 15px; font-weight: 600; color: var(--ap-ink); text-decoration: none;
+}
+[data-style="apages"] .ap-home-links a:hover { color: var(--ap-blue); }
+
+/* body copy — darker and heavier than the rail layout */
+[data-style="apages"] .ap-home-body { font-size: 16px; line-height: 1.62; color: var(--ap-ink); }
+[data-style="apages"] .ap-home-body p { margin: 0 0 15px; color: var(--ap-ink); }
+[data-style="apages"] .ap-home-body b,
+[data-style="apages"] .ap-home-body strong { font-weight: 700; color: var(--ap-ink); }
+[data-style="apages"] .ap-home-h2 {
+  font-size: 24px; font-weight: 700; color: var(--ap-ink);
+  margin: 34px 0 12px; padding: 0; border: none;
+}
+[data-style="apages"] .ap-home-list {
+  list-style: none; margin: 0 0 6px; padding: 0 0 0 26px;
+  font-size: 16px; line-height: 1.7;
+}
+[data-style="apages"] .ap-home-list li { margin-bottom: 5px; }
+[data-style="apages"] .ap-home-list b { font-weight: 700; }
+[data-style="apages"] .ap-home-news {
+  padding-left: 26px; font-size: 15.5px; line-height: 1.7;
+}
+[data-style="apages"] .ap-home-news .d { font-weight: 700; margin-right: 9px; }
+
+/* publication rows on the home page stay plain — no card chrome */
+[data-style="apages"] .ap-home .ap-pub {
+  border: none; padding: 0 0 22px; background: none;
+}
+[data-style="apages"] .ap-home .ap-pub-title { font-size: 16.5px; font-weight: 700; }
+
+@media (max-width: 700px) {
+  [data-style="apages"] .ap-home-avatar { width: 150px; height: 150px; }
+  [data-style="apages"] .ap-home-name { font-size: 26px; }
+  [data-style="apages"] .ap-home-links { justify-content: flex-start; gap: 16px; }
+}
