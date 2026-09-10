@@ -4,7 +4,6 @@ import Footer from '../components/Footer.jsx';
 import Seo from '../components/Seo.jsx';
 import { Chip, Note, Tag, Thumb, SectionHead } from '../components/primitives.jsx';
 import { NEWS, FEATURED_PUBS } from '../data.jsx';
-import Figure from '../components/figures.jsx';
 import ApHead from '../components/ApHead.jsx';
 
 /* ─── shared badge renderer ───────────────────────────────────────── */
@@ -26,10 +25,11 @@ function PubBadge({ b }) {
    the layout convention academicpages.github.io popularised. Markup and
    styles are original to this repo; only the arrangement is borrowed. */
 
+/* Landing page lists publications as text only — figures live on /pubs,
+   where there is room for them to be read rather than skimmed past. */
 function ApPubEntry({ p }) {
   return (
-    <article className="ap-pub">
-      {p.figure && <Figure id={p.figure} />}
+    <article className="ap-pub ap-pub-text">
       <div className="ap-pub-body">
         <h3 className="ap-pub-title">{p.title}</h3>
         <p className="ap-pub-authors">{p.authors}</p>
@@ -77,8 +77,9 @@ function AcademicPagesHome() {
 
         <h2 className="ap-page-h2">Selected Publications</h2>
         <p style={{ marginBottom: 18 }}>
-          <b>Bold</b> author is me. Each figure is the paper&rsquo;s own. →{' '}
-          <a href="/pubs">all publications</a> · <a href="/work">the work behind them</a>
+          <b>Bold</b> author is me. →{' '}
+          <a href="/pubs">all publications, with figures</a> ·{' '}
+          <a href="/work">the work behind them</a>
         </p>
         {FEATURED_PUBS.map((p, i) => <ApPubEntry key={i} p={p} />)}
 
