@@ -5,7 +5,8 @@ import PageHead from '../components/PageHead.jsx';
 import Seo from '../components/Seo.jsx';
 import { Box, Chip, Note, Tag, Thumb } from '../components/primitives.jsx';
 import { ALL_PUBS } from '../data.jsx';
-import Figure from '../components/figures.jsx';
+import Figure, { PAPER_IMAGES } from '../components/figures.jsx';
+import ApHead from '../components/ApHead.jsx';
 import Authors from '../components/Authors.jsx';
 import { Link } from 'react-router-dom';
 import { PUB_META } from '../data-pubs.js';
@@ -61,43 +62,23 @@ function ApPubRow({ p }) {
 }
 
 function AcademicPagesPublications({ byYear, years }) {
-  const withFig = ALL_PUBS.filter((p) => p.figure).length;
+  // count only figures lifted from the papers themselves; the rest are
+  // hand-drawn schematics and must not be described as the paper's own
+  const fromPaper = ALL_PUBS.filter((p) => p.figure && PAPER_IMAGES[p.figure]).length;
+  const drawn = ALL_PUBS.filter((p) => p.figure && !PAPER_IMAGES[p.figure]).length;
   return (
-    <div className="ap-shell">
-      <aside className="ap-sidebar">
-        <img
-          src="/images/jornbowrl_circle3.jpg"
-          alt="Jian Wang"
-          className="ap-avatar"
-          onError={(e) => { e.currentTarget.src = '/images/headshot-ai.png'; e.currentTarget.onerror = null; }}
-        />
-        <h1 className="ap-name">Jian Wang</h1>
-        <p className="ap-role">PhD, NTU Singapore</p>
-        <p className="ap-role ap-role-muted">Code LLM security · program repair</p>
-        <ul className="ap-meta">
-          <li><span className="ap-meta-k">Papers</span> {ALL_PUBS.length}</li>
-          <li><span className="ap-meta-k">Diagrams</span> {withFig}</li>
-          <li><span className="ap-meta-k">Scholar</span>{' '}
-            <a href="https://scholar.google.com/citations?hl=en&user=GAe_mJUAAAAJ" target="_blank" rel="noreferrer">citations</a></li>
-        </ul>
-        <div className="ap-dl">
-          <a href="/data/Jian_Wang_CV_Academic_202605.pdf" target="_blank" rel="noreferrer">↓ CV (PDF)</a>
-        </div>
-      </aside>
-
-      <main className="ap-main">
-        <h2 className="ap-h2">Publications</h2>
-        <p className="ap-note">
-          <b>Bold</b> author is me. {ALL_PUBS.length} papers across SE, ML and security venues;
-          {' '}{withFig} carry a schematic of the method.
-        </p>
+    <div className="ap-page">
+      <ApHead sub={`${ALL_PUBS.length} papers across SE, ML and security venues · ${fromPaper} with the paper's own figure, ${drawn} with a drawn schematic`} />
+      <div className="ap-page-body">
+        <h2 className="ap-page-h2">Publications</h2>
+        <p><b>Bold</b> author is me.</p>
         {years.map((y) => (
           <React.Fragment key={y}>
             <h3 className="ap-year">{y}</h3>
             {byYear[y].map((p) => <ApPubRow key={p.id} p={p} />)}
           </React.Fragment>
         ))}
-      </main>
+      </div>
     </div>
   );
 }

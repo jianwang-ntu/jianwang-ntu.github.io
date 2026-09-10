@@ -7,7 +7,7 @@ import React from 'react';
    back to a hand-drawn schematic below; swap them for the real figure whenever
    the PDF becomes available. */
 
-const PAPER_IMAGES = {
+export const PAPER_IMAGES = {
   defects4c: {
     src: '/images/papers/defects4c.png',
     alt: 'Defects4C data collection pipeline: ~38M commits filtered to ~9M, ~76K, ~3.8K, then 350 human-annotated bugs split into Defects4C_bug and Defects4C_vul.',
