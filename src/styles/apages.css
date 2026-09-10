@@ -318,3 +318,9 @@
 [data-style="apages"] .ap-page .ap-proj { border: none; padding: 0 0 26px; background: none; }
 [data-style="apages"] .ap-page .ap-pub { border: none; padding: 0 0 24px; background: none; }
 [data-style="apages"] .ap-page .ap-role-row { border-bottom: 1px solid #eee; }
+
+/* landing-page publication rows: text only, tighter than the /pubs list */
+[data-style="apages"] .ap-pub-text { padding: 0 0 16px; }
+[data-style="apages"] .ap-pub-text .ap-pub-title { font-size: 16px; font-weight: 700; margin-bottom: 3px; }
+[data-style="apages"] .ap-pub-text .ap-pub-authors { margin-bottom: 4px; }
+[data-style="apages"] .ap-pub-text .ap-pub-venue { margin-bottom: 6px; }
