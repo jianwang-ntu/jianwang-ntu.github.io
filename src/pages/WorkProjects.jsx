@@ -4,7 +4,8 @@ import Footer from '../components/Footer.jsx';
 import Seo from '../components/Seo.jsx';
 import { Box, Chip, SectionHead, Status, Tag } from '../components/primitives.jsx';
 import { WORK, PROJECTS } from '../data.jsx';
-import Figure from '../components/figures.jsx';
+import Figure, { PAPER_IMAGES } from '../components/figures.jsx';
+import ApHead from '../components/ApHead.jsx';
 
 const ARC = [
   'mobile-web async framework',
@@ -39,30 +40,17 @@ const PAIRS = [
    Projects lead with their schematic: on a portfolio page the diagram is
    the fastest way to convey what an artefact actually does. */
 function AcademicPagesWork() {
-  const shipped = PROJECTS.filter((p) => p.status !== 'archived').length;
+  const active = PROJECTS.filter((p) => p.status !== 'archived').length;
+  // only count figures actually lifted from the papers
+  const fromPaper = PROJECTS.filter((p) => p.figure && PAPER_IMAGES[p.figure]).length;
   return (
-    <div className="ap-shell">
-      <aside className="ap-sidebar">
-        <h1 className="ap-name">Work &amp; Projects</h1>
-        <p className="ap-role">2011 — 2026</p>
-        <p className="ap-role ap-role-muted">industry → research</p>
-        <ul className="ap-meta">
-          <li><span className="ap-meta-k">Roles</span> {WORK.length}</li>
-          <li><span className="ap-meta-k">Artefacts</span> {PROJECTS.length}</li>
-          <li><span className="ap-meta-k">Active</span> {shipped}</li>
-          <li><span className="ap-meta-k">Code</span>{' '}
-            <a href="https://github.com/jianwang-ntu" target="_blank" rel="noreferrer">GitHub</a></li>
-        </ul>
-        <div className="ap-dl">
-          <a href="/pubs">→ publications</a>
-          <a href="/cv">→ full CV</a>
-        </div>
-      </aside>
-
-      <main className="ap-main">
-        <h2 className="ap-h2">Open-source artefacts</h2>
-        <p className="ap-note">
-          Each diagram sketches how the artefact actually works, drawn from its paper.
+    <div className="ap-page">
+      <ApHead sub={`${WORK.length} roles, 2011 — 2026 · ${PROJECTS.length} open-source artefacts (${active} active)`} />
+      <div className="ap-page-body">
+        <h2 className="ap-page-h2">Open-source Artefacts</h2>
+        <p>
+          {fromPaper} of these carry the figure from the artefact&rsquo;s own paper;
+          the rest use a schematic drawn from the method.
         </p>
         {PROJECTS.map((p, i) => (
           <article className="ap-proj" key={i}>
@@ -82,7 +70,7 @@ function AcademicPagesWork() {
           </article>
         ))}
 
-        <h2 className="ap-h2">Roles</h2>
+        <h2 className="ap-page-h2">Roles</h2>
         {WORK.map((w, i) => (
           <section className="ap-role-row" key={i}>
             <div className="ap-role-when">{w.year}</div>
@@ -96,7 +84,7 @@ function AcademicPagesWork() {
             </div>
           </section>
         ))}
-      </main>
+      </div>
     </div>
   );
 }
