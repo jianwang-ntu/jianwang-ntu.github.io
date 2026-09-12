@@ -148,7 +148,7 @@ export const ALL_PUBS = [
 
 // Work — newest first. PhD start aligned with bio (Aug 2021).
 export const WORK = [
-  { year: 'Aug 2023 — now', role: 'PhD Candidate · Research Assistant',
+  { year: 'Aug 2023 — now', role: 'Research Engineer Manager',
     where: 'Singapore Management University · Code Intelligence & LLM Security',
     kind: 'RESEARCH',
     what: <>Building <b>Defects4C</b> (350 expert-validated C/C++ bugs distilled from 38M+ commits) and <b>tracewise probing</b>; evaluating 24 SOTA LLMs across single-round and conversation-based repair; analysing parallel vs. sequential scaling under compute budgets.</>,
@@ -192,37 +192,4 @@ export const WORK = [
     stack: ['Data Engineering', 'Pipelines'],
     transfer: 'First exposure to production-scale data handling — the prerequisite for any later large-scale empirical study.',
     papers: [] },
-];
-
-export const PROJECTS = [
-  { kind: 'BENCHMARK', status: 'active', title: 'Defects4C', figure: 'defects4c',
-    slug: 'github.com/defects4c/defects4c',
-    href: 'https://github.com/defects4c/defects4c',
-    blurb: '350 expert-validated C/C++ bugs distilled from 38M+ commits. Comprehensive APR benchmark for LLMs.',
-    stats: "ASE '25", lineage: 'SMU · 2024–25' },
-  { kind: 'STUDY', status: 'active', title: 'tracewise probing', figure: 'tracewise',
-    slug: 'github.com/jianwang-ntu/tracewise_probing',
-    href: 'https://github.com/jianwang-ntu/tracewise_probing',
-    blurb: 'Framework for injecting execution-trace semantics into SFT and inference-time prompting for Code LLMs.',
-    stats: "EMNLP '25", lineage: 'SMU + NTU' },
-  { kind: 'TOOL', status: 'shipped', title: 'RATCHET', figure: 'ratchet',
-    slug: "ISSRE '24 · paper PDF",
-    href: '/data/issre_RATCHET.pdf',
-    blurb: 'Retrieval-augmented transformer for APR, paired with a BiLSTM fault localiser that needs no failing tests.',
-    stats: 'localisation + repair gains over baselines', lineage: 'NTU' },
-  { kind: 'STUDY', status: 'shipped', title: 'AIGC Detectors on Code', figure: 'aigcdet',
-    slug: 'sites.google.com/view/nlccd',
-    href: 'https://sites.google.com/view/nlccd',
-    blurb: 'Large-scale empirical study of 13 AIGC detectors on 2.23M code samples spanning Q&A, summarisation, generation.',
-    stats: "ASE '24", lineage: 'NTU' },
-  { kind: 'TOOL', status: 'shipped', title: 'FGVulDet', figure: 'fgvuldet',
-    slug: 'arxiv.org/abs/2404.09599',
-    href: 'https://arxiv.org/abs/2404.09599',
-    blurb: 'Fine-grained vulnerability detector with edge-aware GGNN and vulnerability-preserving data augmentation.',
-    stats: "LCTES '24", lineage: 'NTU' },
-  { kind: 'TOOL', status: 'archived', title: 'Faire', figure: 'faire',
-    slug: "TOSEM '23 · paper",
-    href: 'https://dl.acm.org/doi/10.1145/3617168',
-    blurb: 'Neural-network fairness repair via neuron condition synthesis.',
-    stats: "TOSEM '23", lineage: 'NTU' },
 ];

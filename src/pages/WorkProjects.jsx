@@ -1,105 +1,101 @@
 import React from 'react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import Nav from '../components/Nav.jsx';
 import Footer from '../components/Footer.jsx';
 import Seo from '../components/Seo.jsx';
-import { Box, Chip, SectionHead, Status, Tag } from '../components/primitives.jsx';
-import { WORK, PROJECTS } from '../data.jsx';
-import Figure, { PAPER_IMAGES } from '../components/figures.jsx';
-import ApHead from '../components/ApHead.jsx';
-
-const ARC = [
-  'mobile-web async framework',
-  'data pipelines',
-  'GAN portrait segmentation',
-  'DL testing & robustness',
-  'AIGC detection',
-  'automated program repair',
-  'code LLM security',
-];
-
-const MATRIX = [
-  ['Async web framework @ 58.com (100M+ daily req)', '→', 'Reproducible large-scale benchmarks', 'Defects4C'],
-  ['GAN portrait pipelines @ Xiaomi (CUDA → DSP)',   '→', 'Model-internals lens for DL testing', 'NPC · Faire'],
-  ['Face cartoonisation GANs @ Xiaomi',              '→', 'Adversarial robustness + deepfake detection', 'ABBA · FakeSpotter'],
-  ['Production data pipelines @ Baidu',              '→', 'Empirical evaluation of detectors at scale', "AIGC Detectors (ASE '24)"],
-  ['RNN automaton modelling @ NTU',                  '→', 'Trace-based reasoning for code LLMs', "EMNLP '25 · Code Semantics"],
-  ['Retrieval-augmented APR @ NTU',                  '→', 'LLM-based C/C++ repair benchmarks', 'RATCHET · Defects4C'],
-];
-
-const PAIRS = [
-  { paper: 'Defects4C: Benchmarking LLM Repair on C/C++', venue: "ASE '25", source: 'Curated 350 expert-validated bugs from 38M+ commits during SMU RA work', role: 'Research Assistant, SMU (2023–now)' },
-  { paper: 'Do Code Semantics Help?', venue: "EMNLP '25", source: 'Trace-based SFT/PEFT framework — extends RNN automaton intuition', role: 'Research Assistant, SMU + NTU' },
-  { paper: 'RATCHET: Retrieval-Augmented Transformer for Repair', venue: "ISSRE '24", source: 'Built during NTU PhD from 13 curated open-source projects', role: 'PhD Student, NTU (2021–23)' },
-  { paper: 'AIGC Detectors on Code Content (2.23M samples)', venue: "ASE '24", source: 'Large-scale empirical study of detector behaviour on code', role: 'PhD Student, NTU (2021–23)' },
-  { paper: 'NPC · Neuron Path Coverage', venue: "TOSEM '22", source: 'Decision-graph view of DNNs — direct heir of model-internals work', role: 'NTU (2019–23)' },
-  { paper: 'FakeSpotter / ABBA · deepfake & blur attack', venue: "IJCAI '20 · NeurIPS '20", source: 'Output of the AI Singapore deepfake challenge (S$100K, 3rd place)', role: 'NTU (2019–23)' },
-];
-
-
-/* ─── academicpages mode ─────────────────────────────────────────────
-   Projects lead with their schematic: on a portfolio page the diagram is
-   the fastest way to convey what an artefact actually does. */
-function AcademicPagesWork() {
-  const active = PROJECTS.filter((p) => p.status !== 'archived').length;
-  // only count figures actually lifted from the papers
-  const fromPaper = PROJECTS.filter((p) => p.figure && PAPER_IMAGES[p.figure]).length;
-  return (
-    <div className="ap-page">
-      <ApHead sub={`${WORK.length} roles, 2011 — 2026 · ${PROJECTS.length} open-source artefacts (${active} active)`} />
-      <div className="ap-page-body">
-        <h2 className="ap-page-h2">Open-source Artefacts</h2>
-        <p>
-          {fromPaper} of these carry the figure from the artefact&rsquo;s own paper;
-          the rest use a schematic drawn from the method.
-        </p>
-        {PROJECTS.map((p, i) => (
-          <article className="ap-proj" key={i}>
-            {p.figure && <Figure id={p.figure} />}
-            <div className="ap-pub-body">
-              <h3 className="ap-pub-title">
-                {p.href ? <a href={p.href} target="_blank" rel="noreferrer">{p.title}</a> : p.title}
-              </h3>
-              <p className="ap-pub-venue">
-                <span className="ap-venue-chip">{p.kind}</span>
-                <span className="ap-pub-kind">{p.status}</span>
-                {p.stats && <span className="ap-pub-note">{p.stats}</span>}
-              </p>
-              <p className="ap-text ap-text-s">{p.blurb}</p>
-              <p className="ap-pub-links"><span className="ap-slug">{p.slug}</span></p>
-            </div>
-          </article>
-        ))}
-
-        <h2 className="ap-page-h2">Roles</h2>
-        {WORK.map((w, i) => (
-          <section className="ap-role-row" key={i}>
-            <div className="ap-role-when">{w.year}</div>
-            <div>
-              <h3 className="ap-pub-title">{w.role}</h3>
-              <p className="ap-pub-authors">{w.where}</p>
-              <p className="ap-text ap-text-s">{w.what}</p>
-              {w.stack?.length > 0 && (
-                <p className="ap-stack">{w.stack.map((t, j) => <span key={j}>{t}</span>)}</p>
-              )}
-            </div>
-          </section>
-        ))}
-      </div>
-    </div>
-  );
-}
+import ProjectMap from '../components/ProjectMap.jsx';
+import Figure from '../components/figures.jsx';
+import ResearchConnection from '../components/ResearchConnection.jsx';
+import { WORK } from '../data.jsx';
+import { ROOMS, WORK_PROJECTS, projectYears, projectSkills, filterProjects, projectPeriod } from '../data-work.js';
 
 export default function WorkProjects() {
-  return (
-    <div className="page">
-      <Seo
-        title="Work & Projects"
-        description="Engineering work and side projects — agent harnesses, blog automation, security research tooling. Eight years of shipping code, now studying what breaks when LLMs ship it."
-        path="/work"
-      />
-      <Nav />
-      <AcademicPagesWork />
-      <Footer />
-    </div>
-  );
+  const [params] = useSearchParams();
+  const navigate = useNavigate();
+  const filters = { type: params.get('type') || '', year: params.get('year') || '', skill: params.get('skill') || '' };
+  const projects = filterProjects(filters);
+  const filtered = Object.values(filters).some(Boolean);
+  function updateFilter(name, value) {
+    const next = new URLSearchParams(params);
+    if (value) next.set(name, value); else next.delete(name);
+    navigate({ pathname: '/work', search: next.toString(), hash: '#project-index' });
+  }
+  function clearFilters() {
+    navigate('/work#project-index');
+  }
+  return <div className="page">
+    <Seo title="Work & Projects" description="Research artifacts and industry projects by Jian Wang, indexed by year, skill and project room." path="/work" />
+    <Nav skipToContent />
+    <main id="main-content" className="portfolio-wide">
+      <p className="portfolio-eyebrow">From research to working systems</p>
+      <div className="work-heading"><div><h1>Work & projects</h1>
+        <p className="page-deck">Different rooms. A shared interest in reliable systems.</p></div>
+        <Link className="text-link" to="/cv">Experience & CV ↗</Link></div>
+      <p className="work-intro">Explore the map, or find a project by year and skill. Research entries link to
+        their papers and artifacts; industry entries describe work in production.
+        The <Link to="/statement#published-foundations">research statement</Link> explains how these methods and
+        experiences inform the future agenda.</p>
+      <section className="work-rooms" id="project-rooms" aria-labelledby="project-rooms-title">
+      <header className="work-rooms-heading">
+        <p className="portfolio-eyebrow">Explore by function</p>
+        <h2 id="project-rooms-title">The project rooms</h2>
+        <p>Four areas of work, with the projects and evidence inside each.</p>
+      </header>
+      <ProjectMap />
+      <section className="project-index" id="project-index" aria-labelledby="index-title">
+        <div className="section-heading"><h3 id="index-title">Project index</h3>
+          <a className="text-link" href="#career">Career timeline ↓</a></div>
+        <div className="project-filters">
+          <label>Type<select value={filters.type} onChange={e => updateFilter('type', e.target.value)}>
+            <option value="">All work</option><option value="research">Research</option><option value="industry">Industry</option>
+          </select></label>
+          <label>Year<select value={filters.year} onChange={e => updateFilter('year', e.target.value)}>
+            <option value="">All years</option>{projectYears.map(year => <option key={year} value={year}>{year}</option>)}
+          </select></label>
+          <label className="skill-filter">Skill<select value={filters.skill} onChange={e => updateFilter('skill', e.target.value)}>
+            <option value="">All skills</option>{projectSkills.map(skill => <option key={skill}>{skill}</option>)}
+          </select></label>
+          {filtered && <button className="clear-filters" onClick={clearFilters}>Clear filters</button>}
+        </div>
+        <p className="filter-result" role="status">{projects.length} of {WORK_PROJECTS.length} projects · Paper years are publication years; industry years show the role period.</p>
+        {projects.length === 0 && <div className="empty-projects"><h3>No projects match these filters.</h3>
+          <p>Try another year or skill, or <button onClick={clearFilters}>show all projects</button>.</p></div>}
+        {ROOMS.map(room => {
+          const entries = projects.filter(p => p.room === room.id);
+          if (!entries.length) return null;
+          return <section key={room.id} id={`room-${room.id}`} className={`project-room tone-${room.tone}`} tabIndex={-1}>
+            <header className="room-section-heading"><span>{room.number}</span><div>
+              <h4><Link to={`/work#room-${room.id}`}>{room.title}</Link></h4><p>{room.purpose}</p>
+            </div><a className="back-to-map" href="#project-rooms">Map ↑</a></header>
+            {entries.map(p => <article id={p.id} key={p.id} className="project-entry" tabIndex={-1}>
+              <div className="project-entry-meta"><span className={`project-type ${p.type}`}>{p.type === 'research' ? 'Research' : 'Industry'}</span>
+                <span>{projectPeriod(p)}</span><span>{p.venue || p.affiliation}</span>
+                {p.status === 'TODO' && <span className="todo-badge">TODO · Case study coming soon</span>}</div>
+              <h5><Link to={`/work#${p.id}`}>{p.title}</Link></h5>
+              <p className="project-summary">{p.summary}</p>
+              <p className="project-detail">{p.detail}</p>
+              {p.publication && <ResearchConnection publication={p.publication} compact />}
+              <div className="project-skills" aria-label={`${p.title} skills`}>{p.skills.map(skill =>
+                <Link key={skill} to={`/work?skill=${encodeURIComponent(skill)}#project-index`}>{skill}</Link>)}</div>
+              <div className="project-resources">
+                {p.publication && <Link to={`/pubs/${p.publication}`}>Publication details ↗</Link>}
+                {p.links.map(link => <a key={link.href} href={link.href} target="_blank" rel="noreferrer">{link.label} ↗</a>)}
+              </div>
+              {p.figure && <details className="project-figure"><summary>View research figure</summary><Figure id={p.figure} /></details>}
+            </article>)}
+          </section>;
+        })}
+      </section>
+      </section>
+      <section id="career" className="career-timeline" tabIndex={-1}>
+        <div className="section-heading"><h2>Career timeline</h2><Link className="text-link" to="/cv">Full CV ↗</Link></div>
+        <p className="filter-result">Employment and research roles, separate from publication dates.</p>
+        {WORK.map((w, i) => <div className="career-row" key={i}>
+          <span className="career-period">{w.year}</span><div><span className="small-label">{w.kind}</span>
+            <h3>{w.role}</h3><p>{w.where}</p>
+            {w.kind === 'INDUSTRY' && <Link to={`/work#room-${w.where.startsWith('Xiaomi') ? 'vision' : 'systems'}`}>Related project room ↑</Link>}
+          </div></div>)}
+      </section>
+    </main><Footer />
+  </div>;
 }

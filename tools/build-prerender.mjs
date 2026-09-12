@@ -40,7 +40,7 @@ const baseHtml = readFileSync(distIndex, 'utf-8');
 
 // Default site-level meta. Used as fallback when a per-route value is missing.
 const SITE_NAME = 'Jian Wang';
-const DEFAULT_DESC = 'Jian Wang (王剑) — PhD, NTU Singapore. Research on code LLM security, automated program repair, and AI-generated code detection. Notes on agents, harnesses, and engineering.';
+const DEFAULT_DESC = 'Jian Wang — PhD, NTU Singapore. Software engineering and trustworthy agent networks for individuals, groups and companies.';
 const DEFAULT_IMAGE = 'https://123publicdata.s3.ap-southeast-1.amazonaws.com/personal/favor.ico';
 const TWITTER_HANDLE = '';  // optional; leave empty to omit twitter:creator
 
@@ -121,9 +121,11 @@ function writeRoute(routePath, html) {
 // Per-route descriptions — keep terse, ~150 chars max. These match the dynamic
 // Seo component's defaults so the static and JS-rendered metadata agree.
 const STATIC_ROUTES = [
-  { path: '/home', title: 'Home',           desc: 'Jian Wang — PhD, NTU Singapore. Research on code LLM security, automated program repair, and AI-generated code detection.' },
+  { path: '/home', title: 'Home',           desc: 'Jian Wang — PhD, NTU Singapore. Software engineering and trustworthy agent networks for individuals, groups and companies.' },
+  { path: '/statement', title: 'Research Statement', desc: "Trustworthy agent networks for individuals, groups and companies: assured agency, collective agency, and independent evidence with controlled adaptation." },
+  { path: '/research', canonicalPath: '/statement', title: 'Research Statement', desc: "Trustworthy agent networks for individuals, groups and companies: assured agency, collective agency, and independent evidence with controlled adaptation." },
   { path: '/pubs', title: 'Publications',   desc: 'Peer-reviewed research and preprints by Jian Wang on code LLM security, fake-content detection, and program repair.' },
-  { path: '/work', title: 'Work & Projects', desc: 'Engineering work and side projects — agent harnesses, blog automation, security research tooling.' },
+  { path: '/work', title: 'Work & Projects', desc: 'Research artifacts and industry projects by Jian Wang, indexed by year, skill and project room.' },
   { path: '/cv',   title: 'CV',             desc: 'Curriculum vitae — education, employment, talks, awards.' },
   { path: '/blog', title: 'Blog',           desc: 'Notes and summaries — auto-drafted from talks, papers, and posts; edited by hand.' },
 ];
@@ -145,7 +147,7 @@ for (const r of STATIC_ROUTES) {
   const block = metaBlock({
     title: r.title,
     description: r.desc,
-    canonicalPath: r.path,
+    canonicalPath: r.canonicalPath || r.path,
     ogType: 'website',
   });
   writeRoute(r.path, patchHead(baseHtml, block));

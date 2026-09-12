@@ -1,115 +1,102 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Nav from '../components/Nav.jsx';
 import Footer from '../components/Footer.jsx';
 import Seo from '../components/Seo.jsx';
-import { Chip, Note, Tag, Thumb, SectionHead } from '../components/primitives.jsx';
-import { NEWS, FEATURED_PUBS } from '../data.jsx';
 import ApHead from '../components/ApHead.jsx';
+import ResearchOverview from '../components/ResearchOverview.jsx';
+import ResearchConnection from '../components/ResearchConnection.jsx';
+import { NEWS, ALL_PUBS } from '../data.jsx';
+import { PUB_META } from '../data-pubs.js';
 
-/* ─── shared badge renderer ───────────────────────────────────────── */
-function PubBadge({ b }) {
-  if (b.href) {
-    return (
-      <a href={b.href} target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>
-        <Tag>{b.label}</Tag>
-      </a>
-    );
-  }
-  return <Tag>{b.label}</Tag>;
-}
-
-/* ─── Classic layout pieces ─────────────────────────────────────── */
-/* ─── Academic layout pieces ────────────────────────────────────── */
-/* ─── academicpages mode ──────────────────────────────────────────────
-   Sticky identity rail on the left, scrolling content on the right —
-   the layout convention academicpages.github.io popularised. Markup and
-   styles are original to this repo; only the arrangement is borrowed. */
-
-/* Landing page lists publications as text only — figures live on /pubs,
-   where there is room for them to be read rather than skimmed past. */
-function ApPubEntry({ p }) {
-  return (
-    <article className="ap-pub ap-pub-text">
-      <div className="ap-pub-body">
-        <h3 className="ap-pub-title">{p.title}</h3>
-        <p className="ap-pub-authors">{p.authors}</p>
-        <p className="ap-pub-venue">
-          <span className="ap-venue-chip">{p.venue} {p.year}</span>
-          {p.note && <span className="ap-pub-note">{p.note}</span>}
-        </p>
-        <p className="ap-pub-links">
-          {(p.badges || []).map((b, i) => (
-            <a key={i} href={b.href} target="_blank" rel="noreferrer" className="ap-lnk">{b.label}</a>
-          ))}
-        </p>
-      </div>
-    </article>
-  );
-}
+const selectedPubs = ALL_PUBS.filter(p => ['C5', 'C4', 'C3', 'C2'].includes(p.id));
 
 function AcademicPagesHome() {
   return (
-    <div className="ap-page">
-      <ApHead />
-
-      <div className="ap-page-body">
-        <p>
-          I am a recent PhD from the College of Computing and Data Science (CCDS) at{' '}
-          <b>Nanyang Technological University</b>, advised by{' '}
-          <a href="https://personal.ntu.edu.sg/yi_li/" target="_blank" rel="noreferrer">Prof. Li Yi</a>.
-          My research sits at the intersection of <b>software engineering</b>,{' '}
-          <b>large language models</b> and <b>trustworthy AI systems</b> — with a focus on{' '}
-          <b>automated program repair</b>, <b>AI-generated code detection</b> and{' '}
-          <b>execution-grounded reasoning</b> over programs.
-        </p>
-        <p>
-          Before research I spent <b>~8 years in industry</b>: the AI Lab at <b>Xiaomi</b>,
-          training GANs for portrait background removal and face cartoonisation, and a backend
-          role at <b>58.com</b>, building an async web framework serving 100M+ daily requests.
-        </p>
-
-        <h2 className="ap-page-h2">Research Interests</h2>
-        <ul className="ap-page-list">
-          <li><b>Code LLM trustworthiness</b>: automated program repair, execution semantics</li>
-          <li><b>AI-generated code detection</b>: how detection built for prose holds up on code</li>
-          <li><b>Long-horizon AI for software maintenance</b>: agentic, automatic, reliable</li>
-        </ul>
-
-        <h2 className="ap-page-h2">Selected Publications</h2>
-        <p style={{ marginBottom: 18 }}>
-          <b>Bold</b> author is me. →{' '}
-          <a href="/pubs">all publications, with figures</a> ·{' '}
-          <a href="/work">the work behind them</a>
-        </p>
-        {FEATURED_PUBS.map((p, i) => <ApPubEntry key={i} p={p} />)}
-
-        <h2 className="ap-page-h2">News</h2>
-        <div className="ap-page-news">
-          {NEWS.slice(0, 7).map(([d, t], i) => (
-            <div key={i}><span className="d">{d}</span>{t}</div>
-          ))}
+    <div className="portfolio-shell">
+      <ApHead sidebar />
+      <main id="main-content" className="portfolio-content">
+        <p className="portfolio-eyebrow">Trustworthy agent networks · Software engineering · AI security</p>
+        <h1>About me</h1>
+        <div className="home-bio">
+          <p>
+            I am a recent PhD from the College of Computing and Data Science (CCDS) at{' '}
+            <strong>Nanyang Technological University</strong>, advised by{' '}
+            <a href="https://personal.ntu.edu.sg/yi_li/" target="_blank" rel="noreferrer">Prof. Li Yi</a>.
+            My research connects <strong>software engineering</strong>,{' '}
+            <strong>large language models</strong> and <strong>trustworthy AI systems</strong>.
+            My PhD work focused on{' '}
+            <strong>automated program repair</strong>, <strong>AI-generated code detection</strong> and{' '}
+            <strong>execution-grounded reasoning</strong> over programs.
+          </p>
+          <p>
+            Before research I spent <strong>~8 years in industry</strong>: the AI Lab at <strong>Xiaomi</strong>,
+            training GANs for portrait background removal and face cartoonisation, and a backend
+            role at <strong>58.com</strong>, building an async web framework serving 100M+ daily requests.
+          </p>
         </div>
-
-        <h2 className="ap-page-h2">Awards</h2>
-        <ul className="ap-page-list">
-          <li><b>S$100,000 prize</b> — 3rd place, AI Singapore Deepfake Detection Challenge, 2022</li>
-        </ul>
-      </div>
+        <section className="home-section" aria-labelledby="interests-title">
+          <div className="section-heading">
+            <h2 id="interests-title"><Link to="/statement">Research interests</Link></h2>
+            <Link className="text-link" to="/statement">Read the statement ↗</Link>
+          </div>
+          <p>I aim to make AI agents useful, secure and accountable representatives of <strong>people, groups and companies</strong>.
+            My research on <Link to="/statement"><strong>trustworthy agent networks</strong></Link> connects two questions:
+            how an agent can grow in capability while preserving the authority, privacy and commitments of those it represents,
+            and how independently governed agents can cooperate to create shared value.</p>
+          <p>I study these as <Link to="/statement#assured-agency">assured agency</Link> and{' '}
+            <Link to="/statement#collective-agency">collective agency</Link>, linked by{' '}
+            <Link to="/statement#independent-evidence-and-controlled-adaptation">independent evidence and controlled adaptation</Link>.</p>
+          <div id="research-overview"><ResearchOverview /></div>
+        </section>
+        <aside className="collaboration-note" aria-label="Collaboration interests">
+          <p><strong>Useful autonomy, secure cooperation.</strong> I welcome research and engineering collaborations on
+            trustworthy agents for individuals and organizations: secure delegation, cooperation across independent owners,
+            and evidence-based evaluation. Collaborative production and private research offer settings where capabilities,
+            information and commitments must work together.</p>
+          <p className="home-skills-links">
+            <Link to="/statement#evaluation-and-milestones">Evaluation & milestones</Link>
+            <Link to="/work">Earlier work & projects</Link>
+            <a href="mailto:jian004@e.ntu.edu.sg">Get in touch ↗</a>
+          </p>
+        </aside>
+        <section className="home-section" aria-labelledby="selected-title">
+          <div className="section-heading"><h2 id="selected-title">Selected publications</h2>
+            <Link className="text-link" to="/pubs">All publications ↗</Link></div>
+          <p>Earlier work in repair, detection and evaluation. <Link to="/statement#published-foundations">How it informs the future agenda ↗</Link></p>
+          {selectedPubs.map(p => (
+            <article className="home-publication" key={p.figure}>
+              <span className="publication-year">{p.year}</span>
+              <div>
+                <h3><Link to={`/pubs/${PUB_META[p.id].key}`}>{p.title}</Link></h3>
+                <p className="publication-authors">{p.authors}</p>
+                <div className="publication-meta"><span>{p.venue} {p.year}</span>
+                  {p.note === 'THESIS SUMMARY' && <span className="small-label">Thesis summary</span>}
+                  {p.badges?.map(b => <a key={b.label} href={b.href} target="_blank" rel="noreferrer">{b.label}</a>)}
+                </div>
+                <ResearchConnection publication={PUB_META[p.id].key} compact />
+              </div>
+            </article>
+          ))}
+        </section>
+        <section className="home-section" aria-labelledby="news-title">
+          <h2 id="news-title">News</h2>
+          <div className="home-news">{NEWS.slice(0, 6).map(([date, text], i) => (
+            <div key={i}><span>{date}</span><p>{text}</p></div>
+          ))}</div>
+        </section>
+        <section className="home-section" aria-labelledby="award-title">
+          <h2 id="award-title">Recognition</h2>
+          <p><strong>AI Singapore Deepfake Detection Challenge, 2022</strong><br />3rd place · S$100,000 prize</p>
+        </section>
+      </main>
     </div>
   );
 }
 
 export default function Home() {
-  return (
-    <div className="page">
-      <Seo
-        title="Home"
-        description="Jian Wang — PhD, NTU Singapore. Research on code LLM security, automated program repair, and AI-generated code detection."
-        path="/home"
-      />
-      <Nav />
-      <AcademicPagesHome />
-      <Footer />
-    </div>
-  );
+  return <div className="page">
+    <Seo title="Home" description="Jian Wang — PhD, NTU Singapore. Trustworthy agent networks for individuals, groups and companies, building on software engineering and AI evaluation." path="/home" />
+    <Nav skipToContent /><AcademicPagesHome /><Footer />
+  </div>;
 }

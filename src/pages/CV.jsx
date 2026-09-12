@@ -43,7 +43,8 @@ export default function CV() {
       <PageHead
         kicker="CURRICULUM VITAE · WEB EDITION"
         title={<span>Jian Wang — <u>cv.</u></span>}
-        blurb={<>Web rendering of the canonical PDF. PDF is the source of truth for committees; this page is for everyone else. PhD conferred Mar 2026.</>}
+        blurb={<>Education, research and industry experience. PhD conferred Mar 2026. The downloadable CV is the May 2026 snapshot;
+          the <a href="/statement">research statement</a> describes my proposed next direction.</>}
         right={
           <div style={{ display: 'flex', flexDirection: 'column', gap: 6, alignItems: 'flex-end' }}>
             <Chip solid href="/data/Jian_Wang_CV_Academic_202605.pdf">↓ cv.pdf</Chip>
@@ -59,18 +60,19 @@ export default function CV() {
           right="Singapore"
           title="PhD, Computer Science"
           sub="Nanyang Technological University · College of Computing and Data Science"
-          body={<>Advisor: <a href="https://personal.ntu.edu.sg/yi_li/" target="_blank" rel="noreferrer">Prof. Li Yi</a>. Working area: <i>code LLM security and intelligence</i> — automated program repair, AI-generated code detection, execution-grounded reasoning over programs.</>}
+          body={<>Advisor: <a href="https://personal.ntu.edu.sg/yi_li/" target="_blank" rel="noreferrer">Prof. Li Yi</a>. PhD research: automated program repair, AI-generated code detection and the evaluation of execution-trace information for code models.</>}
         />
         <CVBlock left="2019" right="Beijing" title="Certification · AI / Computer Vision" sub="Tsinghua University" />
         <CVBlock left="2007 — 2011" right="Tianjin" title="BEng, Software Engineering" sub="Tianjin University" />
 
-        <CVH num="02">Experience · 8 yrs industry + 5 yrs research</CVH>
+        <CVH num="02">Research & industry experience</CVH>
         <CVBlock
           left="Aug 2023 — now"
           right="Singapore"
-          title="PhD Candidate · Research Assistant"
+          title="Research Engineer Manager"
           sub="Singapore Management University · Code Intelligence & LLM Security (with Prof. Xie Xiaofei)"
-          body="Built Defects4C (ASE '25). Designed semantic-enhancement framework with execution traces for SFT/PEFT (EMNLP '25). Evaluated 24 SOTA LLMs across single-round and conversation-based repair."
+          body={<>Built <a href="/pubs/defects4c">Defects4C (ASE '25)</a> and evaluated 24 LLMs on C/C++ repair.
+            Studied execution traces in fine-tuning and inference; the <a href="/pubs/code-semantics-execution-traces">EMNLP '25 paper</a> reports limited usefulness in the settings tested.</>}
         />
         <CVBlock
           left="Aug 2021 — Aug 2023"
@@ -127,7 +129,7 @@ export default function CV() {
         <div style={{ fontSize: 12.5, lineHeight: 1.7 }}>
           <div><b>Production scale:</b> async web framework powering 100M+ daily requests at 58.com.</div>
           <div style={{ marginTop: 4 }}><b>End-to-end ML:</b> trained, quantised, and deployed GAN-based portrait models onto Qualcomm Hexagon DSP / HiSilicon Kirin NPU at Xiaomi.</div>
-          <div style={{ marginTop: 4 }}><b>Open-source:</b> Defects4C, tracewise probing, RATCHET, FGVulDet, AIGC-detector study site.</div>
+          <div style={{ marginTop: 4 }}><b>Research artifacts:</b> <a href="/work?type=research#project-index">Defects4C, tracewise probing, RATCHET, FGVulDet and the AIGC-detector study</a>.</div>
         </div>
 
         <CVH num="06">Skills</CVH>
@@ -142,7 +144,7 @@ export default function CV() {
         </div>
 
         <Box dashed style={{ marginTop: 32, padding: 14, fontFamily: 'var(--mono)', fontSize: 11, display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>
-          <span>References on request — typically advisor + 2 collaborators.</span>
+          <span>References available on request.</span>
           <span>↓ <a href="/data/Jian_Wang_CV_Academic_202605.pdf" target="_blank" rel="noreferrer">cv.pdf</a> · ↓ <a href="/data/jornbowrl-bio.txt" target="_blank" rel="noreferrer">bio.txt</a></span>
         </Box>
       </section>

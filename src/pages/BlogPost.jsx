@@ -132,8 +132,10 @@ export default function BlogPost() {
 
         {meta && (
           <div style={{ marginBottom: 16, fontSize: 11, fontFamily: 'var(--mono)', opacity: 0.7 }}>
-            {meta.date}
-            {meta.source && <> · <a href={meta.source} target="_blank" rel="noreferrer">source video</a></>}
+            Reading note · {meta.date}
+            {meta.source
+              ? <> · <a href={meta.source} target="_blank" rel="noreferrer">original source</a></>
+              : <> · Original source link not recorded</>}
           </div>
         )}
 
