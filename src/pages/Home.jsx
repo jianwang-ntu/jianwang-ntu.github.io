@@ -40,10 +40,10 @@ function AcademicPagesHome() {
             <h2 id="interests-title"><Link to="/statement">Research interests</Link></h2>
             <Link className="text-link" to="/statement">Read the statement ↗</Link>
           </div>
-          <p>I aim to make AI agents useful, secure and accountable representatives of <strong>people, groups and companies</strong>.
-            My research on <Link to="/statement"><strong>trustworthy agent networks</strong></Link> connects two questions:
-            how an agent can grow in capability while preserving the authority, privacy and commitments of those it represents,
-            and how independently governed agents can cooperate to create shared value.</p>
+          <p>My research asks how AI agents can expand what <strong>people, groups and companies</strong> accomplish,
+            while remaining accountable to those they represent. I study <Link to="/statement"><strong>trustworthy agent networks</strong></Link>:
+            how persistent agents can learn and act within evolving mandates, and how independent participants can combine
+            complementary capabilities into cooperation that delivers value after its costs and obligations are accounted for.</p>
           <p>I study these as <Link to="/statement#assured-agency">assured agency</Link> and{' '}
             <Link to="/statement#collective-agency">collective agency</Link>, linked by{' '}
             <Link to="/statement#independent-evidence-and-controlled-adaptation">independent evidence and controlled adaptation</Link>.</p>
