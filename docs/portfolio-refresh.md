@@ -14,7 +14,7 @@ The future research agenda leads the site: trustworthy agent networks for people
 - `src/data-work.js`: project type, room, skills, role/publication years, status and resource links. Room maps and filters share these records.
 - `public/data/jornbowrl-bio.txt`: current biography with PhD status and the V4 research agenda.
 
-The SVG is bundled from `src/assets/`, so it deploys with Vite assets rather than the separate image bucket. `public/data/Jian_Wang_Research_Statement_202609.pdf` is the full V4 statement. The May 2026 CV remains a dated snapshot; the web CV clarifies the limited findings of the trace study.
+The SVG is bundled from `src/assets/`, so it deploys with Vite assets rather than the separate image bucket. `public/data/Jian_Wang_Research_Statement_202609.pdf` is the full V4 statement with an opening landscape overview page. The overview stays vector-based, has 12 internal topic links and six bookmarks, and is labelled Overview before the original five numbered text pages. The May 2026 CV remains a dated snapshot; the web CV clarifies the limited findings of the trace study.
 
 ## Navigation
 
