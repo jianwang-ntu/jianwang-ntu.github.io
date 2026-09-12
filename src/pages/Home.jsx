@@ -16,15 +16,16 @@ function AcademicPagesHome() {
     <div className="portfolio-shell">
       <ApHead sidebar />
       <main id="main-content" className="portfolio-content">
-        <p className="portfolio-eyebrow">Software engineering · Language models · Trustworthy AI</p>
+        <p className="portfolio-eyebrow">Trustworthy agent networks · Software engineering · AI</p>
         <h1>About me</h1>
         <div className="home-bio">
           <p>
             I am a recent PhD from the College of Computing and Data Science (CCDS) at{' '}
             <strong>Nanyang Technological University</strong>, advised by{' '}
             <a href="https://personal.ntu.edu.sg/yi_li/" target="_blank" rel="noreferrer">Prof. Li Yi</a>.
-            My research sits at the intersection of <strong>software engineering</strong>,{' '}
-            <strong>large language models</strong> and <strong>trustworthy AI systems</strong> — with a focus on{' '}
+            My research connects <strong>software engineering</strong>,{' '}
+            <strong>large language models</strong> and <strong>trustworthy AI systems</strong>.
+            My PhD work focused on{' '}
             <strong>automated program repair</strong>, <strong>AI-generated code detection</strong> and{' '}
             <strong>execution-grounded reasoning</strong> over programs.
           </p>
@@ -39,19 +40,29 @@ function AcademicPagesHome() {
             <h2 id="interests-title"><Link to="/statement">Research interests</Link></h2>
             <Link className="text-link" to="/statement">Read the statement ↗</Link>
           </div>
+          <p>My current agenda is <Link to="/statement"><strong>trustworthy agent networks</strong></Link>:
+            persistent agents that grow in capability, cooperate across people and organizations, and remain
+            accountable to those they represent. It connects two research directions through a shared foundation.</p>
           <ul className="research-interest-list">
-            <li><Link to="/statement#code-trustworthiness">Code LLM trustworthiness</Link><span>Automated program repair, execution semantics</span></li>
-            <li><Link to="/statement#code-detection">AI-generated code detection</Link><span>How detection built for prose holds up on code</span></li>
-            <li><Link to="/statement#long-horizon">Long-horizon AI for software maintenance</Link><span>Agentic, automatic, reliable</span></li>
+            <li><Link to="/statement#essay-i-assured-agency">Assured agency</Link>
+              <span>How does agency persist through change? Persistent mandates, state and commitments;
+                authorized execution and recovery; capability growth under live obligations.</span></li>
+            <li><Link to="/statement#essay-ii-collective-agency">Collective agency</Link>
+              <span>When does cooperation create lasting value? Limited group representation, private coordination
+                and conditional commitments, with delivery, exit and shared accountability.</span></li>
+            <li><Link to="/statement#independent-evidence-and-controlled-adaptation">Independent evidence & controlled adaptation</Link>
+              <span>A shared foundation: verify outcomes, attribute failures and evaluate changes to agent
+                capabilities and coordination, while preserving each principal&rsquo;s authority.</span></li>
           </ul>
         </section>
         <aside className="collaboration-note" aria-label="Collaboration interests">
-          <p><strong>From research to working systems.</strong> I welcome research collaborations and engineering
-            opportunities in reliable coding agents, LLM evaluation and AI security.</p>
+          <p><strong>Building useful, accountable agency.</strong> I welcome research and engineering collaborations
+            on persistent agents, cooperation across independent principals, and independent outcome evaluation.
+            I aim to test these ideas in collaborative production and private research, measuring useful completion,
+            participant outcomes, human effort and recovery costs.</p>
           <p className="home-skills-links">
-            <Link to="/work?skill=LLM+evaluation#project-index">LLM evaluation</Link>
-            <Link to="/work?skill=PyTorch#project-index">PyTorch & model development</Link>
-            <Link to="/work?skill=Backend+systems#project-index">Backend systems</Link>
+            <Link to="/statement#a-staged-research-program-2026-2029">Research roadmap, 2026–2029</Link>
+            <Link to="/work">Earlier work & projects</Link>
             <a href="mailto:jian004@e.ntu.edu.sg">Get in touch ↗</a>
           </p>
         </aside>
@@ -89,7 +100,7 @@ function AcademicPagesHome() {
 
 export default function Home() {
   return <div className="page">
-    <Seo title="Home" description="Jian Wang — PhD, NTU Singapore. Research on code LLM security, automated program repair, and AI-generated code detection." path="/home" />
+    <Seo title="Home" description="Jian Wang — PhD, NTU Singapore. Research on trustworthy agent networks: assured agency, collective agency, and independent evidence." path="/home" />
     <Nav skipToContent /><AcademicPagesHome /><Footer />
   </div>;
 }

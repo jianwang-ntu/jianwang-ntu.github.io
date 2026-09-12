@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 // to one origin.
 const SITE_URL = 'https://www.wj2ai.com';
 const SITE_NAME = 'Jian Wang';
-const DEFAULT_DESCRIPTION = 'Jian Wang (王剑) — PhD, NTU Singapore. Research on code LLM security, automated program repair, and AI-generated code detection. Notes on agents, harnesses, and engineering.';
+const DEFAULT_DESCRIPTION = 'Jian Wang — PhD, NTU Singapore. Research on trustworthy agent networks: assured agency, collective agency, and independent evidence.';
 const DEFAULT_IMAGE = 'https://123publicdata.s3.ap-southeast-1.amazonaws.com/personal/favor.ico';
 
 function setMeta(selector, attr, value) {

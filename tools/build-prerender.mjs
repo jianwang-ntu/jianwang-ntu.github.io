@@ -40,7 +40,7 @@ const baseHtml = readFileSync(distIndex, 'utf-8');
 
 // Default site-level meta. Used as fallback when a per-route value is missing.
 const SITE_NAME = 'Jian Wang';
-const DEFAULT_DESC = 'Jian Wang (王剑) — PhD, NTU Singapore. Research on code LLM security, automated program repair, and AI-generated code detection. Notes on agents, harnesses, and engineering.';
+const DEFAULT_DESC = 'Jian Wang — PhD, NTU Singapore. Research on trustworthy agent networks: assured agency, collective agency, and independent evidence.';
 const DEFAULT_IMAGE = 'https://123publicdata.s3.ap-southeast-1.amazonaws.com/personal/favor.ico';
 const TWITTER_HANDLE = '';  // optional; leave empty to omit twitter:creator
 
@@ -121,7 +121,7 @@ function writeRoute(routePath, html) {
 // Per-route descriptions — keep terse, ~150 chars max. These match the dynamic
 // Seo component's defaults so the static and JS-rendered metadata agree.
 const STATIC_ROUTES = [
-  { path: '/home', title: 'Home',           desc: 'Jian Wang — PhD, NTU Singapore. Research on code LLM security, automated program repair, and AI-generated code detection.' },
+  { path: '/home', title: 'Home',           desc: 'Jian Wang — PhD, NTU Singapore. Research on trustworthy agent networks: assured agency, collective agency, and independent evidence.' },
   { path: '/statement', title: 'Research Statement', desc: "Jian Wang's research statement: trustworthy agent networks, assured agency, collective agency, and independent evidence. Research agenda, 2026–2029." },
   { path: '/research', canonicalPath: '/statement', title: 'Research Statement', desc: "Jian Wang's research statement: trustworthy agent networks, assured agency, collective agency, and independent evidence. Research agenda, 2026–2029." },
   { path: '/pubs', title: 'Publications',   desc: 'Peer-reviewed research and preprints by Jian Wang on code LLM security, fake-content detection, and program repair.' },

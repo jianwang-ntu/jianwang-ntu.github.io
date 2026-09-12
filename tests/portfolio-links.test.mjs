@@ -28,7 +28,8 @@ test('all statement overview and prose jump links have targets', () => {
 test('homepage research interests point to real statement sections', () => {
   const home = readFileSync(new URL('../src/pages/Home.jsx', import.meta.url), 'utf8');
   const statement = readFileSync(new URL('../src/pages/Statement.jsx', import.meta.url), 'utf8');
-  for (const [, id] of home.matchAll(/to="\/statement#([^"]+)"/g)) assert.ok(statement.includes(`id="${id}"`));
+  const targets = new Set([...headings.map(h => h.id), ...[...statement.matchAll(/id="([^"]+)"/g)].map(m => m[1])]);
+  for (const [, id] of home.matchAll(/to="\/statement#([^"]+)"/g)) assert.ok(targets.has(id), id);
 });
 
 test('statement PDF download exists and is a PDF', () => {
