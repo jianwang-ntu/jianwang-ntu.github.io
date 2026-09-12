@@ -37,7 +37,7 @@ export default function Statement() {
         <p>My agenda connects <a href="#assured-agency">assured agency</a>—accountable representation through change—with{' '}
           <a href="#collective-agency">collective agency</a>—cooperation across independent people and organizations.
           <a href="#independent-evidence-and-controlled-adaptation"> Independent evidence and controlled adaptation</a> link the two.</p>
-        <div className="statement-download"><a href="/data/Jian_Wang_Research_Statement_202609.pdf" target="_blank" rel="noreferrer">Full V4 research statement (PDF) ↗</a>
+        <div className="statement-download"><a href="/data/Jian_Wang_Research_Statement_202609.pdf" target="_blank" rel="noreferrer">Full research statement (PDF) ↗</a>
           <a href="#published-foundations">Published foundations ↓</a></div>
         <nav className="statement-toc" aria-label="Statement sections">
           <span>The research agenda</span>
