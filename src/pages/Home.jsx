@@ -4,6 +4,7 @@ import Nav from '../components/Nav.jsx';
 import Footer from '../components/Footer.jsx';
 import Seo from '../components/Seo.jsx';
 import ApHead from '../components/ApHead.jsx';
+import ResearchOverview from '../components/ResearchOverview.jsx';
 import { NEWS, FEATURED_PUBS } from '../data.jsx';
 
 const PUB_PATHS = {
@@ -43,6 +44,7 @@ function AcademicPagesHome() {
           <p>My current agenda is <Link to="/statement"><strong>trustworthy agent networks</strong></Link>:
             persistent agents that grow in capability, cooperate across people and organizations, and remain
             accountable to those they represent. It connects two research directions through a shared foundation.</p>
+          <ResearchOverview />
           <ul className="research-interest-list">
             <li><Link to="/statement#essay-i-assured-agency">Assured agency</Link>
               <span>How does agency persist through change? Persistent mandates, state and commitments;

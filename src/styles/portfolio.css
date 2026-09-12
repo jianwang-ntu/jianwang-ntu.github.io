@@ -109,14 +109,13 @@ a:focus-visible, button:focus-visible, select:focus-visible, summary:focus-visib
 [data-style="apages"] .career-row p { font-size: 13px; color: #66737a; margin: 0 0 4px; }
 .career-row a { font-size: 12px; }
 /* Statement index and prose share deep links with the home interests. */
-.statement-overview { background: #f5f8f9; border: 1px solid #dde6eb; padding: 22px; margin: 28px 0; }
-.statement-overview > p { color: #526c79; }
-.statement-map { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; }
-.statement-map a { display: block; padding: 18px; background: #fff; border: 1px solid #cfdce2; border-top: 3px solid #739bab; }
-.statement-map strong { display: block; font-size: 16px; margin: 5px 0 8px; }
-.statement-map span { font-size: 12px; line-height: 1.6; color: #63757f; }
-.statement-map .foundation { grid-column: 1 / -1; padding: 14px 18px; border-top-color: #889984; }
-.statement-map .foundation strong { font-size: 14px; }
+.research-overview { margin: 25px 0; border: 1px solid #dce5ea; background: #fff; }
+.research-overview > svg { display: block; width: 100%; height: auto; }
+.research-overview-region { fill: transparent; stroke: transparent; stroke-width: 3; }
+.research-overview svg a { outline: none; }
+.research-overview svg a:hover .research-overview-region,
+.research-overview svg a:focus-visible .research-overview-region { fill: #0b57a40d; stroke: #246880; }
+.research-overview figcaption { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px 18px; padding: 12px 16px; border-top: 1px solid #e4ebee; color: #60717a; font-size: 12px; }
 .statement-section { padding-top: 22px; margin: 12px 0 22px; }
 .statement-section h3 { font-size: 18px; }
 .statement-status { font-size: 12px !important; color: #66777f; border-left: 2px solid #a8bec8; padding-left: 14px; }
@@ -173,8 +172,6 @@ a:focus-visible, button:focus-visible, select:focus-visible, summary:focus-visib
   .back-to-map { font-size: 11px; }
   .home-publication { grid-template-columns: 32px minmax(0,1fr); gap: 12px; }
   .career-row { grid-template-columns: minmax(0,1fr); gap: 8px; }
-  .statement-map { grid-template-columns: 1fr; }
-  .statement-overview { padding: 16px; }
   .statement-body table { font-size: 11px; }
   .statement-body th, .statement-body td { padding: 6px; }
   [data-style="apages"] .foot { flex-wrap: wrap; gap: 10px; }

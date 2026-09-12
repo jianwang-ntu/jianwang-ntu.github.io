@@ -5,6 +5,7 @@ The homepage uses a compact academic identity rail and a reading column. Work is
 ## Editing content
 
 - `src/pages/Home.jsx`: biography distinguishing PhD work from the current agenda; Assured Agency and Collective Agency as research directions; Independent Evidence and Controlled Adaptation as their shared foundation; and collaboration links to the statement roadmap and earlier projects.
+- `src/components/ResearchOverview.jsx`: the supplied `trustworthy_agent_networks.svg`, shown on both the homepage and statement with 12 keyboard-accessible links to the matching sections. The unchanged artwork is bundled from `src/assets/` so it is deployed with Vite assets; the full-size image remains available from its caption.
 - `src/data-work.js`: one record per project, including type, room, skill tags, period, status, and publication link. The room map and filter results use the same records.
 - `src/content/research-statement.md`: the September 2026 V4 statement, “Trustworthy Agent Networks: Assured Agency and Collective Agency,” with its original research-status qualifications and references. Only its duplicated title and byline are omitted from the Markdown body because the page provides them.
 - `public/data/Jian_Wang_Research_Statement_202609.pdf`: unchanged V4 PDF accompanying the HTML statement. The older PDF remains available at its existing URL.

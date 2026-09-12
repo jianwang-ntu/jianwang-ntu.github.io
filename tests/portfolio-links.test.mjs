@@ -21,8 +21,12 @@ test('repeated statement subtitles get distinct, stable anchors', () => {
 
 test('all statement overview and prose jump links have targets', () => {
   const source = readFileSync(new URL('../src/pages/Statement.jsx', import.meta.url), 'utf8');
+  const overview = readFileSync(new URL('../src/components/ResearchOverview.jsx', import.meta.url), 'utf8');
   const targets = new Set([...headings.map(h => h.id), ...[...source.matchAll(/id="([^"]+)"/g)].map(m => m[1])]);
   for (const [, id] of source.matchAll(/href="#([^"]+)"/g)) assert.ok(targets.has(id), id);
+  const regions = [...overview.matchAll(/id: '([^']+)'/g)];
+  assert.equal(regions.length, 12, 'both essays, six topics, the foundation and its three topics');
+  for (const [, id] of regions) assert.ok(targets.has(id), id);
 });
 
 test('homepage research interests point to real statement sections', () => {

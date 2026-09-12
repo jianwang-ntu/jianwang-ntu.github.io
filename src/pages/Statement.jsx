@@ -6,6 +6,7 @@ import Nav from '../components/Nav.jsx';
 import Footer from '../components/Footer.jsx';
 import Seo from '../components/Seo.jsx';
 import ApHead from '../components/ApHead.jsx';
+import ResearchOverview from '../components/ResearchOverview.jsx';
 import markdown from '../content/research-statement.md?raw';
 import { statementHeadings } from '../statement-headings.js';
 
@@ -30,14 +31,7 @@ export default function Statement() {
         <p className="statement-status">A proposed research agenda for 2026–2029. The hypotheses and mechanisms below are directions to test; published research is linked separately.</p>
         <div className="statement-download"><a href="/data/Jian_Wang_Research_Statement_202609.pdf" target="_blank" rel="noreferrer">Download full statement (PDF) ↗</a>
           <Link to="/pubs">Published research ↗</Link><a href="#research-background">Research background ↓</a></div>
-        <div className="statement-overview" aria-label="Clickable research overview">
-          <p className="portfolio-eyebrow">Two directions · One shared foundation</p>
-          <nav className="statement-map" aria-label="Research directions">
-            <a href="#essay-i-assured-agency"><span>DIRECTION 01</span><strong>Assured agency</strong><span>How does agency persist through change?<br />Mandates · Execution · Capability growth ↗</span></a>
-            <a href="#essay-ii-collective-agency"><span>DIRECTION 02</span><strong>Collective agency</strong><span>When does cooperation create lasting value?<br />Representation · Coordination · Delivery ↗</span></a>
-            <a className="foundation" href="#independent-evidence-and-controlled-adaptation"><span>SHARED FOUNDATION</span><strong>Independent evidence & controlled adaptation</strong><span>Verify outcomes → Attribute failures → Evaluate updates ↗</span></a>
-          </nav>
-        </div>
+        <ResearchOverview />
         <details className="statement-toc">
           <summary>On this page · jump to any section</summary>
           <nav aria-label="Statement sections"><ul>{headings.map(h => <li className={h.level === 3 ? 'toc-sub' : ''} key={h.id}>
