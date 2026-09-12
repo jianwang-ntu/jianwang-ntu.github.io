@@ -122,8 +122,10 @@ function writeRoute(routePath, html) {
 // Seo component's defaults so the static and JS-rendered metadata agree.
 const STATIC_ROUTES = [
   { path: '/home', title: 'Home',           desc: 'Jian Wang — PhD, NTU Singapore. Research on code LLM security, automated program repair, and AI-generated code detection.' },
+  { path: '/statement', title: 'Research Statement', desc: "Jian Wang's research statement: trustworthy agent networks, assured agency, collective agency, and independent evidence. Research agenda, 2026–2029." },
+  { path: '/research', canonicalPath: '/statement', title: 'Research Statement', desc: "Jian Wang's research statement: trustworthy agent networks, assured agency, collective agency, and independent evidence. Research agenda, 2026–2029." },
   { path: '/pubs', title: 'Publications',   desc: 'Peer-reviewed research and preprints by Jian Wang on code LLM security, fake-content detection, and program repair.' },
-  { path: '/work', title: 'Work & Projects', desc: 'Engineering work and side projects — agent harnesses, blog automation, security research tooling.' },
+  { path: '/work', title: 'Work & Projects', desc: 'Research artifacts and industry projects by Jian Wang, indexed by year, skill and project room.' },
   { path: '/cv',   title: 'CV',             desc: 'Curriculum vitae — education, employment, talks, awards.' },
   { path: '/blog', title: 'Blog',           desc: 'Notes and summaries — auto-drafted from talks, papers, and posts; edited by hand.' },
 ];
@@ -145,7 +147,7 @@ for (const r of STATIC_ROUTES) {
   const block = metaBlock({
     title: r.title,
     description: r.desc,
-    canonicalPath: r.path,
+    canonicalPath: r.canonicalPath || r.path,
     ogType: 'website',
   });
   writeRoute(r.path, patchHead(baseHtml, block));

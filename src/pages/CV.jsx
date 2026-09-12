@@ -68,7 +68,7 @@ export default function CV() {
         <CVBlock
           left="Aug 2023 — now"
           right="Singapore"
-          title="PhD Candidate · Research Assistant"
+          title="Research Engineer Manager"
           sub="Singapore Management University · Code Intelligence & LLM Security (with Prof. Xie Xiaofei)"
           body="Built Defects4C (ASE '25). Designed semantic-enhancement framework with execution traces for SFT/PEFT (EMNLP '25). Evaluated 24 SOTA LLMs across single-round and conversation-based repair."
         />
