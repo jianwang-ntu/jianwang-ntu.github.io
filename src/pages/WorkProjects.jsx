@@ -33,11 +33,17 @@ export default function WorkProjects() {
         <Link className="text-link" to="/cv">Experience & CV ↗</Link></div>
       <p className="work-intro">Explore the map, or find a project by year and skill. Research entries link to
         their papers and artifacts; industry entries describe work in production.
-        The <Link to="/statement#research-path">research progression</Link> connects the repair and evaluation
-        projects to proposed maintenance-agent experiments.</p>
+        The <Link to="/statement#published-foundations">research statement</Link> explains how these methods and
+        experiences inform the future agenda.</p>
+      <section className="work-rooms" id="project-rooms" aria-labelledby="project-rooms-title">
+      <header className="work-rooms-heading">
+        <p className="portfolio-eyebrow">Explore by function</p>
+        <h2 id="project-rooms-title">The project rooms</h2>
+        <p>Four areas of work, with the projects and evidence inside each.</p>
+      </header>
       <ProjectMap />
       <section className="project-index" id="project-index" aria-labelledby="index-title">
-        <div className="section-heading"><h2 id="index-title">Project index</h2>
+        <div className="section-heading"><h3 id="index-title">Project index</h3>
           <a className="text-link" href="#career">Career timeline ↓</a></div>
         <div className="project-filters">
           <label>Type<select value={filters.type} onChange={e => updateFilter('type', e.target.value)}>
@@ -59,13 +65,13 @@ export default function WorkProjects() {
           if (!entries.length) return null;
           return <section key={room.id} id={`room-${room.id}`} className={`project-room tone-${room.tone}`} tabIndex={-1}>
             <header className="room-section-heading"><span>{room.number}</span><div>
-              <h2><Link to={`/work#room-${room.id}`}>{room.title}</Link></h2><p>{room.purpose}</p>
-            </div><a className="back-to-map" href="#main-content">Map ↑</a></header>
+              <h4><Link to={`/work#room-${room.id}`}>{room.title}</Link></h4><p>{room.purpose}</p>
+            </div><a className="back-to-map" href="#project-rooms">Map ↑</a></header>
             {entries.map(p => <article id={p.id} key={p.id} className="project-entry" tabIndex={-1}>
               <div className="project-entry-meta"><span className={`project-type ${p.type}`}>{p.type === 'research' ? 'Research' : 'Industry'}</span>
                 <span>{projectPeriod(p)}</span><span>{p.venue || p.affiliation}</span>
                 {p.status === 'TODO' && <span className="todo-badge">TODO · Case study coming soon</span>}</div>
-              <h3><Link to={`/work#${p.id}`}>{p.title}</Link></h3>
+              <h5><Link to={`/work#${p.id}`}>{p.title}</Link></h5>
               <p className="project-summary">{p.summary}</p>
               <p className="project-detail">{p.detail}</p>
               {p.publication && <ResearchConnection publication={p.publication} compact />}
@@ -79,6 +85,7 @@ export default function WorkProjects() {
             </article>)}
           </section>;
         })}
+      </section>
       </section>
       <section id="career" className="career-timeline" tabIndex={-1}>
         <div className="section-heading"><h2>Career timeline</h2><Link className="text-link" to="/cv">Full CV ↗</Link></div>

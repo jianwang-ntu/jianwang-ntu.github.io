@@ -24,7 +24,7 @@ test('all statement overview and prose jump links have targets', () => {
   const source = readFileSync(new URL('../src/pages/Statement.jsx', import.meta.url), 'utf8');
   const overview = readFileSync(new URL('../src/components/ResearchOverview.jsx', import.meta.url), 'utf8');
   const path = readFileSync(new URL('../src/components/ResearchPath.jsx', import.meta.url), 'utf8');
-  const targets = new Set([...headings.map(h => h.id), ...[...(source + path).matchAll(/id="([^"]+)"/g)].map(m => m[1])]);
+  const targets = new Set([...headings.map(h => h.id), ...[...(source + path + overview).matchAll(/id="([^"]+)"/g)].map(m => m[1])]);
   for (const [, id] of source.matchAll(/href="#([^"]+)"/g)) assert.ok(targets.has(id), id);
   const regions = [...overview.matchAll(/id: '([^']+)'/g)];
   assert.equal(regions.length, 12, 'both essays, six topics, the foundation and its three topics');
@@ -42,7 +42,7 @@ test('publication connections lead from existing papers to focused statement sec
 });
 
 test('old statement bookmarks resolve to the sections that absorb their topics', () => {
-  const targets = new Set([...headings.map(h => h.id), 'research-path']);
+  const targets = new Set([...headings.map(h => h.id), 'research-path', 'network-overview']);
   for (const [oldId, target] of Object.entries(STATEMENT_ALIASES)) {
     assert.equal(resolveStatementHash(`#${oldId}`), target);
     assert.ok(targets.has(target), `${oldId} -> ${target}`);

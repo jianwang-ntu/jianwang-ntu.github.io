@@ -24,20 +24,23 @@ export default function Statement() {
   const redirect = resolveStatementHash(hash);
   if (redirect) return <Navigate to={`/statement${search}#${redirect}`} replace />;
   return <div className="page">
-    <Seo title="Research Statement" description="From program repair and code-model evaluation to reliable software-maintenance agents. Jian Wang's focused research agenda and longer-term network vision." path="/statement" />
+    <Seo title="Research Statement" description="Trustworthy agent networks for individuals, groups and companies: assured agency, collective agency, and independent evidence with controlled adaptation." path="/statement" />
     <Nav skipToContent />
-    <div className="portfolio-shell">
+    <div className="portfolio-shell statement-shell">
       <ApHead sidebar />
       <main id="main-content" className="portfolio-content">
         <p className="portfolio-eyebrow">Research statement · September 2026</p>
-        <h1>From reliable code to trustworthy agents</h1>
-        <p className="page-deck">Reliable software maintenance is the starting point.</p>
-        <p>I want to build agents whose work can be checked, whose actions stay within a maintainer's authority,
-          and whose partial work can be recovered when conditions change. My starting point is program repair
-          and the empirical evaluation of code models.</p>
-        <ResearchPath />
+        <h1>Trustworthy agent networks</h1>
+        <p className="statement-lead">How can AI agents expand what <strong>individuals, groups and companies</strong> accomplish,
+          while preserving authority, privacy and commitments as they learn and cooperate?</p>
+        <ResearchOverview />
+        <p>My agenda connects <a href="#assured-agency">assured agency</a>—accountable representation through change—with{' '}
+          <a href="#collective-agency">collective agency</a>—cooperation across independent people and organizations.
+          <a href="#independent-evidence-and-controlled-adaptation"> Independent evidence and controlled adaptation</a> link the two.</p>
+        <div className="statement-download"><a href="/data/Jian_Wang_Research_Statement_202609.pdf" target="_blank" rel="noreferrer">Full V4 research statement (PDF) ↗</a>
+          <a href="#published-foundations">Published foundations ↓</a></div>
         <nav className="statement-toc" aria-label="Statement sections">
-          <span>Read in sequence</span>
+          <span>The research agenda</span>
           <ol>{headings.map(h => <li key={h.id}><a href={`#${h.id}`}>{h.title}</a></li>)}</ol>
         </nav>
         <article className="statement-body" aria-label="Research statement text">
@@ -46,16 +49,10 @@ export default function Statement() {
             h3: props => <LinkedHeading {...props} level={3} />,
           }}>{markdown}</ReactMarkdown>
         </article>
-        <details className="network-vision">
-          <summary>Earlier broad vision: trustworthy agent networks</summary>
-          <p>The original V4 diagram maps a wider set of possibilities. The program above prioritizes
-            maintenance, revalidation and recovery; the remaining network mechanisms are longer-term questions.</p>
-          <ResearchOverview />
-          <a href="/data/Jian_Wang_Research_Statement_202609.pdf" target="_blank" rel="noreferrer">Earlier broad draft (V4 PDF) ↗</a>
-        </details>
+        <ResearchPath />
         <div className="statement-download"><Link to="/pubs">Browse the published evidence ↗</Link>
           <Link to="/work#room-code">Explore the repair projects ↗</Link>
-          <a href="#research-path">Back to the progression ↑</a></div>
+          <a href="#network-overview">Back to the overview ↑</a></div>
       </main>
     </div><Footer />
   </div>;

@@ -35,7 +35,7 @@ export default function ResearchOverview() {
         ))}
       </svg>
       <figcaption>
-        <span>V4 network vision. Topics link to the focused sections that absorb them.</span>
+        <span>Select a heading or topic box to explore the research agenda.</span>
         <a href={overviewUrl} target="_blank" rel="noreferrer">Open full-size overview ↗</a>
       </figcaption>
     </figure>

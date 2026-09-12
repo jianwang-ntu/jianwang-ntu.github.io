@@ -2,33 +2,27 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 export default function ResearchPath() {
-  return <figure className="research-path" id="research-path" tabIndex={-1} aria-label="From published code research to proposed agent research">
-    <figcaption>From existing work to the next research question</figcaption>
+  return <figure className="research-path" id="research-path" tabIndex={-1} aria-label="How published research informs the future agenda">
+    <figcaption>How earlier work informs the agenda</figcaption>
     <ol className="research-path-stages">
       <li>
-        <span className="path-stage-label">01 · Published foundation</span>
-        <h3><Link to="/statement#published-foundations">Repair & evaluate code</Link></h3>
-        <p>Generate patches. Reproduce faults. Test the limits of model evidence.</p>
+        <span className="path-stage-label">Published research</span>
+        <h3><Link to="/pubs">Repair, detection & testing</Link></h3>
+        <p>Locate failures, construct repairs and evaluate model behaviour.</p>
         <div className="path-papers"><Link to="/pubs/ratchet">RATCHET</Link><Link to="/pubs/defects4c">Defects4C</Link></div>
       </li>
       <li>
-        <span className="path-stage-label">02 · Proposed bridge</span>
-        <h3><Link to="/statement#from-patches-to-maintenance">Multi-step maintenance</Link></h3>
-        <p>Inspect → patch → test → revise. Check the outcome of the whole workflow.</p>
-        <Link className="path-next" to="/statement#from-patches-to-maintenance">From a patch to a sequence ↗</Link>
+        <span className="path-stage-label">Transferable methods</span>
+        <h3><Link to="/statement#independent-evidence-and-controlled-adaptation">Evidence & diagnosis</Link></h3>
+        <p>Observe effects, test evaluation signals and assess whether a repair improves outcomes.</p>
+        <Link className="path-next" to="/statement#independent-evidence-and-controlled-adaptation">The shared foundation ↗</Link>
       </li>
       <li>
-        <span className="path-stage-label">03 · Core research question</span>
-        <h3><Link to="/statement#assured-agency">Assured agency</Link></h3>
-        <p>When code, tools or permissions change, which checks must be repeated?</p>
-        <Link className="path-next" to="/statement#assured-agency">Revalidate, continue or recover ↗</Link>
+        <span className="path-stage-label">Future research</span>
+        <h3><Link to="/statement#network-overview">Trustworthy agent networks</Link></h3>
+        <p>Study accountable representation, cooperation and adaptation across independent owners.</p>
+        <div className="path-papers"><Link to="/statement#assured-agency">Assured agency</Link><Link to="/statement#collective-agency">Collective agency</Link></div>
       </li>
     </ol>
-    <div className="research-path-horizon">
-      <span className="path-horizon-arrow" aria-hidden="true">↓</span>
-      <div><span className="path-stage-label">Longer term · conditional on earlier evidence</span>
-        <h3><Link to="/statement#collective-agency">Collective agency across owners</Link></h3>
-        <p>Extend from one maintainer to dependent work across separately governed repositories.</p></div>
-    </div>
   </figure>;
 }

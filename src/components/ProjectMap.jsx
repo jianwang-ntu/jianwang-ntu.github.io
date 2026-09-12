@@ -5,7 +5,7 @@ import { ROOMS, WORK_PROJECTS } from '../data-work.js';
 export default function ProjectMap() {
   return (
     <div className="project-map">
-      <div className="map-caption"><span>THE PROJECT ROOMS</span><span>Choose a room or a project to explore ↓</span></div>
+      <div className="map-caption"><span>FOUR ROOMS · RESEARCH & INDUSTRY</span><span>Choose a room or a project ↓</span></div>
       <svg className="work-map-svg" viewBox="0 0 800 470" role="group" aria-labelledby="map-title map-description">
         <title id="map-title">A floor plan of the project rooms</title>
         <desc id="map-description">Four rooms connect skills to research and industry projects. Each room title and project is a link to its detail section below.</desc>

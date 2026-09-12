@@ -1,27 +1,29 @@
 # Portfolio navigation and content
 
-The site follows a progression: published code repair and evaluation → a proposed multi-step maintenance testbed → assured agency under change → a conditional extension to cooperation across owners. Publications document completed work; the statement describes the proposed next questions; Work contains research artifacts and industry experience; the blog contains reading notes about other people's work.
+The future research agenda leads the site: trustworthy agent networks for people, groups and companies. Assured agency studies accountable representation as capabilities and circumstances change; collective agency studies cooperation across independent participants. Independent evidence and controlled adaptation connect the two. Published work supplies methods and experience without limiting which new questions the statement can pursue.
 
 ## Editing content
 
-- `src/pages/Home.jsx`: supplied biography, focused research introduction, progression and selected supporting publications. RATCHET joins Defects4C, the execution-trace study and the detector study as the four selected foundations.
-- `src/content/research-statement.md`: focused web statement with five sections, approximately 1,000 words. It is a revision of the broader V4 agenda, not a transcription of its PDF.
-- `src/components/ResearchPath.jsx`: responsive progression with arrows, an intermediate maintenance block and explicit published/proposed/conditional labels. Shared by Home and Statement.
-- `src/research-agenda.js`: links between publications and proposed questions, with evidence boundaries; also aliases for old statement fragments. Shared connection copy appears on publication details and in concise links on Home, Publications and Work.
-- `src/components/ResearchOverview.jsx`: the supplied `trustworthy_agent_networks.svg`, retained unchanged under an expandable broader-vision section on Home and Statement. Its 12 clickable regions now lead to the consolidated sections. The full-size asset is available from the caption.
-- `src/data-work.js`: project type, room, skills, role/publication years, status and resource links. Room maps and filters use these same records.
-- `public/data/jornbowrl-bio.txt`: current short biography with PhD status and the proposed next direction.
+- `src/pages/Home.jsx`: supplied biography, a V4-aligned research abstract, visible overview and four selected publications.
+- `src/content/research-statement.md`: condensed V4 web statement with five sections. The two research directions and shared foundation come first; evaluation follows; published foundations come last.
+- `src/components/ResearchOverview.jsx`: the unchanged supplied SVG, with 12 responsive clickable regions. It appears immediately below the statement's title and short lead. Its caption links to the full-size asset.
+- `src/components/ResearchPath.jsx`: a bridge at the bottom of the statement, from published repair/detection/testing through evidence and diagnosis to future agent research.
+- `src/research-agenda.js`: publication-to-agenda connections and their evidence boundaries, plus aliases for old statement fragments.
+- `src/pages/Publications.jsx`: the same `ApHead sidebar` and page grid as Home; publication counts and figure provenance belong in the main content.
+- `src/pages/WorkProjects.jsx` and `src/styles/portfolio.css`: the highlighted project-rooms heading contains the map and an indented project index; project entries are indented again within each room.
+- `src/data-work.js`: project type, room, skills, role/publication years, status and resource links. Room maps and filters share these records.
+- `public/data/jornbowrl-bio.txt`: current biography with PhD status and the V4 research agenda.
 
-The original SVG is bundled from `src/assets/`, so it deploys with Vite assets rather than the separate image bucket. `public/data/Jian_Wang_Research_Statement_202609.pdf` is the earlier broad V4 draft and is explicitly labelled that way. The downloadable May 2026 CV remains a dated snapshot; the web CV clarifies the limited findings of the trace study.
+The SVG is bundled from `src/assets/`, so it deploys with Vite assets rather than the separate image bucket. `public/data/Jian_Wang_Research_Statement_202609.pdf` is the full V4 statement. The May 2026 CV remains a dated snapshot; the web CV clarifies the limited findings of the trace study.
 
 ## Navigation
 
-`/statement` is canonical. `/research` preserves queries and fragments when redirecting. The five statement sections are `published-foundations`, `from-patches-to-maintenance`, `assured-agency`, `collective-agency` and `evaluation-and-milestones`. Older essay, background and subtopic fragments resolve to the section absorbing that subject. Unknown fragments do not trigger redirects.
+`/statement` is canonical. `/research` preserves queries and fragments when redirecting. The statement sections are `assured-agency`, `collective-agency`, `independent-evidence-and-controlled-adaptation`, `evaluation-and-milestones` and `published-foundations`, in that order. The overview uses `network-overview`; the publication bridge uses `research-path`. Older essay, background and subtopic fragments resolve to the section absorbing that subject. Unknown fragments do not redirect.
 
-`/work` supports intersecting `type`, `year` and `skill` queries. Room and project links clear filters so the destination is visible. Research years are publication years; industry spans are role periods. Xiaomi emoji/portrait, 58.com and Baidu case studies retain TODO labels. Industry experience is not used as publication evidence for agent research.
+`/work` supports intersecting `type`, `year` and `skill` queries. Room and project links clear filters so their destinations are visible. Research years are publication years; industry spans are role periods. Xiaomi emoji/portrait, 58.com and Baidu case studies retain TODO labels. The heading hierarchy is Work → The project rooms → Project index → Room → Project.
 
 ## Verification
 
-Run `npm test` for project filtering, links to publications, statement headings, publication-to-agenda connections, legacy fragments and the archived PDF's presence. Run `npm run build` for Vite, the sitemap and route metadata. Browser checks cover the progression, publication-to-statement links, legacy redirects, broader-image links and responsive layouts.
+Run `npm test` for filtering, publication links, statement headings, diagram targets, legacy fragments and PDF availability. Run `npm run build` for Vite, the sitemap and route metadata. Browser checks cover first-view overview visibility, the publication sidebar, work-page indentation, clickable regions, legacy redirects and narrow-screen layouts.
 
 See `docs/content-review-2026-09-12.md` for the evidence assessment and review scope.

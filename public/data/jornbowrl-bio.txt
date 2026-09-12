@@ -2,7 +2,7 @@ Jian Wang, PhD, is a researcher in software engineering and trustworthy AI. He r
 
 His published work focuses on automated program repair, executable C/C++ repair benchmarks, AI-generated code detection and the use of execution traces in code models. RATCHET investigates retrieval-based repair; Defects4C supports reproducible evaluation of C/C++ repairs. His execution-trace study reports limited usefulness in the settings studied, and his detector study examines the limits of transferring prose-based detection to code.
 
-His proposed research extends this foundation to reliable software-maintenance agents: checking outcomes across tool actions, revalidating evidence when conditions change and recovering partial work within a maintainer's authority. Cooperation across independently governed repositories is a longer-term direction that remains to be tested.
+His future research studies trustworthy agent networks: how agents can become useful, secure and accountable representatives of people, groups and companies. The agenda connects assured agency, which preserves authority and commitments as capabilities evolve, with collective agency, which enables independently governed participants to cooperate. Independent evidence and controlled adaptation provide a shared foundation for evaluating outcomes, recovering from failure and improving subsequent work.
 
 Before research, he spent approximately eight years in industry. At Xiaomi AI Lab (2017–2019), he worked on GAN-based portrait processing and face cartoonisation. At 58.com (2011–2017), he worked on backend systems, including an asynchronous web framework serving more than 100 million daily requests. He received his bachelor's degree in software engineering from Tianjin University in 2011.
 

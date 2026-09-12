@@ -2,16 +2,18 @@
 
 ## Assessment
 
-The previous site jumped from code repair and detection to a broad program covering persistent delegation, group representation, private negotiation, commitments, exit, verification and adaptation. Shared words such as trustworthiness and reliability did not establish a research connection. The separate Research Background block repeated homepage themes without explaining which capabilities or findings transfer.
+The site previously mixed completed work and proposed research. An intermediate revision overcorrected by limiting the agenda to software-maintenance agents and making collective agency conditional on that work. This did not represent V4 or the author's intended scope.
 
-The revised narrative is: **repair and evaluate code → evaluate an entire maintenance workflow → revalidate actions when working conditions change → later coordinate dependent work across owners**. It describes a plausible proposed extension, not an established scientific result or a claim of novelty.
+The final narrative leads with **trustworthy agent networks for individuals, groups and companies**. An authorized contribution connects the parts: assured agency preserves a participant's authority and commitments; collective agency composes contributions into joint work; independent evidence guides recovery and adaptation. A creator, an editing collective and a client company provide a continuing example. Personal, group and company relationships are all in scope.
+
+The supplied overview is visible at the top of the statement and on Home. Published foundations appear at the bottom. Earlier papers contribute methods and empirical lessons; they are neither proof of the proposed mechanisms nor prerequisites for pursuing the new interests.
 
 ## Publication support
 
 | Existing work | What it contributes to the next question | Boundary |
 | --- | --- | --- |
-| RATCHET, ISSRE 2024 | Fault localisation and retrieval-based patch generation can supply the repair step in a maintenance workflow. | The paper evaluates repair, not persistent agency, authority changes or cooperative agents. |
-| Defects4C, ASE 2025 | Reproducible C/C++ bugs and tests provide a starting substrate for observing repair outcomes. | A multi-step benchmark needs additional task design and independent checks. Existing tests are not a correctness guarantee. |
+| RATCHET, ISSRE 2024 | Fault localisation and retrieval-based patch generation contribute experience diagnosing failure and constructing corrective actions. | The paper evaluates repair, not persistent agency, authority changes or cooperative agents. |
+| Defects4C, ASE 2025 | Reproducible C/C++ bugs and tests provide a starting substrate for observing repair outcomes. | Agent contribution tasks need additional acceptance criteria and independent checks. Existing tests are not a correctness guarantee. |
 | Execution-trace study, EMNLP Findings 2025 | Its limited gains motivate testing which observations actually help action selection and diagnosis. | It does not establish that adding traces makes agents reliable. |
 | AIGC-detector study, ASE 2024 | Transfer difficulties motivate revalidating evaluation signals across tasks and models. | Authorship detection is not correctness, safety or authority verification. This is a methodological connection. |
 | Earlier neural-network testing, repair, fairness and vision work | Broad experience measuring and diagnosing AI failure. | Retained in the publication archive, without a forced direct link to network governance. |
@@ -25,23 +27,21 @@ Primary sources checked for the four central connections:
 - [AIGC-detector study, SMU repository](https://ink.library.smu.edu.sg/sis_research/9724)
 - [AIGC-detector paper on the advisor's website](https://liyiweb.com/files/Wang2024AES.pdf)
 
-## Scope decisions
+## Scope and presentation
 
-The focused statement has five sections and approximately 1,000 words. Independent verification and controlled adaptation are absorbed into maintenance and assured agency. Persistent state, permission changes and recovery now support one testable question: when does existing evidence remain sufficient to continue after a change?
+The web statement condenses V4 into five sections: assured agency; collective agency; independent evidence and controlled adaptation; evaluation and milestones; published foundations. Persistent state, authorized execution, recovery and capability growth belong inside assured agency. Group representation, private coordination, conditional commitments, delivery and exit belong inside collective agency. These are connected subproblems rather than competing standalone research directions.
 
-The concrete bridge is a repository workflow: inspect, patch, build/test, inspect failures and revise. The proposed comparison includes fixed repair/test loops and strong stateful coding agents under matched budgets. The additional research question concerns selective revalidation under repository, tool and permission changes. It must improve useful completion or validation/oversight cost against strong full-rechecking baselines.
-
-Collective agency is a conditional extension to two repositories under different maintainers. Open-ended group formation, negotiation markets, reputation, broad private coordination and generalized organization/rule adaptation are deferred. These topics remain visible in the expandable original V4 illustration and labelled historical PDF, rather than being presented as parallel immediate projects.
+Collaborative production and private research are proposed evaluation settings, with software workflows providing an additional controlled environment. The 2026–2029 roadmap moves from state/execution to adaptation/cooperation and composition/transfer. Comparisons and metrics separate useful completion, authority violations, disclosure, human effort, recovery cost and participant outcomes. Future mechanisms are presented as hypotheses to evaluate.
 
 ## Site changes
 
-- Home presents the progression and four supporting papers, including RATCHET, with links to the next questions.
-- Statement absorbs the repeated Research Background block, reduces the topic count, and explains the evidence gap before cooperation.
-- Publications and their relevant detail pages distinguish the published result, its possible reuse and the untested extension. The execution-trace brief now states the limited result; a PDF footer accidentally embedded in the FGVulDet abstract was removed. Missing abstracts are described as not yet added, without guessing paywall status.
-- Work keeps research artifacts and industry case studies distinct, while the relevant research projects link forward to the statement.
-- CV and downloaded bio consistently use PhD status. The CV describes the trace study's result and labels its May 2026 PDF as a snapshot.
-- Blog is framed as source-based reading notes, with links to the author's own papers and agenda. The source label works for papers and posts as well as videos.
-- Navigation and both runtime and static metadata reflect the focused direction. Old statement URLs retain a useful destination.
+- Home's research abstract names the principals, the two research directions and their shared foundation. The supplied SVG remains visible.
+- Statement places the SVG immediately after its title and short lead. Its five-section index follows the overview; published foundations and the methods-to-agenda arrow diagram close the page.
+- Publications uses the same profile component and sidebar grid as Home, with its page-specific metadata in the main column. Relevant detail pages distinguish results, transferable methods and untested extensions.
+- Work emphasizes The project rooms and nests the project index beneath it, with an additional indent for project entries. Research artifacts and industry case studies retain their separate types and TODO states.
+- CV and downloaded bio use PhD status. The trace-study brief retains its limited-usefulness result, and the May 2026 CV PDF is labelled as a dated snapshot.
+- Blog remains source-based reading notes, with links to the author's own papers and agenda. Missing source URLs are identified without inventing replacements.
+- Runtime and static metadata use the V4 agent-network framing. Existing statement bookmarks retain a useful destination.
 
 ## Review coverage and remaining provenance gaps
 
@@ -54,4 +54,10 @@ Two older posts have no source URL in their metadata or article:
 
 Their pages explicitly say the source link is not recorded. No replacement URL or attribution was invented.
 
-Automated link inventory checked 48 literal internal links against 61 known routes (including aliases) and local files, with no unresolved targets. Publication-to-statement links, all 12 broad-diagram targets and legacy fragments are covered by tests. Browser checks verify actual cross-page scroll/focus and narrow-screen rendering.
+Automated link inventory checked 48 literal internal links against 61 known routes (including aliases) and local files, with no unresolved targets. Publication-to-statement links, all 12 overview targets and legacy fragments are covered by tests. Browser checks verify actual cross-page scroll/focus and narrow-screen rendering.
+
+## Final revision checks
+
+All 13 tests and the production build pass. At 1280px, the Publications profile has identical markup and bounding box to Home. The overview is fully visible in the statement's initial viewport at 1280×900, 643×863 and 390×844. Its collective-agency and shared-foundation links scroll to and focus the intended sections. Legacy overview, maintenance-bridge and essay fragments resolve to current sections.
+
+The highlighted project rooms contain a nested index and further-indented project entries. Industry filtering returns the four industry entries. The hierarchy remains visible at 390px; all six primary pages have no horizontal overflow at 320px. The browser viewport was restored after checks.

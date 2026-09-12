@@ -5,7 +5,6 @@ import Footer from '../components/Footer.jsx';
 import Seo from '../components/Seo.jsx';
 import ApHead from '../components/ApHead.jsx';
 import ResearchOverview from '../components/ResearchOverview.jsx';
-import ResearchPath from '../components/ResearchPath.jsx';
 import ResearchConnection from '../components/ResearchConnection.jsx';
 import { NEWS, ALL_PUBS } from '../data.jsx';
 import { PUB_META } from '../data-pubs.js';
@@ -17,7 +16,7 @@ function AcademicPagesHome() {
     <div className="portfolio-shell">
       <ApHead sidebar />
       <main id="main-content" className="portfolio-content">
-        <p className="portfolio-eyebrow">Software reliability · Code models · Trustworthy agents</p>
+        <p className="portfolio-eyebrow">Trustworthy agent networks · Software engineering · AI security</p>
         <h1>About me</h1>
         <div className="home-bio">
           <p>
@@ -41,21 +40,20 @@ function AcademicPagesHome() {
             <h2 id="interests-title"><Link to="/statement">Research interests</Link></h2>
             <Link className="text-link" to="/statement">Read the statement ↗</Link>
           </div>
-          <p>My next research direction is <Link to="/statement"><strong>reliable software-maintenance agents</strong></Link>.
-            I want to extend repair and evaluation from individual code changes to workflows that use tools,
-            check their outcomes and recover when conditions change.</p>
-          <div id="research-overview"><ResearchPath /></div>
-          <details className="network-vision">
-            <summary>Longer-term vision: trustworthy agent networks</summary>
-            <p>Cooperation across independently governed repositories is a later extension. The original
-              overview below shows the broader vision; these mechanisms remain proposed research.</p>
-            <ResearchOverview />
-          </details>
+          <p>I aim to make AI agents useful, secure and accountable representatives of <strong>people, groups and companies</strong>.
+            My research on <Link to="/statement"><strong>trustworthy agent networks</strong></Link> connects two questions:
+            how an agent can grow in capability while preserving the authority, privacy and commitments of those it represents,
+            and how independently governed agents can cooperate to create shared value.</p>
+          <p>I study these as <Link to="/statement#assured-agency">assured agency</Link> and{' '}
+            <Link to="/statement#collective-agency">collective agency</Link>, linked by{' '}
+            <Link to="/statement#independent-evidence-and-controlled-adaptation">independent evidence and controlled adaptation</Link>.</p>
+          <div id="research-overview"><ResearchOverview /></div>
         </section>
         <aside className="collaboration-note" aria-label="Collaboration interests">
-          <p><strong>From repair research to reliable agents.</strong> I welcome research collaborations and engineering
-            opportunities in software-maintenance agents, code-model evaluation and reproducible benchmarks.
-            My immediate interest is in measurable correctness, recovery and the human effort needed to complete a task.</p>
+          <p><strong>Useful autonomy, secure cooperation.</strong> I welcome research and engineering collaborations on
+            trustworthy agents for individuals and organizations: secure delegation, cooperation across independent owners,
+            and evidence-based evaluation. Collaborative production and private research offer settings where capabilities,
+            information and commitments must work together.</p>
           <p className="home-skills-links">
             <Link to="/statement#evaluation-and-milestones">Evaluation & milestones</Link>
             <Link to="/work">Earlier work & projects</Link>
@@ -65,7 +63,7 @@ function AcademicPagesHome() {
         <section className="home-section" aria-labelledby="selected-title">
           <div className="section-heading"><h2 id="selected-title">Selected publications</h2>
             <Link className="text-link" to="/pubs">All publications ↗</Link></div>
-          <p>Published work behind the proposed direction. Each paper links to the next question it motivates.</p>
+          <p>Earlier work in repair, detection and evaluation. <Link to="/statement#published-foundations">How it informs the future agenda ↗</Link></p>
           {selectedPubs.map(p => (
             <article className="home-publication" key={p.figure}>
               <span className="publication-year">{p.year}</span>
@@ -98,7 +96,7 @@ function AcademicPagesHome() {
 
 export default function Home() {
   return <div className="page">
-    <Seo title="Home" description="Jian Wang — PhD, NTU Singapore. Program repair and code-model evaluation, with a proposed direction in reliable software-maintenance agents." path="/home" />
+    <Seo title="Home" description="Jian Wang — PhD, NTU Singapore. Trustworthy agent networks for individuals, groups and companies, building on software engineering and AI evaluation." path="/home" />
     <Nav skipToContent /><AcademicPagesHome /><Footer />
   </div>;
 }

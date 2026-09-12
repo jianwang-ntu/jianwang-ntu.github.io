@@ -1,9 +1,7 @@
 import React from 'react';
 import Nav from '../components/Nav.jsx';
 import Footer from '../components/Footer.jsx';
-import PageHead from '../components/PageHead.jsx';
 import Seo from '../components/Seo.jsx';
-import { Box, Chip, Note, Tag, Thumb } from '../components/primitives.jsx';
 import { ALL_PUBS } from '../data.jsx';
 import Figure, { PAPER_IMAGES } from '../components/figures.jsx';
 import ApHead from '../components/ApHead.jsx';
@@ -11,22 +9,6 @@ import Authors from '../components/Authors.jsx';
 import { Link } from 'react-router-dom';
 import { PUB_META } from '../data-pubs.js';
 import ResearchConnection from '../components/ResearchConnection.jsx';
-
-/* ─── shared badge ──────────────────────────────────────────────── */
-function PubBadge({ b }) {
-  if (b.href) {
-    return (
-      <a href={b.href} target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>
-        <Tag>{b.label}</Tag>
-      </a>
-    );
-  }
-  return <Tag>{b.label}</Tag>;
-}
-
-/* ─── Classic layout ─────────────────────────────────────────────── */
-/* ─── Academic layout ────────────────────────────────────────────── */
-/* ─── academicpages mode ─────────────────────────────────────────── */
 
 function ApPubRow({ p }) {
   const meta = PUB_META[p.id];
@@ -69,21 +51,23 @@ function AcademicPagesPublications({ byYear, years }) {
   const fromPaper = ALL_PUBS.filter((p) => p.figure && PAPER_IMAGES[p.figure]).length;
   const drawn = ALL_PUBS.filter((p) => p.figure && !PAPER_IMAGES[p.figure]).length;
   return (
-    <div className="ap-page">
-      <ApHead sub={`${ALL_PUBS.length} papers across SE, ML and security venues · ${fromPaper} with the paper's own figure, ${drawn} with a drawn schematic`} />
-      <div className="ap-page-body">
-        <h2 className="ap-page-h2">Publications</h2>
+    <div className="portfolio-shell publications-shell">
+      <ApHead sidebar />
+      <main id="main-content" className="portfolio-content publications-content">
+        <p className="portfolio-eyebrow">Software engineering · AI evaluation · Security</p>
+        <h1>Publications</h1>
         <p>My published work spans program repair, code-model evaluation and earlier research on AI testing and robustness.
-          The <Link to="/statement#published-foundations">research statement</Link> explains how selected papers motivate
-          a proposed direction in software-maintenance agents. <Link to="/work?type=research#project-index">Browse their projects and artifacts ↗</Link></p>
-        <p><b>Bold</b> author is me.</p>
+          The <Link to="/statement#published-foundations">research statement</Link> connects methods and lessons from this work
+          to my future agenda in trustworthy agent networks.</p>
+        <p className="publication-index-note">{ALL_PUBS.length} papers · {fromPaper} original paper figures · {drawn} explanatory schematics · My name appears in <b>bold</b>.</p>
+        <Link className="text-link" to="/work?type=research#project-index">Browse research projects & artifacts ↗</Link>
         {years.map((y) => (
           <React.Fragment key={y}>
-            <h3 className="ap-year">{y}</h3>
+            <h2 className="ap-year">{y}</h2>
             {byYear[y].map((p) => <ApPubRow key={p.id} p={p} />)}
           </React.Fragment>
         ))}
-      </div>
+      </main>
     </div>
   );
 }
@@ -94,7 +78,6 @@ export default function Publications() {
   const byYear = {};
   ALL_PUBS.forEach((p) => { (byYear[p.year] = byYear[p.year] || []).push(p); });
   const years = Object.keys(byYear).map(Number).sort((a, b) => b - a);
-  const kindCount = ALL_PUBS.reduce((acc, p) => { acc[p.kind] = (acc[p.kind] || 0) + 1; return acc; }, {});
 
   return (
     <div className="page">
@@ -103,7 +86,7 @@ export default function Publications() {
         description={`Peer-reviewed research and preprints by Jian Wang on code LLM security, fake-content detection, and program repair. ${ALL_PUBS.length} papers across SE, ML, and security venues.`}
         path="/pubs"
       />
-      <Nav />
+      <Nav skipToContent />
       <AcademicPagesPublications byYear={byYear} years={years} />
       <Footer />
     </div>
