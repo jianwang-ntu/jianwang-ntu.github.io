@@ -7,6 +7,7 @@ import Figure from '../components/figures.jsx';
 import Authors from '../components/Authors.jsx';
 import { ALL_PUBS } from '../data.jsx';
 import { PUB_META, KEY_TO_ID } from '../data-pubs.js';
+import ResearchConnection from '../components/ResearchConnection.jsx';
 
 export default function PublicationDetail() {
   const { key } = useParams();
@@ -58,10 +59,11 @@ export default function PublicationDetail() {
           </>
         ) : (
           <p className="pub-detail-noabs">
-            Abstract not shown here — the published version sits behind a
-            publisher paywall. Follow the links above for the full text.
+            An abstract has not been added to this page. Follow the publication links above for the source.
           </p>
         )}
+
+        <ResearchConnection publication={meta.key} />
 
         <h2 className="ap-h2">
           Cite

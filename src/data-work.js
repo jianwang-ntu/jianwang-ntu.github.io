@@ -3,7 +3,7 @@
 // identify the employment period, not a claimed project launch date.
 export const ROOMS = [
   { id: 'code', number: '01', title: 'Code reliability', purpose: 'Repair programs. Test what models understand.', tone: 'blue' },
-  { id: 'security', number: '02', title: 'AI security & testing', purpose: 'Detect unreliable outputs. Examine model behaviour.', tone: 'purple' },
+  { id: 'security', number: '02', title: 'AI security & testing', purpose: 'Study detection, robustness and model behaviour.', tone: 'purple' },
   { id: 'vision', number: '03', title: 'Applied generative AI', purpose: 'Turn vision models into consumer experiences.', tone: 'green' },
   { id: 'systems', number: '04', title: 'Production systems', purpose: 'Build the infrastructure that serves real users.', tone: 'orange' },
 ];

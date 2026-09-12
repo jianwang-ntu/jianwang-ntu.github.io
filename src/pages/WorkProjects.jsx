@@ -5,6 +5,7 @@ import Footer from '../components/Footer.jsx';
 import Seo from '../components/Seo.jsx';
 import ProjectMap from '../components/ProjectMap.jsx';
 import Figure from '../components/figures.jsx';
+import ResearchConnection from '../components/ResearchConnection.jsx';
 import { WORK } from '../data.jsx';
 import { ROOMS, WORK_PROJECTS, projectYears, projectSkills, filterProjects, projectPeriod } from '../data-work.js';
 
@@ -31,7 +32,9 @@ export default function WorkProjects() {
         <p className="page-deck">Different rooms. A shared interest in reliable systems.</p></div>
         <Link className="text-link" to="/cv">Experience & CV ↗</Link></div>
       <p className="work-intro">Explore the map, or find a project by year and skill. Research entries link to
-        their papers and artifacts; industry entries describe work in production.</p>
+        their papers and artifacts; industry entries describe work in production.
+        The <Link to="/statement#research-path">research progression</Link> connects the repair and evaluation
+        projects to proposed maintenance-agent experiments.</p>
       <ProjectMap />
       <section className="project-index" id="project-index" aria-labelledby="index-title">
         <div className="section-heading"><h2 id="index-title">Project index</h2>
@@ -65,6 +68,7 @@ export default function WorkProjects() {
               <h3><Link to={`/work#${p.id}`}>{p.title}</Link></h3>
               <p className="project-summary">{p.summary}</p>
               <p className="project-detail">{p.detail}</p>
+              {p.publication && <ResearchConnection publication={p.publication} compact />}
               <div className="project-skills" aria-label={`${p.title} skills`}>{p.skills.map(skill =>
                 <Link key={skill} to={`/work?skill=${encodeURIComponent(skill)}#project-index`}>{skill}</Link>)}</div>
               <div className="project-resources">

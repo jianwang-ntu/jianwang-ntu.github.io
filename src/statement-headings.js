@@ -1,4 +1,4 @@
-// Stable, unique anchors, including repeated headings across the two essays.
+// Stable, unique anchors, including repeated headings in Markdown content.
 export function statementHeadings(markdown) {
   const used = new Map();
   return markdown.split('\n').flatMap((line, index) => {

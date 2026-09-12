@@ -40,7 +40,7 @@ const baseHtml = readFileSync(distIndex, 'utf-8');
 
 // Default site-level meta. Used as fallback when a per-route value is missing.
 const SITE_NAME = 'Jian Wang';
-const DEFAULT_DESC = 'Jian Wang — PhD, NTU Singapore. Research on trustworthy agent networks: assured agency, collective agency, and independent evidence.';
+const DEFAULT_DESC = 'Jian Wang — PhD, NTU Singapore. Program repair and code-model evaluation, with a proposed direction in reliable software-maintenance agents.';
 const DEFAULT_IMAGE = 'https://123publicdata.s3.ap-southeast-1.amazonaws.com/personal/favor.ico';
 const TWITTER_HANDLE = '';  // optional; leave empty to omit twitter:creator
 
@@ -121,9 +121,9 @@ function writeRoute(routePath, html) {
 // Per-route descriptions — keep terse, ~150 chars max. These match the dynamic
 // Seo component's defaults so the static and JS-rendered metadata agree.
 const STATIC_ROUTES = [
-  { path: '/home', title: 'Home',           desc: 'Jian Wang — PhD, NTU Singapore. Research on trustworthy agent networks: assured agency, collective agency, and independent evidence.' },
-  { path: '/statement', title: 'Research Statement', desc: "Jian Wang's research statement: trustworthy agent networks, assured agency, collective agency, and independent evidence. Research agenda, 2026–2029." },
-  { path: '/research', canonicalPath: '/statement', title: 'Research Statement', desc: "Jian Wang's research statement: trustworthy agent networks, assured agency, collective agency, and independent evidence. Research agenda, 2026–2029." },
+  { path: '/home', title: 'Home',           desc: 'Jian Wang — PhD, NTU Singapore. Program repair and code-model evaluation, with a proposed direction in reliable software-maintenance agents.' },
+  { path: '/statement', title: 'Research Statement', desc: "From program repair and code-model evaluation to reliable software-maintenance agents. Jian Wang's focused research agenda and longer-term network vision." },
+  { path: '/research', canonicalPath: '/statement', title: 'Research Statement', desc: "From program repair and code-model evaluation to reliable software-maintenance agents. Jian Wang's focused research agenda and longer-term network vision." },
   { path: '/pubs', title: 'Publications',   desc: 'Peer-reviewed research and preprints by Jian Wang on code LLM security, fake-content detection, and program repair.' },
   { path: '/work', title: 'Work & Projects', desc: 'Research artifacts and industry projects by Jian Wang, indexed by year, skill and project room.' },
   { path: '/cv',   title: 'CV',             desc: 'Curriculum vitae — education, employment, talks, awards.' },

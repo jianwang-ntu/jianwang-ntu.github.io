@@ -5,19 +5,19 @@ import Footer from '../components/Footer.jsx';
 import Seo from '../components/Seo.jsx';
 import ApHead from '../components/ApHead.jsx';
 import ResearchOverview from '../components/ResearchOverview.jsx';
-import { NEWS, FEATURED_PUBS } from '../data.jsx';
+import ResearchPath from '../components/ResearchPath.jsx';
+import ResearchConnection from '../components/ResearchConnection.jsx';
+import { NEWS, ALL_PUBS } from '../data.jsx';
+import { PUB_META } from '../data-pubs.js';
 
-const PUB_PATHS = {
-  trustworthy: 'trustworthy-ai-assisted-programming', defects4c: 'defects4c',
-  tracewise: 'code-semantics-execution-traces', aigcdet: 'aigc-detectors-on-code',
-};
+const selectedPubs = ALL_PUBS.filter(p => ['C5', 'C4', 'C3', 'C2'].includes(p.id));
 
 function AcademicPagesHome() {
   return (
     <div className="portfolio-shell">
       <ApHead sidebar />
       <main id="main-content" className="portfolio-content">
-        <p className="portfolio-eyebrow">Trustworthy agent networks · Software engineering · AI</p>
+        <p className="portfolio-eyebrow">Software reliability · Code models · Trustworthy agents</p>
         <h1>About me</h1>
         <div className="home-bio">
           <p>
@@ -41,29 +41,23 @@ function AcademicPagesHome() {
             <h2 id="interests-title"><Link to="/statement">Research interests</Link></h2>
             <Link className="text-link" to="/statement">Read the statement ↗</Link>
           </div>
-          <p>My current agenda is <Link to="/statement"><strong>trustworthy agent networks</strong></Link>:
-            persistent agents that grow in capability, cooperate across people and organizations, and remain
-            accountable to those they represent. It connects two research directions through a shared foundation.</p>
-          <ResearchOverview />
-          <ul className="research-interest-list">
-            <li><Link to="/statement#essay-i-assured-agency">Assured agency</Link>
-              <span>How does agency persist through change? Persistent mandates, state and commitments;
-                authorized execution and recovery; capability growth under live obligations.</span></li>
-            <li><Link to="/statement#essay-ii-collective-agency">Collective agency</Link>
-              <span>When does cooperation create lasting value? Limited group representation, private coordination
-                and conditional commitments, with delivery, exit and shared accountability.</span></li>
-            <li><Link to="/statement#independent-evidence-and-controlled-adaptation">Independent evidence & controlled adaptation</Link>
-              <span>A shared foundation: verify outcomes, attribute failures and evaluate changes to agent
-                capabilities and coordination, while preserving each principal&rsquo;s authority.</span></li>
-          </ul>
+          <p>My next research direction is <Link to="/statement"><strong>reliable software-maintenance agents</strong></Link>.
+            I want to extend repair and evaluation from individual code changes to workflows that use tools,
+            check their outcomes and recover when conditions change.</p>
+          <div id="research-overview"><ResearchPath /></div>
+          <details className="network-vision">
+            <summary>Longer-term vision: trustworthy agent networks</summary>
+            <p>Cooperation across independently governed repositories is a later extension. The original
+              overview below shows the broader vision; these mechanisms remain proposed research.</p>
+            <ResearchOverview />
+          </details>
         </section>
         <aside className="collaboration-note" aria-label="Collaboration interests">
-          <p><strong>Building useful, accountable agency.</strong> I welcome research and engineering collaborations
-            on persistent agents, cooperation across independent principals, and independent outcome evaluation.
-            I aim to test these ideas in collaborative production and private research, measuring useful completion,
-            participant outcomes, human effort and recovery costs.</p>
+          <p><strong>From repair research to reliable agents.</strong> I welcome research collaborations and engineering
+            opportunities in software-maintenance agents, code-model evaluation and reproducible benchmarks.
+            My immediate interest is in measurable correctness, recovery and the human effort needed to complete a task.</p>
           <p className="home-skills-links">
-            <Link to="/statement#a-staged-research-program-2026-2029">Research roadmap, 2026–2029</Link>
+            <Link to="/statement#evaluation-and-milestones">Evaluation & milestones</Link>
             <Link to="/work">Earlier work & projects</Link>
             <a href="mailto:jian004@e.ntu.edu.sg">Get in touch ↗</a>
           </p>
@@ -71,16 +65,18 @@ function AcademicPagesHome() {
         <section className="home-section" aria-labelledby="selected-title">
           <div className="section-heading"><h2 id="selected-title">Selected publications</h2>
             <Link className="text-link" to="/pubs">All publications ↗</Link></div>
-          {FEATURED_PUBS.map(p => (
+          <p>Published work behind the proposed direction. Each paper links to the next question it motivates.</p>
+          {selectedPubs.map(p => (
             <article className="home-publication" key={p.figure}>
               <span className="publication-year">{p.year}</span>
               <div>
-                <h3><Link to={`/pubs/${PUB_PATHS[p.figure]}`}>{p.title}</Link></h3>
+                <h3><Link to={`/pubs/${PUB_META[p.id].key}`}>{p.title}</Link></h3>
                 <p className="publication-authors">{p.authors}</p>
                 <div className="publication-meta"><span>{p.venue} {p.year}</span>
                   {p.note === 'THESIS SUMMARY' && <span className="small-label">Thesis summary</span>}
                   {p.badges?.map(b => <a key={b.label} href={b.href} target="_blank" rel="noreferrer">{b.label}</a>)}
                 </div>
+                <ResearchConnection publication={PUB_META[p.id].key} compact />
               </div>
             </article>
           ))}
@@ -102,7 +98,7 @@ function AcademicPagesHome() {
 
 export default function Home() {
   return <div className="page">
-    <Seo title="Home" description="Jian Wang — PhD, NTU Singapore. Research on trustworthy agent networks: assured agency, collective agency, and independent evidence." path="/home" />
+    <Seo title="Home" description="Jian Wang — PhD, NTU Singapore. Program repair and code-model evaluation, with a proposed direction in reliable software-maintenance agents." path="/home" />
     <Nav skipToContent /><AcademicPagesHome /><Footer />
   </div>;
 }

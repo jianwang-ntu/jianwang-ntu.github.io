@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Nav from '../components/Nav.jsx';
 import Footer from '../components/Footer.jsx';
 import Seo from '../components/Seo.jsx';
-import { SectionHead, Tag } from '../components/primitives.jsx';
+import { Tag } from '../components/primitives.jsx';
 
 // --------------------------------------------------------------------------- //
 // Label taxonomy — must mirror tools/video-to-blog/pipeline.py LABEL_TAXONOMY
@@ -296,7 +296,7 @@ export default function Blog() {
       <Nav />
       <section className="content">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-          <SectionHead num="01">Blog</SectionHead>
+          <h1 className="blog-page-title">Reading notes</h1>
           {posts && posts.length > 0 && (
             <select
               value={sort}
@@ -313,7 +313,8 @@ export default function Blog() {
           )}
         </div>
         <div style={{ fontSize: 12, opacity: 0.7, marginBottom: 16, fontFamily: 'var(--mono)' }}>
-          Notes and summaries — auto-drafted from talks and papers, edited by hand.
+          Reading notes on talks, papers and posts by other researchers and practitioners. Drafted with AI assistance and edited by hand.
+          {' '}For my own work, see the <Link to="/pubs">publications</Link> and <Link to="/statement">research statement</Link>.
         </div>
 
         {error && <div style={{ color: 'crimson' }}>Could not load posts: {error}</div>}

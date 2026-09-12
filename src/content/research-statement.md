@@ -1,135 +1,48 @@
-My research asks how intelligent agents can expand what people and organizations can accomplish while remaining accountable to those they represent. I aim to develop foundations and mechanisms for **trustworthy agent networks**: persistent agents that acquire useful capabilities, cooperate across independent principals, and learn from outcomes while preserving authorization, information boundaries, and outstanding commitments. This agenda connects two scientific questions: **how agency persists through change**, and **when cooperation among independent agents creates lasting value**.
+## Published foundations
 
-Delegation becomes difficult when capabilities, authority, and obligations change on different timescales. An agent may learn a better tool without gaining permission to disclose additional information. A principal may withdraw permission for future work while an earlier commitment still requires resolution. A group may agree on a plan without acquiring the authority to act for every member. I want to understand how these relationships can remain coherent as agents become more capable and their cooperation becomes more ambitious.
+My published work studies **how to detect, understand and repair unreliable code**. It gives me a practical starting point for agent research: repair methods, executable tasks and experience evaluating model behaviour. The connection is strongest for software maintenance; cooperation between independently owned agents requires additional research.
 
-### Two directions and a shared foundation
+- **[RATCHET (ISSRE 2024)](/pubs/ratchet)** combines fault localisation with retrieval-based patch generation. The next step is to place repair inside a workflow that inspects a repository, uses tools, checks a change and revises it. The paper evaluates repair, so this broader workflow is a proposed extension.
+- **[Defects4C (ASE 2025)](/pubs/defects4c)** provides reproducible C/C++ bugs and vulnerabilities with tests. These tasks offer a starting point for observing whether an agent's changes repair a fault. A maintenance benchmark would still need sequences of actions, held-out checks and explicit failure conditions; passing existing tests is incomplete evidence of correctness.
+- **[The execution-trace study (EMNLP Findings 2025)](/pubs/code-semantics-execution-traces)** finds limited usefulness from adding traces in the settings studied. My proposed follow-up asks which observations help an agent choose its next action, and which merely add context. Execution evidence must earn its place through measured outcomes.
+- **[The AIGC-detector study (ASE 2024)](/pubs/aigc-detectors-on-code)** exposes difficulties transferring detection from prose to code. Its relevance is methodological: revalidate evaluation signals across tasks and models. Authorship detection does not establish correctness or safe agency, so it is background to the evaluation approach rather than a separate agent-research direction.
 
-| Research direction | Central question | Scientific subproblems |
-| --- | --- | --- |
-| **I. Assured Agency** | How does agency persist through change? | Persistent mandates, state and commitments; authorized execution and recovery; capability growth under live obligations. |
-| **II. Collective Agency** | When does cooperation create lasting value? | Limited group representation; private coordination and conditional commitments; delivery, exit and shared accountability. |
-| **Shared foundation** | Which evidence should justify an update? | Outcome verification; failure attribution and recovery; evaluated capability and coordination updates. |
+Earlier work on neural-network testing, repair, fairness and vision robustness remains in the [publication archive](/pubs). It provides experience studying AI failures; I do not treat it as direct evidence for delegation or collective agency.
 
-The common research object is an **authorized contribution**: work undertaken for an identifiable principal, within a defined mandate, with explicit dependencies, obligations, and evidence requirements. Assured Agency studies whether an agent can produce and maintain such contributions. Collective Agency studies how independent contributions can be organized into joint work. Action and delivery evidence then support evaluated changes to capabilities and coordination. Changes to authority remain decisions for the relevant principals.
+## From patches to maintenance
 
-A principal may be an individual or an organization. A mandate defines delegated authority; a commitment records an accepted obligation. A collective represents its members only within authority they have actually delegated. These distinctions let the program address personal agents, organizational agents, and cooperation between them using a consistent vocabulary.
+**The immediate experiment is a software-maintenance agent with independently checked outcomes.** Start with an executable bug: inspect the code, propose a patch, build and test it, examine failures, and revise. Extend to sequences of related changes only after this loop can be evaluated reproducibly.
 
-My intended contribution is a scientific account of the conditions under which useful autonomy and cooperation can grow together with accountable control. Candidate mechanisms must demonstrate benefits beyond strong stateful agents, established workflows, and existing coordination methods. The following essays describe proposed research, hypotheses, and evaluation criteria; they do not report completed experiments or established novelty.
+This intermediate step makes the move from code models to agents concrete. The research object becomes a sequence of tool actions and changing repository states, with a record of what was attempted and what the environment confirmed. Tests and traces are useful observations with limited coverage. The agent's own success report is a claim to check.
 
-<!-- PAGEBREAK -->
+I would build on repair benchmarks such as Defects4C, adding controlled workflow tasks and held-out outcome checks. Comparisons would include a repair model, a fixed repair-and-test loop and a strong stateful coding agent under matched model and resource budgets. The question is whether the additional agent machinery improves completed, correct maintenance work enough to justify its cost.
 
-## Essay I. Assured Agency
+## Assured agency
 
-*Persistent agents that grow in capability while remaining accountable to their principals.*
+**The core question is how a maintenance agent can keep acting reliably when its working conditions change.** A maintainer may authorize an agent to edit a branch and run tests. While work is in progress, a dependency changes, a tool is replaced or permission to publish is withdrawn. Which earlier checks still justify the next action?
 
-I study Assured Agency as the persistence of a meaningful relationship between a principal's authority, an agent's capabilities, and the consequences of its actions. The objective is to enlarge the range of useful work that can be delegated over time. In this agenda, assurance means evidence and controls under explicit assumptions about trusted components and observable effects.
+I would study a compact record connecting the task, permitted actions, repository and tool versions, pending work and verification results. A candidate method would identify which results become stale after a change, repeat the affected checks, and choose whether to continue, pause for authorization or recover partial work. This brings persistent state, authorized execution and recovery into one question: **when is existing evidence sufficient to continue?**
 
-### Persistent mandates, state and commitments
+Independent outcome checks and controlled adaptation are part of this question. Better patch generation cannot enlarge permission to act; updating a tool requires checking its effects on pending work. In a repository, some actions can be rolled back. External disclosures or published artifacts may require different recovery, which limits what the initial testbed can establish.
 
-An agent operating over weeks or months must distinguish what it knows, what it can do, what it may do, and what it already owes. I would investigate representations that separate authoritative mandates, private knowledge, versioned tools and skills, outstanding commitments, and evidence of external effects. Inferred preferences can inform planning, but cannot create permission. A mandate change must trigger a review of affected obligations without treating those obligations as erased.
+The connection to my publications is through repair and evaluation. Permission changes, dependency-aware revalidation and persistent obligations are new research. The method must show benefits over full regression checks, existing workflow controls and equally informed stateful agents; keeping a larger log alone would not be a contribution.
 
-The scientific question concerns which dependencies are necessary for deciding whether continued execution or an update is admissible. Explicit state alone is insufficient as a contribution. I would seek methods that identify affected commitments and information flows, determine which checks remain valid, and establish when local validation is sufficient. This would connect a representation to a testable advantage in useful completion, validation cost, or oversight effort.
+## Collective agency
 
-### Authorized execution and recovery
+**Cooperation across owners is a longer-term extension, conditional on the earlier results.** The next setting would be maintenance across two repositories with different maintainers: one agent updates an interface while another adapts a dependent service. Each maintainer controls local changes, disclosures and acceptance.
 
-CaMeL separates control and data flows to constrain the influence of untrusted inputs; Fides studies agent planners through information-flow control. ShieldAgent investigates policy reasoning over agent action trajectories [1-3]. Intelligent AI Delegation also treats authority, responsibility, and adaptation as central to delegation [4]. My proposed question is how these foundations compose when tools, permissions, recipients, and live obligations change together.
+This adds a specific question: how should agents coordinate dependent work when one side changes its plan or withdraws? Local verification would need to connect to shared acceptance conditions and recovery for unfinished contributions. The transition is from checking one agent's actions to checking whether separately authorized contributions compose into a working result.
 
-Consider a creator who authorizes an agent to contribute selected assets to a joint project. Replacing an editor changes the recipient of private material; extending a usage license changes the purpose of disclosure. A useful system should identify the affected work and choose among continuation, local suspension, renewed authorization, renegotiation, and recovery. Formal analysis would characterize preservation of specified properties across such transitions. It would state when those properties depend on complete mediation, accurate dependency records, or trustworthy observations.
+My current publications do not evaluate this setting. I would begin with fixed participants and explicit dependency tasks. Open-ended group formation, negotiation markets, reputation systems and general private coordination are outside the immediate program. The broader network vision below remains a horizon, with these mechanisms deferred until a concrete need and suitable evidence emerge.
 
-### Capability growth under live obligations
+## Evaluation and milestones
 
-I also want agents to learn new tools, compose specialist capabilities, and improve plans while work is in progress. A candidate update should expose which assumptions and obligations it may affect. I would study how dependency analysis and targeted validation can support bounded introduction of an update, followed by evaluation on subsequent outcomes. Improved task performance would not itself justify a broader mandate. Recovery may restore software state or compensate a participant, but it cannot reverse information already disclosed or work already consumed.
+The program advances by evidence rather than by adding topics:
 
-### Hypothesis and evidence
+1. **Establish the maintenance loop.** Release reproducible tasks, strong baselines and independent outcome checks. Separate successful repair from test overfitting, broken builds and incomplete work.
+2. **Test change and recovery.** Introduce controlled repository changes, tool replacements and permission changes. Compare targeted revalidation with full rechecking and fixed workflows. Measure whether it preserves useful completion while reducing validation or human effort.
+3. **Test cooperation only if justified.** Add two independently governed repositories. Compare against sequential handoffs and a coordinator with the same permitted information, including the cost of failed or withdrawn contributions.
 
-My working hypothesis is that dependency-aware validation can improve the frontier between useful autonomy and control cost when capabilities and live obligations interact. Comparisons would include equally informed stateful regression checks, fixed workflows with approval, information-flow controls, and adapted tool-learning or harness-update methods. All automated methods would receive the same permitted state, model access, and resource budgets; human assistance would be measured explicitly.
+Report correct completion, regressions, unauthorized effects, human interventions, compute and recovery costs separately. Separate development tasks from evaluation by repository or task family. If benefits vanish against strong baselines, require extra human intervention, or come mainly from refusing more work, the proposed mechanism has not earned its complexity.
 
-Task families would vary tool changes, revocation, delayed evidence, partial completion, and adversarial inputs. I would report useful completion, unauthorized effects, disclosure, oversight effort, and recovery cost separately. Evidence would count against the hypothesis if gains disappear with a strong stateful baseline, depend on unequal information, or arise only from additional refusals or human intervention. The intended outcome is a reusable account of when agency can persist through change, including boundaries where ordinary workflow controls are sufficient.
-
-<!-- PAGEBREAK -->
-
-## Essay II. Collective Agency
-
-*Independent agents that form useful organizations and deliver shared outcomes.*
-
-I study cooperation among agents whose principals have distinct interests, resources, and authority. A production team combines creators, editors, rights holders, and a customer; a research collaboration combines data, expertise, computation, and validation. I want to understand when complementary contributions produce value that survives the costs of coordination, verification, and recovery.
-
-### Limited group representation
-
-A collective agent should represent a group through a defined charter and limited member mandates. Membership does not imply consent to every action, and a group preference does not automatically transfer an individual's authority. I would investigate how a group discovers feasible cooperation, allocates roles, and maintains a shared plan while each principal retains local control over its actions and disclosures.
-
-Group formation must connect to subsequent execution. AgenticPay studies language-mediated negotiation with private constraints and valuations [5]; A2A supports agent discovery, communication, and tasks [6]. I would build on these foundations to ask how an agreement should constrain delivery when participants change, dependencies fail, or evidence is incomplete. Cooperation must also be assessed after the work is performed.
-
-### Private coordination and conditional commitments
-
-My candidate approach represents a collective through limited mandates, an explicit charter, and a graph of conditional commitments. A contribution would identify who owes what to whom, the conditions under which the obligation applies, its dependencies, and the evidence required for acceptance. Proposals, accepted commitments, delivered artifacts, and accepted outcomes would remain distinct states.
-
-Participants could expose restricted feasibility responses without pooling their full private state. Research questions include how to choose disclosure granularity, coordinate interdependent choices, and limit information revealed through repeated queries. A shared graph would contain only information permitted for the collaboration; sensitive local constraints could remain with their principals. Selective disclosure is a design objective whose effectiveness must be measured, rather than an assumed guarantee of privacy.
-
-Commitments and recovery have established antecedents in multi-agent systems and distributed workflows. I would test when their combination with language-based capability discovery and adaptation improves cooperation under incomplete information, and when conventional coordination suffices.
-
-### Delivery, exit and shared accountability
-
-When a contributor withdraws, the system should identify affected work, permissible replacements, and obligations that remain unresolved. Meaningful exit does not require pretending that prior costs or commitments disappear. I would study how local recovery changes the feasibility of ongoing cooperation and how costs are allocated among the original participants. Strategic reports, colluding participants, and compromised evaluators would be explicit experimental conditions.
-
-### Hypothesis and evidence
-
-My working hypothesis is that coupling group formation to conditional commitments and bounded representation can improve realized participant outcomes in interdependent tasks. Evaluation would compare fixed-rule workflows, constraint-based coordination, negotiation agents, and centralized coordinators given the same permitted information. An omniscient solver would be reported separately as an upper bound; experienced human coordination would provide a practical comparison with recorded labor costs.
-
-Experiments would vary complementarity, dependency structure, private information, member exits, and adversarial coalitions. The original participant cohort would remain in the analysis, including members who leave or are replaced. I would report delivery quality, unresolved obligations, the distribution of net outcomes, and all communication, computation, verification, and recovery costs. The hypothesis would fail if apparent gains rely on excluded participants, shifted losses, excessive overhead, or easier tasks. The long-term goal is to explain when independent agency becomes beneficial collective agency and which organizational structures support that transition.
-
-<!-- PAGEBREAK -->
-
-## Independent Evidence and Controlled Adaptation
-
-*A shared foundation for both research directions.*
-
-I would study how action and delivery evidence can improve capabilities and coordination while preserving each principal's authority. This foundation links both directions through a common learning problem: determine what happened, identify a promising change, and evaluate its effect on later outcomes.
-
-### Outcome verification
-
-Different claims require different evidence: artifact checks for specified properties, external records for events, and independent assessment for substantive acceptance. AgentBeats separates assessment logic from agent implementation through standardized interfaces [7]. This separation does not establish that judges have independent information or uncorrelated errors. I would examine actor-evaluator dependence alongside the provenance and limits of observations.
-
-### Failure attribution and recovery
-
-A failed project may reflect a missing capability, an invalid assumption, a coordination defect, a policy failure, or an evaluator error. These explanations imply different interventions. I would study attribution methods using controlled changes and paired replays where environments permit them, and explicit uncertainty where external effects cannot be replayed. Diagnosis would be evaluated by whether the proposed repair improves held-out outcomes, rather than by the plausibility of an explanatory narrative. Immediate recovery and longer-term learning would use related evidence but have distinct objectives.
-
-### Evaluated capability and coordination updates
-
-Candidate changes would be assessed within a defined scope and against affected obligations. Development and evaluation would be separated by task family. Updates could improve tools, plans, matching, or task structure within existing authority; mandate and collective-rule changes would require authorization from the relevant principals. Reputation and favorable self-evaluation would not create authority.
-
-### A staged research program, 2026-2029
-
-| Stage | Research objective and decision evidence |
-| --- | --- |
-| **Year 1: State and execution** | Define mandate, commitment, and evidence semantics. Establish strong stateful and workflow baselines in controlled collaborative production tasks. Test changes, revocation, and local recovery. |
-| **Year 2: Adaptation and cooperation** | Study capability updates under live obligations and coordination under private information. Test exits, adversarial behavior, evidence dependence, and full cost accounting. |
-| **Year 3: Composition and transfer** | Test cooperation across independently governed organizations. Transfer to cooperative production or private research, varying dependencies and the reversibility of effects. Study rule adaptation where earlier evidence supports it. |
-
-Collaborative production offers inspectable artifacts, scoped asset use, acceptance, and partial delivery. Later environments would vary information access, verification difficulty, and the reversibility of effects. These structural differences define the program's generalization tests.
-
-Across studies, I would report useful completion, security and authorization failures, disclosure, human effort, resource use, recovery cost, and participant outcomes separately. Pilot estimates would inform sample sizes and prespecified meaningful differences; uncertainty would be assessed at the project or organization level. A simulator score would not by itself establish value in deployment. My long-term goal is to enable people and organizations to undertake more consequential work together, supported by an intelligible relationship between authority, action, evidence, and outcome.
-
-<!-- PAGEBREAK -->
-
-## Selected Research Foundations
-
-These sources anchor the mechanisms and evaluation ideas discussed in this statement. They are a selective set of foundations, not an exhaustive novelty audit. Publication pages and official documentation were checked on September 12, 2026.
-
-1. Edoardo Debenedetti et al. **Defeating Prompt Injections by Design.** 2025. arXiv:2503.18813. [Publication](https://arxiv.org/abs/2503.18813). Foundation: separating trusted control flow from untrusted data and restricting information flows.
-
-2. Manuel Costa et al. **Securing AI Agents with Information-Flow Control.** 2025. arXiv:2505.23643v2. [Publication](https://arxiv.org/abs/2505.23643v2). Foundation: formal analysis of agent planners and confidentiality and integrity tracking in Fides.
-
-3. Zhaorun Chen, Mintong Kang, and Bo Li. **ShieldAgent: Shielding Agents via Verifiable Safety Policy Reasoning.** 2025. arXiv:2503.22738. [Publication](https://arxiv.org/abs/2503.22738). Foundation: explicit policy reasoning and checks over agent action trajectories.
-
-4. Nenad Tomasev, Matija Franklin, and Simon Osindero. **Intelligent AI Delegation.** 2026. arXiv:2602.11865v1. [Publication](https://arxiv.org/abs/2602.11865v1). Foundation: adaptive delegation with authority, responsibility, accountability, and boundaries.
-
-5. Xianyang Liu, Shangding Gu, and Dawn Song. **AgenticPay: A Multi-Agent LLM Negotiation System for Buyer-Seller Transactions.** 2026. arXiv:2602.06008v1. [Publication](https://arxiv.org/abs/2602.06008v1). Foundation: language-mediated negotiation under private constraints and valuations.
-
-6. A2A Project. **Agent2Agent Protocol Documentation.** Official documentation, accessed September 12, 2026. [Documentation](https://a2a-protocol.org/latest/). Foundation: agent discovery, communication, and task interoperability.
-
-7. Xiaoyuan Liu et al. **AgentBeats: Agentifying Agent Assessment for Openness, Standardization, and Reproducibility.** 2026. arXiv:2606.13608v2. [Publication](https://arxiv.org/abs/2606.13608v2). Foundation: separating assessment logic from agent implementation through standardized interfaces.
-
-### Research status
-
-This statement describes a proposed research program. The mechanism hypotheses remain to be tested. Any formal guarantee would require a specified model, property, and set of trust assumptions; empirical improvements would require appropriate comparisons and independent outcome assessment. The intended contribution includes both useful mechanisms and evidence about when simpler approaches remain preferable.
+This is a proposed research program. Existing publications support the starting methods and evaluation experience; agent reliability and collective outcomes remain hypotheses to test. I welcome collaborations on reproducible maintenance tasks, independent verification and controlled agent experiments.

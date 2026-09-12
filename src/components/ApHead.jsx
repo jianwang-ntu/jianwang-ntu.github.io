@@ -21,7 +21,7 @@ export default function ApHead({ sub, sidebar = false }) {
       {sidebar && <p className="profile-degree">PhD · Computer Science</p>}
       <p className="ap-page-meta">
         <a href="mailto:jian004@e.ntu.edu.sg">jian004@e.ntu.edu.sg</a><br />
-        {sidebar ? <>PhD, Nanyang Technological University<br /></> : <>College of Computing and Data Science<br />Nanyang Technological University<br /></>}
+        PhD, Nanyang Technological University<br />
         Singapore
       </p>
       <nav className="ap-page-links" aria-label="Profile links">

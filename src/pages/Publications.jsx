@@ -10,6 +10,7 @@ import ApHead from '../components/ApHead.jsx';
 import Authors from '../components/Authors.jsx';
 import { Link } from 'react-router-dom';
 import { PUB_META } from '../data-pubs.js';
+import ResearchConnection from '../components/ResearchConnection.jsx';
 
 /* ─── shared badge ──────────────────────────────────────────────── */
 function PubBadge({ b }) {
@@ -56,6 +57,7 @@ function ApPubRow({ p }) {
           {meta && <Link to={`/pubs/${meta.key}`} className="ap-lnk ap-lnk-more">details</Link>}
         </p>
         {meta?.brief && <p className="ap-pub-brief">{meta.brief}</p>}
+        {meta && <ResearchConnection publication={meta.key} compact />}
       </div>
     </article>
   );
@@ -71,6 +73,9 @@ function AcademicPagesPublications({ byYear, years }) {
       <ApHead sub={`${ALL_PUBS.length} papers across SE, ML and security venues · ${fromPaper} with the paper's own figure, ${drawn} with a drawn schematic`} />
       <div className="ap-page-body">
         <h2 className="ap-page-h2">Publications</h2>
+        <p>My published work spans program repair, code-model evaluation and earlier research on AI testing and robustness.
+          The <Link to="/statement#published-foundations">research statement</Link> explains how selected papers motivate
+          a proposed direction in software-maintenance agents. <Link to="/work?type=research#project-index">Browse their projects and artifacts ↗</Link></p>
         <p><b>Bold</b> author is me.</p>
         {years.map((y) => (
           <React.Fragment key={y}>
