@@ -143,6 +143,44 @@ test('the overview reports company-level JD signals with their evidence boundary
   assert.match(html, /not company endorsement/i);
 });
 
+test('Statement offers JD sources collapsed by default without adding them to Home', () => {
+  const html = renderRoute('/statement');
+  const disclosure = html.match(/<details\b[^>]*id="industry-jd-references"[^>]*>[\s\S]*?<\/details>/)?.[0];
+  assert.ok(disclosure, 'The percentage figure needs its JD source disclosure');
+  assert.match(disclosure, /<summary>References \(JD sources\)<\/summary>/);
+  assert.doesNotMatch(disclosure, /^<details[^>]*\sopen(?:[\s=>])/);
+  assert.ok(html.indexOf(disclosure) > html.indexOf('</figure>'), 'Sources should follow the figure');
+  assert.doesNotMatch(renderRoute('/home'), /industry-jd-references|References \(JD sources\)/);
+});
+
+test('the JD reference list preserves all matched records grouped by research direction and company', () => {
+  const html = renderRoute('/statement');
+  const disclosure = html.match(/<details\b[^>]*id="industry-jd-references"[^>]*>[\s\S]*?<\/details>/)?.[0] || '';
+  const ids = [...disclosure.matchAll(/<code>([^<]+)<\/code>/g)].map(match => match[1]);
+  assert.equal(ids.length, 89, 'All theme assignments must be inspectable');
+  assert.equal(new Set(ids).size, 77, 'Cross-theme matches must not be removed');
+  assert.equal((disclosure.match(/<h3\b/g) || []).length, 3);
+  const companies = [...disclosure.matchAll(/<p><strong>([^<]+) — (\d+) matched records?<\/strong><\/p>\s*<ul>([\s\S]*?)<\/ul>/g)];
+  assert.deepEqual(companies.map(([, name, count]) => [name, Number(count)]), [
+    ['OpenAI', 21], ['Anthropic', 23], ['MiniMax', 1], ['Moonshot', 1],
+    ['OpenAI', 7], ['Anthropic', 4], ['Moonshot', 1],
+    ['OpenAI', 10], ['Anthropic', 10], ['DeepSeek', 2], ['MiniMax', 2], ['Moonshot', 2], ['Zhipu', 5],
+  ]);
+  for (const [, name, count, list] of companies) {
+    assert.equal((list.match(/<li>/g) || []).length, Number(count), name);
+  }
+  assert.match(disclosure, /12–13 September 2026/);
+  assert.match(disclosure, /not a list of currently open positions/);
+  assert.match(disclosure, /one assessor/);
+  assert.match(disclosure, /broad themes, including enabling technical foundations/);
+  assert.match(disclosure, /does not establish direct research on or endorsement of every subproblem/);
+  assert.match(disclosure, /Generic capability evaluation alone is excluded/);
+  assert.match(disclosure, /Generic SFT\/RL\/post-training alone is excluded/);
+  assert.match(disclosure, /without an agent-execution context is excluded/);
+  assert.doesNotMatch(disclosure, /<table|<a\b/);
+  assert.doesNotMatch(disclosure, /&lt;!--|Research_Overview_JD_Method\.md/);
+});
+
 test('the public statement omits appendices while retaining the core agenda and references', () => {
   const html = renderRoute('/statement');
   const linkedPages = `${renderRoute('/home')}\n${renderRoute('/pubs/defects4c')}`;

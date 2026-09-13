@@ -7,6 +7,7 @@ import Footer from '../components/Footer.jsx';
 import Seo from '../components/Seo.jsx';
 import SiteFrame from '../components/SiteFrame.jsx';
 import ResearchOverview from '../components/ResearchOverview.jsx';
+import IndustryJDReferences from '../components/IndustryJDReferences.jsx';
 import ReadingTable from '../components/ReadingTable.jsx';
 import markdown from '../content/research-statement.md?raw';
 import { statementHeadings } from '../statement-headings.js';
@@ -32,6 +33,7 @@ export default function Statement() {
         <h1>Reliable autonomy for adaptive AI agents</h1>
         <p className="statement-lead">Scalable oversight, safety-preserving learning, and secure delegation.</p>
         <ResearchOverview />
+        <IndustryJDReferences />
         <div className="statement-download"><a href="/data/Jian_Wang_Research_Statement_2026.pdf" target="_blank" rel="noreferrer">Full research statement (PDF) ↗</a>
           <a href="#research-foundation-and-approach">Research foundation ↓</a></div>
         <nav className="statement-toc" aria-label="Statement sections">
