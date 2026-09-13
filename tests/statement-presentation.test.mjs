@@ -47,8 +47,10 @@ test('Home displays the supplied agent-world image with full-size access and sta
   const image = figure.match(/<img\b[^>]*>/)?.[0];
   assert.ok(image, 'Home must display the supplied illustration as an image');
   const src = image.match(/src="([^"]+)"/)?.[1];
-  assert.ok(src, 'The illustration must have a loadable asset URL');
-  const png = readFileSync(new URL(`..${src}`, import.meta.url));
+  assert.equal(src, '/images/world-connected-by-agents.png', 'Deployment rewrites the public image path to S3');
+  const pngFile = new URL('../public/images/world-connected-by-agents.png', import.meta.url);
+  assert.ok(existsSync(pngFile), 'The S3-backed public image source is missing');
+  const png = readFileSync(pngFile);
   assert.equal(png.subarray(0, 8).toString('hex'), '89504e470d0a1a0a');
   assert.equal(png.readUInt32BE(16), 1672);
   assert.equal(png.readUInt32BE(20), 941);
