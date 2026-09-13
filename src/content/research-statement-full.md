@@ -1,150 +1,233 @@
-# Trustworthy Agent Networks
+# Reliable Autonomy for Adaptive AI Agents
 
-## Research Statement: Assured Agency and Collective Agency
+**Jian Wang | 13 September 2026**
 
-**Jian Wang | September 2026 | Research agenda, 2026-2029**
+Scalable oversight, safety-preserving learning, and secure delegation
 
-My research asks how intelligent agents can expand what individuals, groups and companies can accomplish while remaining accountable to those they represent. I aim to develop foundations and mechanisms for **trustworthy agent networks**: persistent agents that acquire useful capabilities, cooperate across independent principals, and learn from outcomes while preserving authorization, information boundaries, and outstanding commitments. This agenda connects two scientific questions: **how agency persists through change**, and **when cooperation among independent agents creates lasting value**.
+My research focuses on how AI agents can become more capable through learning and interaction while remaining safe, reliable, and subject to meaningful human control. I study three connected questions: what evidence makes oversight effective, which learning signals preserve safety through adaptation, and how control survives long tasks and delegation. My long-term goal is to enable sustained autonomy in scientific research and enterprise work, including AI systems that contribute to their own development. I aim to develop learning and control methods whose benefits persist as models, tools, and workflows change.
 
-Delegation becomes difficult when capabilities, authority, and obligations change on different timescales. An agent may learn a better tool without gaining permission to disclose additional information. A principal may withdraw permission for future work while an earlier commitment still requires resolution. A group may agree on a plan without acquiring the authority to act for every member. I want to understand how these relationships can remain coherent as agents become more capable and their cooperation becomes more ambitious.
+This agenda addresses a concrete industrial transition. Frontier-lab research and engineering roles connect agent capability to post-training, interactive environments, feedback quality, and deployment; they also specify action monitoring, security boundaries, and the cost of human review [J1-J13]. OpenAI's Auto-review and Meta's Muse show how learned judgment and separately enforced permissions are already being combined in deployed systems [5,13]. These developments motivate my central question: **how can the evidence and controls that justify delegation remain effective as the agent and its environment evolve?**
 
-### Two directions and a shared foundation
+```mermaid
+flowchart TB
+  O["I. Oversight: select evidence"] --> E["Independently assessed behavior and effects"]
+  L["II. Learning: improve feedback"] --> E
+  D["III. Delegation: carry constraints"] --> E
+  E -. "revise oversight" .-> O
+  E -. "revise learning" .-> L
+  E -. "revise controls" .-> D
+```
 
-| Research direction | Central question | Scientific subproblems |
-| --- | --- | --- |
-| **I. Assured Agency** | How does agency persist through change? | Persistent mandates, state and commitments; authorized execution and recovery; capability growth under live obligations. |
-| **II. Collective Agency** | When does cooperation create lasting value? | Limited group representation; private coordination and conditional commitments; delivery, exit and shared accountability. |
-| **Shared foundation** | Which evidence should justify an update? | Outcome verification; failure attribution and recovery; evaluated capability and coordination updates. |
+*Figure 1. Each problem supports an independent contribution. Solid arrows indicate assessment; dashed arrows return evidence for revision. Evaluation and authority remain separate from the optimizing agent.*
 
-The common research object is an **authorized contribution**: work undertaken for an identifiable principal, within a defined mandate, with explicit dependencies, obligations, and evidence requirements. Assured Agency studies whether an agent can produce and maintain such contributions. Collective Agency studies how independent contributions can be organized into joint work. Action and delivery evidence then support evaluated changes to capabilities and coordination. Changes to authority remain decisions for the relevant principals.
+### Research foundation and approach
 
-A principal may be an individual or an organization. A mandate defines delegated authority; a commitment records an accepted obligation. A collective represents its members only within authority they have actually delegated. These distinctions let the program address personal agents, organizational agents, and cooperation between them using a consistent vocabulary.
+My work on code language models and program repair provides a foundation in testing learned behavior against execution. Our execution-trace study found limited benefit from trace-based information in the investigated fine-tuning and inference settings [1]. Defects4C grounds repair evaluation in reproducible C/C++ faults and tests [2]; RATCHET studies retrieval-augmented repair [3]. These projects inform my approach: identify the failure mechanism, design an intervention, and test its effect on independently assessed behavior. I will extend this approach to agent learning and control, using software as an initial experimental domain and testing transfer to other digital workflows.
 
-My intended contribution is a scientific account of the conditions under which useful autonomy and cooperation can grow together with accountable control. Candidate mechanisms must demonstrate benefits beyond strong stateful agents, established workflows, and existing coordination methods. The following essays describe proposed research, hypotheses, and evaluation criteria; they do not report completed experiments or established novelty.
+Throughout this program, **reliability** means sustained completion of the intended task under stated operating conditions; **safety** concerns specified harmful outcomes; and **authorization** determines who may act on which resources. I measure them separately. An accurate result may still disclose restricted data, and a blocked action may prevent harm while leaving useful work unfinished.
 
-<!-- PAGEBREAK -->
+> The next three pages develop the research problems. Execution, evaluation, and JD evidence follow in the appendices. All future contributions are proposed; no new experimental results are asserted.
 
-## Essay I. Assured Agency
 
-*Persistent agents that grow in capability while remaining accountable to their principals.*
+---
 
-I study Assured Agency as the persistence of a meaningful relationship between a principal's authority, an agent's capabilities, and the consequences of its actions. The objective is to enlarge the range of useful work that can be delegated over time. In this agenda, assurance means evidence and controls under explicit assumptions about trusted components and observable effects.
+## Research statement: I. Scalable oversight under adaptation
 
-### Persistent mandates, state and commitments
+*What must a supervisor observe to justify an agent's next action?*
 
-An agent operating over weeks or months must distinguish what it knows, what it can do, what it may do, and what it already owes. I would investigate a state model that records each principal's authoritative mandates, private knowledge, versioned tools and skills, outstanding commitments, and evidence of external effects. An action would identify its mandate, recipient, purpose, capability version, dependent commitments and expected checks. This connects representation, execution and adaptation within one account of continuing agency. Inferred preferences can inform planning, but cannot create permission. A mandate change must trigger a review of affected obligations without treating those obligations as erased.
+> **Problem definition.** Given an acting agent, a partially observed environment, explicit task and authority requirements, and a limited review budget, learn an oversight policy that selects evidence and interventions before consequential actions. The target is fewer harmful or unauthorized effects at comparable useful task completion and total cost, including when the actor or an external attacker adapts to the review policy.
 
-The scientific question concerns which dependencies are necessary for deciding whether continued execution or an update is admissible. Explicit state alone is insufficient as a contribution. I would seek methods that identify affected commitments and information flows, determine which checks remain valid, and establish when local validation is sufficient. This would connect a representation to a testable advantage in useful completion, validation cost, or oversight effort.
+The difficulty is that the actor can influence both its behavior and the account on which it is judged. In a research workflow, an agent may explain why an export is necessary while omitting that a tool endpoint has changed. A stronger language-model judge cannot infer an unobserved destination reliably from that explanation alone. AI Control already studies supervision under intentional subversion [4], and Auto-review evaluates actions at a sandbox boundary while acknowledging residual attacks and incomplete visibility [5]. I would study how the available evidence determines the limits and effectiveness of oversight.
 
-### Authorized execution and recovery
+### Direction 1: Learn which evidence changes the decision
 
-CaMeL separates control and data flows to constrain the influence of untrusted inputs; Fides studies agent planners through information-flow control. ShieldAgent investigates policy reasoning over agent action trajectories [1-3]. Intelligent AI Delegation also treats authority, responsibility, and adaptation as central to delegation [4]. My proposed question is how these foundations compose when tools, permissions, recipients, and live obligations change together.
+I would develop evidence-acquisition policies that choose among service-state queries, sandboxed execution, artifact checks, model review, and human inspection. A candidate method would estimate the expected reduction in decision error from each check, accounting for delay and the consequences of acting before the check completes. It would then use the result to permit an action, request a safer plan, or defer. The intended advance is a method for selecting decision-relevant observations and recognizing when the available view is insufficient. A check needs a stated property: a signed receipt establishes origin, while a trusted execution test may establish a bounded behavioral fact.
 
-Consider a creator who authorizes an agent to contribute selected assets to a joint project. Replacing an editor changes the recipient of private material; extending a usage license changes the purpose of disclosure. A useful system should identify the affected work and choose among continuation, local suspension, renewed authorization, renegotiation, and recovery. Formal analysis would characterize preservation of specified properties across such transitions. It would state when those properties depend on complete mediation, accurate dependency records, or trustworthy observations.
+### Direction 2: Preserve oversight signals under optimization
 
-### Capability growth under live obligations
+I would train and evaluate monitors against actors that learn to exploit their blind spots. The study would vary the actor's control over evidence, its knowledge of the monitor, and the capability gap between them. Reasoning traces, when available, would be tested alongside externally collected evidence; neither verbal explanations nor the use of a different model establishes independence. My working hypothesis is that selective access to protected observations can improve oversight robustness beyond transcript-only review, and that its value depends on which facts the actor can conceal or alter.
 
-I also want agents to learn new tools, compose specialist capabilities, and improve plans while work is in progress. A candidate update should expose which assumptions and obligations it may affect. I would study how dependency analysis and targeted validation can support bounded introduction of an update, followed by evaluation on subsequent outcomes. Improved task performance would not itself justify a broader mandate. Recovery may restore software state or compensate a participant, but it cannot reverse information already disclosed or work already consumed.
+### Contribution and decisive evidence
 
-### Hypothesis and evidence
+The contribution sought is a learned oversight policy together with an account of its information requirements. I would compare it with a stronger transcript reviewer, fixed checks, random audits, and an evidence-equipped reviewer under matched budgets. The evaluation would separate failure to detect a violation from failure to enforce a correct decision. An advantage that disappears under adaptive attacks or depends on privileged access unavailable in deployment would narrow the claim. Initial theory would characterize observation and intervention requirements in explicit models; empirical work would establish how far those conditions transfer.
 
-My working hypothesis is that dependency-aware validation can improve the frontier between useful autonomy and control cost when capabilities and live obligations interact. Comparisons would include equally informed stateful regression checks, fixed workflows with approval, information-flow controls, and adapted tool-learning or harness-update methods. All automated methods would receive the same permitted state, model access, and resource budgets; human assistance would be measured explicitly.
+> Industrial relevance: agent-action review and its productivity costs [J1], adversarial safeguards [J4], and scalable oversight research [J3].
 
-Task families would vary tool changes, revocation, delayed evidence, partial completion, and adversarial inputs. I would report useful completion, unauthorized effects, disclosure, oversight effort, and recovery cost separately. Evidence would count against the hypothesis if gains disappear with a strong stateful baseline, depend on unequal information, or arise only from additional refusals or human intervention. The intended outcome is a reusable account of when agency can persist through change, including boundaries where ordinary workflow controls are sufficient.
 
-<!-- PAGEBREAK -->
+---
 
-## Essay II. Collective Agency
+## Research statement: II. Safety-preserving learning and feedback
 
-*Independent agents that form useful organizations and deliver shared outcomes.*
+*Which changes to training improve the agent's subsequent behavior?*
 
-I study cooperation among agents whose principals have distinct interests, resources, and authority. A production team combines creators, editors, rights holders, and a customer; a research collaboration combines data, expertise, computation, and validation. I want to understand when complementary contributions produce value that survives the costs of coordination, verification, and recovery. The organization itself is a research object, connecting formation and limited representation to delivery and evaluated adaptation.
+> **Problem definition.** Given an assessed agent and a specified sequence of capability updates, design learning signals and update-selection methods that improve useful performance while limiting regression on fixed safety requirements. When feedback itself is repaired, the target is the resulting agent's independently measured behavior after learning. A better evaluator score alone is insufficient evidence of improvement.
 
-### Limited group representation
+Adaptation changes behavior and the data available for later learning. Fine-tuning can compromise safety [6]; RUBAS supplies trajectory-level rubric rewards [7], and ToolShield develops defensive experience for multi-turn tool use [8]. Building on these foundations, I would investigate which distinctions learned from feedback transfer to new environments and persist through subsequent capability training.
 
-A collective agent should represent a group through a defined charter and limited member mandates. Membership does not imply consent to every action, and a group preference does not automatically transfer an individual's authority. I would investigate how a group discovers feasible cooperation, allocates roles, and maintains a shared plan while each principal retains local control over its actions and disclosures.
+### Direction 1: Train on consequential decision differences
 
-Group formation must connect to subsequent execution. AgenticPay studies language-mediated negotiation with private constraints and valuations [5]; A2A supports agent discovery, communication, and tasks [6]. I would build on these foundations to ask how an agreement should constrain delivery when participants change, dependencies fail, or evidence is incomplete. Cooperation must also be assessed after the work is performed.
+I would construct matched task pairs that preserve the legitimate goal while changing the recipient, data-use scope, instruction source, or a tool's external effect. Training would combine outcome feedback with separately checked constraint labels and retain a feasible authorized solution. The hypothesis is that these contrasts teach the dependence of a decision on authority and consequences. Comparisons with matched-data adversarial training, ordinary safety fine-tuning, and rubric-based RL would measure transfer and retention after further capability updates. Gains from broad refusal would not support the hypothesis.
 
-### Private coordination and conditional commitments
+### Direction 2: Select feedback repairs by their learning effects
 
-My candidate approach represents a collective through limited mandates, an explicit charter, and a graph of conditional commitments. A contribution would identify who owes what to whom, the conditions under which the obligation applies, its dependencies, and the evidence required for acceptance. Proposals, accepted commitments, delivered artifacts, and accepted outcomes would remain distinct states.
+Which defect in a reward model, evaluator, or simulator most needs repair before the next training stage? A frequent labeling error may have little learning effect, while a rare exploitable reward can redirect the policy. I would predict how candidate repairs change future trajectory distributions, using controlled interventions and limited training branches. The target is a reusable estimator and repair-selection rule, tested against prioritization by current error frequency, severity, or judge disagreement.
 
-Participants could expose restricted feasibility responses without pooling their full private state. Research questions include how to choose disclosure granularity and query budgets, coordinate interdependent choices, and limit information revealed through repeated queries or strategic responses. A shared graph would contain only information permitted for the collaboration; sensitive local constraints could remain with their principals. Evaluation would expose trade-offs among disclosure, coordination costs and strategic incentives. Selective disclosure must be measured under repeated interaction.
+The causal target is the difference in independently assessed outcomes after matched updates with and without a repair. Predictions must account for adaptation: the largest reward change need not produce the best behavior. Automated alignment research demonstrates gains on well-characterized failures [9]. I would study reliable feedback selection when optimization alters which failures matter.
 
-Building on established commitment and workflow models, I would test whether language-based capability discovery and adaptation improve coordination under incomplete information.
+### Contribution and decisive evidence
 
-### Delivery, exit and shared accountability
+I would seek learning methods with measurable safety retention and repair-effect predictions that generalize to unseen repairs or update stages. Validation would keep outcome criteria fixed, isolate test access, and measure actual post-update behavior over multiple seeds. The cost of selecting repairs, including exploratory training branches, counts toward the budget. Failure to beat simple repair-priority rules at matched total cost would reject the added machinery. Improvements confined to a single model, task family, or update schedule would be reported at that scope.
 
-When a contributor withdraws, the system should identify affected work, permissible replacements, and obligations that remain unresolved. Meaningful exit does not require pretending that prior costs or commitments disappear. I would study how local recovery changes the feasibility of ongoing cooperation and how costs are allocated among the original participants. Strategic reports, colluding participants, and compromised evaluators would be explicit experimental conditions.
+> Industrial relevance: incident-to-training signals [J2], RL environments and graders [J5], model-harness co-evolution [J7], and feedback-driven iteration [J6,J8-J11].
 
-### Hypothesis and evidence
 
-My working hypothesis is that coupling group formation to conditional commitments and bounded representation can improve realized participant outcomes in interdependent tasks. Evaluation would compare fixed-rule workflows, constraint-based coordination, negotiation agents, and centralized coordinators given the same permitted information. An omniscient solver would be reported separately as an upper bound; experienced human coordination would provide a practical comparison with recorded labor costs.
+---
 
-Experiments would vary complementarity, dependency structure, private information, member exits, and adversarial coalitions. The original participant cohort would remain in the analysis, including members who leave or are replaced. I would report delivery quality, unresolved obligations, the distribution of net outcomes, and all communication, computation, verification, human-work and recovery costs, including failed projects. Non-monetary outcomes would use explicit task-specific preferences, with sensitivity analysis instead of a universal welfare score. The hypothesis would fail if apparent gains rely on excluded participants, shifted losses, excessive overhead, or easier tasks. 
+## Research statement: III. Control across time and delegation
 
-<!-- PAGEBREAK -->
+*When do local restrictions remain sufficient for a changing workflow?*
 
-## Independent Evidence and Controlled Adaptation
+> **Problem definition.** Given a long-running workflow, identified principals, changing tools or permissions, and global constraints, design a protocol that preserves authorized execution through handoffs and partial failure. The target is useful joint completion with bounded violations and intervention cost under an explicit adversary and trusted execution boundary.
 
-*A shared foundation for both research directions.*
+An agent replacement, permission revocation, or tool change can invalidate approvals for pending work. Cooperation adds another difficulty: an agent with private-data access can pass a derived artifact to another with external communication privileges. Isolated checks may miss the resulting disclosure. I would study what state control must retain across time and organizational boundaries.
 
-I would study how action and delivery evidence can improve capabilities and coordination while preserving each principal's authority. This foundation links both directions through a common learning problem: determine what happened, identify a promising change, and evaluate its effect on later outcomes.
+### Direction 1: Carry constraints through task decomposition
 
-### Outcome verification
+I would bind delegated work to its principal, permitted operations, data dependencies, and validity conditions. Learned components would propose task decompositions; an independent execution layer would check machine-enforceable restrictions. The theoretical target is to identify when local checks imply a stated workflow property, and counterexamples when they do not. Identity, evidence quality, authorization, and task correctness remain distinct; unknown semantic effects require conservative handling or human judgment.
 
-Different claims require different evidence: artifact checks for specified properties, external records for events, and independent assessment for substantive acceptance. AgentBeats separates assessment logic from agent implementation through standardized interfaces [7]. This separation does not establish that judges have independent information or uncorrelated errors. I would examine actor-evaluator dependence alongside the provenance and limits of observations.
+### Direction 2: Revise control when its assumptions change
 
-### Failure attribution and recovery
+I would identify which pending decisions require renewed evidence after a change, tracking dependencies behind approvals to suspend or replan affected work while preserving valid progress. This builds on information-flow defenses such as CaMeL and Fides [10,11]. EvoSafeHarness already optimizes policies and executable controls for a frozen model in a target domain [12], and Muse separates its acting runtime from permission authority [13]. My target is control that evolves during an ongoing workflow while retaining an explicit basis for each permitted effect.
 
-A failed project may reflect a missing capability, an invalid assumption, a coordination defect, a policy failure, or an evaluator error. These explanations imply different interventions. I would study attribution methods using controlled changes and paired replays where environments permit them, and explicit uncertainty where external effects cannot be replayed. Diagnosis would be evaluated by whether the proposed repair improves held-out outcomes, rather than by the plausibility of an explanatory narrative. Immediate recovery and longer-term learning would use related evidence but have distinct objectives.
+### Contribution and decisive evidence
 
-### Evaluated capability and coordination updates
+Comparisons would include stateful access control, information-flow enforcement, whole-workflow suspension, and learned harnesses with the same information and authority. I would measure unauthorized effects, completion, review demand, recovery costs, and unresolved obligations. Formal guarantees would apply only to the modeled property and trusted components; rollback cannot erase external disclosure. Cross-agent tests would include compromised participants and messages, without assuming shared objectives or protocol compliance.
 
-Candidate changes would be assessed within a defined scope and against affected obligations. Development and evaluation would be separated by task family. Updates could improve tools, plans, matching, or task structure within existing authority. I would first compare fixed, understandable charters, then study bounded rule adaptation with authorization from affected principals. Evaluation must distinguish better organization from selecting easier participants or satisfying a dependent evaluator. Reputation and favorable self-evaluation would not create authority.
+### Long-term direction: AI-assisted research that can improve safely
 
-### A staged research program, 2026-2029
+Together, these problems support a longer-term program in autonomous research and AI development. Agents could propose changes to training data, tools, and evaluators while separate processes establish whether those changes improve behavior and preserve control. I would begin with oversight and learning, then extend validated mechanisms to delegation. The scientific ambition is to understand when useful autonomy can grow without outrunning the evidence needed to supervise it.
 
-| Stage | Research objective and decision evidence |
+> Industrial relevance: secure runtimes [J12,J13] and model-harness adaptation [J7]. Cross-principal security is a research extension; multi-agent RL demand [J9] does not by itself establish demand for that specialization.
+
+
+---
+
+## Appendix A: Execution, evidence, and a staged program
+
+*A practical path from a focused mechanism to a transferable result*
+
+I would begin in executable digital environments where task outcomes, authority, and selected harmful effects can be inspected. This provides a tractable basis for causal experiments and bounded formal reasoning. Defects4C supplies repair tasks with reproducible faults [2]; AgentDojo provides an extensible setting for tool use and prompt-injection evaluation [14]. Neither is a complete agent-safety test. Any added authority changes, revocation events, or feedback defects would be documented as new experimental conditions.
+
+| Stage | Research objective and decision |
 | --- | --- |
-| **Year 1: State and execution** | Define mandate, commitment, and evidence semantics. Establish strong stateful and workflow baselines in controlled collaborative production tasks. Test changes, revocation, and local recovery. |
-| **Year 2: Adaptation and cooperation** | Study capability updates under live obligations and coordination under private information. Test exits, adversarial behavior, evidence dependence, and full cost accounting. |
-| **Year 3: Composition and transfer** | Test cooperation across independently governed organizations. Transfer to cooperative production or private research, varying dependencies and the reversibility of effects. Study rule adaptation where earlier evidence supports it. |
+| 0-12 months | Establish one result on evidence acquisition for oversight. In a separate, bounded training study, test whether feedback-repair priorities predict post-update behavior. Advance a mechanism only if it improves over strong simple baselines at matched utility and total cost. |
+| 12-24 months | Test safety retention across capability updates, model families, and unseen failure mechanisms. Combine learning and oversight only after each has a measured effect; use component ablations to identify interaction benefits or regressions. |
+| 24-36 months | Study tool changes, revocation, and delegation in longer enterprise or research workflows. Extend claims only when they survive different dependency and verification structures; seek deployment partners for shadow evaluation and realistic incident distributions. |
 
-Collaborative production offers inspectable artifacts, scoped asset use, acceptance, and partial delivery. Later environments would vary information access, verification difficulty, and the reversibility of effects. These structural differences define the program's generalization tests.
+### What would count as progress
 
-Across studies, I would report useful completion, security and authorization failures, disclosure, human effort, resource use, recovery cost, and participant outcomes separately. Pilot estimates would inform sample sizes and prespecified meaningful differences; uncertainty would be assessed at the project or organization level. A simulator score would not by itself establish value in deployment. My long-term goal is to enable people and organizations to undertake more consequential work together, supported by an intelligible relationship between authority, action, evidence, and outcome.
+I would report useful task completion, authorization violations, and harmful outcomes separately, including severity categories. Comparisons would use common task and attack budgets and show the tradeoffs among utility, risk, latency, and human effort. Training, evidence acquisition, inference, and recovery costs belong in the accounting. For learning, I would evaluate both the policy alone and the policy under a fixed controller, so that blocking cannot be mistaken for improved judgment.
 
-<!-- PAGEBREAK -->
+Task families, tool semantics, and attack-generation procedures would be separated between development and evaluation. Adaptive adversaries would receive stated access and query budgets. Checkers would be validated against known outcomes; logs establish provenance within their trust boundary. Human review would be blinded and disagreement retained. Uncertainty would be estimated at the independent task, workflow, or training-run level, with sample sizes chosen for a pre-specified meaningful effect. Small pilots would test mechanisms, without establishing rare-event safety.
 
-## Research Foundations
+### How my existing methods carry forward
 
-### Selected related work
+Execution-trace analysis [1] supports experiments on whether additional observations change a model's decisions. Reproducible repair tasks [2] support evaluation of actual effects and controlled feedback defects. Retrieval-based correction [3] provides experience with learning from relevant prior cases. The next methodological steps are sequential decision-making for oversight, post-training experiments that isolate causal effects, and security protocols with stated enforcement assumptions. The supplied publications support this starting foundation; they do not establish frontier-scale RL training experience.
 
-These sources anchor the mechanisms and evaluation ideas discussed in this statement. Publication pages and official documentation were checked on September 12, 2026.
+Public outputs would include task specifications, threat models, implementations, and measured failures where sharing is permitted. The goal is publishable mechanisms and limits, and components that training, safety, and product teams can evaluate in their systems.
 
-1. Edoardo Debenedetti et al. **Defeating Prompt Injections by Design.** 2025. arXiv:2503.18813. [Publication](https://arxiv.org/abs/2503.18813). Foundation: separating trusted control flow from untrusted data and restricting information flows.
 
-2. Manuel Costa et al. **Securing AI Agents with Information-Flow Control.** 2025. arXiv:2505.23643v2. [Publication](https://arxiv.org/abs/2505.23643v2). Foundation: formal analysis of agent planners and confidentiality and integrity tracking in Fides.
+---
 
-3. Zhaorun Chen, Mintong Kang, and Bo Li. **ShieldAgent: Shielding Agents via Verifiable Safety Policy Reasoning.** 2025. arXiv:2503.22738. [Publication](https://arxiv.org/abs/2503.22738). Foundation: explicit policy reasoning and checks over agent action trajectories.
+## Appendix B: How the JD collection shapes this agenda
 
-4. Nenad Tomasev, Matija Franklin, and Simon Osindero. **Intelligent AI Delegation.** 2026. arXiv:2602.11865v1. [Publication](https://arxiv.org/abs/2602.11865v1). Foundation: adaptive delegation with authority, responsibility, accountability, and boundaries.
+*Source audit and direct evidence for the two near-term priorities*
 
-5. Xianyang Liu, Shangding Gu, and Dawn Song. **AgenticPay: A Multi-Agent LLM Negotiation System for Buyer-Seller Transactions.** 2026. arXiv:2602.06008v1. [Publication](https://arxiv.org/abs/2602.06008v1). Foundation: language-mediated negotiation under private constraints and valuations.
+The eight JD JSONL files contain **876 records and 829 distinct company-job-ID pairs**: Anthropic 328, OpenAI 188, Zhipu 162, MiniMax 75, Moonshot 53, and DeepSeek 23. The 47 repeated pairs are overlaps between safety and technical collections; some duplicates differ in formatting. Four Zhipu records have empty description bodies after HTML cleanup and contribute no responsibility evidence. The collection timestamps span 12-13 September 2026.
 
-6. A2A Project. **Agent2Agent Protocol Documentation.** Official documentation, accessed September 12, 2026. [Documentation](https://a2a-protocol.org/latest/). Foundation: agent discovery, communication, and task interoperability.
+These are selected snapshots, mixing research, engineering, operational roles, locations, and seniority levels. They establish stated responsibilities, not hiring volume, growth rates, current availability, or personal eligibility. One DeepSeek Harness record covers several functions. Keyword counts would therefore be a weak basis for ranking research fields. The mapping uses specific duties and exact IDs; Chinese role titles are translated and responsibilities are paraphrased.
 
-7. Xiaoyuan Liu et al. **AgentBeats: Agentifying Agent Assessment for Openness, Standardization, and Reproducibility.** 2026. arXiv:2606.13608v2. [Publication](https://arxiv.org/abs/2606.13608v2). Foundation: separating assessment logic from agent implementation through standardized interfaces.
+| Role and exact source ID | Responsibility and research implication |
+| --- | --- |
+| **J1 - OpenAI**: [Researcher, Agent Safety, Oversight and System Mitigations](https://jobs.ashbyhq.com/openai/7d49af15-623e-476a-9d35-831c5c9c9bf5)<br>Job ID: `7d49af15-623e-476a-9d35-831c5c9c9bf5` | Action review, isolation and permission boundaries; missed harm, false blocks, approval burden, and latency. Direct support for Problem I. |
+| **J2 - OpenAI**: [Researcher, Agent Safety, Training and Evaluations](https://jobs.ashbyhq.com/openai/e1cc86e5-b56c-49c0-a4a6-8cf766c27281)<br>Job ID: `e1cc86e5-b56c-49c0-a4a6-8cf766c27281` | Train frontier models; convert incidents into repeatable safety signals and deployed mitigations. Direct support for Problem II. |
+| **J3 - Anthropic**: [Research Engineer / Scientist, Alignment](https://job-boards.greenhouse.io/anthropic/jobs/4631822008)<br>Job ID: `4631822008` | Scalable oversight, AI control, alignment stress tests, and automated alignment research. Direct research context for Problems I-II. |
+| **J4 - Anthropic**: [ML/Research Engineer, Safeguards](https://job-boards.greenhouse.io/anthropic/jobs/4949336008)<br>Job ID: `4949336008` | Adversarial classifiers, harms across exchanges, agent threat models, and prompt-injection mitigations. Deployment context for Problem I. |
+| **J5 - OpenAI**: [Agent Post-Training, Frontier Evals and Environments Research](https://jobs.ashbyhq.com/openai/9d72171e-2630-4347-83a1-263178644282)<br>Job ID: `9d72171e-2630-4347-83a1-263178644282` | RL environments, measurement reliability, continuous evaluation, and model-understanding loops. Adjacent capability demand for Problems I-II. |
+| **J6 - DeepSeek**: [Post-training Researcher (Data / Algorithms)](https://app.mokahr.com/social-recruitment/high-flyer/140576#/job/5d75f4cd-f626-4f73-80c1-e53b2073de76)<br>Job ID: `5d75f4cd-f626-4f73-80c1-e53b2073de76` | RL algorithms, data generation and filtering, and evaluations that identify agent capability limits. Adjacent training demand for Problem II. |
+| **J7 - DeepSeek**: [Agent Harness Team - research responsibilities](https://app.mokahr.com/social-recruitment/high-flyer/140576#/job/8d40c764-d2b2-49b1-826c-e3f2adb75c01)<br>Job ID: `8d40c764-d2b2-49b1-826c-e3f2adb75c01` | Model-harness co-evolution; memory, subagents, long tasks, and feedback from real use. Supports adaptation as a research setting. |
 
-### Published foundations
+> Reading the mapping: J1-J4 provide direct safety or alignment evidence. J5-J7 establish adjacent demand for environments, learning signals, and model-harness co-evolution. The latter support methodological relevance without implying dedicated safety mandates.
 
-My earlier work contributes methods and evaluation experience to this future agenda:
 
-- **RATCHET (ISSRE 2024)** studies fault localisation and retrieval-based repair, informing diagnosis and corrective action. [Paper and artifacts](https://www.wj2ai.com/pubs/ratchet).
-- **Defects4C (ASE 2025)** supplies reproducible C/C++ bugs and tests, informing executable outcome evaluation and its coverage limits. [Paper and benchmark](https://www.wj2ai.com/pubs/defects4c).
-- **Execution-trace study (EMNLP Findings 2025)** reports limited usefulness from traces in the settings studied, motivating tests of when additional observations improve decisions. [Paper](https://www.wj2ai.com/pubs/code-semantics-execution-traces).
-- **AIGC-detector study (ASE 2024)** examines transfer from prose detection to code, informing evaluation under changing tasks and models. [Paper](https://www.wj2ai.com/pubs/aigc-detectors-on-code).
+---
 
-These are methodological connections to proposed research on authority, cooperation and adaptation. The new mechanism hypotheses remain to be tested, with explicit assumptions, strong comparisons and independent outcome assessment.
+## Appendix B (continued): Industry fit and the boundary of the evidence
+
+*Capability training, secure execution, and longer-term extensions*
+
+| Role and exact source ID | Responsibility and research implication |
+| --- | --- |
+| **J8 - MiniMax**: [LLM Algorithm Engineer - Code](https://vrfi1sk8a0.jobs.feishu.cn/referral/position/7681565559078996251/detail)<br>Job ID: `7681565559078996251` | Execution and tool feedback for RL; reward design, iterative learning, and error analysis. Adjacent training demand for Problem II. |
+| **J9 - Moonshot**: [Research Scientist / Engineer - Agentic RL/Infra](https://app.mokahr.com/apply/moonshot/148506#/job/d4a6a175-6506-4746-a6f4-2b736c0ce339)<br>Job ID: `d4a6a175-6506-4746-a6f4-2b736c0ce339` | Agentic and multi-agent RL algorithms, environments, and infrastructure. Supports agent learning; does not establish secure cooperation as a dedicated role. |
+| **J10 - Zhipu**: [Post-training Algorithm Engineer - Coding Agent](https://app.mokahr.com/social-recruitment/zphz/148983?locale=zh-CN#/job/a1f2d79e-010c-43ba-ab4e-d609c4ce7a7f)<br>Job ID: `a1f2d79e-010c-43ba-ab4e-d609c4ce7a7f` | Data synthesis, RL, and realistic coding-agent evaluation across frameworks. Adjacent training demand for Problem II. |
+| **J11 - Zhipu**: [GLM Coding Agent Data and Automated Iteration Engineer / Expert](https://app.mokahr.com/social-recruitment/zphz/148983?locale=zh-CN#/job/eb6e44ae-8d5e-4122-965d-b72f3922d08c)<br>Job ID: `eb6e44ae-8d5e-4122-965d-b72f3922d08c` | Mine production logs and bad cases; maintain data and RL infrastructure for continuous improvement. Concrete feedback-loop context for Problem II. |
+| **J12 - MiniMax**: [Agent Sandbox Systems Architect](https://vrfi1sk8a0.jobs.feishu.cn/referral/position/7644834917046667539/detail)<br>Job ID: `7644834917046667539` | Resource isolation, credentials, network permissions, execution replay, and risk intervention. Engineering context for Problem III. |
+| **J13 - Anthropic**: [Tech Lead Manager, Agent Runtime Platform](https://job-boards.greenhouse.io/anthropic/jobs/5316593008)<br>Job ID: `5316593008` | Secure credential-managed runtimes, reusable agent primitives, capacity, and reliability. Platform demand for Problem III; senior systems requirements apply. |
+
+### Why this ordering
+
+My interpretation of the combined evidence is to prioritize **scalable oversight and safety-preserving learning**. They have direct safety responsibilities in the collection and share methods with broader agent-training roles. Secure runtime research provides a route into deployment; cross-principal cooperation becomes a later extension that needs its own scientific case. OpenAI's recursive-self-improvement-safety role (ID 5a9e68f6-30b5-40c0-aa8c-c822c59140d0) and DeepSeek's Frontier role (ID c7076ca9-558c-4ec3-804b-f21bdfc6135c) support the long-term motivation. These two postings do not establish a broad or predictable market for that specialization.
+
+### External checks on the positioning
+
+The September 2026 Muse release [13] and EvoSafeHarness preprint [12] make independently enforced action boundaries and deployment-specific control concrete technical reference points. Singapore's IMDA framework calls for bounded permissions, meaningful oversight, and lifecycle monitoring [15]; NIST's agent initiative includes identity, authentication, and security-evaluation research [16]. These sources support the problem setting. Product reports are developer-reported evidence, preprints remain preliminary, and institutional priorities do not validate my proposed methods.
+
+> Career relevance is methodological, not a claim of eligibility. For example, the Moonshot RL/Infra posting requests deep RL and large-scale systems experience. My prior publications justify the research foundation stated here; application-specific evidence of those additional skills would still be required.
+
+
+---
+
+## References: Selected references
+
+*Primary sources checked on 13 September 2026*
+
+[1] J. Wang et al. [Do Code Semantics Help? A Comprehensive Study on Execution Trace-Based Information for Code Large Language Models.](https://aclanthology.org/2025.findings-emnlp.548/) Findings of EMNLP, 2025.
+
+[2] J. Wang et al. [Defects4C: Benchmarking Large Language Model Repair Capability with C/C++ Bugs.](https://arxiv.org/abs/2510.11059v2) ASE, 2025; arXiv:2510.11059v2.
+
+[3] J. Wang et al. [Ratchet: Retrieval Augmented Transformer for Program Repair.](https://doi.org/10.1109/ISSRE62328.2024.00048) ISSRE, 2024, pp. 427-438.
+
+[4] R. Greenblatt et al. [AI Control: Improving Safety Despite Intentional Subversion.](https://arxiv.org/abs/2312.06942v5) ICML, 2024; arXiv:2312.06942v5.
+
+[5] M. Trebacz et al. [Auto-review of agent actions without synchronous human oversight.](https://alignment.openai.com/auto-review/) OpenAI Alignment, 30 April 2026.
+
+[6] X. Qi et al. [Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To!](https://arxiv.org/abs/2310.03693) arXiv:2310.03693, 2023.
+
+[7] X. Q. Loye et al. [RUBAS: Rubric-Based Reinforcement Learning for Agent Safety.](https://arxiv.org/html/2606.04051v1) arXiv:2606.04051v1, 2 June 2026.
+
+[8] X. Li et al. [Unsafer in Many Turns: Benchmarking and Defending Multi-Turn Safety Risks in Tool-Using Agents.](https://arxiv.org/abs/2602.13379) arXiv:2602.13379, 2026.
+
+[9] Chen Yueh-Han, J. Wen, and J. H. Kirchner. [Automated Researchers Can Mitigate Well-Characterized Alignment Failures.](https://alignment.anthropic.com/2026/automated-alignment-researchers/) Anthropic Alignment Science, 2026.
+
+[10] E. Debenedetti et al. [Defeating Prompt Injections by Design.](https://arxiv.org/abs/2503.18813v2) CaMeL; arXiv:2503.18813v2, 2025.
+
+[11] M. Costa et al. [Securing AI Agents with Information-Flow Control.](https://arxiv.org/abs/2505.23643v2) Fides; arXiv:2505.23643v2, 2025.
+
+[12] N. Li et al. [EvoSafeHarness: Evolving Model- and Domain-Specific Harnesses for Securing Agents.](https://arxiv.org/abs/2609.05903v1) arXiv:2609.05903v1, 5 September 2026.
+
+[13] T. Sheasha. [How We Built Safety Into Muse.](https://research.meta.ai/blog/security-and-safety-for-ai-agents-our-approach-with-muse) Meta AI Research, 8 September 2026.
+
+[14] E. Debenedetti et al. [AgentDojo: A Dynamic Environment to Evaluate Prompt Injection Attacks and Defenses for LLM Agents.](https://arxiv.org/abs/2406.13352v3) arXiv:2406.13352v3, 2024.
+
+[15] IMDA. [Model AI Governance Framework for Agentic AI.](https://www.imda.gov.sg/assets/63438074-73f6-4dcc-a281-030f42642cf4.pdf) Version 1.5, 20 May 2026; updated 5 June 2026.
+
+[16] NIST. [AI Agent Standards Initiative.](https://www.nist.gov/artificial-intelligence/ai-agent-standards-initiative) Created 17 February 2026; updated 14 August 2026.
+
+### Provenance of the statement
+
+The research foundation is based on the two supplied statements and the cited publications. The industry mapping uses the supplied JD snapshots; role links identify source postings and do not certify current vacancies. The three problems and candidate mechanisms are a proposed agenda, requiring project-specific novelty analysis and new evidence before claims of effectiveness or priority.
+
+The accompanying 120-person research-interest inventory, 25-person Agent Commons fit ranking, 26-person follow-up, and their shards were discovery material. Their fit scores were not reused as market evidence; shards were not counted as independent signals. The research direction follows the problems and sources above.
+
+> Source files for the JD mapping: openai_filtered_technical_research_jobs_2026-09-13.jsonl; openai_safe.jsonl; anthropic_technical_jobs_2026-09-13.jsonl; anthropic_safe.jsonl; deepseek_selected_categories_jobs_2026-09-13.jsonl; minimax_feishu_rnd_jobs_2026-09-13.jsonl; moonshot_moka_technical_ai_jobs_2026-09-13.jsonl; zhipuai_moka_all_jobs_2026-09-13.jsonl. All are contained in the supplied data.zip.

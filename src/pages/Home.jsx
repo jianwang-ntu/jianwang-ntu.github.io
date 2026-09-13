@@ -37,22 +37,20 @@ function AcademicPagesHome() {
             <h2 id="interests-title"><Link to="/statement">Research interests</Link></h2>
             <Link className="text-link" to="/statement">Read the statement ↗</Link>
           </div>
-          <p>My research asks how AI agents can expand what <strong>people, groups and companies</strong> accomplish,
-            while remaining accountable to those they represent. I study <Link to="/statement"><strong>trustworthy agent networks</strong></Link>:
-            how persistent agents can learn and act within evolving mandates, and how independent participants can combine
-            complementary capabilities into cooperation that delivers value after its costs and obligations are accounted for.</p>
-          <p>I study these as <Link to="/statement#assured-agency">assured agency</Link> and{' '}
-            <Link to="/statement#collective-agency">collective agency</Link>, linked by{' '}
-            <Link to="/statement#independent-evidence-and-controlled-adaptation">independent evidence and controlled adaptation</Link>.</p>
-          <div id="research-overview"><ResearchOverview /></div>
+          <p>My research studies <Link to="/statement"><strong>reliable autonomy for adaptive AI agents</strong></Link>:
+            how agents can learn and interact while remaining safe, reliable, and under meaningful human control as models,
+            tools, and workflows change.</p>
+          <p>The agenda connects <Link to="/statement#i-scalable-oversight-under-adaptation">scalable oversight</Link>,{' '}
+            <Link to="/statement#ii-safety-preserving-learning-and-feedback">safety-preserving learning</Link>, and{' '}
+            <Link to="/statement#iii-control-across-time-and-delegation">control across time and delegation</Link>.</p>
+          <ResearchOverview />
         </section>
         <aside className="collaboration-note" aria-label="Collaboration interests">
-          <p><strong>Useful autonomy, secure cooperation.</strong> I welcome research and engineering collaborations on
-            trustworthy agents for individuals and organizations: secure delegation, cooperation across independent owners,
-            and evidence-based evaluation. Collaborative production and private research offer settings where capabilities,
-            information and commitments must work together.</p>
+          <p><strong>Evidence and control through change.</strong> I welcome research and engineering collaborations on
+            agent oversight, safety-preserving feedback, secure runtimes, and long-running workflows where capabilities,
+            permissions, and evidence evolve together.</p>
           <p className="home-skills-links">
-            <Link to="/statement#evaluation-and-milestones">Evaluation & milestones</Link>
+            <Link to="/statement#appendix-a-execution-evidence-and-a-staged-program">Evaluation & staged program</Link>
             <Link to="/work">Earlier work & projects</Link>
             <a href="mailto:jian004@e.ntu.edu.sg">Get in touch ↗</a>
           </p>
@@ -60,7 +58,7 @@ function AcademicPagesHome() {
         <section className="home-section" aria-labelledby="selected-title">
           <div className="section-heading"><h2 id="selected-title">Selected publications</h2>
             <Link className="text-link" to="/pubs">All publications ↗</Link></div>
-          <p>Earlier work in repair, detection and evaluation. <Link to="/statement#published-foundations">How it informs the future agenda ↗</Link></p>
+          <p>Earlier work in repair, detection and evaluation. <Link to="/statement#how-my-existing-methods-carry-forward">How it informs the future agenda ↗</Link></p>
           {selectedPubs.map(p => (
             <article className="home-publication" key={p.figure}>
               <span className="publication-year">{p.year}</span>
@@ -92,7 +90,7 @@ function AcademicPagesHome() {
 
 export default function Home() {
   return <div className="page">
-    <Seo title="Home" description="Jian Wang — PhD, NTU Singapore. Trustworthy agent networks for individuals, groups and companies, building on software engineering and AI evaluation." path="/home" />
+    <Seo title="Home" description="Jian Wang — PhD, NTU Singapore. Reliable autonomy for adaptive AI agents, building on software engineering and AI evaluation." path="/home" />
     <Nav skipToContent /><AcademicPagesHome /><Footer />
   </div>;
 }
