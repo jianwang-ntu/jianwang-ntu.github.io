@@ -82,7 +82,7 @@ def build(font_dir, output):
         )
 
     styles = {
-        'body': ParagraphStyle('Body', fontName='LibSerif', fontSize=9.7, leading=12.3, spaceAfter=7),
+        'body': ParagraphStyle('Body', fontName='LibSerif', fontSize=11, leading=14.4, spaceAfter=7),
         'title': ParagraphStyle('Title', fontName='LibSerif-Bold', fontSize=22, leading=27, textColor=blue, spaceAfter=9, keepWithNext=True),
         'byline': ParagraphStyle('Byline', fontName='LibSans', fontSize=9.5, leading=13, textColor=colors.HexColor('#586d79'), spaceAfter=8, keepWithNext=True),
         'subtitle': ParagraphStyle('Subtitle', fontName='LibSerif', fontSize=13, leading=17, textColor=link_color, spaceAfter=14, keepWithNext=True),
@@ -112,7 +112,7 @@ def build(font_dir, output):
         if heading:
             level, title = len(heading[1]), plain_heading(heading[2])
             key = 'title' if level == 1 else 'h2' if level == 2 else 'h3'
-            paragraph = Paragraph(inline(title), styles[key])
+            paragraph = Paragraph(inline(title.removeprefix('Research statement: ')), styles[key])
             paragraph.heading = title
             story.append(paragraph)
             continue

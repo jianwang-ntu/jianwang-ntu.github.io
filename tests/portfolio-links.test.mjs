@@ -73,6 +73,31 @@ test('homepage research interests point to real statement sections', () => {
   for (const [, id] of home.matchAll(/to="\/statement#([^"]+)"/g)) assert.ok(targets.has(id), id);
 });
 
+test('bookmarks for shortened statement subsections reach their retained research area', () => {
+  const groups = [
+    ['i-scalable-oversight-under-adaptation', [
+      'direction-1-learn-which-evidence-changes-the-decision',
+      'direction-2-preserve-oversight-signals-under-optimization',
+      'contribution-and-decisive-evidence',
+    ]],
+    ['ii-safety-preserving-learning-and-feedback', [
+      'direction-1-train-on-consequential-decision-differences',
+      'direction-2-select-feedback-repairs-by-their-learning-effects',
+      'contribution-and-decisive-evidence-2',
+    ]],
+    ['iii-control-across-time-and-delegation', [
+      'direction-1-carry-constraints-through-task-decomposition',
+      'direction-2-revise-control-when-its-assumptions-change',
+      'contribution-and-decisive-evidence-3',
+      'long-term-direction-ai-assisted-research-that-can-improve-safely',
+    ]],
+  ];
+  for (const [target, bookmarks] of groups) {
+    for (const bookmark of bookmarks) assert.equal(resolveStatementHash(`#${bookmark}`), target);
+    assert.ok(headings.some(heading => heading.id === target));
+  }
+});
+
 test('statement PDF download exists and is a PDF', () => {
   const file = new URL('../public/data/Jian_Wang_Research_Statement_2026.pdf', import.meta.url);
   assert.ok(existsSync(file));

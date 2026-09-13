@@ -28,6 +28,16 @@ export const PUBLICATION_CONNECTIONS = {
 
 // Existing bookmarks are redirected to the section that absorbs their topic.
 export const STATEMENT_ALIASES = {
+  'direction-1-learn-which-evidence-changes-the-decision': 'i-scalable-oversight-under-adaptation',
+  'direction-2-preserve-oversight-signals-under-optimization': 'i-scalable-oversight-under-adaptation',
+  'contribution-and-decisive-evidence': 'i-scalable-oversight-under-adaptation',
+  'direction-1-train-on-consequential-decision-differences': 'ii-safety-preserving-learning-and-feedback',
+  'direction-2-select-feedback-repairs-by-their-learning-effects': 'ii-safety-preserving-learning-and-feedback',
+  'contribution-and-decisive-evidence-2': 'ii-safety-preserving-learning-and-feedback',
+  'direction-1-carry-constraints-through-task-decomposition': 'iii-control-across-time-and-delegation',
+  'direction-2-revise-control-when-its-assumptions-change': 'iii-control-across-time-and-delegation',
+  'contribution-and-decisive-evidence-3': 'iii-control-across-time-and-delegation',
+  'long-term-direction-ai-assisted-research-that-can-improve-safely': 'iii-control-across-time-and-delegation',
   'two-directions-and-a-shared-foundation': 'research-overview',
   'network-overview': 'research-overview',
   'essay-i-assured-agency': 'iii-control-across-time-and-delegation',

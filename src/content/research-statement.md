@@ -1,87 +1,56 @@
-My research focuses on how AI agents can become more capable through learning and interaction while remaining safe, reliable, and subject to meaningful human control. I study three connected questions: what evidence makes oversight effective, which learning signals preserve safety through adaptation, and how control survives long tasks and delegation. My long-term goal is to enable sustained autonomy in scientific research and enterprise work, including AI systems that contribute to their own development. I aim to develop learning and control methods whose benefits persist as models, tools, and workflows change.
+I study how AI agents can learn and carry out long tasks while remaining safe and under human control. My research asks three questions: what evidence is needed before an agent acts, which training changes preserve safety, and how permissions should change when tasks or tools change.
 
-This agenda addresses a concrete industrial transition. Frontier-lab research and engineering work increasingly combines post-training, interactive environments, feedback quality, action monitoring, security boundaries, and the cost of human review. The supporting role audit remains in the downloadable PDF. OpenAI's Auto-review and Meta's Muse show how learned judgment and separately enforced permissions are already being combined in deployed systems [5,13]. These developments motivate my central question: **how can the evidence and controls that justify delegation remain effective as the agent and its environment evolve?**
+The aim is reliable autonomy for scientific research and enterprise work. The collected company JDs provide industry context, not validation of my proposed methods.
 
 ### Research foundation and approach
 
-My work on code language models and program repair provides a foundation in testing learned behavior against execution. Our execution-trace study found limited benefit from trace-based information in the investigated fine-tuning and inference settings [1]. Defects4C grounds repair evaluation in reproducible C/C++ faults and tests [2]; RATCHET studies retrieval-augmented repair [3]. These projects inform my approach: identify the failure mechanism, design an intervention, and test its effect on independently assessed behavior. I will extend this approach to agent learning and control, using software as an initial experimental domain and testing transfer to other digital workflows.
+My work on code models and program repair grounds this agenda in execution-based evaluation. Our execution-trace study found limited gains from trace information in the settings tested [1]. Defects4C provides reproducible C/C++ repair tasks [2], while RATCHET studies retrieval-augmented repair [3]. These projects inform how I design experiments; they do not establish results on agent safety.
 
-Throughout this program, **reliability** means sustained completion of the intended task under stated operating conditions; **safety** concerns specified harmful outcomes; and **authorization** determines who may act on which resources. I measure them separately. An accurate result may still disclose restricted data, and a blocked action may prevent harm while leaving useful work unfinished.
-
-> The next three sections develop the research problems. All future contributions are proposed; no new experimental results are asserted.
-
+I would start with software tasks, then test transfer to other digital workflows. I measure task completion, harmful outcomes, and authorization violations separately: a correct result can still disclose restricted data. The work below is proposed research, not a report of new results.
 
 ---
 
 ## I. Scalable oversight under adaptation
 
-*What must a supervisor observe to justify an agent's next action?*
+*What evidence is needed before an agent acts?*
 
-> **Problem definition.** Given an acting agent, a partially observed environment, explicit task and authority requirements, and a limited review budget, learn an oversight policy that selects evidence and interventions before consequential actions. The target is fewer harmful or unauthorized effects at comparable useful task completion and total cost, including when the actor or an external attacker adapts to the review policy.
+An agent may explain why it needs to export a file without revealing that the destination has changed. A reviewer cannot establish the destination from that explanation alone. AI Control studies supervision under deliberate subversion [4]; Auto-review examines action review at a sandbox boundary [5]. I would study which observations make oversight effective when the agent can influence the evidence.
 
-The difficulty is that the actor can influence both its behavior and the account on which it is judged. In a research workflow, an agent may explain why an export is necessary while omitting that a tool endpoint has changed. A stronger language-model judge cannot infer an unobserved destination reliably from that explanation alone. AI Control already studies supervision under intentional subversion [4], and Auto-review evaluates actions at a sandbox boundary while acknowledging residual attacks and incomplete visibility [5]. I would study how the available evidence determines the limits and effectiveness of oversight.
+I would learn an oversight policy that decides when to query a service, run a sandboxed test, inspect an artifact, or request human review. Each check would be selected for its expected effect on the decision, weighed against delay and cost. The result would support permission to act, a safer plan, or deferral when evidence remains insufficient.
 
-### Direction 1: Learn which evidence changes the decision
+I would also train and test monitors against agents that learn to exploit their blind spots. Experiments would vary the agent's control over evidence, knowledge of the monitor, and relative capability. The hypothesis is that protected observations can improve on transcript-only review. Reasoning traces would be tested alongside external evidence, not treated as independent proof.
 
-I would develop evidence-acquisition policies that choose among service-state queries, sandboxed execution, artifact checks, model review, and human inspection. A candidate method would estimate the expected reduction in decision error from each check, accounting for delay and the consequences of acting before the check completes. It would then use the result to permit an action, request a safer plan, or defer. The intended advance is a method for selecting decision-relevant observations and recognizing when the available view is insufficient. A check needs a stated property: a signed receipt establishes origin, while a trusted execution test may establish a bounded behavioral fact.
-
-### Direction 2: Preserve oversight signals under optimization
-
-I would train and evaluate monitors against actors that learn to exploit their blind spots. The study would vary the actor's control over evidence, its knowledge of the monitor, and the capability gap between them. Reasoning traces, when available, would be tested alongside externally collected evidence; neither verbal explanations nor the use of a different model establishes independence. My working hypothesis is that selective access to protected observations can improve oversight robustness beyond transcript-only review, and that its value depends on which facts the actor can conceal or alter.
-
-### Contribution and decisive evidence
-
-The contribution sought is a learned oversight policy together with an account of its information requirements. I would compare it with a stronger transcript reviewer, fixed checks, random audits, and an evidence-equipped reviewer under matched budgets. The evaluation would separate failure to detect a violation from failure to enforce a correct decision. An advantage that disappears under adaptive attacks or depends on privileged access unavailable in deployment would narrow the claim. Initial theory would characterize observation and intervention requirements in explicit models; empirical work would establish how far those conditions transfer.
+Comparisons would include stronger transcript reviewers, fixed checks, random audits, and reviewers with the same external evidence, at matched task completion and total cost. I would separate missed violations from failures to enforce a correct decision. Gains that disappear under adaptive attacks or require unavailable deployment data would limit the claim. Formal models would clarify which observations and interventions oversight requires.
 
 ---
 
 ## II. Safety-preserving learning and feedback
 
-*Which changes to training improve the agent's subsequent behavior?*
+*Which training changes improve behavior without weakening safety?*
 
-> **Problem definition.** Given an assessed agent and a specified sequence of capability updates, design learning signals and update-selection methods that improve useful performance while limiting regression on fixed safety requirements. When feedback itself is repaired, the target is the resulting agent's independently measured behavior after learning. A better evaluator score alone is insufficient evidence of improvement.
+Fine-tuning can weaken previously learned safety behavior [6]. RUBAS studies rubric-based rewards [7], and ToolShield uses defensive experience for multi-turn tool use [8]. I would investigate which learning signals transfer to new tasks and remain effective after further capability training.
 
-Adaptation changes behavior and the data available for later learning. Fine-tuning can compromise safety [6]; RUBAS supplies trajectory-level rubric rewards [7], and ToolShield develops defensive experience for multi-turn tool use [8]. Building on these foundations, I would investigate which distinctions learned from feedback transfer to new environments and persist through subsequent capability training.
+One approach is to train on paired tasks with the same legitimate goal but different recipients, permissions, or tool effects. Each pair would retain a valid authorized solution. I would test whether outcome feedback and independently checked constraints teach why an action is acceptable in one case but not the other. I would compare this with safety fine-tuning, adversarial training, and rubric-based reinforcement learning using matched data.
 
-### Direction 1: Train on consequential decision differences
+A second question is which defects in feedback deserve repair first. A frequent labeling error may barely affect learning, while a rare exploitable reward can redirect behavior. I would use limited training experiments to predict the effects of repairing a reward model, evaluator, or simulator. Matched updates with and without a repair would test those predictions against independently assessed outcomes, extending work on automated alignment research [9].
 
-I would construct matched task pairs that preserve the legitimate goal while changing the recipient, data-use scope, instruction source, or a tool's external effect. Training would combine outcome feedback with separately checked constraint labels and retain a feasible authorized solution. The hypothesis is that these contrasts teach the dependence of a decision on authority and consequences. Comparisons with matched-data adversarial training, ordinary safety fine-tuning, and rubric-based RL would measure transfer and retention after further capability updates. Gains from broad refusal would not support the hypothesis.
-
-### Direction 2: Select feedback repairs by their learning effects
-
-Which defect in a reward model, evaluator, or simulator most needs repair before the next training stage? A frequent labeling error may have little learning effect, while a rare exploitable reward can redirect the policy. I would predict how candidate repairs change future trajectory distributions, using controlled interventions and limited training branches. The target is a reusable estimator and repair-selection rule, tested against prioritization by current error frequency, severity, or judge disagreement.
-
-The causal target is the difference in independently assessed outcomes after matched updates with and without a repair. Predictions must account for adaptation: the largest reward change need not produce the best behavior. Automated alignment research demonstrates gains on well-characterized failures [9]. I would study reliable feedback selection when optimization alters which failures matter.
-
-### Contribution and decisive evidence
-
-I would seek learning methods with measurable safety retention and repair-effect predictions that generalize to unseen repairs or update stages. Validation would keep outcome criteria fixed, isolate test access, and measure actual post-update behavior over multiple seeds. The cost of selecting repairs, including exploratory training branches, counts toward the budget. Failure to beat simple repair-priority rules at matched total cost would reject the added machinery. Improvements confined to a single model, task family, or update schedule would be reported at that scope.
+Evaluation would use held-out tasks, fixed safety criteria, and multiple training seeds. Repair selection must beat simple priorities based on error frequency, severity, or reviewer disagreement at matched total cost, including exploratory training. I would measure safety retention after later updates and transfer to unseen repairs. Better evaluator scores or broader refusal would not count as improved behavior.
 
 ---
 
 ## III. Control across time and delegation
 
-*When do local restrictions remain sufficient for a changing workflow?*
+*Which permissions remain valid when a workflow changes?*
 
-> **Problem definition.** Given a long-running workflow, identified principals, changing tools or permissions, and global constraints, design a protocol that preserves authorized execution through handoffs and partial failure. The target is useful joint completion with bounded violations and intervention cost under an explicit adversary and trusted execution boundary.
+An approval may become invalid when a tool changes or access is revoked. Delegation adds another risk: one agent can pass private information to another with permission to send messages externally. Separate local checks may miss the combined disclosure. I would study how control can preserve authorized execution across handoffs and partial failures.
 
-An agent replacement, permission revocation, or tool change can invalidate approvals for pending work. Cooperation adds another difficulty: an agent with private-data access can pass a derived artifact to another with external communication privileges. Isolated checks may miss the resulting disclosure. I would study what state control must retain across time and organizational boundaries.
+I would attach constraints to delegated work: who authorized it, permitted operations, data dependencies, and conditions for validity. Learned components could propose task splits, while an independent execution layer enforces checkable restrictions. The theory would identify when local checks imply a workflow-wide property, and when they do not. Uncertain effects would require conservative handling or human review.
 
-### Direction 1: Carry constraints through task decomposition
+I would then track the dependencies behind approvals. A change would trigger new evidence and suspend or replan affected work while preserving valid progress. This builds on information-flow controls such as CaMeL and Fides [10,11]. EvoSafeHarness studies deployment-specific controls [12], while Muse separates action execution from permission authority [13]. My focus is how those controls remain justified during a changing workflow.
 
-I would bind delegated work to its principal, permitted operations, data dependencies, and validity conditions. Learned components would propose task decompositions; an independent execution layer would check machine-enforceable restrictions. The theoretical target is to identify when local checks imply a stated workflow property, and counterexamples when they do not. Identity, evidence quality, authorization, and task correctness remain distinct; unknown semantic effects require conservative handling or human judgment.
+Comparisons would include stateful access control, information-flow enforcement, whole-workflow suspension, and learned controls with the same information and authority. I would measure completion, violations, review effort, and recovery cost, including tests with compromised agents. Formal guarantees would apply only to stated assumptions and trusted components; rollback cannot undo information already disclosed.
 
-### Direction 2: Revise control when its assumptions change
-
-I would identify which pending decisions require renewed evidence after a change, tracking dependencies behind approvals to suspend or replan affected work while preserving valid progress. This builds on information-flow defenses such as CaMeL and Fides [10,11]. EvoSafeHarness already optimizes policies and executable controls for a frozen model in a target domain [12], and Muse separates its acting runtime from permission authority [13]. My target is control that evolves during an ongoing workflow while retaining an explicit basis for each permitted effect.
-
-### Contribution and decisive evidence
-
-Comparisons would include stateful access control, information-flow enforcement, whole-workflow suspension, and learned harnesses with the same information and authority. I would measure unauthorized effects, completion, review demand, recovery costs, and unresolved obligations. Formal guarantees would apply only to the modeled property and trusted components; rollback cannot erase external disclosure. Cross-agent tests would include compromised participants and messages, without assuming shared objectives or protocol compliance.
-
-### Long-term direction: AI-assisted research that can improve safely
-
-Together, these problems support a longer-term program in autonomous research and AI development. Agents could propose changes to training data, tools, and evaluators while separate processes establish whether those changes improve behavior and preserve control. I would begin with oversight and learning, then extend validated mechanisms to delegation. The scientific ambition is to understand when useful autonomy can grow without outrunning the evidence needed to supervise it.
+I would begin with oversight and learning, then extend validated methods to delegation. Longer term, I want AI systems to help improve research tools and training processes while independent checks establish whether those changes are useful, safe, and authorized.
 
 ---
 
