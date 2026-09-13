@@ -30,6 +30,9 @@ const STATIC_ROUTES = [
   { path: '/statement', changefreq: 'monthly', priority: '0.9' },
   { path: '/pubs', changefreq: 'monthly', priority: '0.9' },
   { path: '/work', changefreq: 'monthly', priority: '0.8' },
+  { path: '/work/xiaomi-portrait-ai', changefreq: 'yearly', priority: '0.7' },
+  { path: '/work/58-web-infrastructure', changefreq: 'yearly', priority: '0.7' },
+  { path: '/zh/work/58-web-infrastructure', changefreq: 'yearly', priority: '0.7' },
   { path: '/cv',   changefreq: 'monthly', priority: '0.7' },
   { path: '/blog', changefreq: 'weekly',  priority: '0.9' },
 ];

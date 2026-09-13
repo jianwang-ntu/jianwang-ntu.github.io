@@ -8,6 +8,8 @@ import Blog from './pages/Blog.jsx';
 import BlogPost from './pages/BlogPost.jsx';
 import PublicationDetail from './pages/PublicationDetail.jsx';
 import Statement from './pages/Statement.jsx';
+import XiaomiPortraitAI from './pages/XiaomiPortraitAI.jsx';
+import FiftyEightWebInfrastructure from './pages/FiftyEightWebInfrastructure.jsx';
 
 function ScrollToTop() {
   const { pathname, hash, key } = useLocation();
@@ -49,6 +51,9 @@ export default function App() {
         <Route path="/pubs" element={<Publications />} />
         <Route path="/pubs/:key" element={<PublicationDetail />} />
         <Route path="/work" element={<WorkProjects />} />
+        <Route path="/work/58-web-infrastructure" element={<FiftyEightWebInfrastructure />} />
+        <Route path="/zh/work/58-web-infrastructure" element={<FiftyEightWebInfrastructure lang="zh-CN" />} />
+        <Route path="/work/xiaomi-portrait-ai" element={<XiaomiPortraitAI />} />
         <Route path="/cv" element={<CV />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:slug" element={<BlogPost />} />

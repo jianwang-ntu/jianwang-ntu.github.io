@@ -28,7 +28,7 @@ export default function ProjectMap() {
               <text x={x + 58} y={y + 36} className="map-title">{room.title}</text>
               <text x={x + 328} y={y + 36} className="map-arrow">↗</text>
             </Link>
-            <text x={x + 22} y={y + 69} className="map-type">{index < 2 ? 'RESEARCH · PAPER ARTIFACTS' : 'INDUSTRY · CASE STUDIES COMING SOON'}</text>
+            <text x={x + 22} y={y + 69} className="map-type">{index < 2 ? 'RESEARCH · PAPER ARTIFACTS' : 'INDUSTRY · PROJECT RECORDS'}</text>
             {projects.map((p, i) => <Link key={p.id} to={`/work#${p.id}`} className="map-project" aria-label={`View ${p.title}`}>
               <rect x={x + 16} y={y + 82 + i * 30} width="320" height="27" rx="2" className="map-hit" />
               <text x={x + 25} y={y + 100 + i * 30} className="map-label">{p.title}</text>

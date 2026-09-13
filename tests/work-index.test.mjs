@@ -28,9 +28,17 @@ test('every project has a unique deep link, room and evidenced skills', () => {
   }
 });
 
-test('incomplete case studies remain explicitly TODO', () => {
-  for (const id of ['58-web', 'xiaomi-emoji', 'xiaomi-portrait']) {
-    assert.equal(WORK_PROJECTS.find(p => p.id === id).status, 'TODO');
+test('published industry case studies expose their internal project pages', () => {
+  const expectedPages = {
+    '58-web': '/work/58-web-infrastructure',
+    'xiaomi-emoji': '/work/xiaomi-portrait-ai',
+    'xiaomi-portrait': '/work/xiaomi-portrait-ai',
+  };
+
+  for (const [id, href] of Object.entries(expectedPages)) {
+    const project = WORK_PROJECTS.find(p => p.id === id);
+    assert.equal(project.status, 'Published');
+    assert.ok(project.links.some(link => link.href === href));
   }
 });
 

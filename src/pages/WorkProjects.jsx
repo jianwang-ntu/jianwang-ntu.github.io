@@ -35,6 +35,53 @@ export default function WorkProjects() {
         their papers and artifacts; industry entries describe work in production.
         The <Link to="/statement#published-foundations">research statement</Link> explains how these methods and
         experiences inform the future agenda.</p>
+      <section className="industry-case-studies" aria-labelledby="industry-case-studies-title">
+        <header className="industry-case-studies-heading">
+          <p className="portfolio-eyebrow">From implementation to deployment</p>
+          <h2 id="industry-case-studies-title">Industry Case Studies</h2>
+        </header>
+        <div className="industry-feature-list">
+          <article className="ap-proj industry-feature f8-feature">
+            <Link to="/work/58-web-infrastructure" className="industry-feature-visual" aria-label="Read Shared web infrastructure at 58.com">
+              <img
+                src="/images/projects/58/shared-middleware-architecture.svg"
+                sizes="(max-width: 820px) calc(100vw - 36px), 420px"
+                width="1440"
+                height="900"
+                loading="lazy"
+                decoding="async"
+                alt="App-facing services, Mobile WAP, and business lines using one shared asynchronous web framework."
+              />
+            </Link>
+            <div className="ap-pub-body">
+              <p className="industry-feature-overline">58.com · 2011–2017</p>
+              <h3 className="ap-pub-title"><Link to="/work/58-web-infrastructure">Shared web infrastructure at 58.com</Link></h3>
+              <p>An asynchronous web framework, reusable middleware, and a custom Nginx traffic router supporting App, Mobile WAP, and multiple business lines.</p>
+              <Link to="/work/58-web-infrastructure" className="ap-lnk">Systems case study →</Link>
+            </div>
+          </article>
+          <article className="ap-proj industry-feature xiaomi-feature">
+            <Link to="/work/xiaomi-portrait-ai" className="industry-feature-visual" aria-label="Read Portrait intelligence at Xiaomi">
+              <img
+                src="/images/projects/xiaomi/portrait-segmentation-reconstruction-768.jpg"
+                srcSet="/images/projects/xiaomi/portrait-segmentation-reconstruction-768.jpg 768w, /images/projects/xiaomi/portrait-segmentation-reconstruction.jpg 1536w"
+                sizes="(max-width: 820px) calc(100vw - 36px), 420px"
+                width="768"
+                height="512"
+                loading="lazy"
+                decoding="async"
+                alt="Portrait segmentation sequence showing a source portrait, person mask, and background-blur composite."
+              />
+            </Link>
+            <div className="ap-pub-body">
+              <p className="industry-feature-overline">Xiaomi AI Lab · 2017–2019</p>
+              <h3 className="ap-pub-title"><Link to="/work/xiaomi-portrait-ai">Portrait intelligence at Xiaomi</Link></h3>
+              <p>Portrait semantic segmentation and GAN-based selfie cartoonisation, taken from GPU training to mobile accelerators.</p>
+              <Link to="/work/xiaomi-portrait-ai" className="ap-lnk">Visual case study →</Link>
+            </div>
+          </article>
+        </div>
+      </section>
       <section className="work-rooms" id="project-rooms" aria-labelledby="project-rooms-title">
       <header className="work-rooms-heading">
         <p className="portfolio-eyebrow">Explore by function</p>
@@ -79,7 +126,9 @@ export default function WorkProjects() {
                 <Link key={skill} to={`/work?skill=${encodeURIComponent(skill)}#project-index`}>{skill}</Link>)}</div>
               <div className="project-resources">
                 {p.publication && <Link to={`/pubs/${p.publication}`}>Publication details ↗</Link>}
-                {p.links.map(link => <a key={link.href} href={link.href} target="_blank" rel="noreferrer">{link.label} ↗</a>)}
+                {p.links.map(link => link.href.startsWith('/')
+                  ? <Link key={link.href} to={link.href}>{link.label} →</Link>
+                  : <a key={link.href} href={link.href} target="_blank" rel="noreferrer">{link.label} ↗</a>)}
               </div>
               {p.figure && <details className="project-figure"><summary>View research figure</summary><Figure id={p.figure} /></details>}
             </article>)}

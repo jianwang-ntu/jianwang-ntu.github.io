@@ -126,6 +126,25 @@ const STATIC_ROUTES = [
   { path: '/research', canonicalPath: '/statement', title: 'Research Statement', desc: "Trustworthy agent networks for individuals, groups and companies: assured agency, collective agency, and independent evidence with controlled adaptation." },
   { path: '/pubs', title: 'Publications',   desc: 'Peer-reviewed research and preprints by Jian Wang on code LLM security, fake-content detection, and program repair.' },
   { path: '/work', title: 'Work & Projects', desc: 'Research artifacts and industry projects by Jian Wang, indexed by year, skill and project room.' },
+  {
+    path: '/work/xiaomi-portrait-ai',
+    title: 'Portrait Intelligence at Xiaomi',
+    desc: 'Portrait semantic segmentation and GAN-based selfie cartoonisation, taken from GPU training to on-device inference.',
+    image: `${SITE_URL}/images/projects/xiaomi/portrait-segmentation-reconstruction.jpg`,
+  },
+  {
+    path: '/work/58-web-infrastructure',
+    title: 'Web Infrastructure at 58.com',
+    desc: 'Two infrastructure projects from 58.com: a shared asynchronous web framework and a custom traffic-routing module for Nginx.',
+    image: `${SITE_URL}/images/projects/58/shared-web-infrastructure.png`,
+  },
+  {
+    path: '/zh/work/58-web-infrastructure',
+    title: '58同城的 Web 基础设施',
+    desc: '在 58同城参与的两个基础设施项目：面向多业务线的异步 Web 框架，以及运行在 Nginx 内的流量路由模块。',
+    image: `${SITE_URL}/images/projects/58/shared-web-infrastructure.png`,
+    lang: 'zh-CN',
+  },
   { path: '/cv',   title: 'CV',             desc: 'Curriculum vitae — education, employment, talks, awards.' },
   { path: '/blog', title: 'Blog',           desc: 'Notes and summaries — auto-drafted from talks, papers, and posts; edited by hand.' },
 ];
@@ -148,9 +167,14 @@ for (const r of STATIC_ROUTES) {
     title: r.title,
     description: r.desc,
     canonicalPath: r.canonicalPath || r.path,
+    image: r.image,
     ogType: 'website',
   });
-  writeRoute(r.path, patchHead(baseHtml, block));
+  const routeHtml = patchHead(baseHtml, block).replace(
+    /<html lang="[^"]*"/,
+    `<html lang="${r.lang || 'en'}"`,
+  );
+  writeRoute(r.path, routeHtml);
 }
 
 // 2) Each blog post, with BlogPosting JSON-LD for richer search results.
