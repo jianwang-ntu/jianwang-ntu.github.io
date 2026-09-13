@@ -7,12 +7,13 @@ import Footer from '../components/Footer.jsx';
 import Seo from '../components/Seo.jsx';
 import SiteFrame from '../components/SiteFrame.jsx';
 import ResearchOverview from '../components/ResearchOverview.jsx';
-import ResearchPath from '../components/ResearchPath.jsx';
+import ReadingTable from '../components/ReadingTable.jsx';
 import markdown from '../content/research-statement.md?raw';
 import { statementHeadings } from '../statement-headings.js';
 import { resolveStatementHash } from '../research-agenda.js';
 
 const headings = statementHeadings(markdown);
+const sections = headings.filter(heading => heading.level === 2);
 function LinkedHeading({ node, children, level }) {
   const heading = headings.find(h => h.line === node.position.start.line);
   const Tag = `h${level}`;
@@ -24,33 +25,29 @@ export default function Statement() {
   const redirect = resolveStatementHash(hash);
   if (redirect) return <Navigate to={`/statement${search}#${redirect}`} replace />;
   return <div className="page">
-    <Seo title="Research Statement" description="Trustworthy agent networks for individuals, groups and companies: assured agency, collective agency, and independent evidence with controlled adaptation." path="/statement" />
+    <Seo title="Research Statement" description="Reliable autonomy for adaptive AI agents through scalable oversight, safety-preserving learning, and secure delegation." path="/statement" />
     <Nav skipToContent />
     <SiteFrame className="statement-shell">
-        <p className="portfolio-eyebrow">Research statement · September 2026</p>
-        <h1>Trustworthy agent networks</h1>
-        <p className="statement-lead">How can AI agents expand what <strong>individuals, groups and companies</strong> accomplish,
-          while preserving authority, privacy and commitments as they learn and cooperate?</p>
+        <p className="portfolio-eyebrow">Research statement · 13 September 2026</p>
+        <h1>Reliable autonomy for adaptive AI agents</h1>
+        <p className="statement-lead">Scalable oversight, safety-preserving learning, and secure delegation.</p>
         <ResearchOverview />
-        <p>My agenda connects <a href="#assured-agency">assured agency</a>—accountable representation through change—with{' '}
-          <a href="#collective-agency">collective agency</a>—cooperation across independent people and organizations.
-          <a href="#independent-evidence-and-controlled-adaptation"> Independent evidence and controlled adaptation</a> link the two.</p>
-        <div className="statement-download"><a href="/data/Jian_Wang_Research_Statement_202609.pdf" target="_blank" rel="noreferrer">Full research statement (PDF) ↗</a>
-          <a href="#published-foundations">Published foundations ↓</a></div>
+        <div className="statement-download"><a href="/data/Jian_Wang_Research_Statement_2026.pdf" target="_blank" rel="noreferrer">Full research statement (PDF) ↗</a>
+          <a href="#research-foundation-and-approach">Research foundation ↓</a></div>
         <nav className="statement-toc" aria-label="Statement sections">
           <span>The research agenda</span>
-          <ol>{headings.map(h => <li key={h.id}><a href={`#${h.id}`}>{h.title}</a></li>)}</ol>
+          <ol>{sections.map(heading => <li key={heading.id}><a href={`#${heading.id}`}>{heading.title}</a></li>)}</ol>
         </nav>
         <article className="statement-body" aria-label="Research statement text">
           <ReactMarkdown remarkPlugins={[remarkGfm]} components={{
             h2: props => <LinkedHeading {...props} level={2} />,
             h3: props => <LinkedHeading {...props} level={3} />,
+            table: ReadingTable,
           }}>{markdown}</ReactMarkdown>
         </article>
-        <ResearchPath />
         <div className="statement-download"><Link to="/pubs">Browse the published evidence ↗</Link>
-          <Link to="/work#research-projects">Explore the repair projects ↗</Link>
-          <a href="#network-overview">Back to the overview ↑</a></div>
+          <Link to="/work#research-projects">Explore earlier research projects ↗</Link>
+          <a href="#research-overview">Back to the overview ↑</a></div>
     </SiteFrame><Footer />
   </div>;
 }
