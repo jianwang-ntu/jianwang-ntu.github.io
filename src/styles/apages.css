@@ -10,8 +10,8 @@
    ══════════════════════════════════════════════════════════════════════ */
 
 [data-style="apages"] {
-  --ap-ink: #222222;
-  --ap-ink-muted: #555a5e;
+  --ap-ink: #29343a;
+  --ap-ink-muted: #5c6970;
   --ap-blue: #52adc8;
   --ap-ground: #ffffff;
   --ap-foot-bg: #f2f3f3;
@@ -19,7 +19,7 @@
   --ap-hair: #f2f3f3;
   --ap-hair-strong: #dcdee0;
   --ap-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-             "Helvetica Neue", Arial, sans-serif;
+             "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
 
   /* Redefine the base design tokens inside this theme. The wireframe look —
      the Caveat script headings and dashed rules — is driven by --hand and
@@ -56,22 +56,23 @@
 [data-style="apages"] body {
   font-family: var(--ap-sans);
   color: var(--ap-ink);
-  font-size: 16px;
-  line-height: 1.6;
+  font-size: 17px;
+  line-height: 1.8;
 }
 [data-style="apages"] .page {
   width: 100%;
-  max-width: 1180px;
+  max-width: 1120px;
   background: var(--ap-ground);
   color: var(--ap-ink);
 }
-[data-style="apages"] p { font-size: 16px; line-height: 1.62; margin: 0 0 16px; }
+[data-style="apages"] p { font-size: 17px; line-height: 1.8; margin: 0 0 20px; }
 [data-style="apages"] a { color: var(--ap-blue); text-decoration: none; }
 [data-style="apages"] a:visited { color: var(--ap-blue); }
 [data-style="apages"] a:hover { text-decoration: underline; }
 [data-style="apages"] h1, [data-style="apages"] h2,
 [data-style="apages"] h3, [data-style="apages"] h4 {
-  font-family: var(--ap-sans); color: var(--ap-ink); font-weight: 700;
+  font-family: var(--ap-sans); color: var(--ap-ink); font-weight: 600;
+  text-wrap: pretty;
 }
 [data-style="apages"] h1 { font-size: 28px; line-height: 1.25; }
 [data-style="apages"] h2 { font-size: 22px; line-height: 1.3; }
@@ -83,34 +84,36 @@
   background: var(--ap-ground);
   border-bottom: 1px solid var(--ap-hair);
   padding: 0 var(--page-pad-x);
-  min-height: 65px;
-  max-width: 1180px;
+  min-height: 80px;
+  max-width: 1120px;
+  gap: 24px;
   margin: 0 auto;
 }
 [data-style="apages"] .nav .brand {
   font-family: var(--ap-sans);
-  font-size: 17px; font-weight: 700; color: var(--ap-ink);
-  border-bottom: 3px solid var(--ap-blue);
-  padding: 4px 0 6px;
+  font-size: 17px; font-weight: 600; color: var(--ap-ink);
+  flex-shrink: 0;
+  border-bottom: 0;
+  padding: 8px 0;
 }
 [data-style="apages"] .nav .links {
   font-family: var(--ap-sans);
-  font-size: 15px; gap: 26px; align-items: center;
+  font-size: 14px; gap: 22px; align-items: center;
 }
-[data-style="apages"] .nav .links a { color: var(--ap-ink); text-decoration: none; }
+[data-style="apages"] .nav .links a { color: var(--ap-ink-muted); text-decoration: none; padding: 10px 0; }
 [data-style="apages"] .nav .links a:hover { color: var(--ap-blue); }
 [data-style="apages"] .nav .links a.active {
   color: var(--ap-ink); text-decoration: none; box-shadow: inset 0 -2px 0 var(--ap-blue);
 }
 /* ── footer ────────────────────────────────────────────────────────── */
 [data-style="apages"] .foot {
-  background: var(--ap-foot-bg);
-  border-top: 1px solid var(--ap-hair-strong);
-  color: var(--ap-foot-ink);
+  background: transparent;
+  border-top: 1px solid #e8ecee;
+  color: var(--ap-ink-muted);
   font-family: var(--ap-sans); font-size: 13px;
-  padding: 22px var(--page-pad-x);
+  padding: 28px var(--page-pad-x);
 }
-[data-style="apages"] .foot a { color: var(--ap-foot-ink); }
+[data-style="apages"] .foot a { color: var(--ap-ink-muted); }
 [data-style="apages"] .foot a:hover { color: var(--ap-blue); }
 
 /* ── shell: identity rail + content column ─────────────────────────── */
@@ -782,10 +785,10 @@
   max-width: 760px;
   margin: 0;
   color: #223943;
-  font-size: clamp(30px, 4.5vw, 44px);
-  font-weight: 700;
-  letter-spacing: -0.025em;
-  line-height: 1.12;
+  font-size: clamp(28px, 3vw, 34px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
 }
 
 [data-style="apages"] .case-study-deck {
@@ -805,34 +808,32 @@
 }
 
 [data-style="apages"] .case-study-section {
-  padding: 42px 0 8px;
+  padding: 32px 0 0;
   border-top: 1px solid #dce4e8;
 }
 
 [data-style="apages"] .case-study-section + .case-study-section {
-  margin-top: 44px;
+  margin-top: 48px;
 }
 
 [data-style="apages"] .case-study-section > h2 {
   margin: 0 0 18px;
   color: #263c46;
-  font-size: 24px;
-  font-weight: 650;
+  font-size: 23px;
+  font-weight: 600;
 }
 
 [data-style="apages"] .case-study-section > p {
   max-width: 740px;
-  margin: 0 0 14px;
+  margin: 0 0 20px;
   color: #42525a;
-  font-size: 15px;
-  line-height: 1.76;
+  font-size: 17px;
+  line-height: 1.8;
 }
 
 [data-style="apages"] .case-study-figure {
   margin: 28px 0 30px;
-  border-top: 1px solid #dfe5e8;
-  border-bottom: 1px solid #dfe5e8;
-  background: #fbfbfa;
+  background: transparent;
 }
 
 [data-style="apages"] .case-study-figure img {
@@ -844,27 +845,27 @@
 [data-style="apages"] .case-study-figure figcaption {
   padding: 12px 0 13px;
   color: #68757c;
-  font-size: 12.5px;
-  line-height: 1.55;
+  font-size: 14px;
+  line-height: 1.65;
 }
 
 [data-style="apages"] .case-study-notes {
-  margin: 4px 0 18px 25px;
+  margin: 24px 0 24px 0;
   padding-left: 20px;
   border-left: 1px solid #ccd9de;
 }
 
 [data-style="apages"] .case-study-note {
-  margin: 0 0 15px;
+  margin: 0 0 20px;
   color: #42525a;
-  font-size: 14.5px;
-  line-height: 1.73;
+  font-size: 16px;
+  line-height: 1.8;
 }
 
 [data-style="apages"] .case-study-note strong { color: #263c46; }
 [data-style="apages"] .case-study-section > .case-study-evidence {
   color: #6c787e;
-  font-size: 12.5px;
+  font-size: 14px;
 }
 
 [data-style="apages"] .case-study-section > .case-study-closing {
@@ -876,7 +877,7 @@
 
 @media (max-width: 560px) {
   [data-style="apages"] .case-study-back { margin-bottom: 24px; }
-  [data-style="apages"] .case-study-header h1 { font-size: 32px; }
+  [data-style="apages"] .case-study-header h1 { font-size: 28px; }
   [data-style="apages"] .case-study-deck { font-size: 16px; }
   [data-style="apages"] .case-study-section { padding-top: 34px; }
   [data-style="apages"] .case-study-section + .case-study-section { margin-top: 34px; }

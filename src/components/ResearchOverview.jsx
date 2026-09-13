@@ -34,8 +34,16 @@ export default function ResearchOverview() {
           </Link>
         ))}
       </svg>
+      <ul className="research-overview-mobile" aria-label="Research overview">
+        <li><Link to="/statement#assured-agency">Assured agency</Link>
+          <p>Persistent mandates, authorized execution, and capability growth.</p></li>
+        <li><Link to="/statement#collective-agency">Collective agency</Link>
+          <p>Group representation, private coordination, and shared accountability.</p></li>
+        <li><Link to="/statement#independent-evidence-and-controlled-adaptation">Independent evidence and controlled adaptation</Link>
+          <p>Outcome verification, failure diagnosis, and evaluated updates.</p></li>
+      </ul>
       <figcaption>
-        <span>Select a heading or topic box to explore the research agenda.</span>
+        <span>Select a topic to read its research section.</span>
         <a href={overviewUrl} target="_blank" rel="noreferrer">Open full-size overview ↗</a>
       </figcaption>
     </figure>

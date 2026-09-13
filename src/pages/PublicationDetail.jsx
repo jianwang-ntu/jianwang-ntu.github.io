@@ -3,7 +3,7 @@ import { useParams, Link, Navigate } from 'react-router-dom';
 import Nav from '../components/Nav.jsx';
 import Footer from '../components/Footer.jsx';
 import Seo from '../components/Seo.jsx';
-import ApHead from '../components/ApHead.jsx';
+import SiteFrame from '../components/SiteFrame.jsx';
 import Figure from '../components/figures.jsx';
 import Authors from '../components/Authors.jsx';
 import { ALL_PUBS } from '../data.jsx';
@@ -33,9 +33,8 @@ export default function PublicationDetail() {
         path={`/pubs/${meta.key}`}
       />
       <Nav skipToContent />
-      <div className="portfolio-shell publication-detail-shell">
-        <ApHead sidebar />
-        <article id="main-content" className="portfolio-content pub-detail publication-detail">
+      <SiteFrame className="publication-detail-shell">
+        <article className="pub-detail publication-detail">
         <Link to="/pubs" className="pub-back">← all publications</Link>
 
         <h1 className="pub-detail-title">{pub.title}</h1>
@@ -72,7 +71,7 @@ export default function PublicationDetail() {
           </div>
         </details>
         </article>
-      </div>
+      </SiteFrame>
       <Footer />
     </div>
   );

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 /* The identity block that opens every page: centred avatar, name, contact
    lines and a rule-bounded link strip. Shared so Home, Publications and
@@ -14,6 +13,8 @@ export default function ApHead({ sub, sidebar = false }) {
       <img
         src="/images/jornbowrl_circle3.jpg"
         alt="Jian Wang"
+        width="152"
+        height="152"
         className="ap-page-avatar"
         onError={(e) => { e.currentTarget.src = '/images/headshot-ai.png'; e.currentTarget.onerror = null; }}
       />
@@ -21,15 +22,15 @@ export default function ApHead({ sub, sidebar = false }) {
       {sidebar && <p className="profile-degree">PhD · Computer Science</p>}
       <p className="ap-page-meta">
         <a href="mailto:jian004@e.ntu.edu.sg">jian004@e.ntu.edu.sg</a><br />
-        PhD, Nanyang Technological University<br />
+        Nanyang Technological University<br />
         Singapore
       </p>
       <nav className="ap-page-links" aria-label="Profile links">
+        <a href="mailto:jian004@e.ntu.edu.sg">Email</a>
         <a href="https://scholar.google.com/citations?hl=en&user=GAe_mJUAAAAJ" target="_blank" rel="noreferrer">Google Scholar</a>
         <a href="https://github.com/jianwang-ntu" target="_blank" rel="noreferrer">GitHub</a>
         <a href="https://twitter.com/jornbowrl" target="_blank" rel="noreferrer">Twitter</a>
         <a href="/data/Jian_Wang_CV_Academic_202605.pdf" target="_blank" rel="noreferrer">CV</a>
-        <Link to="/statement">Research statement</Link>
       </nav>
       {sub && <p className="ap-page-sub">{sub}</p>}
     </header>

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Nav from '../components/Nav.jsx';
 import Footer from '../components/Footer.jsx';
 import Seo from '../components/Seo.jsx';
-import ApHead from '../components/ApHead.jsx';
+import SiteFrame from '../components/SiteFrame.jsx';
 import Authors from '../components/Authors.jsx';
 import { ALL_PUBS } from '../data.jsx';
 import { PUB_META } from '../data-pubs.js';
@@ -43,22 +43,17 @@ export default function Publications() {
         path="/pubs"
       />
       <Nav skipToContent />
-      <div className="portfolio-shell publications-shell">
-        <ApHead sidebar />
-        <main id="main-content" className="portfolio-content publications-content text-index-page">
-          <p className="portfolio-eyebrow">Software engineering · AI evaluation · Security</p>
+      <SiteFrame className="publications-shell" mainClassName="publications-content text-index-page">
           <h1>Publications</h1>
           <p className="page-deck">Research on program repair, code-model evaluation, neural-network testing, and robustness.</p>
           <p className="text-index-intro">
-            Each entry gives the paper's question or contribution in one sentence. Figures, research context,
-            and citation material are available on the detail pages. My name appears in <b>bold</b>.
+            My name appears in <b>bold</b>. Details include figures, research context, and citations.
           </p>
           <p><Link className="text-link" to="/work#research-projects">Research projects and artifacts ↗</Link></p>
           <div className="text-index-list">
             {ALL_PUBS.map((publication) => <PublicationRow key={publication.id} publication={publication} />)}
           </div>
-        </main>
-      </div>
+      </SiteFrame>
       <Footer />
     </div>
   );

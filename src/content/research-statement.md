@@ -36,11 +36,9 @@ Evaluated updates may improve tools, plans, partner matching or task decompositi
 
 I plan to develop this agenda through collaborative production and private research settings, where contributions, information boundaries, acceptance and partial delivery can be made explicit. Software workflows provide an additional controlled setting for studying execution and repair. These environments help test the general questions across different participants and kinds of work.
 
-| Stage | Research focus |
-| --- | --- |
-| **2026–2027: State and execution** | Define mandate, commitment and evidence semantics. Build controlled contribution tasks and strong stateful/workflow baselines. Study tool changes, revocation and local recovery. |
-| **2027–2028: Adaptation and cooperation** | Study capability updates during ongoing work, group formation and conditional commitments under private information. Test exits, adversarial behavior and evaluator dependence. |
-| **2028–2029: Composition and transfer** | Test cooperation across independently governed groups and companies. Transfer between production and research settings, varying dependency structure, information access and the reversibility of effects. |
+- **2026–2027: State and execution.** Define mandate, commitment and evidence semantics. Build controlled contribution tasks and strong stateful/workflow baselines. Study tool changes, revocation and local recovery.
+- **2027–2028: Adaptation and cooperation.** Study capability updates during ongoing work, group formation and conditional commitments under private information. Test exits, adversarial behavior and evaluator dependence.
+- **2028–2029: Composition and transfer.** Test cooperation across independently governed groups and companies. Transfer between production and research settings, varying dependency structure, information access and the reversibility of effects.
 
 Comparisons would include fixed workflows, strong stateful agents, information-flow controls, constrained coordination, negotiation agents and human coordinators using existing tools. Automated comparisons would match permitted information and resource budgets; an omniscient solver would be a separate upper bound. Tests would vary dependencies, group size, exits, collusion and evaluator dependence.
 
@@ -57,4 +55,4 @@ My earlier work provides experience with failure detection, repair and empirical
 - **[The execution-trace study (EMNLP Findings 2025)](/pubs/code-semantics-execution-traces)** finds limited usefulness from adding traces in the settings studied. It motivates testing which observations improve decisions or expose failure, instead of assuming that additional context supplies reliable evidence.
 - **[The AIGC-detector study (ASE 2024)](/pubs/aigc-detectors-on-code)** examines the difficulty of transferring detection from prose to code. It informs evaluation under changing tasks and models; authorship detection itself does not establish correctness or safe agency.
 
-Earlier work on neural-network testing, repair, fairness and vision robustness adds experience studying AI failures. My industry work contributes experience building and operating useful systems. The [publication archive](/pubs) and [project rooms](/work#project-rooms) document that background; the future program asks how such methods can support agents acting for individuals, groups and companies.
+Earlier work on neural-network testing, repair, fairness and vision robustness adds experience studying AI failures. My industry work contributes experience building and operating useful systems. The [publication archive](/pubs) and [projects](/work) document that background; the future program asks how such methods can support agents acting for individuals, groups and companies.

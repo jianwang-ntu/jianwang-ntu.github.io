@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Nav from '../components/Nav.jsx';
 import Footer from '../components/Footer.jsx';
 import Seo from '../components/Seo.jsx';
-import { Tag } from '../components/primitives.jsx';
+import SiteFrame from '../components/SiteFrame.jsx';
 
 // --------------------------------------------------------------------------- //
 // Label taxonomy — must mirror tools/video-to-blog/pipeline.py LABEL_TAXONOMY
@@ -24,6 +24,7 @@ const LOCAL_KEY = 'blog/clicks';
 const SESSION_KEY = 'blog/posted-this-session';
 
 function readLocal() {
+  if (typeof window === 'undefined') return {};
   try { return JSON.parse(localStorage.getItem(LOCAL_KEY) || '{}') || {}; }
   catch { return {}; }
 }
@@ -82,8 +83,8 @@ function FilterChip({ axis, value, count, active, onToggle }) {
     <button
       type="button"
       className={cls}
+      aria-pressed={active}
       onClick={() => onToggle(axis, value)}
-      style={{ marginRight: 6, marginBottom: 6 }}
     >
       {value} <span style={{ opacity: 0.6, marginLeft: 4 }}>{count}</span>
     </button>
@@ -112,20 +113,15 @@ function FilterBar({ posts, selected, onToggle, onClear }) {
   const anySelected = Object.values(selected).some((s) => s.size > 0);
 
   return (
-    <div style={{ marginBottom: 18, paddingBottom: 14, borderBottom: 'var(--dash)' }}>
+    <div className="blog-filter-options">
       {AXES.map((ax) => {
         const entries = Object.entries(counts[ax.key])
           .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
         if (entries.length === 0) return null;
         return (
-          <div key={ax.key} style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginTop: 6 }}>
-            <span style={{
-              fontFamily: 'var(--mono)', fontSize: 11, opacity: 0.55,
-              minWidth: 64, textTransform: 'uppercase', letterSpacing: 1,
-            }}>
-              {ax.label}
-            </span>
-            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+          <fieldset key={ax.key}>
+            <legend>{ax.label}</legend>
+            <div className="blog-filter-chips">
               {entries.map(([v, c]) => (
                 <FilterChip
                   key={v}
@@ -137,7 +133,7 @@ function FilterBar({ posts, selected, onToggle, onClear }) {
                 />
               ))}
             </div>
-          </div>
+          </fieldset>
         );
       })}
       {anySelected && (
@@ -145,7 +141,6 @@ function FilterBar({ posts, selected, onToggle, onClear }) {
           type="button"
           className="chip sm"
           onClick={onClear}
-          style={{ marginTop: 8, opacity: 0.7 }}
         >
           Clear filters ✕
         </button>
@@ -155,44 +150,18 @@ function FilterBar({ posts, selected, onToggle, onClear }) {
 }
 
 
-function BlogCard({ post, featured, globalCount, onClick }) {
-  const cls = ['blog-post', featured ? 'feat' : '', post.image ? 'has-cover' : '']
-    .filter(Boolean).join(' ');
+function BlogCard({ post, globalCount, onClick }) {
   const langs = post.languages || ['en'];
   return (
-    <Link
-      to={`/blog/${post.slug}`}
-      onClick={() => onClick(post.slug)}
-      className={cls}
-      style={{ textDecoration: 'none', color: 'inherit' }}
-    >
-      <div className="when">
-        {post.date}
-        <div className="meta">
-          {post.source ? 'via video' : ''}
-          {langs.length > 1 && <span> · {langs.join('/').toUpperCase()}</span>}
-          {globalCount > 0 && <span> · {globalCount} read{globalCount > 1 ? 's' : ''}</span>}
-        </div>
-      </div>
-      <div className="body">
-        <div className="ttl">{post.title_en}</div>
-        {post.dek_en && <div className="dek">{post.dek_en}</div>}
-        {(post.labels?.length > 0 || post.tags?.length > 0) && (
-          <div className="tags">
-            {(post.labels || []).map((l) => <Tag key={l}>{l}</Tag>)}
-            {(post.tags || []).map((t) => <Tag key={t} body>{t}</Tag>)}
-          </div>
-        )}
-      </div>
-      {post.image && (
-        <img
-          className="cover"
-          src={`${import.meta.env.BASE_URL.replace(/\/$/, '')}${post.image}`}
-          alt=""
-          loading="lazy"
-        />
-      )}
-    </Link>
+    <article className="blog-entry">
+      <p className="blog-entry-meta">
+        <time dateTime={post.date}>{post.date}</time>
+        {langs.length > 1 && <span> · EN / 中文</span>}
+        {globalCount > 0 && <span> · {globalCount} reads</span>}
+      </p>
+      <h2><Link to={`/blog/${post.slug}`} onClick={() => onClick(post.slug)}>{post.title_en}</Link></h2>
+      {post.dek_en && <p className="blog-entry-deck">{post.dek_en}</p>}
+    </article>
   );
 }
 
@@ -293,62 +262,62 @@ export default function Blog() {
         description="Notes and summaries on agents, harnesses, and engineering — auto-drafted from talks, papers, and posts; edited by hand."
         path="/blog"
       />
-      <Nav />
-      <section className="content">
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+      <Nav skipToContent />
+      <SiteFrame mainClassName="blog-index">
+        <header>
           <h1 className="blog-page-title">Reading notes</h1>
+          <p className="page-deck">Notes on talks, papers and posts by other researchers and practitioners.</p>
+          <p className="text-index-intro">
+            Drafted with AI assistance and edited by hand. For my own work, see the{' '}
+            <Link to="/pubs">publications</Link> and <Link to="/statement">research statement</Link>.
+          </p>
+        </header>
+        <div className="blog-toolbar">
           {posts && posts.length > 0 && (
+            <details className="blog-filters">
+              <summary>Filter notes{Object.values(selected).some(s => s.size > 0) ? ` (${Object.values(selected).reduce((n, s) => n + s.size, 0)} active)` : ''}</summary>
+              <FilterBar posts={posts} selected={selected} onToggle={toggle} onClear={clearAll} />
+            </details>
+          )}
+          {posts && posts.length > 0 && (
+            <label className="blog-sort">Sort
             <select
+              aria-label="Sort reading notes"
               value={sort}
               onChange={(e) => setSort(e.target.value)}
-              style={{
-                fontFamily: 'var(--mono)', fontSize: 11, padding: '4px 8px',
-                background: 'transparent', border: 'var(--line)', borderRadius: 3,
-              }}
             >
               <option value="latest">Latest</option>
               <option value="popular">Popular (most reads)</option>
               <option value="foryou">For you</option>
             </select>
+            </label>
           )}
-        </div>
-        <div style={{ fontSize: 12, opacity: 0.7, marginBottom: 16, fontFamily: 'var(--mono)' }}>
-          Reading notes on talks, papers and posts by other researchers and practitioners. Drafted with AI assistance and edited by hand.
-          {' '}For my own work, see the <Link to="/pubs">publications</Link> and <Link to="/statement">research statement</Link>.
         </div>
 
         {error && <div style={{ color: 'crimson' }}>Could not load posts: {error}</div>}
         {posts === null && !error && <div>Loading…</div>}
 
-        {posts && posts.length > 0 && (
-          <FilterBar
-            posts={posts}
-            selected={selected}
-            onToggle={toggle}
-            onClear={clearAll}
-          />
-        )}
+        {ordered && <p className="blog-result-count" role="status">{ordered.length} notes</p>}
 
         {ordered && ordered.length === 0 && (
-          <div style={{ opacity: 0.6, fontFamily: 'var(--mono)', fontSize: 13 }}>
+          <p className="text-index-intro">
             No posts match the current filters.
-          </div>
+          </p>
         )}
 
         {ordered && ordered.length > 0 && (
           <div>
-            {ordered.map((p, i) => (
+            {ordered.map((p) => (
               <BlogCard
                 key={p.slug}
                 post={p}
-                featured={i === 0 && sort === 'latest'}
                 globalCount={globalCounts[p.slug] || 0}
                 onClick={trackClick}
               />
             ))}
           </div>
         )}
-      </section>
+      </SiteFrame>
       <Footer />
     </div>
   );

@@ -752,8 +752,8 @@
 .ap-fig-photo { margin: 0 0 var(--gap-3); overflow: hidden; }
 .ap-fig-img { display: block; width: 100%; height: auto; border-radius: 3px; background: #fff; }
 .ap-fig-credit {
-  font-family: var(--mono); font-size: var(--t-mono-xs);
-  color: var(--ap-muted); margin-top: 7px; letter-spacing: 0.3px;
+  font-family: var(--body); font-size: 14px; line-height: 1.65;
+  color: #5c6970; padding: 12px 14px;
 }
 
 /* ── publication entry: figure left, content right ─────────────────── */
