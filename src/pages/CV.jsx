@@ -3,6 +3,9 @@ import Nav from '../components/Nav.jsx';
 import Footer from '../components/Footer.jsx';
 import SiteFrame from '../components/SiteFrame.jsx';
 import Seo from '../components/Seo.jsx';
+import { ALL_PUBS } from '../data.jsx';
+import { PUB_META } from '../data-pubs.js';
+import Authors from '../components/Authors.jsx';
 
 function CVBlock({ left, right, title, sub, body }) {
   return (
@@ -29,7 +32,7 @@ export default function CV() {
     <div className="page">
       <Seo
         title="CV"
-        description="Curriculum vitae of Jian Wang — education, employment, talks, awards. PhD conferred Mar 2026."
+        description="Jian Wang’s education, research and industry experience, selected publications, and awards."
         path="/cv"
       />
       <Nav skipToContent />
@@ -68,57 +71,43 @@ export default function CV() {
           right="Singapore"
           title="PhD Student"
           sub="Nanyang Technological University · Deep Learning & LLM Security"
-          body="Large-scale empirical study of 13 AIGC detectors on 2M+ code samples (ASE '24). Built RATCHET retrieval-augmented APR (ISSRE '24). Neuro-symbolic methods for DL testing — NPC, Faire (TOSEM '22, '23). 3rd place + S$100K in AI Singapore deepfake challenge."
+          body="Studied AI-generated code detection and retrieval-augmented program repair. Co-authored work on neural-network testing and fairness repair, including NPC and Faire."
         />
         <CVBlock
           left="Dec 2019 — Aug 2021"
           right="Singapore"
           title="Research Assistant"
           sub="Nanyang Technological University · Deep Learning Security"
-          body="Pre-PhD research bridge — neural-network testing, robustness analysis, and the early infrastructure that became NPC and the AIGC-detector study."
+          body="Research on neural-network testing, robustness, and repair."
         />
         <CVBlock
           left="2017 — 2019"
           right="Beijing"
           title="Research Scientist · Xiaomi AI Lab"
           sub="Xiaomi Group · AI Lab"
-          body="Trained GANs for portrait background removal and face cartoonisation. Owned full pipeline: GPU training (CUDA / PyTorch) → quantisation / pruning → ONNX/IR → on-device inference on Hexagon DSP / Kirin NPU. Cascaded multi-mask approach for natural-scene blur."
+          body={<>Worked on portrait segmentation and GAN-based selfie cartoonisation, from PyTorch/CUDA training through compression and ONNX/IR conversion to mobile inference. <a href="/work/xiaomi-portrait-ai">Project details</a>.</>}
         />
         <CVBlock
           left="2011 — 2017"
           right="Beijing"
           title="Backend Engineer · 58.com"
           sub="58 Inc. · Mobile Web / Backend Infrastructure"
-          body="Designed and shipped a high-performance asynchronous web framework that handles 100M+ daily requests in production, and a user-profiling and behavior-analytics platform. Owned reliability, latency, scalability."
+          body={<>Built a shared asynchronous web framework serving 100M+ daily requests and a custom Nginx traffic router for multiple business lines. <a href="/work/58-web-infrastructure">Project details</a>.</>}
         />
         <CVBlock left="2011" right="Beijing" title="Data Engineering Intern" sub="Baidu, Inc." body="Contributed to large-scale data pipelines." />
 
         <CVH>Selected publications</CVH>
         <div className="cv-publications">
-          <div><b>Wang J.</b>, Xie X., Hu Q., Liu S., Yu J., Kong J., Li Y. <i>Defects4C: Benchmarking Large Language Model Repair Capability with C/C++ Bugs.</i> <b>ASE '25</b>.</div>
-          <div style={{ marginTop: 6 }}><b>Wang J.</b>, Xie X., Hu Q., Liu S., Li Y. <i>Do Code Semantics Help? A Comprehensive Study on Execution Trace-Based Information for Code LLMs.</i> <b>EMNLP Findings '25</b>.</div>
-          <div style={{ marginTop: 6 }}><b>Wang J.</b>, Liu S., Xie X., Siow J. K., Liu K., Li Y. <i>RATCHET: Retrieval Augmented Transformer for Program Repair.</i> <b>ISSRE '24</b>.</div>
-          <div style={{ marginTop: 6 }}><b>Wang J.</b>, Liu S., Xie X., Li Y. <i>An Empirical Study to Evaluate AIGC Detectors on Code Content.</i> <b>ASE '24</b>.</div>
-          <div style={{ marginTop: 6 }}>Liu S., Ma W., <b>Wang J.</b>, Xie X., Feng R., Liu Y. <i>Enhancing Code Vulnerability Detection via Vulnerability-Preserving Data Augmentation.</i> <b>LCTES '24</b>.</div>
-          <div style={{ marginTop: 6 }}>Li T., Xie X., <b>Wang J.</b>, et al. <i>Faire: Repairing Fairness of Neural Networks via Neuron Condition Synthesis.</i> <b>ACM TOSEM '23</b>.</div>
-          <div style={{ marginTop: 6 }}>Xie X., Li T., <b>Wang J.</b>, et al. <i>NPC: Neuron Path Coverage via Characterizing Decision Logic of DNNs.</i> <b>ACM TOSEM '22</b>.</div>
-          <div style={{ marginTop: 6 }}>Xie X., Guo W., Ma L., Le W., <b>Wang J.</b>, et al. <i>Automatic RNN Repair via Model-based Analysis.</i> <b>ICML '21</b>.</div>
-          <div style={{ marginTop: 6 }}>Guo Q., Juefei-Xu F., Xie X., Ma L., <b>Wang J.</b>, et al. <i>Watch out! Motion is Blurring the Vision of Your Deep Neural Networks.</i> <b>NeurIPS '20</b>.</div>
-          <div style={{ marginTop: 6 }}>Wang R., Juefei-Xu F., Ma L., Xie X., Huang Y., <b>Wang J.</b>, Liu Y. <i>FakeSpotter: A Simple yet Robust Baseline for Spotting AI-Synthesized Fake Faces.</i> <b>IJCAI '20</b>.</div>
+          {ALL_PUBS.filter(pub => ['C5', 'C4', 'C3'].includes(pub.id)).map(pub => (
+            <p key={pub.id}><Authors names={PUB_META[pub.id].authors} />.{' '}
+              <a href={`/pubs/${PUB_META[pub.id].key}`}>{pub.title}</a>. {pub.venue}, {pub.year}.</p>
+          ))}
           <p className="reading-links"><a href="/pubs">All publications</a><a href="https://scholar.google.com/citations?hl=en&user=GAe_mJUAAAAJ" target="_blank" rel="noreferrer">Google Scholar ↗</a></p>
         </div>
 
         <CVH>Honors & awards</CVH>
         <div className="cv-prose">
           <p><b>2022</b> · S$100,000 prize · 3rd place · AI Singapore Deepfake Detection Challenge (international)</p>
-          <p><b>2019</b> · AI / Computer Vision Certification · Tsinghua University</p>
-        </div>
-
-        <CVH>Engineering highlights</CVH>
-        <div className="cv-prose">
-          <p><b>Production scale:</b> async web framework powering 100M+ daily requests at 58.com.</p>
-          <p><b>End-to-end ML:</b> trained, quantised, and deployed GAN-based portrait models onto Qualcomm Hexagon DSP / HiSilicon Kirin NPU at Xiaomi.</p>
-          <p><b>Research artifacts:</b> <a href="/work#research-projects">Defects4C, tracewise probing, RATCHET, FGVulDet and the AIGC-detector study</a>.</p>
         </div>
 
         <CVH>Skills</CVH>
@@ -132,7 +121,6 @@ export default function CV() {
           ].join(' · ')}
         </p>
 
-        <p className="cv-closing">References available on request.</p>
       </SiteFrame>
 
       <Footer />

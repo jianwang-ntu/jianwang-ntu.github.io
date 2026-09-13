@@ -76,7 +76,7 @@ test('Xiaomi case study explains both visual pipelines and their deployment cons
   }
 
   assert.match(html, /Historical model size, FPS, and latency measurements were not retained/);
-  assert.match(html, /verified deployment logic without asserting Xiaomi’s proprietary topology or losses/);
+  assert.match(html, /diagrams explain system roles rather than proprietary model designs/);
   assert.match(html, /aria-label="Profile"/);
   assert.equal((article.match(/<h2\b/g) || []).length, 3);
   assert.match(article, /Mobile deployment and validation/);

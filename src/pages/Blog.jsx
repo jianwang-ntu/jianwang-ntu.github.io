@@ -259,7 +259,7 @@ export default function Blog() {
     <div className="page">
       <Seo
         title="Blog"
-        description="Notes and summaries on agents, harnesses, and engineering — auto-drafted from talks, papers, and posts; edited by hand."
+        description="AI-assisted reading notes on talks, papers, and posts about AI and software engineering, with links to original sources."
         path="/blog"
       />
       <Nav skipToContent />
@@ -268,8 +268,7 @@ export default function Blog() {
           <h1 className="blog-page-title">Reading notes</h1>
           <p className="page-deck">Notes on talks, papers and posts by other researchers and practitioners.</p>
           <p className="text-index-intro">
-            Drafted with AI assistance and edited by hand. For my own work, see the{' '}
-            <Link to="/pubs">publications</Link> and <Link to="/statement">research statement</Link>.
+            Written with AI assistance. Each note links to its original source where available.
           </p>
         </header>
         <div className="blog-toolbar">

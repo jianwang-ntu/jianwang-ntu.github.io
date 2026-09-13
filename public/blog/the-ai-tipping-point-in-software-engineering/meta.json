@@ -2,7 +2,7 @@
   "slug": "the-ai-tipping-point-in-software-engineering",
   "title_en": "The AI Tipping Point in Software Engineering: Why Teams Need to Think in Ecosystems, Not Tools",
   "date": "2026-05-19",
-  "dek_en": "Adam Bender argues software engineering is hitting a 10x moment — but generating code faster is not engineering faster. Through the lens of \"software ecology\", he warns AI amplifies a team's existing strengths and weaknesses alike, and the bottleneck simply moves to review, testing, builds, and releases.",
+  "dek_en": "A reading note on changing software-development workflows and the growing importance of judgment as coding becomes faster.",
   "tags": [
     "agents",
     "engineering",

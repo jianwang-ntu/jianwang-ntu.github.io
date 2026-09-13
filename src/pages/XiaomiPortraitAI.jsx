@@ -62,7 +62,7 @@ export default function XiaomiPortraitAI() {
               I worked on two image systems: semantic segmentation for portrait effects and GAN-based selfie cartoonisation. Both also had to move from GPU training toward dependable on-device inference.
             </p>
             <p className="case-study-evidence-intro">
-              The visuals below are illustrative reconstructions made from portfolio portraits, not original Xiaomi product captures. The retained record confirms the project domains and deployment path, but not proprietary model topology or benchmark tables.
+              The images are illustrative reconstructions made from portfolio portraits, not original Xiaomi product captures. The diagrams explain system roles rather than proprietary model designs.
             </p>
           </header>
 
@@ -85,11 +85,11 @@ export default function XiaomiPortraitAI() {
               src="/images/projects/xiaomi/portrait-segmentation-reconstruction.jpg"
               srcSmall="/images/projects/xiaomi/portrait-segmentation-reconstruction-768.jpg"
               alt="Portrait segmentation demonstration: the same portrait shown as a source image, a binary semantic mask, and a foreground composite over a blurred outdoor background."
-              caption="The product contract in one sequence: preserve the subject, estimate a clean mask, and make the final composite feel natural."
+              caption="Source portrait, estimated foreground mask, and background-blur composite."
               priority
             />
             <EngineeringNotes
-              implementation="The explored system designs included GCN, CNN, GAN variants, and a cascaded multi-mask approach. They combined scene context with local evidence to estimate the foreground and refine hair, shoulders, and transition regions. This is a system-level reconstruction of the verified deployment logic without asserting Xiaomi’s proprietary topology or losses."
+              implementation="The explored designs included GCN, CNN, GAN variants, and a cascaded multi-mask approach. Scene context and local image details informed the foreground mask, with refinement around hair, shoulders, and transition regions."
               efficiency="A segmentation model was useful only if the full mask-and-composite path remained practical on the target phone. Compression and operator support therefore had to be considered alongside visible boundary quality, not after the visual model was finished."
               difficulty="Fine hair, semi-transparent edges, occlusion, low light, motion blur, clutter, and similar foreground and background colours all break the clean-edge assumption. Small mask errors become obvious as halos or missing subject detail."
             />
@@ -98,7 +98,7 @@ export default function XiaomiPortraitAI() {
           <section className="case-study-section">
             <h2>Selfie to emoji with GANs</h2>
             <p>
-              This project treated a selfie as a character-design problem: simplify the portrait into an expressive visual language without losing the face that makes the result personal.
+              The goal was to turn a selfie into a cartoon or emoji while keeping the person recognisable.
             </p>
             <ArchitectureFigure
               src="/images/projects/xiaomi/selfie-emoji-architecture.svg"
@@ -116,7 +116,7 @@ export default function XiaomiPortraitAI() {
               caption="Expressions change across the set while identity and the character system remain recognisable."
             />
             <EngineeringNotes
-              implementation="The retained record identifies GAN-based face cartoonisation. At the product level, that meant structuring the portrait, translating it into the target visual language, and constraining face shape, hair, and feature placement so the output stayed recognisable."
+              implementation="The project used GAN-based face cartoonisation. Face shape, hair, and feature placement were important for preserving identity while changing style."
               efficiency="A visually strong generator still needed stable outputs after compression and graph conversion. Model size, supported operations, and ordinary selfie conditions shaped what could move from a GPU experiment into a handset pipeline."
               difficulty="Balancing identity and style was difficult: too little stylisation looks like a filter, while too much removes the identifying details. Neutral, smiling, surprised, and focused outputs also had to read as one consistent character rather than unrelated faces."
             />
@@ -142,10 +142,7 @@ export default function XiaomiPortraitAI() {
               difficulty="The GPU model and the phone model were not automatically equivalent. Quantisation, pruning, conversion, and accelerator constraints could change boundary quality, destabilise generated faces, or prevent execution entirely."
             />
             <p className="case-study-evidence">
-              Historical model size, FPS, and latency measurements were not retained in the public portfolio materials. This page therefore explains the supported engineering path without inventing those numbers, the exact generator or discriminator, or a proprietary loss formulation.
-            </p>
-            <p className="case-study-closing">
-              The lasting lesson was concrete: model quality includes the halo around hair, whether a generated face still looks like the same person, whether a converted graph behaves differently, and whether the target accelerator can execute it at all.
+              Historical model size, FPS, and latency measurements were not retained in the public portfolio materials.
             </p>
           </section>
         </article>

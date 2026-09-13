@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, Navigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import Nav from '../components/Nav.jsx';
@@ -7,6 +7,7 @@ import Footer from '../components/Footer.jsx';
 import Seo from '../components/Seo.jsx';
 import SiteFrame from '../components/SiteFrame.jsx';
 import ReadingTable from '../components/ReadingTable.jsx';
+import { BLOG_ALIASES } from '../blog-aliases.js';
 
 // Cover-image URLs in meta.json are stored as `/images/blog/<slug>.png` for
 // local dev. The deploy workflow rewrites them to S3 URLs in dist/, but the
@@ -37,6 +38,11 @@ function ReadingImage({ src, alt }) {
 
 export default function BlogPost() {
   const { slug } = useParams();
+  if (Object.hasOwn(BLOG_ALIASES, slug)) return <Navigate to={`/blog/${BLOG_ALIASES[slug]}`} replace />;
+  return <ReadingPost key={slug} slug={slug} />;
+}
+
+function ReadingPost({ slug }) {
   const [meta, setMeta] = useState(null);
   const [lang, setLang] = useState(null);
   const [body, setBody] = useState(null);
@@ -77,6 +83,7 @@ export default function BlogPost() {
     if (!lang || !slug) return;
     let cancelled = false;
     setBody(null);
+    setError(null);
     fetch(`${import.meta.env.BASE_URL}blog/${slug}/index.${lang}.md`)
       .then((r) => (r.ok ? r.text() : Promise.reject(new Error(`HTTP ${r.status}`))))
       .then((md) => { if (!cancelled) setBody(md); })
@@ -85,21 +92,23 @@ export default function BlogPost() {
   }, [slug, lang]);
 
   const langs = meta?.languages || [];
+  const title = (lang === 'zh' ? meta?.title_zh : meta?.title_en) || meta?.title_en;
+  const description = (lang === 'zh' ? meta?.dek_zh : meta?.dek_en) || meta?.dek_en;
   // Per-post head tags — only render Seo once meta has loaded so we don't
   // overwrite the prerendered head with empty defaults.
   const seo = meta && (
     <Seo
-      title={meta.title_en || meta.slug}
+      title={title || meta.slug}
       lang={lang === 'zh' ? 'zh-CN' : 'en'}
-      description={meta.dek_en}
+      description={description}
       image={absoluteImage(meta.image)}
       path={`/blog/${meta.slug}`}
       type="article"
       ldJson={{
         '@context': 'https://schema.org',
         '@type': 'BlogPosting',
-        headline: meta.title_en || meta.slug,
-        description: meta.dek_en,
+        headline: title || meta.slug,
+        description,
         image: absoluteImage(meta.image),
         author: { '@type': 'Person', name: 'Jian Wang' },
         publisher: { '@type': 'Person', name: 'Jian Wang' },
@@ -117,7 +126,7 @@ export default function BlogPost() {
       <Nav skipToContent />
       <SiteFrame mainClassName="blog-reading">
         <div className="article-tools">
-          <Link to="/blog">← back to blog</Link>
+          <Link to="/blog">{lang === 'zh' ? '← 阅读笔记' : '← Reading notes'}</Link>
           {langs.length > 1 && (
             <div className="article-language" role="group" aria-label="Article language">
               {langs.map((code) => (
@@ -139,10 +148,10 @@ export default function BlogPost() {
 
         {meta && (
           <p className="article-meta">
-            Reading note · {meta.date}
+            {lang === 'zh' ? '阅读笔记' : 'Reading note'} · {meta.date}
             {meta.source
-              ? <> · <a href={meta.source} target="_blank" rel="noreferrer">original source</a></>
-              : <> · Original source link not recorded</>}
+              ? <> · <a href={meta.source} target="_blank" rel="noreferrer">{lang === 'zh' ? '原始来源' : 'Original source'}</a></>
+              : <> · {lang === 'zh' ? '原始来源链接未记录' : 'Original source link not recorded'}</>}
           </p>
         )}
 

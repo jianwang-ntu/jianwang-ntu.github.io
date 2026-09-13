@@ -125,7 +125,7 @@ const trustworthy = () => (
 const aigcdet = () => {
   const tasks = ['Q&A', 'summarisation', 'generation'];
   return (
-    <Frame title="AIGC Detectors on Code — 13 detectors × 2.23M samples" height={168}>
+    <Frame title="AIGC detectors — evaluation across three software tasks" height={168}>
       <text x="4" y={TOP + 22} className="ap-fig-sub">tasks</text>
       {tasks.map((t, i) => (
         <g key={t}>
@@ -145,7 +145,7 @@ const aigcdet = () => {
       <rect x="486" y={TOP + 26} width="110" height="48" rx="6" fill="none" stroke="var(--ap-fig-stroke)" strokeWidth="1.2" />
       <text x="541" y={TOP + 48} textAnchor="middle" className="ap-fig-label">accuracy</text>
       <text x="541" y={TOP + 62} textAnchor="middle" className="ap-fig-sub">per task</text>
-      <text x="4" y="162" className="ap-fig-sub">2.23M code samples — how well do AIGC detectors transfer from prose to code?</text>
+      <text x="4" y="162" className="ap-fig-sub">13 detectors · content from GPT-3.5, WizardCoder and CodeLlama</text>
     </Frame>
   );
 };

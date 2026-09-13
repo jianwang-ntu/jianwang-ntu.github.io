@@ -20,7 +20,6 @@ function ResearchProject({ project }) {
         <h3>{project.title}</h3>
         <p className="text-index-meta">{project.venue} · {project.affiliation}</p>
         <p className="text-index-summary">{project.summary}</p>
-        <p className="work-project-skills"><strong>Methods:</strong> {project.skills.join(', ')}</p>
         <p className="text-index-links">
           {project.publication && <Link to={`/pubs/${project.publication}`}>Publication details</Link>}
           {project.links.map((link) => <ResourceLink key={link.href} link={link} />)}
@@ -38,7 +37,7 @@ export default function WorkProjects() {
     <div className="page">
       <Seo
         title="Work & Projects"
-        description="Industry engineering and research projects by Jian Wang, with concise summaries and evidence-linked detail pages."
+        description="Jian Wang’s work on shared web infrastructure, mobile portrait AI, program repair, and code-model evaluation."
         path="/work"
       />
       <Nav skipToContent />
@@ -46,41 +45,37 @@ export default function WorkProjects() {
           <div className="work-heading">
             <div>
               <h1>Work &amp; projects</h1>
-              <p className="page-deck">Production systems, mobile AI, and evidence-driven software research.</p>
+              <p className="page-deck">Web infrastructure, mobile AI, and software research.</p>
             </div>
             <Link className="text-link" to="/cv">Experience &amp; CV ↗</Link>
           </div>
           <section className="work-text-section" aria-labelledby="industry-work-title">
-            <h2 id="industry-work-title">Industry Case Studies</h2>
+            <h2 id="industry-work-title">Industry projects</h2>
 
             <article className="work-editorial-entry">
               <h3>Shared web infrastructure at 58.com</h3>
               <p className="text-index-meta">58.com · Mobile Web / Backend Infrastructure · 2011–2017</p>
               <div className="work-indented-notes">
-                <p><strong>Shared asynchronous Web framework.</strong> App-facing services, Mobile WAP, and product business lines needed the same request handling without rebuilding it inside each service. The framework placed middleware and common components behind stable boundaries so business code could reuse authentication, request parsing, service access, caching, and response handling.</p>
-                <p><strong>Scale and difficulty.</strong> The documented system served 100M+ daily requests. Compatibility with several business lines, low per-request overhead, and failure isolation mattered as much as API convenience: one common component could not be allowed to turn into a shared failure point.</p>
-                <p><strong>Custom Nginx module.</strong> A second project moved company traffic routing into the Nginx request path. It pursued an OpenResty-like programming goal through a custom module: match central rules, select an upstream, update rules safely, and retain a bounded hot-path cost with a predictable fallback when routing state was unavailable.</p>
+                <p><strong>Shared asynchronous Web framework.</strong> I built middleware and common components for App-facing services, Mobile WAP, and several business lines. The system served 100M+ daily requests; compatibility, request overhead, and failure isolation were the main engineering constraints.</p>
+                <p><strong>Custom Nginx module.</strong> I designed a company traffic router that selected upstream services inside the Nginx request path. Like OpenResty, the goal was programmable request handling. Rule updates, routing cost, and fallback behaviour were the key design concerns.</p>
               </div>
-              <p className="work-evidence-note">The retained record supports the request scale and architecture; historical latency and CPU measurements are not reconstructed.</p>
-              <p className="work-detail-links"><Link to="/work/58-web-infrastructure">Details with diagrams</Link><span aria-hidden="true"> · </span><Link to="/zh/work/58-web-infrastructure">中文版本</Link></p>
+              <p className="work-detail-links"><Link to="/work/58-web-infrastructure">Details</Link><Link to="/zh/work/58-web-infrastructure">中文</Link></p>
             </article>
 
             <article className="work-editorial-entry">
               <h3>Portrait intelligence at Xiaomi</h3>
               <p className="text-index-meta">Xiaomi AI Lab · Research Scientist · 2017–2019</p>
               <div className="work-indented-notes">
-                <p><strong>Portrait semantic segmentation.</strong> The pipeline separated the person from the surrounding scene for portrait effects. The difficult cases were the ones visible to users immediately: hair and clothing boundaries, occlusion, motion, and foreground colours that resemble the background.</p>
-                <p><strong>Selfie-to-emoji generation.</strong> GAN-based image translation turned a selfie into a personalised cartoon or emoji. The engineering problem was not only style transfer; the output also needed to retain recognisable identity and behave consistently across expressions.</p>
-                <p><strong>Deployment efficiency.</strong> Models trained with PyTorch and CUDA moved through compression, ONNX/IR graph conversion, and device-specific validation for Hexagon DSP or Kirin NPU. Accuracy, unsupported operators, memory pressure, and visual regressions had to be checked together.</p>
+                <p><strong>Portrait semantic segmentation.</strong> I worked on separating the subject from the background for portrait effects, with particular attention to hair, clothing boundaries, and difficult lighting.</p>
+                <p><strong>Selfie-to-emoji generation.</strong> GAN-based translation turned selfies into personalised cartoons. The main challenge was preserving identity while changing style.</p>
+                <p>Deployment work covered PyTorch/CUDA training, compression, ONNX/IR conversion, and validation on Hexagon DSP or Kirin NPU. Operator support, memory use, and image quality constrained the final model.</p>
               </div>
-              <p className="work-evidence-note">The deployment path is retained; proprietary topology, losses, FPS, latency, and model-size measurements are not presented as recovered facts.</p>
-              <p className="work-detail-links"><Link to="/work/xiaomi-portrait-ai">Details with images</Link></p>
+              <p className="work-detail-links"><Link to="/work/xiaomi-portrait-ai">Details</Link></p>
             </article>
           </section>
 
           <section className="work-text-section" id="research-projects" aria-labelledby="research-projects-title">
             <h2 id="research-projects-title">Research projects</h2>
-            <p className="section-intro">A compact index of the systems, benchmarks, and evaluations behind the publication record.</p>
             <div className="text-index-list">
               {researchProjects.map((project) => <ResearchProject key={project.id} project={project} />)}
             </div>

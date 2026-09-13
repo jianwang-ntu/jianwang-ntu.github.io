@@ -2,7 +2,7 @@
   "slug": "pets-cattle-and-the-quiet-choice-that-defines-your-ai",
   "title_en": "Pets, Cattle, and the Quiet Choice That Defines Your AI Agent's Architecture",
   "date": "2026-05-10",
-  "dek_en": "A developer who has shipped an AI agent to production argues that the industry's hottest abstractions — Anthropic's \"session, sandbox, harness\" trio, the \"don't treat agents as pets, treat them as cattle\" slogan — only become useful once yo",
+  "dek_en": "A practitioner examines how sessions, sandboxes, and harnesses shape the design of production agents.",
   "tags": [],
   "languages": [
     "en",

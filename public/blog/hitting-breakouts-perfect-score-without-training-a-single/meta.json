@@ -2,7 +2,7 @@
   "slug": "hitting-breakouts-perfect-score-without-training-a-single",
   "title_en": "Hitting Breakout's Perfect Score Without Training a Single Neuron",
   "date": "2026-05-12",
-  "dek_en": "In a recent explainer video, the presenter walks through a result that cuts against deep reinforcement learning's reigning orthodoxy: an AI that updates no weights, runs no backprop, and still pushes Atari Breakout to its theoretical maximu",
+  "dek_en": "A video explains Heuristic Learning: a coding agent improves pure-code policies using environment feedback without updating neural-network weights.",
   "tags": [],
   "languages": [
     "en",

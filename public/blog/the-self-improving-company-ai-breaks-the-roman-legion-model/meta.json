@@ -2,7 +2,7 @@
   "slug": "the-self-improving-company-ai-breaks-the-roman-legion-model",
   "title_en": "The Self-Improving Company: Why AI Will Break the Roman Legion Model of Business",
   "date": "2026-05-19",
-  "dek_en": "A talk argues companies are still built like Roman legions — hierarchies where information flows up and orders flow down through people. AI breaks that model: rather than bolting on copilots, companies should redesign themselves as AI-native systems built around recursive self-improving loops.",
+  "dek_en": "A Y Combinator talk proposes company workflows built around observation, policy, tools, quality checks, and feedback.",
   "tags": [
     "agents",
     "business",

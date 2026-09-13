@@ -2,7 +2,7 @@
   "slug": "webforge-generating-browser-agent-benchmarks-that-are",
   "title_en": "WebForge: Generating Browser Agent Benchmarks That Are Realistic, Reproducible, and Scalable at the Same Time",
   "date": "2026-05-08",
-  "dek_en": "Browser agent benchmarks force a three-way tradeoff: live websites give realism but rot within months, sandboxed environments give reproducibility but feel sterile, and both demand expensive manual curation. A new paper from Tencent BAC and",
+  "dek_en": "WebForge studies generating reproducible browser environments and tasks for agent evaluation.",
   "tags": [],
   "languages": [
     "en",

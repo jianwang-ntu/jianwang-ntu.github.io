@@ -66,7 +66,7 @@ The compounding chain he describes runs: value → trust → retention and repur
 
 ## The VC Scoreboard: Growth, ARR Quality and Exit
 
-On the venture path, growth becomes an explicit quantitative constraint. The speaker cites the classic SaaS "3-3-2-2-2" illustration — roughly 300% growth in each of the first two years, then 200% in the following three.
+On the venture path, growth becomes an explicit quantitative constraint. The speaker cites the SaaS "3-3-2-2-2" illustration: revenue triples in each of the first two years, then doubles in each of the following three.
 
 The exact benchmark matters less than the lesson: taking venture money changes the definition of good performance. Investors track a chain that runs from market size to ARR, ARR quality, growth rate, retention, the next financing round, enterprise value and finally exit.
 

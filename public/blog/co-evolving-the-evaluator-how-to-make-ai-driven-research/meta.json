@@ -2,7 +2,7 @@
   "slug": "co-evolving-the-evaluator-how-to-make-ai-driven-research",
   "title_en": "Co-Evolving the Evaluator: How to Make AI-Driven Research Actually Work for Databases",
   "date": "2026-05-08",
-  "dek_en": "A new paper by Cheng et al. (UC Berkeley, KTH, Meta, Workday, U-Michigan, Maven AGI) argues that the bottleneck in applying LLM-driven algorithm discovery to databases is no longer solution generation — it's evaluation. The authors propose ",
+  "dek_en": "A paper examines how AI research systems might improve their evaluators alongside the artifacts they optimize.",
   "tags": [],
   "languages": [
     "en",

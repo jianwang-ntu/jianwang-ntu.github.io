@@ -2,7 +2,7 @@
   "slug": "how-deepseek-v4-squeezed-a-trillion-parameter-model-out-of",
   "title_en": "How DeepSeek V4 Squeezed a Trillion-Parameter Model Out of Limited Hardware",
   "date": "2026-05-10",
-  "dek_en": "A new explainer video walks through the architecture paper behind DeepSeek V4, the latest open-source model from a Chinese lab that the speaker repeatedly calls \"cracked.\" The central claim: with a team roughly 40 times smaller than OpenAI'",
+  "dek_en": "A video walks through the architecture and inference-efficiency ideas described in the DeepSeek V4 paper.",
   "tags": [],
   "languages": [
     "en",

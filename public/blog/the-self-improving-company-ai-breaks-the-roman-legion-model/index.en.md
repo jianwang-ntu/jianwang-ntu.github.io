@@ -2,7 +2,9 @@
 
 ![The Self-Improving Company: Why AI Will Break the Roman Legion Model of Business](/images/blog/the-self-improving-company-ai-breaks-the-roman-legion-model.png)
 
-For most of modern history, companies have been organized like Roman legions.
+This note summarizes the argument in Y Combinator’s talk [How to Build a Self-Improving Company with AI](https://www.youtube.com/watch?v=X_JsIHUfUjc). The workflow examples and forecasts below are the talk’s proposals, not measured results from this website’s author.
+
+The talk compares traditional company hierarchies to Roman legions.
 
 There is a center of command. Orders flow downward. Information flows upward. Managers coordinate people. People pass messages. Decisions move through layers.
 

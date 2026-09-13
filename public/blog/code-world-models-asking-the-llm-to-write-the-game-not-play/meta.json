@@ -2,7 +2,7 @@
   "slug": "code-world-models-asking-the-llm-to-write-the-game-not-play",
   "title_en": "Code World Models: Asking the LLM to Write the Game, Not Play It",
   "date": "2026-05-13",
-  "dek_en": "A new preprint from Google DeepMind (Lehrach, Hennes, Lázaro-Gredilla, and colleagues, October 2025) argues that the standard \"LLM-as-policy\" recipe for game-playing agents is the wrong abstraction. Instead, the authors use the LLM as a cod",
+  "dek_en": "A DeepMind paper studies using language models to write executable game models for planning.",
   "tags": [],
   "languages": [
     "en",

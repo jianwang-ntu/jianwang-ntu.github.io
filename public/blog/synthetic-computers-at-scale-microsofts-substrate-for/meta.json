@@ -2,7 +2,7 @@
   "slug": "synthetic-computers-at-scale-microsofts-substrate-for",
   "title_en": "Synthetic Computers at Scale: Microsoft's Substrate for Training Long-Horizon Productivity Agents",
   "date": "2026-05-08",
-  "dek_en": "Productivity agents need rich user-specific context — files, project history, collaborator threads — to do realistic work, but real trajectories of that work are private and costly to collect. A Microsoft technical report by Ge, Peng, Cheng",
+  "dek_en": "A Microsoft research project explores synthetic computer environments for training and evaluating productivity agents.",
   "tags": [
     "research",
     "paper-reading",

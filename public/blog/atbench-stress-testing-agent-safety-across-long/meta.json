@@ -2,7 +2,7 @@
   "slug": "atbench-stress-testing-agent-safety-across-long",
   "title_en": "ATBench: Stress-Testing Agent Safety Across Long Trajectories, Not Single Prompts",
   "date": "2026-05-08",
-  "dek_en": "A new benchmark from Shanghai AI Lab and collaborators argues that agent safety can't be judged from a single response. The paper introduces **ATBench**, 1,000 multi-turn trajectories built around an explicit three-axis taxonomy of risk sou",
+  "dek_en": "ATBench tests how well models detect and explain safety risks in multi-turn agent trajectories.",
   "tags": [],
   "languages": [
     "en",
