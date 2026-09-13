@@ -41,6 +41,24 @@ function renderRoute(route) {
   );
 }
 
+test('Home shows the linked research overview without the company percentage section', () => {
+  const html = renderRoute('/home');
+  const data = html.match(/<object\b[^>]*data="([^"]+)"/)?.[1];
+  assert.ok(data, 'Home must retain the research overview image');
+  const svg = readFileSync(new URL(`..${data}`, import.meta.url), 'utf8');
+  const fullSvg = readFileSync(svgFile, 'utf8');
+  const blocks = source => [...source.matchAll(/<a\b[^>]*href="\/statement#[^"]+"[^>]*>[\s\S]*?<\/a>/g)].map(match => match[0]);
+
+  assert.equal(blocks(svg).length, 9);
+  assert.deepEqual(blocks(svg), blocks(fullSvg), 'Home and Statement must retain the same research links and labels');
+  assert.doesNotMatch(svg, /Industry Signals|Company samples|deduplicated JDs|\d+\.\d+%/);
+  assert.doesNotMatch(html, /Industry grounding|Percentages|company endorsement/);
+  assert.ok(html.includes(`href="${data}"`), 'The full-size link must open the overview-only asset');
+
+  const [, , , height] = svg.match(/viewBox="([^"]+)"/)[1].split(' ').map(Number);
+  assert.ok(height >= 1095 && height < 1142, 'The canvas must include the final research block without reserving space for percentages');
+});
+
 test('the overview is a vector SVG whose nine research blocks are links', () => {
   assert.ok(existsSync(svgFile), 'vector overview SVG is missing');
   const svg = readFileSync(svgFile, 'utf8');
