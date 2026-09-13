@@ -141,7 +141,9 @@ a:focus-visible, button:focus-visible, select:focus-visible, summary:focus-visib
 .research-connection > a { display: inline-block; font-size: 13px; }
 [data-style="apages"] .research-connection-link { font-size: 14px; line-height: 1.7; margin: 12px 0 0; }
 .research-overview { margin: 25px 0; border: 1px solid #dce5ea; background: #fff; scroll-margin-top: 28px; }
-.research-overview > svg { display: block; width: 100%; height: auto; }
+.research-overview-canvas { max-width: 100%; overflow-x: auto; overscroll-behavior-x: contain; }
+.research-overview-canvas > svg { display: block; width: 100%; height: auto; }
+.research-overview-canvas:focus-visible { outline: 2px solid var(--ap-blue); outline-offset: -2px; }
 .research-overview-mobile { display: none; }
 .research-overview-region { fill: transparent; stroke: transparent; stroke-width: 3; }
 .research-overview svg a { outline: none; }
@@ -529,7 +531,7 @@ a:focus-visible, button:focus-visible, select:focus-visible, summary:focus-visib
 }
 @media (max-width: 600px) {
   .portfolio-shell { padding-bottom: 56px; }
-  .research-overview > svg { display: block; }
+  .research-overview-canvas > svg { width: 760px; min-width: 760px; }
   .research-overview-mobile { display: grid; gap: 8px; list-style: none; padding: 14px 16px; margin: 0; border-top: 1px solid #e4ebee; }
   .research-overview-mobile a { font-size: 14px; font-weight: 600; }
   [data-style="apages"] .research-overview-mobile p { font-size: 15px; line-height: 1.7; margin: 6px 0 0; color: #5c6970; }

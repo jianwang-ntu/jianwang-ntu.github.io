@@ -13,25 +13,28 @@ const regions = [
 export default function ResearchOverview() {
   return (
     <figure className="research-overview" id="research-overview">
-      <svg viewBox="0 0 1448 1086" width="1448" height="1086" role="group"
-        aria-label="Interactive overview of reliable autonomy for adaptive AI agents">
-        <title>Reliable Autonomy for Adaptive AI Agents</title>
-        <desc>Scalable oversight, safety-preserving learning, and control across time and delegation form a connected research agenda. Select an area to read its section.</desc>
-        <image href={overviewUrl} width="1448" height="1086" aria-hidden="true" />
-        {regions.map(({ id, label, box: [x, y, width, height] }) => (
-          <Link key={id} to={`/statement#${id}`} aria-label={`Read about ${label}`}>
-            <title>{label}</title>
-            <rect className="research-overview-region" x={x} y={y} width={width} height={height} rx="4" />
-          </Link>
-        ))}
-      </svg>
+      <div className="research-overview-canvas" role="region"
+        aria-label="Research overview; scroll horizontally on a small screen" tabIndex={0}>
+        <svg viewBox="0 0 1448 1086" width="1448" height="1086" role="group"
+          aria-label="Interactive overview of reliable autonomy for adaptive AI agents">
+          <title>Reliable Autonomy for Adaptive AI Agents</title>
+          <desc>Scalable oversight, safety-preserving learning, and control across time and delegation form a connected research agenda. Select an area to read its section.</desc>
+          <image href={overviewUrl} width="1448" height="1086" aria-hidden="true" />
+          {regions.map(({ id, label, box: [x, y, width, height] }) => (
+            <Link key={id} to={`/statement#${id}`} aria-label={`Read about ${label}`}>
+              <title>{label}</title>
+              <rect className="research-overview-region" x={x} y={y} width={width} height={height} rx="4" />
+            </Link>
+          ))}
+        </svg>
+      </div>
       <ul className="research-overview-mobile" aria-label="Research overview">
         <li><Link to="/statement#i-scalable-oversight-under-adaptation">Scalable oversight</Link></li>
         <li><Link to="/statement#ii-safety-preserving-learning-and-feedback">Safety-preserving learning</Link></li>
         <li><Link to="/statement#iii-control-across-time-and-delegation">Control across time and delegation</Link></li>
       </ul>
       <figcaption>
-        <span>Select one of the three research areas to read its section.</span>
+        <span>Select a research area; on a small screen, swipe the figure to read it.</span>
         <a href={overviewUrl} target="_blank" rel="noreferrer">Open full-size overview ↗</a>
       </figcaption>
     </figure>

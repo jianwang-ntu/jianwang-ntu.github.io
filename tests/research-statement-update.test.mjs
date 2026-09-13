@@ -49,6 +49,7 @@ test('the supplied reliable-autonomy source and overview are installed', () => {
 test('the statement page exposes the three-part agenda without a crowded index', () => {
   const page = text('src/pages/Statement.jsx');
   const overview = text('src/components/ResearchOverview.jsx');
+  const styles = text('src/styles/portfolio.css');
   const home = text('src/pages/Home.jsx');
   const headings = statementHeadings(text('src/content/research-statement.md'));
   const sections = headings.filter(heading => heading.level === 2).map(heading => heading.id);
@@ -69,6 +70,9 @@ test('the statement page exposes the three-part agenda without a crowded index',
   const regions = [...overview.matchAll(/id: '([^']+)'/g)].map(match => match[1]);
   assert.deepEqual(regions, agenda);
   assert.match(overview, /reliable-autonomy-overview\.png/);
+  assert.match(overview, /className="research-overview-canvas"/);
+  assert.match(styles, /\.research-overview-canvas\s*>\s*svg\s*{[^}]*min-width:\s*760px/s);
+  assert.match(styles, /\.research-overview-canvas\s*{[^}]*overflow-x:\s*auto/s);
 });
 
 test('the PDF builder validates the reliable-autonomy source without authoring dependencies', () => {
