@@ -142,13 +142,9 @@ a:focus-visible, button:focus-visible, select:focus-visible, summary:focus-visib
 [data-style="apages"] .research-connection-link { font-size: 14px; line-height: 1.7; margin: 12px 0 0; }
 .research-overview { margin: 25px 0; border: 1px solid #dce5ea; background: #fff; scroll-margin-top: 28px; }
 .research-overview-canvas { max-width: 100%; overflow-x: auto; overscroll-behavior-x: contain; }
-.research-overview-canvas > svg { display: block; width: 100%; height: auto; }
+.research-overview-object { display: block; width: 100%; aspect-ratio: 4 / 3; border: 0; }
 .research-overview-canvas:focus-visible { outline: 2px solid var(--ap-blue); outline-offset: -2px; }
 .research-overview-mobile { display: none; }
-.research-overview-region { fill: transparent; stroke: transparent; stroke-width: 3; }
-.research-overview svg a { outline: none; }
-.research-overview svg a:hover .research-overview-region,
-.research-overview svg a:focus-visible .research-overview-region { fill: #0b57a40d; stroke: #246880; }
 .research-overview figcaption { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px 18px; padding: 12px 16px; border-top: 1px solid #e4ebee; color: #60717a; font-size: 12px; }
 .statement-toc { margin: 32px 0 40px; padding: 0 0 0 20px; border-left: 1px solid #dfe6e9; }
 .statement-toc > span { font-size: 14px; color: #607780; }
@@ -531,7 +527,7 @@ a:focus-visible, button:focus-visible, select:focus-visible, summary:focus-visib
 }
 @media (max-width: 600px) {
   .portfolio-shell { padding-bottom: 56px; }
-  .research-overview-canvas > svg { width: 760px; min-width: 760px; }
+  .research-overview-object { width: 760px; min-width: 760px; height: 570px; }
   .research-overview-mobile { display: grid; gap: 8px; list-style: none; padding: 14px 16px; margin: 0; border-top: 1px solid #e4ebee; }
   .research-overview-mobile a { font-size: 14px; font-weight: 600; }
   [data-style="apages"] .research-overview-mobile p { font-size: 15px; line-height: 1.7; margin: 6px 0 0; color: #5c6970; }

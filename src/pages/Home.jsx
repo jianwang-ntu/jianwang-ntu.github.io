@@ -50,7 +50,7 @@ function AcademicPagesHome() {
             agent oversight, safety-preserving feedback, secure runtimes, and long-running workflows where capabilities,
             permissions, and evidence evolve together.</p>
           <p className="home-skills-links">
-            <Link to="/statement#appendix-a-execution-evidence-and-a-staged-program">Evaluation & staged program</Link>
+            <a href="/data/Jian_Wang_Research_Statement_2026.pdf" target="_blank" rel="noreferrer">Full statement (PDF) ↗</a>
             <Link to="/work">Earlier work & projects</Link>
             <a href="mailto:jian004@e.ntu.edu.sg">Get in touch ↗</a>
           </p>
@@ -58,7 +58,7 @@ function AcademicPagesHome() {
         <section className="home-section" aria-labelledby="selected-title">
           <div className="section-heading"><h2 id="selected-title">Selected publications</h2>
             <Link className="text-link" to="/pubs">All publications ↗</Link></div>
-          <p>Earlier work in repair, detection and evaluation. <Link to="/statement#how-my-existing-methods-carry-forward">How it informs the future agenda ↗</Link></p>
+          <p>Earlier work in repair, detection and evaluation. <Link to="/statement#research-foundation-and-approach">How it informs the future agenda ↗</Link></p>
           {selectedPubs.map(p => (
             <article className="home-publication" key={p.figure}>
               <span className="publication-year">{p.year}</span>
