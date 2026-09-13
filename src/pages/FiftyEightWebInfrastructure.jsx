@@ -4,6 +4,7 @@ import Nav from '../components/Nav.jsx';
 import Footer from '../components/Footer.jsx';
 import Seo from '../components/Seo.jsx';
 import SiteFrame from '../components/SiteFrame.jsx';
+import ArchitectureFigure from '../components/ArchitectureFigure.jsx';
 
 const PROJECT_SOCIAL_IMAGE = 'https://www.wj2ai.com/images/projects/58/shared-web-infrastructure.png';
 
@@ -23,6 +24,9 @@ const COPY = {
       difficulty: 'What was difficult.',
     },
     viewDiagram: 'View full-size diagram ↗',
+    diagramNote: 'Functional blocks describe roles, not verified internal implementation.',
+    diagramScrollLabel: 'Scrollable architecture diagram',
+    diagramScrollHint: 'Scroll inside the diagram to inspect the full architecture.',
     framework: {
       title: 'Shared web framework',
       intro: [
@@ -66,6 +70,9 @@ const COPY = {
       difficulty: '难点：',
     },
     viewDiagram: '查看原图 ↗',
+    diagramNote: '功能模块只表示系统角色，不代表已确认的公司内部实现。',
+    diagramScrollLabel: '可横向滚动的架构图',
+    diagramScrollHint: '可在图内横向滑动查看完整架构。',
     framework: {
       title: '共享 Web 框架',
       intro: [
@@ -96,28 +103,6 @@ const COPY = {
   },
 };
 
-function SystemFigure({ project, viewLabel, priority = false }) {
-  return (
-    <figure className="case-study-figure f8-system-figure">
-      <img
-        src={project.image}
-        width="1440"
-        height="900"
-        loading={priority ? 'eager' : 'lazy'}
-        fetchpriority={priority ? 'high' : undefined}
-        decoding="async"
-        alt={project.alt}
-      />
-      <figcaption>
-        {project.caption}
-        <a href={project.image} target="_blank" rel="noreferrer" className="f8-fullsize-link">
-          {viewLabel}
-        </a>
-      </figcaption>
-    </figure>
-  );
-}
-
 function EngineeringNotes({ project, labels }) {
   return (
     <div className="case-study-notes">
@@ -128,12 +113,22 @@ function EngineeringNotes({ project, labels }) {
   );
 }
 
-function ProjectSection({ project, labels, viewLabel, priority = false }) {
+function ProjectSection({ project, labels, diagramLabels, priority = false }) {
   return (
     <section className="case-study-section">
       <h2>{project.title}</h2>
       {project.intro.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-      <SystemFigure project={project} viewLabel={viewLabel} priority={priority} />
+      <ArchitectureFigure
+        src={project.image}
+        alt={project.alt}
+        caption={project.caption}
+        note={diagramLabels.note}
+        viewLabel={diagramLabels.view}
+        scrollLabel={diagramLabels.scrollLabel}
+        scrollHint={diagramLabels.scrollHint}
+        className="f8-system-figure"
+        priority={priority}
+      />
       <EngineeringNotes project={project} labels={labels} />
       {project.evidence && <p className="case-study-evidence">{project.evidence}</p>}
     </section>
@@ -143,6 +138,12 @@ function ProjectSection({ project, labels, viewLabel, priority = false }) {
 export default function FiftyEightWebInfrastructure({ lang = 'en' }) {
   const isZh = lang === 'zh-CN';
   const copy = isZh ? COPY.zh : COPY.en;
+  const diagramLabels = {
+    view: copy.viewDiagram,
+    note: copy.diagramNote,
+    scrollLabel: copy.diagramScrollLabel,
+    scrollHint: copy.diagramScrollHint,
+  };
 
   return (
     <div className="page">
@@ -171,8 +172,8 @@ export default function FiftyEightWebInfrastructure({ lang = 'en' }) {
             <p className="case-study-deck">{copy.intro}</p>
           </header>
 
-          <ProjectSection project={copy.framework} labels={copy.labels} viewLabel={copy.viewDiagram} priority />
-          <ProjectSection project={copy.router} labels={copy.labels} viewLabel={copy.viewDiagram} />
+          <ProjectSection project={copy.framework} labels={copy.labels} diagramLabels={diagramLabels} priority />
+          <ProjectSection project={copy.router} labels={copy.labels} diagramLabels={diagramLabels} />
         </article>
       </SiteFrame>
       <Footer />

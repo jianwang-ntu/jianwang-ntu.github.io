@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900" role="img" aria-labelledby="title desc">
+  <title id="title">Portrait semantic segmentation system architecture</title>
+  <desc id="desc">A complete conceptual path from portrait input through a placeholder feature backbone, context and detail paths, mask fusion, boundary refinement, final mask and portrait composite, with quality review feeding back into refinement.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#526d82"/></marker>
+    <marker id="feedback" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#c5683f"/></marker>
+    <pattern id="placeholder" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="10" height="10" fill="#f5f0fb"/><line y2="10" stroke="#ded1ee" stroke-width="3"/></pattern>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="140%"><feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#2a3d4d" flood-opacity=".1"/></filter>
+    <style>
+      text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}.kicker{font-size:18px;font-weight:750;letter-spacing:3px;fill:#a95837}.title{font-size:40px;font-weight:760;fill:#223744}.sub{font-size:20px;fill:#60717c}.stage{font-size:17px;font-weight:760;letter-spacing:2px;fill:#60717c}.box-title{font-size:22px;font-weight:720;fill:#263c48}.box-sub{font-size:16px;fill:#65747d}.small{font-size:14px;fill:#6f7b82}.white-title{font-size:22px;font-weight:720;fill:#fff}.white-sub{font-size:15px;fill:#cbd8df}.tag{font-size:12px;font-weight:780;letter-spacing:1.4px;fill:#6f4c88}.legend{font-size:14px;fill:#596871}.arrow{fill:none;stroke:#526d82;stroke-width:4;marker-end:url(#arrow)}.feedback{fill:none;stroke:#c5683f;stroke-width:3;stroke-dasharray:8 7;marker-end:url(#feedback)}
+    </style>
+  </defs>
+  <rect width="1440" height="900" fill="#fbfaf8"/>
+  <text x="64" y="67" class="kicker">PORTRAIT SEMANTIC SEGMENTATION</text>
+  <text x="64" y="120" class="title">From portrait pixels to a usable foreground mask</text>
+  <text x="64" y="158" class="sub">System-level reconstruction · module classes illustrate roles, not Xiaomi’s retained internal topology</text>
+
+  <text x="64" y="220" class="stage">01 · INPUT</text>
+  <text x="330" y="220" class="stage">02 · MASK ESTIMATION</text>
+  <text x="1110" y="220" class="stage">03 · OUTPUT</text>
+
+  <g filter="url(#shadow)">
+    <rect x="64" y="244" width="220" height="388" rx="24" fill="#fff" stroke="#d9e3e8" stroke-width="2"/>
+  </g>
+  <rect x="91" y="279" width="166" height="208" rx="18" fill="#d7e5ee"/>
+  <circle cx="174" cy="345" r="42" fill="#f1c9b5"/>
+  <path d="M113 459c8-58 35-87 61-87s53 29 61 87" fill="#3f6578"/>
+  <text x="174" y="538" text-anchor="middle" class="box-title">Portrait frame</text>
+  <text x="174" y="568" text-anchor="middle" class="box-sub">person + scene</text>
+  <rect x="91" y="592" width="166" height="24" rx="12" fill="#e7f1f4"/>
+  <text x="174" y="609" text-anchor="middle" class="small">resize · normalise</text>
+
+  <path d="M284 438H330" class="arrow"/>
+  <rect x="330" y="244" width="722" height="388" rx="26" fill="#eef4f7" stroke="#cbdbe2" stroke-width="2"/>
+  <rect x="358" y="278" width="244" height="320" rx="20" fill="url(#placeholder)" stroke="#9372ac" stroke-width="2" stroke-dasharray="9 7"/>
+  <rect x="380" y="298" width="132" height="26" rx="13" fill="#e3d6ef"/>
+  <text x="446" y="316" text-anchor="middle" class="tag">ROLE PLACEHOLDER</text>
+  <text x="480" y="374" text-anchor="middle" class="box-title">Feature backbone</text>
+  <text x="480" y="408" text-anchor="middle" class="box-sub">GCN / CNN /</text>
+  <text x="480" y="432" text-anchor="middle" class="box-sub">Transformer class</text>
+  <g fill="#bca7cf">
+    <rect x="399" y="470" width="162" height="22" rx="6"/><rect x="416" y="504" width="128" height="22" rx="6"/><rect x="437" y="538" width="86" height="22" rx="6"/>
+  </g>
+
+  <path d="M602 392H650" class="arrow"/><path d="M602 500H650" class="arrow"/>
+  <rect x="650" y="286" width="202" height="128" rx="18" fill="#fff" stroke="#bfd4df" stroke-width="2"/>
+  <text x="751" y="329" text-anchor="middle" class="box-title">Scene context</text>
+  <text x="751" y="358" text-anchor="middle" class="box-sub">whole-person shape</text>
+  <text x="751" y="384" text-anchor="middle" class="box-sub">and surroundings</text>
+  <rect x="650" y="462" width="202" height="128" rx="18" fill="#fff" stroke="#e5c6b8" stroke-width="2"/>
+  <text x="751" y="505" text-anchor="middle" class="box-title">Local detail</text>
+  <text x="751" y="534" text-anchor="middle" class="box-sub">hair · shoulders</text>
+  <text x="751" y="560" text-anchor="middle" class="box-sub">transition regions</text>
+
+  <path d="M852 350H886V421" class="arrow"/><path d="M852 526H886V455" class="arrow"/>
+  <rect x="886" y="350" width="138" height="142" rx="20" fill="#243b49"/>
+  <text x="955" y="405" text-anchor="middle" class="white-title">Mask fusion</text>
+  <text x="955" y="435" text-anchor="middle" class="white-sub">coarse + detail</text>
+  <text x="955" y="460" text-anchor="middle" class="white-sub">or cascaded masks</text>
+  <rect x="886" y="518" width="138" height="72" rx="16" fill="#f7e6dd" stroke="#d89a7b"/>
+  <text x="955" y="548" text-anchor="middle" class="box-title">Boundary</text>
+  <text x="955" y="574" text-anchor="middle" class="box-sub">refinement</text>
+  <path d="M955 492V510" class="arrow"/>
+
+  <path d="M1052 438H1110" class="arrow"/>
+  <g filter="url(#shadow)"><rect x="1110" y="244" width="266" height="388" rx="24" fill="#fff" stroke="#d9e3e8" stroke-width="2"/></g>
+  <rect x="1137" y="278" width="92" height="136" rx="14" fill="#202c34"/>
+  <circle cx="1183" cy="322" r="22" fill="#fff"/><path d="M1152 397c4-45 17-66 31-66s27 21 31 66" fill="#fff"/>
+  <text x="1246" y="322" class="box-title">Final mask</text>
+  <text x="1246" y="351" class="box-sub">foreground</text>
+  <text x="1246" y="376" class="box-sub">probability</text>
+  <path d="M1140 454H1346" stroke="#d9e3e8" stroke-width="2"/>
+  <rect x="1137" y="486" width="92" height="112" rx="14" fill="#d9e9df"/>
+  <circle cx="1183" cy="522" r="21" fill="#f1c9b5"/><path d="M1153 586c4-40 17-59 30-59s27 19 31 59" fill="#3f6578"/>
+  <text x="1246" y="520" class="box-title">Composite</text>
+  <text x="1246" y="549" class="box-sub">blur · replace</text>
+  <text x="1246" y="574" class="box-sub">or restyle scene</text>
+
+  <rect x="330" y="676" width="1046" height="92" rx="18" fill="#fff3ec" stroke="#e6b9a3"/>
+  <text x="360" y="711" class="box-title">Image-level quality review</text>
+  <text x="360" y="742" class="box-sub">hair · transparent edges · occlusion · low light · motion blur · foreground/background similarity</text>
+  <path d="M1170 632V668" class="feedback"/><path d="M560 676V626H955V598" class="feedback"/>
+
+  <rect x="64" y="810" width="1312" height="50" rx="14" fill="#fff" stroke="#dfe6e9"/>
+  <rect x="92" y="826" width="28" height="18" rx="4" fill="#eef4f7" stroke="#bfd4df"/><text x="132" y="840" class="legend">system stage</text>
+  <rect x="292" y="826" width="28" height="18" rx="4" fill="url(#placeholder)" stroke="#9372ac" stroke-dasharray="5 4"/><text x="332" y="840" class="legend">functional placeholder; class examples only</text>
+  <line x1="710" y1="835" x2="752" y2="835" class="feedback"/><text x="766" y="840" class="legend">validation feedback</text>
+  <text x="1344" y="840" text-anchor="end" class="legend">No proprietary topology or metrics claimed</text>
+</svg>

@@ -4,8 +4,13 @@ import Nav from '../components/Nav.jsx';
 import Footer from '../components/Footer.jsx';
 import Seo from '../components/Seo.jsx';
 import SiteFrame from '../components/SiteFrame.jsx';
+import ArchitectureFigure from '../components/ArchitectureFigure.jsx';
 
 const PROJECT_SOCIAL_IMAGE = 'https://www.wj2ai.com/images/projects/xiaomi/portrait-segmentation-reconstruction.jpg';
+const ARCHITECTURE_NOTE = 'Functional blocks describe roles, not Xiaomi’s verified proprietary topology.';
+const ARCHITECTURE_VIEW = 'View full-size architecture ↗';
+const ARCHITECTURE_SCROLL_LABEL = 'Scrollable system architecture';
+const ARCHITECTURE_SCROLL_HINT = 'Scroll inside the diagram to inspect the full architecture.';
 
 function ResultFigure({ src, srcSmall, alt, caption, priority = false }) {
   return (
@@ -66,6 +71,16 @@ export default function XiaomiPortraitAI() {
             <p>
               The task was to separate the person from the surrounding scene so a phone could blur, replace, or restyle the background. Most visible errors appeared at the subject boundary.
             </p>
+            <ArchitectureFigure
+              src="/images/projects/xiaomi/portrait-segmentation-architecture.svg"
+              alt="System architecture for portrait segmentation: a source image passes through a placeholder feature backbone, context and detail paths, mask fusion, boundary refinement, and a final portrait composite."
+              caption="System-level reconstruction of the complete portrait-mask path, from image input to boundary-aware composite."
+              note={ARCHITECTURE_NOTE}
+              viewLabel={ARCHITECTURE_VIEW}
+              scrollLabel={ARCHITECTURE_SCROLL_LABEL}
+              scrollHint={ARCHITECTURE_SCROLL_HINT}
+              priority
+            />
             <ResultFigure
               src="/images/projects/xiaomi/portrait-segmentation-reconstruction.jpg"
               srcSmall="/images/projects/xiaomi/portrait-segmentation-reconstruction-768.jpg"
@@ -85,6 +100,15 @@ export default function XiaomiPortraitAI() {
             <p>
               This project treated a selfie as a character-design problem: simplify the portrait into an expressive visual language without losing the face that makes the result personal.
             </p>
+            <ArchitectureFigure
+              src="/images/projects/xiaomi/selfie-emoji-architecture.svg"
+              alt="System architecture for selfie-to-emoji generation: an aligned selfie passes through placeholder identity encoding and GAN-class generation, with training-only checks and multiple consistent expression outputs."
+              caption="System-level reconstruction separating the handset inference path from training-only identity and style checks."
+              note={ARCHITECTURE_NOTE}
+              viewLabel={ARCHITECTURE_VIEW}
+              scrollLabel={ARCHITECTURE_SCROLL_LABEL}
+              scrollHint={ARCHITECTURE_SCROLL_HINT}
+            />
             <ResultFigure
               src="/images/projects/xiaomi/selfie-emoji-reconstruction.jpg"
               srcSmall="/images/projects/xiaomi/selfie-emoji-reconstruction-768.jpg"
@@ -103,6 +127,15 @@ export default function XiaomiPortraitAI() {
             <p>
               The model was only one part of the system. The practical path was PyTorch and CUDA training, compression through quantisation or pruning, ONNX/IR graph conversion, and validation on the accelerator that would actually execute the model: Hexagon DSP or Kirin NPU.
             </p>
+            <ArchitectureFigure
+              src="/images/projects/xiaomi/mobile-deployment-architecture.svg"
+              alt="Mobile deployment architecture: a PyTorch and CUDA model passes through compression, ONNX or IR export, operator validation, Hexagon DSP or Kirin NPU execution, and visual regression feedback."
+              caption="The delivered graph—not only the training checkpoint—had to survive compression, conversion, runtime constraints, and image-level validation."
+              note={ARCHITECTURE_NOTE}
+              viewLabel={ARCHITECTURE_VIEW}
+              scrollLabel={ARCHITECTURE_SCROLL_LABEL}
+              scrollHint={ARCHITECTURE_SCROLL_HINT}
+            />
             <EngineeringNotes
               implementation="Each conversion stage had to preserve the intended graph closely enough to validate the same image behaviour on the target runtime. Unsupported operators or changed numerical behaviour could require revisiting either the model or its exported graph."
               efficiency="Parameter count, memory traffic, latency, supported operators, and visual quality were coupled constraints. Improving one dimension could make another worse, so validation covered the delivered graph rather than only the training checkpoint."

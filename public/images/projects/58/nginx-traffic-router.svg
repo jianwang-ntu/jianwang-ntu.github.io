@@ -1,79 +1,49 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900" role="img" aria-labelledby="title desc">
   <title id="title">Custom Nginx traffic router architecture</title>
-  <desc id="desc">Incoming traffic enters an Nginx edge worker, passes through a custom routing module that reads request attributes, matches central rules, and selects an upstream business service pool.</desc>
+  <desc id="desc">The request data plane reads routing attributes, matches a worker-local rule snapshot, selects an upstream pool and follows a fallback when needed. A separate control plane validates, versions and atomically publishes centrally managed rules to Nginx workers.</desc>
   <defs>
-    <linearGradient id="ground" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#f5f8fa"/>
-      <stop offset="1" stop-color="#fff7f0"/>
-    </linearGradient>
-    <linearGradient id="edge" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#182740"/>
-      <stop offset="1" stop-color="#101c2e"/>
-    </linearGradient>
-    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0 0 10 5 0 10Z" fill="#b6532d"/>
-    </marker>
-    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
-      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#16233a" flood-opacity=".12"/>
-    </filter>
+    <marker id="hotArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#c2673f"/></marker>
+    <marker id="controlArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#4f748a"/></marker>
+    <pattern id="placeholder" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="10" height="10" fill="#f5f0fb"/><line y2="10" stroke="#ded1ee" stroke-width="3"/></pattern>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="140%"><feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#2a3d4d" flood-opacity=".1"/></filter>
+    <style>text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}.kicker{font-size:18px;font-weight:750;letter-spacing:3px;fill:#a95837}.title{font-size:40px;font-weight:760;fill:#223744}.sub{font-size:20px;fill:#60717c}.stage{font-size:16px;font-weight:760;letter-spacing:1.8px;fill:#60717c}.box-title{font-size:20px;font-weight:720;fill:#263c48}.box-sub{font-size:14px;fill:#65747d}.small{font-size:13px;fill:#6f7b82}.white-title{font-size:20px;font-weight:720;fill:#fff}.white-sub{font-size:14px;fill:#cbd8df}.tag{font-size:11px;font-weight:780;letter-spacing:1.1px;fill:#6f4c88}.legend{font-size:14px;fill:#596871}.hot{fill:none;stroke:#c2673f;stroke-width:4;marker-end:url(#hotArrow)}.control{fill:none;stroke:#4f748a;stroke-width:3;marker-end:url(#controlArrow)}.fallback{fill:none;stroke:#c2673f;stroke-width:3;stroke-dasharray:8 7;marker-end:url(#hotArrow)}</style>
   </defs>
+  <rect width="1440" height="900" fill="#fbfaf8"/>
+  <text x="64" y="67" class="kicker">58.COM · NGINX TRAFFIC ROUTER</text><text x="64" y="120" class="title">Routing policy before the application service</text><text x="64" y="158" class="sub">A bounded request hot path reads a worker-local snapshot; rule updates use a separate path</text>
 
-  <rect width="1440" height="900" fill="url(#ground)"/>
-  <path d="M0 778C220 712 360 848 572 796s378-88 578-16 290 28 290 28v92H0Z" fill="#d76b38" opacity=".06"/>
+  <rect x="64" y="202" width="1312" height="406" rx="28" fill="#fff3ec" stroke="#e4b49e" stroke-width="2"/>
+  <text x="92" y="240" class="stage">DATA PLANE · EVERY REQUEST</text>
+  <g filter="url(#shadow)"><rect x="92" y="274" width="190" height="286" rx="22" fill="#fff" stroke="#e3d8d1" stroke-width="2"/></g>
+  <circle cx="187" cy="354" r="40" fill="#f3d3c4"/><path d="M164 354h46M173 339l-15 15 15 15M201 339l15 15-15 15" fill="none" stroke="#a95837" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="187" y="432" text-anchor="middle" class="box-title">Incoming request</text><text x="187" y="462" text-anchor="middle" class="box-sub">App · WAP · web</text><text x="187" y="488" text-anchor="middle" class="box-sub">host · path · headers</text>
+  <path d="M282 417H330" class="hot"/>
 
-  <text x="76" y="86" fill="#a7461f" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="22" font-weight="700" letter-spacing="4">NGINX TRAFFIC ROUTING</text>
-  <text x="76" y="143" fill="#17233b" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="43" font-weight="750">Traffic routing in Nginx</text>
-  <text x="76" y="183" fill="#59636d" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="22">A custom module applies routing policy before requests reach application services.</text>
+  <rect x="330" y="274" width="704" height="286" rx="24" fill="#263d4a"/>
+  <text x="358" y="310" class="stage" fill="#f3b392">NGINX WORKER · CUSTOM MODULE</text>
+  <rect x="358" y="340" width="146" height="120" rx="16" fill="#fff" opacity=".1" stroke="#fff" stroke-opacity=".25"/><text x="431" y="385" text-anchor="middle" class="white-title">Read</text><text x="431" y="414" text-anchor="middle" class="white-sub">routing attributes</text><text x="431" y="438" text-anchor="middle" class="white-sub">needed by policy</text>
+  <path d="M504 400H536" class="hot"/>
+  <rect x="536" y="330" width="196" height="140" rx="18" fill="url(#placeholder)" stroke="#c6aad8" stroke-width="2" stroke-dasharray="8 6"/><text x="634" y="360" text-anchor="middle" class="tag">ROLE PLACEHOLDER</text><text x="634" y="397" text-anchor="middle" class="box-title">Policy matcher</text><text x="634" y="425" text-anchor="middle" class="box-sub">index structure not retained</text><text x="634" y="449" text-anchor="middle" class="box-sub">bounded rule lookup</text>
+  <path d="M732 400H764" class="hot"/>
+  <rect x="764" y="340" width="146" height="120" rx="16" fill="#fff" opacity=".1" stroke="#fff" stroke-opacity=".25"/><text x="837" y="385" text-anchor="middle" class="white-title">Select</text><text x="837" y="414" text-anchor="middle" class="white-sub">upstream pool</text><text x="837" y="438" text-anchor="middle" class="white-sub">or fallback</text>
+  <path d="M910 400H942" class="hot"/>
+  <rect x="942" y="340" width="66" height="120" rx="16" fill="#4f6876"/><text x="975" y="389" text-anchor="middle" class="white-title">Proxy</text><text x="975" y="418" text-anchor="middle" class="white-sub">request</text>
+  <rect x="358" y="492" width="650" height="42" rx="13" fill="#405965"/><text x="683" y="519" text-anchor="middle" class="white-sub">hot-path work remains local to the worker</text>
+  <path d="M1034 417H1082" class="hot"/>
 
-  <g font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
-    <g filter="url(#shadow)">
-      <rect x="74" y="348" width="246" height="218" rx="26" fill="#ffffff" stroke="#d9e2e7" stroke-width="2"/>
-    </g>
-    <circle cx="197" cy="411" r="34" fill="#f5d7c8"/>
-    <path d="M178 411h38M185 398l-13 13 13 13M209 398l13 13-13 13" fill="none" stroke="#a7461f" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-    <text x="197" y="479" text-anchor="middle" fill="#17233b" font-size="27" font-weight="750">Incoming traffic</text>
-    <text x="197" y="515" text-anchor="middle" fill="#68717a" font-size="18">App · WAP · web</text>
+  <g filter="url(#shadow)"><rect x="1082" y="274" width="266" height="286" rx="22" fill="#fff" stroke="#e3d8d1" stroke-width="2"/></g>
+  <text x="1108" y="312" class="stage">UPSTREAM POOLS</text>
+  <rect x="1108" y="338" width="100" height="72" rx="14" fill="#eaf2f5" stroke="#c6d9e1"/><text x="1158" y="381" text-anchor="middle" class="box-title">A</text><rect x="1222" y="338" width="100" height="72" rx="14" fill="#edf4e8" stroke="#bfd3b4"/><text x="1272" y="381" text-anchor="middle" class="box-title">B</text>
+  <rect x="1108" y="430" width="100" height="72" rx="14" fill="#f1ecf5" stroke="#d4c6df"/><text x="1158" y="473" text-anchor="middle" class="box-title">C</text><rect x="1222" y="430" width="100" height="72" rx="14" fill="#fff3ec" stroke="#e3b49e"/><text x="1272" y="462" text-anchor="middle" class="box-title">Fallback</text><text x="1272" y="484" text-anchor="middle" class="small">explicit route</text>
+  <path d="M1215 560V532H1272V510" class="fallback"/><text x="1130" y="542" class="small">unavailable / no match</text>
 
-    <path d="M320 457H410" fill="none" stroke="#b6532d" stroke-width="5" marker-end="url(#arrow)"/>
-    <text x="365" y="434" text-anchor="middle" fill="#7a6155" font-size="16" font-weight="700">REQUEST</text>
+  <rect x="64" y="642" width="1312" height="148" rx="24" fill="#edf3f6" stroke="#c9d9e1" stroke-width="2"/>
+  <text x="92" y="678" class="stage">CONTROL PLANE · RULE UPDATE PATH</text>
+  <rect x="92" y="700" width="220" height="62" rx="14" fill="#fff" stroke="#c7d8e0"/><text x="202" y="739" text-anchor="middle" class="box-title">Central routing rules</text>
+  <path d="M312 731H354" class="control"/><rect x="354" y="700" width="206" height="62" rx="14" fill="#fff" stroke="#c7d8e0"/><text x="457" y="727" text-anchor="middle" class="box-title">Validate + version</text><text x="457" y="749" text-anchor="middle" class="small">reject invalid update</text>
+  <path d="M560 731H602" class="control"/><rect x="602" y="700" width="206" height="62" rx="14" fill="#fff" stroke="#c7d8e0"/><text x="705" y="727" text-anchor="middle" class="box-title">Atomic publish</text><text x="705" y="749" text-anchor="middle" class="small">no partial rule set</text>
+  <path d="M808 731H850" class="control"/><rect x="850" y="700" width="240" height="62" rx="14" fill="#fff" stroke="#c7d8e0"/><text x="970" y="727" text-anchor="middle" class="box-title">Worker-local snapshot</text><text x="970" y="749" text-anchor="middle" class="small">active requests continue</text>
+  <path d="M970 700V620H634V478" class="control"/>
+  <rect x="1120" y="700" width="228" height="62" rx="14" fill="#fff3ec" stroke="#e3b49e"/><text x="1234" y="727" text-anchor="middle" class="box-title">Isolation boundary</text><text x="1234" y="749" text-anchor="middle" class="small">destination failures stay scoped</text>
 
-    <g filter="url(#shadow)">
-      <rect x="424" y="254" width="592" height="472" rx="32" fill="url(#edge)"/>
-    </g>
-    <text x="474" y="314" fill="#f0a278" font-size="18" font-weight="700" letter-spacing="2">NGINX WORKER</text>
-    <text x="474" y="359" fill="#ffffff" font-size="31" font-weight="750">Custom traffic-router module</text>
-    <text x="474" y="394" fill="#bdc8d3" font-size="18">custom module in the request processing path</text>
-
-    <rect x="474" y="442" width="492" height="76" rx="14" fill="#ffffff" opacity=".08" stroke="#ffffff" stroke-opacity=".2"/>
-    <circle cx="508" cy="480" r="14" fill="#dc733f"/>
-    <text x="540" y="488" fill="#ffffff" font-size="23" font-weight="700">Read request attributes</text>
-
-    <path d="M720 518V548" stroke="#f0a278" stroke-width="3" marker-end="url(#arrow)"/>
-    <rect x="474" y="558" width="492" height="76" rx="14" fill="#ffffff" opacity=".08" stroke="#ffffff" stroke-opacity=".2"/>
-    <circle cx="508" cy="596" r="14" fill="#dc733f"/>
-    <text x="540" y="604" fill="#ffffff" font-size="23" font-weight="700">Match rules · select upstream</text>
-
-    <text x="474" y="683" fill="#8fd3df" font-size="17">CONTROL RULES OUTSIDE THE HOT PATH</text>
-    <path d="M1016 457H1106" fill="none" stroke="#b6532d" stroke-width="5" marker-end="url(#arrow)"/>
-    <text x="1061" y="434" text-anchor="middle" fill="#7a6155" font-size="16" font-weight="700">ROUTE</text>
-
-    <text x="1118" y="280" fill="#69727b" font-size="18" font-weight="700" letter-spacing="2">UPSTREAM POOLS</text>
-    <g filter="url(#shadow)">
-      <rect x="1118" y="316" width="246" height="106" rx="18" fill="#ffffff" stroke="#e3d8d0" stroke-width="2"/>
-      <rect x="1118" y="444" width="246" height="106" rx="18" fill="#ffffff" stroke="#e3d8d0" stroke-width="2"/>
-      <rect x="1118" y="572" width="246" height="106" rx="18" fill="#ffffff" stroke="#e3d8d0" stroke-width="2"/>
-    </g>
-    <rect x="1152" y="348" width="18" height="42" rx="4" fill="#dc733f"/>
-    <rect x="1178" y="348" width="18" height="42" rx="4" fill="#e8a17d"/>
-    <text x="1222" y="378" fill="#17233b" font-size="23" font-weight="700">Business A</text>
-    <rect x="1152" y="476" width="18" height="42" rx="4" fill="#dc733f"/>
-    <rect x="1178" y="476" width="18" height="42" rx="4" fill="#e8a17d"/>
-    <text x="1222" y="506" fill="#17233b" font-size="23" font-weight="700">Business B</text>
-    <rect x="1152" y="604" width="18" height="42" rx="4" fill="#dc733f"/>
-    <rect x="1178" y="604" width="18" height="42" rx="4" fill="#e8a17d"/>
-    <text x="1222" y="634" fill="#17233b" font-size="23" font-weight="700">Business C</text>
-
-    <rect x="74" y="780" width="1290" height="64" rx="16" fill="#ffffff" stroke="#e1d8d1"/>
-    <text x="719" y="820" text-anchor="middle" fill="#4d5963" font-size="20">Routing is managed centrally; application services remain ordinary upstreams.</text>
-  </g>
+  <rect x="64" y="820" width="1312" height="50" rx="14" fill="#fff" stroke="#dfe6e9"/><line x1="92" y1="845" x2="136" y2="845" class="hot"/><text x="150" y="850" class="legend">request hot path</text><line x1="320" y1="845" x2="364" y2="845" class="control"/><text x="378" y="850" class="legend">rule update path</text><line x1="554" y1="845" x2="598" y2="845" class="fallback"/><text x="612" y="850" class="legend">fallback</text><rect x="748" y="836" width="28" height="18" rx="4" fill="url(#placeholder)" stroke="#9372ac" stroke-dasharray="5 4"/><text x="788" y="850" class="legend">functional role; internal data structure not retained</text>
 </svg>

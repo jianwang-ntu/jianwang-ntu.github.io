@@ -56,6 +56,13 @@ test('Xiaomi case study explains both visual pipelines and their deployment cons
   assert.match(html, /Portrait intelligence, built for the phone/);
   assert.match(html, /Portrait semantic segmentation/);
   assert.match(html, /Selfie to emoji with GANs/);
+  assert.match(html, /\/images\/projects\/xiaomi\/portrait-segmentation-architecture\.svg/);
+  assert.match(html, /\/images\/projects\/xiaomi\/selfie-emoji-architecture\.svg/);
+  assert.match(html, /\/images\/projects\/xiaomi\/mobile-deployment-architecture\.svg/);
+  assert.equal((html.match(/class="case-study-figure architecture-figure/g) || []).length, 3);
+  assert.equal((html.match(/class="architecture-scroll"/g) || []).length, 3);
+  assert.equal((html.match(/View full-size architecture/g) || []).length, 3);
+  assert.equal((html.match(/Functional blocks describe roles, not Xiaomi’s verified proprietary topology\./g) || []).length, 3);
   assert.match(html, /\/images\/projects\/xiaomi\/portrait-segmentation-reconstruction\.jpg/);
   assert.match(html, /portrait-segmentation-reconstruction-768\.jpg 768w/);
   assert.match(html, /\/images\/projects\/xiaomi\/selfie-emoji-reconstruction\.jpg/);

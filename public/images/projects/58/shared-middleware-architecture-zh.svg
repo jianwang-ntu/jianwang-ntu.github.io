@@ -1,90 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900" role="img" aria-labelledby="title desc">
   <title id="title">共享异步 Web 框架架构</title>
-  <desc id="desc">App、Mobile WAP 和多个业务站点通过共享异步 Web 框架访问业务服务与平台服务。框架统一处理请求生命周期、中间件和公共组件。</desc>
-  <defs>
-    <linearGradient id="ground" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#fff9f4"/>
-      <stop offset="1" stop-color="#f3f6f8"/>
-    </linearGradient>
-    <linearGradient id="core" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#1c2940"/>
-      <stop offset="1" stop-color="#111d31"/>
-    </linearGradient>
-    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0 0 10 5 0 10Z" fill="#b6532d"/>
-    </marker>
-    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
-      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#16233a" flood-opacity=".12"/>
-    </filter>
-  </defs>
-
-  <rect width="1440" height="900" fill="url(#ground)"/>
-  <circle cx="1325" cy="95" r="180" fill="#ec8a57" opacity=".08"/>
-  <circle cx="84" cy="824" r="170" fill="#2d6f83" opacity=".06"/>
-
-  <g font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei','Segoe UI',sans-serif">
-    <text x="76" y="86" fill="#a7461f" font-size="22" font-weight="700" letter-spacing="4">共享 WEB 框架</text>
-    <text x="76" y="143" fill="#17233b" font-size="43" font-weight="750">多个产品共用一套请求处理基础设施</text>
-    <text x="76" y="183" fill="#59636d" font-size="22">App、Mobile WAP 与业务站点通过统一框架访问后端服务。</text>
-
-    <text x="74" y="285" fill="#69727b" font-size="18" font-weight="700" letter-spacing="2">业务入口</text>
-    <g filter="url(#shadow)">
-      <rect x="74" y="316" width="282" height="104" rx="18" fill="#ffffff" stroke="#e5d7cd" stroke-width="2"/>
-      <circle cx="112" cy="350" r="12" fill="#dc733f"/>
-      <text x="140" y="359" fill="#17233b" font-size="25" font-weight="700">App 接入服务</text>
-      <text x="112" y="392" fill="#68717a" font-size="18">移动产品接口</text>
-
-      <rect x="74" y="444" width="282" height="104" rx="18" fill="#ffffff" stroke="#e5d7cd" stroke-width="2"/>
-      <circle cx="112" cy="478" r="12" fill="#dc733f"/>
-      <text x="140" y="487" fill="#17233b" font-size="25" font-weight="700">Mobile WAP</text>
-      <text x="112" y="520" fill="#68717a" font-size="18">浏览器端页面</text>
-
-      <rect x="74" y="572" width="282" height="104" rx="18" fill="#ffffff" stroke="#e5d7cd" stroke-width="2"/>
-      <circle cx="112" cy="606" r="12" fill="#dc733f"/>
-      <text x="140" y="615" fill="#17233b" font-size="25" font-weight="700">业务站点</text>
-      <text x="112" y="648" fill="#68717a" font-size="18">独立业务逻辑</text>
-    </g>
-
-    <path d="M356 368H440" fill="none" stroke="#b6532d" stroke-width="4" marker-end="url(#arrow)"/>
-    <path d="M356 496H440" fill="none" stroke="#b6532d" stroke-width="4" marker-end="url(#arrow)"/>
-    <path d="M356 624H440" fill="none" stroke="#b6532d" stroke-width="4" marker-end="url(#arrow)"/>
-
-    <g filter="url(#shadow)">
-      <rect x="452" y="272" width="538" height="474" rx="30" fill="url(#core)"/>
-    </g>
-    <text x="500" y="328" fill="#f0a278" font-size="18" font-weight="700" letter-spacing="2">共享异步 WEB 框架</text>
-    <text x="500" y="375" fill="#ffffff" font-size="32" font-weight="750">统一执行层</text>
-    <text x="500" y="410" fill="#bdc8d3" font-size="18">统一请求生命周期 · 可组合中间件 · 异步 I/O</text>
-
-    <rect x="500" y="452" width="442" height="66" rx="13" fill="#ffffff" opacity=".08" stroke="#ffffff" stroke-opacity=".19"/>
-    <text x="530" y="493" fill="#ffffff" font-size="23" font-weight="700">请求生命周期</text>
-    <text x="922" y="492" fill="#8fd3df" font-size="15" text-anchor="end">接入 → 调度 → 返回</text>
-
-    <rect x="500" y="536" width="442" height="66" rx="13" fill="#ffffff" opacity=".08" stroke="#ffffff" stroke-opacity=".19"/>
-    <text x="530" y="577" fill="#ffffff" font-size="23" font-weight="700">中间件链</text>
-    <text x="922" y="576" fill="#8fd3df" font-size="15" text-anchor="end">按业务组合</text>
-
-    <rect x="500" y="620" width="442" height="78" rx="13" fill="#ffffff" opacity=".08" stroke="#ffffff" stroke-opacity=".19"/>
-    <text x="530" y="656" fill="#ffffff" font-size="23" font-weight="700">公共组件</text>
-    <text x="530" y="682" fill="#bdc8d3" font-size="17">通过稳定接口提供共享能力</text>
-
-    <path d="M990 432H1068" fill="none" stroke="#b6532d" stroke-width="4" marker-end="url(#arrow)"/>
-    <path d="M990 580H1068" fill="none" stroke="#b6532d" stroke-width="4" marker-end="url(#arrow)"/>
-
-    <text x="1072" y="285" fill="#69727b" font-size="18" font-weight="700" letter-spacing="2">后端服务</text>
-    <g filter="url(#shadow)">
-      <rect x="1072" y="316" width="292" height="136" rx="18" fill="#ffffff" stroke="#d7dfe4" stroke-width="2"/>
-      <text x="1110" y="361" fill="#17233b" font-size="24" font-weight="700">业务服务</text>
-      <text x="1110" y="397" fill="#68717a" font-size="18">各业务线维护</text>
-      <text x="1110" y="424" fill="#68717a" font-size="18">承载具体业务逻辑</text>
-
-      <rect x="1072" y="482" width="292" height="136" rx="18" fill="#ffffff" stroke="#d7dfe4" stroke-width="2"/>
-      <text x="1110" y="527" fill="#17233b" font-size="24" font-weight="700">平台服务</text>
-      <text x="1110" y="563" fill="#68717a" font-size="18">共享数据与系统</text>
-      <text x="1110" y="590" fill="#68717a" font-size="18">通过统一接口调用</text>
-    </g>
-
-    <rect x="452" y="786" width="912" height="58" rx="16" fill="#ffffff" stroke="#e1d8d1"/>
-    <text x="908" y="823" text-anchor="middle" fill="#4d5963" font-size="20">业务处理器位于框架之外；公共请求处理集中在共享层。</text>
-  </g>
+  <desc id="desc">App 接口、Mobile WAP 和业务站点进入共享异步请求链路。中间件调用公共能力与业务处理器，在等待下游服务时不阻塞共享链路，并通过明确的故障边界返回响应。</desc>
+  <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#536f80"/></marker><marker id="returnArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#c2673f"/></marker><pattern id="slot" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="10" height="10" fill="#f5f0fb"/><line y2="10" stroke="#ded1ee" stroke-width="3"/></pattern><filter id="shadow" x="-15%" y="-15%" width="130%" height="140%"><feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#2a3d4d" flood-opacity=".1"/></filter><style>text{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",Arial,sans-serif}.kicker{font-size:18px;font-weight:750;letter-spacing:3px;fill:#a95837}.title{font-size:40px;font-weight:760;fill:#223744}.sub{font-size:20px;fill:#60717c}.stage{font-size:16px;font-weight:760;letter-spacing:1.8px;fill:#60717c}.box-title{font-size:21px;font-weight:720;fill:#263c48}.box-sub{font-size:15px;fill:#65747d}.small{font-size:14px;fill:#6f7b82}.white-sub{font-size:14px;fill:#cbd8df}.tag{font-size:11px;font-weight:780;letter-spacing:1.1px;fill:#6f4c88}.legend{font-size:14px;fill:#596871}.arrow{fill:none;stroke:#536f80;stroke-width:4;marker-end:url(#arrow)}.return{fill:none;stroke:#c2673f;stroke-width:3;stroke-dasharray:8 7;marker-end:url(#returnArrow)}</style></defs>
+  <rect width="1440" height="900" fill="#fbfaf8"/><text x="64" y="67" class="kicker">58同城 · 共享 WEB 框架</text><text x="64" y="120" class="title">多条业务线，共用一条请求基础链路</text><text x="64" y="158" class="sub">业务逻辑由各团队维护；请求处理与公共能力由共享层提供</text>
+  <text x="64" y="218" class="stage">01 · 业务入口</text><text x="336" y="218" class="stage">02 · 共享请求链路</text><text x="1100" y="218" class="stage">03 · 下游服务</text>
+  <g filter="url(#shadow)"><rect x="64" y="244" width="226" height="420" rx="24" fill="#fff" stroke="#d9e3e8" stroke-width="2"/></g><rect x="88" y="282" width="178" height="92" rx="16" fill="#fff3ec" stroke="#e3b49e"/><text x="177" y="320" text-anchor="middle" class="box-title">App 接口</text><text x="177" y="348" text-anchor="middle" class="box-sub">移动产品服务</text><rect x="88" y="402" width="178" height="92" rx="16" fill="#eaf2f5" stroke="#c6d9e1"/><text x="177" y="440" text-anchor="middle" class="box-title">Mobile WAP</text><text x="177" y="468" text-anchor="middle" class="box-sub">浏览器请求</text><rect x="88" y="522" width="178" height="112" rx="16" fill="#edf4e8" stroke="#bfd3b4"/><text x="177" y="560" text-anchor="middle" class="box-title">业务站点</text><text x="177" y="588" text-anchor="middle" class="box-sub">独立业务处理</text><text x="177" y="614" text-anchor="middle" class="box-sub">独立发布节奏</text>
+  <path d="M290 454H336" class="arrow"/><rect x="336" y="244" width="718" height="420" rx="26" fill="#edf3f6" stroke="#c9d9e1" stroke-width="2"/><text x="364" y="280" class="stage">请求生命周期</text><g><rect x="364" y="302" width="140" height="64" rx="14" fill="#fff" stroke="#c7d8e0"/><rect x="530" y="302" width="140" height="64" rx="14" fill="#fff" stroke="#c7d8e0"/><rect x="696" y="302" width="140" height="64" rx="14" fill="#fff" stroke="#c7d8e0"/><rect x="862" y="302" width="164" height="64" rx="14" fill="#fff" stroke="#c7d8e0"/><text x="434" y="342" text-anchor="middle" class="box-title">接收</text><text x="600" y="342" text-anchor="middle" class="box-title">调度</text><text x="766" y="342" text-anchor="middle" class="box-title">组合</text><text x="944" y="342" text-anchor="middle" class="box-title">返回响应</text><path d="M504 334H530" class="arrow"/><path d="M670 334H696" class="arrow"/><path d="M836 334H862" class="arrow"/></g>
+  <text x="364" y="411" class="stage">中间件链</text><rect x="364" y="432" width="662" height="92" rx="18" fill="#263d4a"/><g class="white-sub" text-anchor="middle"><text x="427" y="472">鉴权</text><text x="532" y="472">解析</text><text x="637" y="472">缓存</text><text x="750" y="472">服务访问</text><text x="875" y="472">响应处理</text></g><g fill="#567482"><rect x="389" y="487" width="76" height="14" rx="7"/><rect x="494" y="487" width="76" height="14" rx="7"/><rect x="599" y="487" width="76" height="14" rx="7"/><rect x="704" y="487" width="92" height="14" rx="7"/><rect x="837" y="487" width="76" height="14" rx="7"/></g><rect x="930" y="448" width="72" height="58" rx="12" fill="url(#slot)" stroke="#ae91c2" stroke-dasharray="6 5"/><text x="966" y="470" text-anchor="middle" class="tag">角色</text><text x="966" y="490" text-anchor="middle" class="tag">插槽</text><rect x="364" y="550" width="318" height="84" rx="16" fill="#fff" stroke="#c7d8e0"/><text x="388" y="584" class="box-title">公共能力</text><text x="388" y="612" class="box-sub">通过稳定接口供业务复用</text><rect x="708" y="550" width="318" height="84" rx="16" fill="#fff3ec" stroke="#e3b49e"/><text x="732" y="584" class="box-title">异步等待下游 I/O</text><text x="732" y="612" class="box-sub">完成后恢复当前请求</text>
+  <path d="M1054 454H1100" class="arrow"/><g filter="url(#shadow)"><rect x="1100" y="244" width="276" height="420" rx="24" fill="#fff" stroke="#d9e3e8" stroke-width="2"/></g><rect x="1126" y="282" width="224" height="104" rx="16" fill="#fff3ec" stroke="#e3b49e"/><text x="1238" y="322" text-anchor="middle" class="box-title">业务处理器</text><text x="1238" y="351" text-anchor="middle" class="box-sub">由产品团队维护</text><rect x="1126" y="414" width="224" height="92" rx="16" fill="#eaf2f5" stroke="#c6d9e1"/><text x="1238" y="451" text-anchor="middle" class="box-title">业务服务</text><text x="1238" y="480" text-anchor="middle" class="box-sub">领域系统</text><rect x="1126" y="534" width="224" height="100" rx="16" fill="#edf4e8" stroke="#bfd3b4"/><text x="1238" y="573" text-anchor="middle" class="box-title">平台服务</text><text x="1238" y="602" text-anchor="middle" class="box-sub">共享数据与系统</text><path d="M1238 386V406" class="arrow"/><path d="M1238 506V526" class="arrow"/>
+  <rect x="64" y="704" width="1312" height="86" rx="18" fill="#fff3ec" stroke="#e6b9a3"/><text x="92" y="738" class="box-title">共享边界约束</text><text x="92" y="768" class="box-sub">接口向后兼容 · 中间件热路径短而稳定 · 单次请求故障隔离 · 具体业务逻辑保持在框架外</text><path d="M1200 664V696H750V642" class="return"/><text x="1000" y="689" class="small">响应 / 异常边界</text>
+  <rect x="64" y="820" width="1312" height="50" rx="14" fill="#fff" stroke="#dfe6e9"/><line x1="92" y1="845" x2="136" y2="845" class="arrow"/><text x="150" y="850" class="legend">请求链路</text><line x1="298" y1="845" x2="342" y2="845" class="return"/><text x="356" y="850" class="legend">响应 / 隔离边界</text><rect x="590" y="836" width="28" height="18" rx="4" fill="url(#slot)" stroke="#9372ac" stroke-dasharray="5 4"/><text x="630" y="850" class="legend">扩展角色，不代表内部组件名称</text><text x="1344" y="850" text-anchor="end" class="legend">日请求量 1 亿+ · 不重建延迟数据</text>
 </svg>

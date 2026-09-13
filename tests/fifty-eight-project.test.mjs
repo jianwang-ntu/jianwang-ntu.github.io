@@ -67,6 +67,9 @@ test('58.com case study explains the shared middleware and Nginx traffic router'
   assert.match(html, /href="\/zh\/work\/58-web-infrastructure"/);
   assert.match(html, /\/images\/projects\/58\/shared-middleware-architecture\.svg/);
   assert.match(html, /\/images\/projects\/58\/nginx-traffic-router\.svg/);
+  assert.equal((html.match(/class="case-study-figure architecture-figure/g) || []).length, 2);
+  assert.equal((html.match(/class="architecture-scroll"/g) || []).length, 2);
+  assert.equal((html.match(/Functional blocks describe roles, not verified internal implementation\./g) || []).length, 2);
   assert.equal((html.match(/View full-size diagram/g) || []).length, 2);
   assert.match(html, /href="\/images\/projects\/58\/shared-middleware-architecture\.svg" target="_blank"/);
   assert.match(html, /href="\/images\/projects\/58\/nginx-traffic-router\.svg" target="_blank"/);
@@ -91,6 +94,9 @@ test('Chinese 58.com route renders a complete localized project page', () => {
   assert.equal((html.match(/查看原图/g) || []).length, 2);
   assert.match(html, /\/images\/projects\/58\/shared-middleware-architecture-zh\.svg/);
   assert.match(html, /\/images\/projects\/58\/nginx-traffic-router-zh\.svg/);
+  assert.equal((html.match(/class="case-study-figure architecture-figure/g) || []).length, 2);
+  assert.equal((html.match(/class="architecture-scroll"/g) || []).length, 2);
+  assert.equal((html.match(/功能模块只表示系统角色，不代表已确认的公司内部实现。/g) || []).length, 2);
   assert.match(html, /aria-label="Profile"/);
   assert.equal((article.match(/<h2\b/g) || []).length, 2);
   assert.match(article, /<strong>实现：<\/strong>/);

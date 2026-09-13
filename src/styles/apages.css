@@ -515,7 +515,7 @@
 [data-style="apages"] .xp-efficiency-copy strong { color: #fff; }
 [data-style="apages"] .xp-model-note { margin: 32px 0 0; }
 [data-style="apages"] .f8-system-figure { background: #f8f6f2; }
-[data-style="apages"] .f8-fullsize-link {
+[data-style="apages"] .architecture-fullsize-link {
   display: block;
   width: fit-content;
   margin-top: 8px;
@@ -836,6 +836,25 @@
   background: transparent;
 }
 
+[data-style="apages"] .architecture-figure {
+  overflow: hidden;
+  border: 1px solid #dce4e8;
+  border-radius: 10px;
+  background: #f8fafb;
+}
+
+[data-style="apages"] .architecture-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+[data-style="apages"] .architecture-scroll:focus-visible {
+  outline: 2px solid var(--xp-cyan-text);
+  outline-offset: -2px;
+}
+
 [data-style="apages"] .case-study-figure img {
   display: block;
   width: 100%;
@@ -848,6 +867,21 @@
   font-size: 14px;
   line-height: 1.65;
 }
+
+[data-style="apages"] .architecture-figure figcaption {
+  padding: 13px 16px 15px;
+  border-top: 1px solid #e3e9ec;
+  background: #fff;
+}
+
+[data-style="apages"] .architecture-placeholder-note {
+  display: block;
+  margin-top: 5px;
+  color: #7b6660;
+  font-size: 12.5px;
+}
+
+[data-style="apages"] .architecture-scroll-hint { display: none; }
 
 [data-style="apages"] .case-study-notes {
   margin: 24px 0 24px 0;
@@ -882,4 +916,14 @@
   [data-style="apages"] .case-study-section { padding-top: 34px; }
   [data-style="apages"] .case-study-section + .case-study-section { margin-top: 34px; }
   [data-style="apages"] .case-study-notes { margin-left: 6px; padding-left: 14px; }
+  [data-style="apages"] .architecture-scroll img {
+    width: 680px;
+    max-width: none;
+  }
+  [data-style="apages"] .architecture-scroll-hint {
+    display: block;
+    margin-top: 5px;
+    color: #68757c;
+    font-size: 12.5px;
+  }
 }
