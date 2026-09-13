@@ -1,5 +1,3 @@
-![Eric Schmidt: AI Is Already Reshaping Warfare, and China Is Closer Than You Think](/images/blog/eric-schmidt-ai-warfare-china.png)
-
 # Eric Schmidt: AI Is Already Reshaping Warfare, and China Is Closer Than You Think
 
 In a conversation moderated by journalist Tom Shanker, former Google CEO Eric Schmidt makes a sweeping argument: AI is not simply another technology wave — it is simultaneously rewriting the rules of warfare, software development, national-security infrastructure, and education. Schmidt's tone is urgent without being apocalyptic, and his sharpest claims are military and geopolitical.

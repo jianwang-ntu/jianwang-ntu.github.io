@@ -1,7 +1,5 @@
 # Agency 比技能更重要：Max Schoening 谈 AI 时代的产品打造
 
-![Drive It Like It's Stolen: Max Shying on Agency, Malleable Software, and the Tiny Core](/images/blog/drive-it-like-its-stolen-max-shying-on-agency-malleable.png)
-
 在 Lenny's Podcast 的一期访谈中，Notion 产品负责人 Max Schoening 抛出了一个反直觉的论点：当 AI 把技能门槛降到几乎为零时，真正决定一个人能否做事的不是能力，而是 agency——主动改造周围世界的意愿。他还把多个被业界奉为圭臬的概念——"品味"、"SaaS 末日"、"通用基本收入"——重新拆解了一遍。Schoening 曾任职于 Google、Heroku、GitHub，目前在 Notion 推动设计师和产品经理直接写代码。
 
 ## Agency 才是真正稀缺的东西

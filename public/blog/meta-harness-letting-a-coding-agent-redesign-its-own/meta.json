@@ -2,7 +2,7 @@
   "slug": "meta-harness-letting-a-coding-agent-redesign-its-own",
   "title_en": "Meta-Harness: Letting a Coding Agent Redesign Its Own Scaffolding",
   "date": "2026-05-13",
-  "dek_en": "A new paper from Lee et al. (Stanford, KRAFTON, MIT) argues that the code wrapping an LLM — the *harness* that decides what to store, retrieve, and show the model — can be optimized end-to-end by a coding agent that reads the full filesyste",
+  "dek_en": "Meta-Harness studies whether a coding agent can improve its own execution environment through iterative evaluation.",
   "tags": [],
   "languages": [
     "en",

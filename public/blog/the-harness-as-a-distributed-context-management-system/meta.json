@@ -2,7 +2,7 @@
   "slug": "the-harness-as-a-distributed-context-management-system",
   "title_en": "The Harness as a Distributed Context Management System",
   "date": "2026-05-08",
-  "dek_en": "In a recent LinkedIn post, Glean co-founder Tony Gentilcore argues that the central engineering challenge in agent design has shifted from prompting to context management — and that the agent harness is increasingly the place where that wor",
+  "dek_en": "Tony Gentilcore discusses agent harnesses as systems for managing context across distributed work.",
   "tags": [
     "agents",
     "llm",

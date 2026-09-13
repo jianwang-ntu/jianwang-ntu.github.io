@@ -2,7 +2,9 @@
 
 ![自我进化的公司：AI 如何改写组织的底层逻辑](/images/blog/the-self-improving-company-ai-breaks-the-roman-legion-model.png)
 
-长期以来，公司都像罗马军团一样运作。
+本文整理 Y Combinator 的演讲 [How to Build a Self-Improving Company with AI](https://www.youtube.com/watch?v=X_JsIHUfUjc)。下文的工作流示例与预测来自演讲中的设想，并非本站作者验证过的结果。
+
+演讲把传统公司的层级结构比作罗马军团。
 
 总部发号施令，信息层层上传，命令层层下达。员工负责执行，经理负责协调，更高层负责判断方向。
 

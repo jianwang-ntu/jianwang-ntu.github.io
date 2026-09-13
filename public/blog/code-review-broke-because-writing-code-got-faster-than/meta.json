@@ -2,7 +2,7 @@
   "slug": "code-review-broke-because-writing-code-got-faster-than",
   "title_en": "Code Review Broke Because Writing Code Got Faster Than Reading It",
   "date": "2026-09-10",
-  "dek_en": "A recent Chinese-language post on lightnote.com.cn argues that the fifty-year-old practice of human code review — formalised by Fagan in 1976 — has lost the economic condition that made it work. The author's claim is narrow and specific: re",
+  "dek_en": "A reading note on why faster code generation puts pressure on human review, and what evidence reviewers still need.",
   "tags": [],
   "languages": [
     "en",

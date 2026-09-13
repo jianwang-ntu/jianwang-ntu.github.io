@@ -6,7 +6,7 @@ In a two-hour workshop at what appears to be an AI engineering conference, Chris
 
 ## What a Ralph Loop Actually Is
 
-The name comes from Ralph Wiggum, the Simpsons character who tries the same thing over and over until it works. Parsons credited Jeffrey Huntley with the original idea: when an AI finishes a task, just ask it to do the same task again. The model frequently notices something it missed, fixes it, and only then declares itself truly done.
+The name comes from Ralph Wiggum, the Simpsons character who tries the same thing over and over until it works. Parsons credited Geoffrey Huntley with the original idea: when an AI finishes a task, just ask it to do the same task again. The model frequently notices something it missed, fixes it, and only then declares itself truly done.
 
 Parsons walked through the lineage:
 

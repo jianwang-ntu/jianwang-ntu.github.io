@@ -2,7 +2,7 @@
   "slug": "promedical-treating-clinical-rubrics-as-the-reward-signal",
   "title_en": "ProMedical: Treating Clinical Rubrics as the Reward Signal, Not a Post-Hoc Check",
   "date": "2026-05-08",
-  "dek_en": "A team from Xunfei Healthcare argues that the standard recipe for aligning medical LLMs — collect pairwise preferences, train a scalar reward model, run RLHF/DPO — is fundamentally mismatched with how clinicians actually evaluate medical an",
+  "dek_en": "ProMedical studies clinical rubrics as structured feedback for training and evaluating medical language models.",
   "tags": [],
   "languages": [
     "en",

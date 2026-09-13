@@ -2,7 +2,7 @@
 
 ![Demystifying the Inner Workings of AI Models: The Role of Natural Language Autoencoders](/images/blog/demystifying-the-inner-workings-of-ai-models-the-role-of.png)
 
-In a recent talk, Dafei from Zui Jia Pai Dang discussed Ansobic's groundbreaking research on mechanistic interpretability in AI models. The study introduces the Natural Language Autoencoder (NLA) which aims to translate the complex and indecipherable activation values within AI language models into understandable natural language. This research marks a significant step forward in interpreting the "black box" of large language models.
+In a recent talk, Dafei from Zui Jia Pai Dang discussed Anthropic's groundbreaking research on mechanistic interpretability in AI models. The study introduces the Natural Language Autoencoder (NLA) which aims to translate the complex and indecipherable activation values within AI language models into understandable natural language. This research marks a significant step forward in interpreting the "black box" of large language models.
 
 ## The Challenges of AI Model Interpretability
 
@@ -10,7 +10,7 @@ Dafei points out that one of the AI industry's most pressing challenges is the i
 
 ## Introducing the Natural Language Autoencoder (NLA)
 
-The NLA, as introduced by Ansobic, is a novel approach that translates activation vectors into coherent natural language without the need for labeled data. This system consists of two main components:
+The NLA, as introduced by Anthropic, is a novel approach that translates activation vectors into coherent natural language without the need for labeled data. This system consists of two main components:
 
 - **Activation Verbalizer (AV):** Translates the activation vectors into a natural language text.
 - **Activation Reconstructor (AR):** Converts the generated text back into the original activation vectors, with the aim of minimizing reconstruction loss.
@@ -28,9 +28,9 @@ The talk highlighted several case studies that demonstrate the capabilities of N
 
 ## Quantitative Evaluation and Limitations
 
-Ansobic's team subjected NLA to multiple prediction tasks, noting performance improvements as the variance explained (FVE) increased. Despite its impressive capacity to extract and relay the internal workings of AI models, NLA does have limitations:
+Anthropic's team subjected NLA to multiple prediction tasks, noting performance improvements as the variance explained (FVE) increased. Despite its impressive capacity to extract and relay the internal workings of AI models, NLA does have limitations:
 
-- **Confabulation:** NLA can fabricate contextual information, though it remains thematically accurate.
+- **Confabulation:** NLA explanations can contain false contextual details or misleading accounts of internal reasoning. Findings require independent checks.
 - **Lack of Mechanistic Transparency:** Like other models, the NLA operates as a "black box."
 - **High Resource Demands:** The model's training is computationally expensive.
 - **Potential for Degeneration in Objective:** Under certain conditions, the training objectives might degenerate.
@@ -44,6 +44,4 @@ Dafei outlined several promising directions for further research with NLA, inclu
 - Application expansions, such as integrating NLA into different model components beyond simple activation decoding.
 - Investigation into the limits on what activation-derived information can be articulated.
 
-## Conclusion
-
-Ansobic's Natural Language Autoencoder offers a transformative approach to understanding and auditing AI models by translating their activation states into human-readable text. This advance could profoundly impact AI safety audits and mechanistic interpretability research, suggesting a future where AI's internal logic becomes transparent and accessible.
+Anthropic’s [research overview](https://www.anthropic.com/research/natural-language-autoencoders) distinguishes training the NLA from auditing a target model: its auditing experiment withheld the data used to implant a hidden motivation, but NLA training still required activation data. The method provides evidence to investigate, not a guarantee that an explanation is correct.

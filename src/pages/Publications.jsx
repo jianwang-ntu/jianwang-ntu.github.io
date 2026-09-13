@@ -39,17 +39,13 @@ export default function Publications() {
     <div className="page">
       <Seo
         title="Publications"
-        description={`Peer-reviewed research and preprints by Jian Wang on code LLM security, fake-content detection, and program repair. ${ALL_PUBS.length} papers across SE, ML, and security venues.`}
+        description="Publications by Jian Wang on program repair, code-model evaluation, neural-network testing, and robustness."
         path="/pubs"
       />
       <Nav skipToContent />
       <SiteFrame className="publications-shell" mainClassName="publications-content text-index-page">
           <h1>Publications</h1>
           <p className="page-deck">Research on program repair, code-model evaluation, neural-network testing, and robustness.</p>
-          <p className="text-index-intro">
-            My name appears in <b>bold</b>. Details include figures, research context, and citations.
-          </p>
-          <p><Link className="text-link" to="/work#research-projects">Research projects and artifacts ↗</Link></p>
           <div className="text-index-list">
             {ALL_PUBS.map((publication) => <PublicationRow key={publication.id} publication={publication} />)}
           </div>

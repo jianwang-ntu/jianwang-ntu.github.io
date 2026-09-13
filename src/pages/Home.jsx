@@ -4,8 +4,6 @@ import Nav from '../components/Nav.jsx';
 import Footer from '../components/Footer.jsx';
 import Seo from '../components/Seo.jsx';
 import SiteFrame from '../components/SiteFrame.jsx';
-import ResearchOverview from '../components/ResearchOverview.jsx';
-import ResearchConnection from '../components/ResearchConnection.jsx';
 import { NEWS, ALL_PUBS } from '../data.jsx';
 import { PUB_META } from '../data-pubs.js';
 
@@ -17,66 +15,51 @@ function AcademicPagesHome() {
         <h1>About me</h1>
         <div className="home-bio">
           <p>
-            I am a recent PhD from the College of Computing and Data Science (CCDS) at{' '}
+            I received my PhD in Computer Science from{' '}
             <strong>Nanyang Technological University</strong>, advised by{' '}
             <a href="https://personal.ntu.edu.sg/yi_li/" target="_blank" rel="noreferrer">Prof. Li Yi</a>.
-            My research connects software engineering,{' '}
-            large language models and trustworthy AI systems.
-            My PhD work focused on{' '}
-            automated program repair, AI-generated code detection and{' '}
-            execution-grounded reasoning over programs.
+            My work covers automated program repair, AI-generated code detection,
+            and the evaluation of execution-trace information for code models.
           </p>
           <p>
-            Before research I spent ~8 years in industry: the AI Lab at <Link to="/work/xiaomi-portrait-ai">Xiaomi</Link>,
-            training GANs for portrait background removal and face cartoonisation, and a backend
-            role at <Link to="/work/58-web-infrastructure">58.com</Link>, building an async web framework serving 100M+ daily requests.
+            Before research, I spent about eight years in industry. At <Link to="/work/xiaomi-portrait-ai">Xiaomi AI Lab</Link>,
+            I worked on portrait segmentation and GAN-based selfie cartoonisation. At{' '}
+            <Link to="/work/58-web-infrastructure">58.com</Link>, I built shared web infrastructure
+            and a custom Nginx traffic router.
           </p>
         </div>
         <section className="home-section" aria-labelledby="interests-title">
           <div className="section-heading">
-            <h2 id="interests-title"><Link to="/statement">Research interests</Link></h2>
-            <Link className="text-link" to="/statement">Read the statement ↗</Link>
+            <h2 id="interests-title">Research interests</h2>
+            <Link className="text-link" to="/statement">Research statement ↗</Link>
           </div>
-          <p>My research studies <Link to="/statement"><strong>reliable autonomy for adaptive AI agents</strong></Link>:
+          <p>My proposed research focuses on <strong>reliable autonomy for adaptive AI agents</strong>:
             how agents can learn and interact while remaining safe, reliable, and under meaningful human control as models,
             tools, and workflows change.</p>
           <p>The agenda connects <Link to="/statement#i-scalable-oversight-under-adaptation">scalable oversight</Link>,{' '}
             <Link to="/statement#ii-safety-preserving-learning-and-feedback">safety-preserving learning</Link>, and{' '}
             <Link to="/statement#iii-control-across-time-and-delegation">control across time and delegation</Link>.</p>
-          <ResearchOverview />
         </section>
-        <aside className="collaboration-note" aria-label="Collaboration interests">
-          <p><strong>Evidence and control through change.</strong> I welcome research and engineering collaborations on
-            agent oversight, safety-preserving feedback, secure runtimes, and long-running workflows where capabilities,
-            permissions, and evidence evolve together.</p>
-          <p className="home-skills-links">
-            <a href="/data/Jian_Wang_Research_Statement_2026.pdf" target="_blank" rel="noreferrer">Full statement (PDF) ↗</a>
-            <Link to="/work">Earlier work & projects</Link>
-            <a href="mailto:jian004@e.ntu.edu.sg">Get in touch ↗</a>
-          </p>
-        </aside>
         <section className="home-section" aria-labelledby="selected-title">
           <div className="section-heading"><h2 id="selected-title">Selected publications</h2>
             <Link className="text-link" to="/pubs">All publications ↗</Link></div>
-          <p>Earlier work in repair, detection and evaluation. <Link to="/statement#research-foundation-and-approach">How it informs the future agenda ↗</Link></p>
           {selectedPubs.map(p => (
             <article className="home-publication" key={p.figure}>
               <span className="publication-year">{p.year}</span>
               <div>
                 <h3><Link to={`/pubs/${PUB_META[p.id].key}`}>{p.title}</Link></h3>
                 <p className="publication-authors">{p.authors}</p>
-                <div className="publication-meta"><span>{p.venue} {p.year}</span>
+                <div className="publication-meta"><span>{p.venue}</span>
                   {p.note === 'THESIS SUMMARY' && <span className="small-label">Thesis summary</span>}
                   {p.badges?.map(b => <a key={b.label} href={b.href} target="_blank" rel="noreferrer">{b.label}</a>)}
                 </div>
-                <ResearchConnection publication={PUB_META[p.id].key} compact />
               </div>
             </article>
           ))}
         </section>
         <section className="home-section" aria-labelledby="news-title">
           <h2 id="news-title">News</h2>
-          <div className="home-news">{NEWS.slice(0, 6).map(([date, text], i) => (
+          <div className="home-news">{NEWS.slice(0, 2).map(([date, text], i) => (
             <div key={i}><span>{date}</span><p>{text}</p></div>
           ))}</div>
         </section>

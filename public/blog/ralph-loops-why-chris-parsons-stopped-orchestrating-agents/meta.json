@@ -2,7 +2,7 @@
   "slug": "ralph-loops-why-chris-parsons-stopped-orchestrating-agents",
   "title_en": "Ralph Loops: Why Chris Parsons Stopped Orchestrating Agents and Started Looping Them",
   "date": "2026-05-08",
-  "dek_en": "In a two-hour workshop at what appears to be an AI engineering conference, Chris Parsons argued that the future of working with AI is not elaborate orchestration but a deceptively simple pattern: a loop that does one thing, picks the next m",
+  "dek_en": "Chris Parsons explains an iterative agent workflow that chooses a task, executes it, checks the result, and repeats.",
   "tags": [
     "llm",
     "video-summary",
@@ -22,5 +22,6 @@
     "topic:product",
     "format:workshop",
     "speaker:independent"
-  ]
+  ],
+  "source_kind": "video"
 }

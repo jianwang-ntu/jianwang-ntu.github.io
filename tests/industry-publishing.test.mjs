@@ -1,9 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
-import { existsSync, readFileSync, statSync } from 'node:fs';
+import { existsSync, readFileSync, statSync, readdirSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { PUB_META } from '../src/data-pubs.js';
+import { BLOG_ALIASES } from '../src/blog-aliases.js';
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -14,6 +16,27 @@ test('production build publishes both industry case studies and their visual ass
   });
 
   const sitemap = readFileSync(resolve(repoRoot, 'dist/sitemap.xml'), 'utf8');
+  for (const meta of Object.values(PUB_META)) {
+    const html = readFileSync(resolve(repoRoot, `dist/pubs/${meta.key}/index.html`), 'utf8');
+    assert.ok(sitemap.includes(`<loc>https://www.wj2ai.com/pubs/${meta.key}</loc>`), meta.key);
+    assert.doesNotMatch(html, /<title>Publication —/);
+    assert.ok(html.includes(meta.brief.replaceAll('&', '&amp;').replaceAll('"', '&quot;')), meta.key);
+  }
+  for (const [source, target] of Object.entries(BLOG_ALIASES)) {
+    const html = readFileSync(resolve(repoRoot, `dist/blog/${source}/index.html`), 'utf8');
+    assert.ok(html.includes(`rel="canonical" href="https://www.wj2ai.com/blog/${target}"`));
+    assert.ok(!sitemap.includes(`/blog/${source}</loc>`));
+    assert.equal(existsSync(resolve(repoRoot, `dist/blog/${source}/meta.json`)), false);
+  }
+  for (const name of readdirSync(resolve(repoRoot, 'archive/legacy-downloads'))) {
+    assert.equal(existsSync(resolve(repoRoot, `dist/data/${name}`)), false, name);
+  }
+  assert.equal(existsSync(resolve(repoRoot, 'dist/archive')), false);
+  const posts = JSON.parse(readFileSync(resolve(repoRoot, 'public/blog/posts.json'), 'utf8'));
+  for (const post of posts) {
+    const html = readFileSync(resolve(repoRoot, `dist/blog/${post.slug}/index.html`), 'utf8');
+    assert.equal((html.match(/<script type="application\/ld\+json" data-seo="page">/g) || []).length, 1, post.slug);
+  }
   const fiftyEightHtml = readFileSync(
     resolve(repoRoot, 'dist/work/58-web-infrastructure/index.html'),
     'utf8',

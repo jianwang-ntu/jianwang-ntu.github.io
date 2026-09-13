@@ -3,7 +3,7 @@
     "slug": "code-review-broke-because-writing-code-got-faster-than",
     "title_en": "Code Review Broke Because Writing Code Got Faster Than Reading It",
     "date": "2026-09-10",
-    "dek_en": "A recent Chinese-language post on lightnote.com.cn argues that the fifty-year-old practice of human code review — formalised by Fagan in 1976 — has lost the economic condition that made it work. The author's claim is narrow and specific: re",
+    "dek_en": "A reading note on why faster code generation puts pressure on human review, and what evidence reviewers still need.",
     "tags": [],
     "languages": [
       "en",
@@ -26,7 +26,7 @@
     "slug": "why-most-profitable-businesses-stay-invisible-business-vs",
     "title_en": "Why Most Profitable Businesses Stay Invisible: Business vs. VC Startup in the AI Era",
     "date": "2026-09-01",
-    "dek_en": "In a recent video, the host of the channel 课代表立正 argues that AI has changed the economics of starting a company without changing the test every company still has to pass. Business and VC startup differ in their growth requirements, but both rest on product-market fit.",
+    "dek_en": "The host of 课代表立正 distinguishes a profitable business from a venture-scale startup as AI lowers the cost of building.",
     "tags": [],
     "languages": [
       "en",
@@ -42,7 +42,7 @@
     "slug": "a-therapists-seven-hard-won-rules-after-a-decade-in-the",
     "title_en": "A Therapist's Seven Hard-Won Rules, After a Decade in the Chair",
     "date": "2026-09-01",
-    "dek_en": "An anonymous Chinese-language post making the rounds — attributed only to \"a therapist\" — lists seven lessons the author says took ten years of clinical work to actually see. The tone is deliberately blunt: the author calls the list \"扎心\" (l",
+    "dek_en": "An anonymous post attributed to a therapist offers seven reflections on relationships, responsibility, and change.",
     "tags": [],
     "languages": [
       "en",
@@ -60,25 +60,24 @@
   },
   {
     "slug": "exploring-the-advancements-in-ai-with-jan-leike",
-    "title_en": "Exploring the Advancements in AI with Jan Leike",
+    "title_en": "Yann Dubois on GPT-5.5, Reliability, and Continual Learning",
     "date": "2026-05-28",
-    "dek_en": "In a recent discussion hosted by Matt Turk on the Mad Podcast, Jan Leike, who co-leads the post-training frontiers team at OpenAI, shared insights into the latest developments in AI, particularly focusing on GPT-5.5. Leike argues that while",
+    "dek_en": "Yann Dubois discusses GPT-5.5, model reliability, and continual learning with Matt Turck on The MAD Podcast.",
     "tags": [],
     "languages": [
       "en",
       "zh"
     ],
-    "title_zh": "Jan Leike谈GPT-5.5的突破与未来展望",
-    "dek_zh": "Jan Leike是OpenAI的后训练前沿团队的共同负责人。他在一次采访中分享了关于最近发布的GPT-5.5的看法，其中涉及人工智能技术的可靠性、强化学习的实际应用以及AI未来的发展方向。",
+    "title_zh": "Yann Dubois 谈 GPT-5.5、可靠性与持续学习",
+    "dek_zh": "Yann Dubois 在 Matt Turck 主持的 The MAD Podcast 中讨论 GPT-5.5、模型可靠性和持续学习。",
     "source": "https://www.youtube.com/watch?v=DhD1zZ8w8Mw",
-    "source_kind": "video",
-    "image": "/images/blog/exploring-the-advancements-in-ai-with-jan-leike.png"
+    "source_kind": "video"
   },
   {
     "slug": "software-engineering-in-the-ai-native-era-insights-from",
     "title_en": "Software Engineering in the AI-Native Era: Insights from Andrew MacVean and Nicole Forsgren",
     "date": "2026-05-28",
-    "dek_en": "In a recent presentation, Andrew MacVean and Nicole Forsgren of Google's Developer Intelligence Team explored the evolving role of software engineering in the AI-native era. They argue that while AI tools are increasingly writing code, the ",
+    "dek_en": "Andrew MacVean and Nicole Forsgren discuss how AI changes engineering work and how teams can evaluate its effects.",
     "tags": [],
     "languages": [
       "en",
@@ -87,30 +86,14 @@
     "title_zh": "如何在 AI 原生时代中蓬勃发展：Andrew MacVean 和 Nicole Forsgren 的见解",
     "dek_zh": "Andrew MacVean 和 Nicole Forsgren在一次演讲中探讨了软件工程师在AI时代蓬勃发展的途径。他们是谷歌开发者智能团队的负责人，致力于研究软件工程师的工作方式和技能需求。两人分享了当前AI技术如何重塑软件工程领域的见解，并提供了多项关于提升专业能力的实用建议。",
     "source": "https://www.youtube.com/watch?v=q_Jq4IgYImk",
-    "source_kind": "post",
-    "image": "/images/blog/software-engineering-in-the-ai-native-era-insights-from.png"
-  },
-  {
-    "slug": "reinventing-the-company-how-ai-is-reshaping-business",
-    "title_en": "Reinventing the Company: How AI is Reshaping Business Structures",
-    "date": "2026-05-28",
-    "dek_en": "In a transformative talk drawing inspiration from both historical and modern concepts, the speaker explores how the rise of AI is fundamentally altering traditional organizational structures. By reimagining the ways companies are built and ",
-    "tags": [],
-    "languages": [
-      "en",
-      "zh"
-    ],
-    "title_zh": "重塑企业：如何利用AI重构商业模式",
-    "dek_zh": "在这次演讲中，发言者讨论了人工智能（AI）如何可能重塑企业组织结构。演讲的中心观点是，传统的层级式公司结构，如同古罗马军团般的组织方式，可能被AI所打破。发言者认为，通过AI驱动的自我优化，公司可以实现前所未有的效率和灵活性。",
-    "source": "https://www.youtube.com/watch?v=t-G67yKAHBQ",
     "source_kind": "video",
-    "image": "/images/blog/reinventing-the-company-how-ai-is-reshaping-business.png"
+    "image": "/images/blog/software-engineering-in-the-ai-native-era-insights-from.png"
   },
   {
     "slug": "the-self-improving-company-ai-breaks-the-roman-legion-model",
     "title_en": "The Self-Improving Company: Why AI Will Break the Roman Legion Model of Business",
     "date": "2026-05-19",
-    "dek_en": "A talk argues companies are still built like Roman legions — hierarchies where information flows up and orders flow down through people. AI breaks that model: rather than bolting on copilots, companies should redesign themselves as AI-native systems built around recursive self-improving loops.",
+    "dek_en": "A Y Combinator talk proposes company workflows built around observation, policy, tools, quality checks, and feedback.",
     "tags": [
       "agents",
       "business",
@@ -137,7 +120,7 @@
     "slug": "the-ai-tipping-point-in-software-engineering",
     "title_en": "The AI Tipping Point in Software Engineering: Why Teams Need to Think in Ecosystems, Not Tools",
     "date": "2026-05-19",
-    "dek_en": "Adam Bender argues software engineering is hitting a 10x moment — but generating code faster is not engineering faster. Through the lens of \"software ecology\", he warns AI amplifies a team's existing strengths and weaknesses alike, and the bottleneck simply moves to review, testing, builds, and releases.",
+    "dek_en": "A reading note on changing software-development workflows and the growing importance of judgment as coding becomes faster.",
     "tags": [
       "agents",
       "engineering",
@@ -164,7 +147,7 @@
     "slug": "the-future-of-software-engineering-is-more-intentional",
     "title_en": "The Future of Software Engineering Is Not Less Human — It Is More Intentional",
     "date": "2026-05-19",
-    "dek_en": "A panel on how AI is reshaping software engineering argues that seniority is shifting from writing difficult code to understanding systems, framing problems, and evaluating AI output — and that the biggest risk is \"cognitive surrender\", accepting AI answers without understanding them.",
+    "dek_en": "A reading note on intentional software development: defining outcomes, checking results, and deciding where AI helps.",
     "tags": [
       "agents",
       "engineering",
@@ -191,14 +174,14 @@
     "slug": "demystifying-the-inner-workings-of-ai-models-the-role-of",
     "title_en": "Demystifying the Inner Workings of AI Models: The Role of Natural Language Autoencoders",
     "date": "2026-05-18",
-    "dek_en": "In a recent talk, Dafei from Zui Jia Pai Dang discussed Ansobic's groundbreaking research on mechanistic interpretability in AI models. The study introduces the Natural Language Autoencoder (NLA) which aims to translate the complex and inde",
+    "dek_en": "A video explanation of Anthropic’s Natural Language Autoencoders and their use in interpreting model activations.",
     "tags": [],
     "languages": [
       "en",
       "zh"
     ],
     "title_zh": "自然语言自编码器：解密大模型的黑盒子",
-    "dek_zh": "大飞在最近的视频中探讨了一项由安索卫克发布的关于机制可解释性的最新研究——自然语言自编码器（NLA）。他指出，NLA开创性地将大语言模型内部复杂的激活项量翻译成可读的自然语言，从而使大模型的内在运作更加透明。这一研究可能为AI行业解决久未攻克的可解释性难题带来突破。",
+    "dek_zh": "一则视频解读 Anthropic 的自然语言自编码器（NLA）研究，介绍如何用自然语言描述模型激活，以及这种方法的局限。",
     "source": "https://www.youtube.com/watch?v=aOWdyqUHkmc",
     "source_kind": "video",
     "image": "/images/blog/demystifying-the-inner-workings-of-ai-models-the-role-of.png"
@@ -207,7 +190,7 @@
     "slug": "airbnb-ceo-brian-chesky-advocates-for-founder-mode",
     "title_en": "Airbnb CEO Brian Chesky Advocates for \"Founder Mode\" Leadership",
     "date": "2026-05-18",
-    "dek_en": "In a recent discussion, Airbnb CEO Brian Chesky delves deeply into his \"Founder Mode\" leadership philosophy, sharing his thoughts during an interview with Patrick O’Shaughnessy and drawing upon Paul Graham’s essay on founder-led management.",
+    "dek_en": "Brian Chesky discusses founder involvement, organizational structure, and leadership with Patrick O’Shaughnessy.",
     "tags": [],
     "languages": [
       "en",
@@ -223,7 +206,7 @@
     "slug": "how-ai-agents-are-defining-the-future-of-technology",
     "title_en": "How AI Agents are Defining the Future of Technology",
     "date": "2026-05-18",
-    "dek_en": "In a recent keynote, speakers delivered a comprehensive analysis of the current AI wave, highlighting its significance as different from previous technology shifts, and underscoring the pivotal role that AI agents are predicted to play by 2",
+    "dek_en": "A keynote discusses AI agents, changing software workflows, and the engineering demands of putting agents to work.",
     "tags": [],
     "languages": [
       "en",
@@ -239,7 +222,7 @@
     "slug": "leworldmodel-simplifying-joint-embedding-predictive",
     "title_en": "LeWorldModel: Simplifying Joint-Embedding Predictive Architectures for World Models",
     "date": "2026-05-17",
-    "dek_en": "The paper introduces LeWorldModel (LeWM), a novel approach for training Joint Embedding Predictive Architectures (JEPA) to create stable world models. Unlike existing methods that are prone to representation collapse and require complex mul",
+    "dek_en": "LeWorldModel studies how to train stable world models using joint-embedding predictive architectures.",
     "tags": [],
     "languages": [
       "en",
@@ -255,7 +238,7 @@
     "slug": "riding-the-exponential-how-anthropic-navigates-rapid-growth",
     "title_en": "Riding the Exponential: How Anthropic Navigates Rapid Growth and Change",
     "date": "2026-05-17",
-    "dek_en": "In a recent discussion, thought leaders Dario and Daniela from Anthropic shared insights into the dynamic growth the company is experiencing and the broader implications for the tech industry. They liken their journey to riding a roller coa",
+    "dek_en": "Dario and Daniela Amodei discuss Anthropic’s growth and the organizational pressures of rapid AI progress.",
     "tags": [],
     "languages": [
       "en",
@@ -271,7 +254,7 @@
     "slug": "eric-schmidt-ai-warfare-china",
     "title_en": "Eric Schmidt: AI Is Already Reshaping Warfare, and China Is Closer Than You Think",
     "date": "2026-05-17",
-    "dek_en": "Former Google CEO Eric Schmidt argues in a conversation with Tom Shanker that Ukraine has revealed the future of drone-dominated warfare, that China has closed the AI gap to roughly six months, and that traditional programming is functionally over.",
+    "dek_en": "Eric Schmidt discusses AI’s implications for warfare, software development, infrastructure, and education with Tom Shanker.",
     "tags": [],
     "languages": [
       "en",
@@ -281,7 +264,6 @@
     "dek_zh": "谷歌前 CEO 埃里克·施密特在与汤姆·尚克的对话中指出，乌克兰已揭示无人机主导战争的未来，中国已将 AI 差距缩小至约六个月，传统编程实际上已走到尽头。",
     "source": "https://chatgpt.com/share/6a08c1da-7b6c-83ec-919d-e8dece491e5d",
     "source_kind": "post",
-    "image": "/images/blog/eric-schmidt-ai-warfare-china.png",
     "labels": [
       "topic:ai",
       "topic:security",
@@ -294,7 +276,7 @@
     "slug": "thinking-machines-labs-interaction-model-making",
     "title_en": "Thinking Machines Lab's Interaction Model: Making Conversation Native to the Model",
     "date": "2026-05-14",
-    "dek_en": "On May 11, Thinking Machines Lab — the venture founded by former OpenAI CTO Mira Murati — published research on what it calls the **Interaction Model**. The central claim, as relayed in the video: every frontier AI lab has optimized for the",
+    "dek_en": "Thinking Machines Lab presents an Interaction Model for more natural, continuous human–AI interaction.",
     "tags": [],
     "languages": [
       "en",
@@ -317,7 +299,7 @@
     "slug": "builders-win-information-movers-dont-nikhyl-singhal-on-the",
     "title_en": "Builders Win, Information Movers Don't: Nikhyl Singhal on the Next Two Years of Product Management",
     "date": "2026-05-14",
-    "dek_en": "In a return appearance on Lenny's Podcast, Nikhyl Singhal — former exec at Meta and Google, ex-CPO at Credit Karma, and convener of the Skip community of heads of product — argues that the product industry is in a renaissance for builders a",
+    "dek_en": "Nikhyl Singhal discusses how AI changes product careers and why direct building experience matters.",
     "tags": [],
     "languages": [
       "en",
@@ -337,19 +319,18 @@
   },
   {
     "slug": "drive-it-like-its-stolen-max-shying-on-agency-malleable",
-    "title_en": "Drive It Like It's Stolen: Max Shying on Agency, Malleable Software, and the Tiny Core",
+    "title_en": "Drive It Like It's Stolen: Max Schoening on Agency, Malleable Software, and the Tiny Core",
     "date": "2026-05-14",
-    "dek_en": "On *Lenny's Podcast*, Notion's head of product Max Shying makes a flat claim: in a world where AI has compressed most skill gaps, the thing that separates people who thrive from people who stall is agency. Almost everything else he argues a",
+    "dek_en": "Max Schoening discusses agency, hands-on product development, and software that users can reshape.",
     "tags": [],
     "languages": [
       "en",
       "zh"
     ],
     "title_zh": "Agency 比技能更重要：Max Schoening 谈 AI 时代的产品打造",
-    "dek_zh": "在 Lenny's Podcast 的一期访谈中，Notion 产品负责人 Max Schoening 抛出了一个反直觉的论点：当 AI 把技能门槛降到几乎为零时，真正决定一个人能否做事的不是能力，而是 agency——主动改造周围世界的意愿。他还把多个被业界奉为圭臬的概念——\"品味\"、\"SaaS 末日\"、\"通用基本收入\"——重新拆解了一遍。Schoening 曾任职于 Google、Heroku、GitHub，目前在 Notion 推动设计师和产品经理直接写代码。",
+    "dek_zh": "Max Schoening 在 Lenny’s Podcast 中讨论主动性、动手构建产品，以及用户可以自行改造的软件。",
     "source": "https://www.youtube.com/watch?v=mCO-D3pkviM",
     "source_kind": "video",
-    "image": "/images/blog/drive-it-like-its-stolen-max-shying-on-agency-malleable.png",
     "labels": [
       "topic:product",
       "topic:agents",
@@ -362,7 +343,7 @@
     "slug": "meta-harness-letting-a-coding-agent-redesign-its-own",
     "title_en": "Meta-Harness: Letting a Coding Agent Redesign Its Own Scaffolding",
     "date": "2026-05-13",
-    "dek_en": "A new paper from Lee et al. (Stanford, KRAFTON, MIT) argues that the code wrapping an LLM — the *harness* that decides what to store, retrieve, and show the model — can be optimized end-to-end by a coding agent that reads the full filesyste",
+    "dek_en": "Meta-Harness studies whether a coding agent can improve its own execution environment through iterative evaluation.",
     "tags": [],
     "languages": [
       "en",
@@ -372,20 +353,20 @@
     "dek_zh": "Stanford、KRAFTON 和 MIT 团队（Lee 等人）提出的这篇论文把\"harness 工程\"——围绕大模型编写的存储、检索和上下文构造代码——变成了一个可自动搜索的问题。作者们的核心主张是：现有文本优化器之所以不擅长这件事，是因为它们把反馈压缩得太狠；只要让一个编码 Agent 通过文件系统读到所有历史代码、分数和执行轨迹，自动化的 harness 搜索就能在三个差异巨大的领域上击败手工设计的最强方案。",
     "source": "https://arxiv.org/pdf/2603.28052",
     "source_kind": "paper",
+    "image": "/images/blog/meta-harness-letting-a-coding-agent-redesign-its-own_diagram.png",
     "labels": [
       "topic:agents",
       "topic:research",
       "topic:engineering",
       "format:paper",
       "speaker:academia"
-    ],
-    "image": "/images/blog/meta-harness-letting-a-coding-agent-redesign-its-own_diagram.png"
+    ]
   },
   {
     "slug": "code-world-models-asking-the-llm-to-write-the-game-not-play",
     "title_en": "Code World Models: Asking the LLM to Write the Game, Not Play It",
     "date": "2026-05-13",
-    "dek_en": "A new preprint from Google DeepMind (Lehrach, Hennes, Lázaro-Gredilla, and colleagues, October 2025) argues that the standard \"LLM-as-policy\" recipe for game-playing agents is the wrong abstraction. Instead, the authors use the LLM as a cod",
+    "dek_en": "A DeepMind paper studies using language models to write executable game models for planning.",
     "tags": [],
     "languages": [
       "en",
@@ -408,7 +389,7 @@
     "slug": "hitting-breakouts-perfect-score-without-training-a-single",
     "title_en": "Hitting Breakout's Perfect Score Without Training a Single Neuron",
     "date": "2026-05-12",
-    "dek_en": "In a recent explainer video, the presenter walks through a result that cuts against deep reinforcement learning's reigning orthodoxy: an AI that updates no weights, runs no backprop, and still pushes Atari Breakout to its theoretical maximu",
+    "dek_en": "A video explains Heuristic Learning: a coding agent improves pure-code policies using environment feedback without updating neural-network weights.",
     "tags": [],
     "languages": [
       "en",
@@ -430,7 +411,7 @@
     "slug": "the-road-to-alphafold-how-deepmind-bet-on-agi-and-cracked",
     "title_en": "The Road to AlphaFold: How DeepMind Bet on AGI and Cracked Biology's Hardest Problem",
     "date": "2026-05-11",
-    "dek_en": "A documentary-style talk traces Demis Hassabis and Shane Legg from a stealth London startup pitching \"solve intelligence\" to investors, through AlphaGo's Sputnik moment, to AlphaFold's solution of the 50-year-old protein folding problem. Th",
+    "dek_en": "A documentary traces DeepMind’s early work, AlphaGo, and the development of AlphaFold.",
     "tags": [
       "llm",
       "agents",
@@ -456,7 +437,7 @@
     "slug": "demis-hassabis-on-the-through-line-from-theme-park-to-agi",
     "title_en": "Demis Hassabis on the Through-line from Theme Park to AGI",
     "date": "2026-05-11",
-    "dek_en": "In a wide-ranging interview, DeepMind founder and CEO Demis Hassabis traces his path from teenage chess prodigy to running one of the most consequential AI labs in the world, and lays out a thesis that reframes what AI is for: a tool for do",
+    "dek_en": "Demis Hassabis discusses his path to DeepMind and his view of AI as a tool for scientific discovery.",
     "tags": [],
     "languages": [
       "en",
@@ -479,7 +460,7 @@
     "slug": "andrej-karpathy-on-ai-psychosis-auto-research-and-why-he",
     "title_en": "Andrej Karpathy on AI Psychosis, Auto-Research, and Why He Hasn't Typed Code Since December",
     "date": "2026-05-11",
-    "dek_en": "On a recent *No Priors* episode, Andrej Karpathy described being in a sustained state of what he calls \"AI psychosis\" — a frantic attempt to keep up with a capability shift in coding agents that, in his telling, fundamentally changed how an",
+    "dek_en": "Andrej Karpathy discusses coding agents, automated research, and changes in his own engineering workflow.",
     "tags": [],
     "languages": [
       "en",
@@ -502,14 +483,14 @@
     "slug": "a16zs-case-for-continual-learning-llms-are-stuck-in-memento",
     "title_en": "A16Z's Case for Continual Learning: LLMs Are Stuck in *Memento*",
     "date": "2026-05-10",
-    "dek_en": "In a new essay for a16z, Malika Aubakirova and Matt Bornstein argue that today’s large language models live in the same fractured present as Leonard Shelby in Christopher Nolan’s *Memento* — capable in any single scene, but unable to compou",
+    "dek_en": "Malika Aubakirova and Matt Bornstein argue that deployed AI systems need better ways to learn from experience.",
     "tags": [],
     "languages": [
       "en",
       "zh"
     ],
     "title_zh": "困在《记忆碎片》里的大模型：a16z 为何押注\"持续学习\"",
-    "dek_zh": "a16z 的 Malika Aubakirova 与 Matt Bornstein 在 2026 年 4 月发表的长文中，把今天的大语言模型比作 Christopher Nolan 电影《记忆碎片》中患有顺行性遗忘症的 Leonard：能力惊人，却无法形成新的记忆，只能依靠纤身和宝丽来照片维系一个\"永恒的当下\"",
+    "dek_zh": "a16z 的 Malika Aubakirova 与 Matt Bornstein 在 2026 年 4 月发表的长文中，把今天的大语言模型比作 Christopher Nolan 电影《记忆碎片》中患有顺行性遗忘症的 Leonard：能力惊人，却无法形成新的记忆，只能依赖纹身和宝丽来照片维系一个\"永恒的当下\"。两位作者认为，仅靠上下文窗口、检索系统与系统提示这套\"外部脚手架\"远远不够——要让 AI 真正进步，必须允许它在部署之后也能像训练时那样，把新经验直接压缩进权重。",
     "source": "https://a16z.com/why-we-need-continual-learning/",
     "source_kind": "post",
     "image": "/images/blog/a16zs-case-for-continual-learning-llms-are-stuck-in-memento.png",
@@ -525,7 +506,7 @@
     "slug": "how-deepseek-v4-squeezed-a-trillion-parameter-model-out-of",
     "title_en": "How DeepSeek V4 Squeezed a Trillion-Parameter Model Out of Limited Hardware",
     "date": "2026-05-10",
-    "dek_en": "A new explainer video walks through the architecture paper behind DeepSeek V4, the latest open-source model from a Chinese lab that the speaker repeatedly calls \"cracked.\" The central claim: with a team roughly 40 times smaller than OpenAI'",
+    "dek_en": "A video walks through the architecture and inference-efficiency ideas described in the DeepSeek V4 paper.",
     "tags": [],
     "languages": [
       "en",
@@ -548,7 +529,7 @@
     "slug": "pets-cattle-and-the-quiet-choice-that-defines-your-ai",
     "title_en": "Pets, Cattle, and the Quiet Choice That Defines Your AI Agent's Architecture",
     "date": "2026-05-10",
-    "dek_en": "A developer who has shipped an AI agent to production argues that the industry's hottest abstractions — Anthropic's \"session, sandbox, harness\" trio, the \"don't treat agents as pets, treat them as cattle\" slogan — only become useful once yo",
+    "dek_en": "A practitioner examines how sessions, sandboxes, and harnesses shape the design of production agents.",
     "tags": [],
     "languages": [
       "en",
@@ -570,7 +551,7 @@
     "slug": "the-filing-cabinet-problem-why-continual-learning-is-the",
     "title_en": "The Filing Cabinet Problem: Why Continual Learning Is the Real Bottleneck for AI",
     "date": "2026-05-10",
-    "dek_en": "In a recent episode of *最佳拍档* (Best Partner), the host Da Fei walks viewers through an A16Z long-read published on April 22 that puts continual learning at the center of the next phase of AI infrastructure. His central claim, borrowed from ",
+    "dek_en": "A video commentary on a16z’s continual-learning essay considers the infrastructure needed for AI to retain experience.",
     "tags": [],
     "languages": [
       "en",
@@ -593,7 +574,7 @@
     "slug": "autonomous-ai-hackers-have-arrived-and-the-defenders-have",
     "title_en": "Autonomous AI Hackers Have Arrived — and the Defenders Have Six Months",
     "date": "2026-05-10",
-    "dek_en": "In a short, pointed talk, the speaker — the founder of an AI offensive-security company called XBOW (rendered \"Xbo\" in the transcript) — argues that fully autonomous AI hacking is no longer hypothetical. His central claim: a bot given nothi",
+    "dek_en": "XBOW’s founder discusses autonomous offensive-security agents and the implications for defenders.",
     "tags": [],
     "languages": [
       "en",
@@ -615,7 +596,7 @@
     "slug": "boris-on-claude-code-compute-and-why-software-will-become-a",
     "title_en": "Boris on Claude Code, Compute, and Why Software Will Become a Basic Literacy",
     "date": "2026-05-10",
-    "dek_en": "In a conversation at Anthropic's developer day, Boris — the creator of Claude Code — argues that AI coding agents are not just speeding engineers up, they are restructuring how companies work. The throughline of the talk: organizations that",
+    "dek_en": "Boris Cherny discusses Claude Code, compute constraints, and how coding agents change engineering organizations.",
     "tags": [],
     "languages": [
       "en",
@@ -638,7 +619,7 @@
     "slug": "anthropics-2026-developer-conference-no-new-model-but-a",
     "title_en": "Anthropic's 2026 Developer Conference: No New Model, But a Surprise Compute Deal With Musk",
     "date": "2026-05-10",
-    "dek_en": "In a recap of Anthropic's May 6 developer conference, Dafei — host of the Chinese tech show *Best Partners* — argues the headline news was not a next-generation foundation model but two things the industry did not see coming: a full lease o",
+    "dek_en": "Dafei reviews Anthropic’s developer conference, focusing on agent tooling, compute, and operating costs.",
     "tags": [],
     "languages": [
       "en",
@@ -661,7 +642,7 @@
     "slug": "co-evolving-the-evaluator-how-to-make-ai-driven-research",
     "title_en": "Co-Evolving the Evaluator: How to Make AI-Driven Research Actually Work for Databases",
     "date": "2026-05-08",
-    "dek_en": "A new paper by Cheng et al. (UC Berkeley, KTH, Meta, Workday, U-Michigan, Maven AGI) argues that the bottleneck in applying LLM-driven algorithm discovery to databases is no longer solution generation — it's evaluation. The authors propose ",
+    "dek_en": "A paper examines how AI research systems might improve their evaluators alongside the artifacts they optimize.",
     "tags": [],
     "languages": [
       "en",
@@ -684,7 +665,7 @@
     "slug": "promedical-treating-clinical-rubrics-as-the-reward-signal",
     "title_en": "ProMedical: Treating Clinical Rubrics as the Reward Signal, Not a Post-Hoc Check",
     "date": "2026-05-08",
-    "dek_en": "A team from Xunfei Healthcare argues that the standard recipe for aligning medical LLMs — collect pairwise preferences, train a scalar reward model, run RLHF/DPO — is fundamentally mismatched with how clinicians actually evaluate medical an",
+    "dek_en": "ProMedical studies clinical rubrics as structured feedback for training and evaluating medical language models.",
     "tags": [],
     "languages": [
       "en",
@@ -706,7 +687,7 @@
     "slug": "beyond-compliance-teaching-llm-client-simulators-to-push",
     "title_en": "Beyond Compliance: Teaching LLM Client Simulators to Push Back",
     "date": "2026-05-08",
-    "dek_en": "Counselor-training simulators have a credibility problem: the LLM-based \"clients\" used to rehearse therapeutic conversations are too agreeable, leaving trainees unprepared for the resistance that pervades real practice. A new paper from Liu",
+    "dek_en": "A paper studies how simulated counseling clients can express resistance more realistically during training.",
     "tags": [],
     "languages": [
       "en",
@@ -728,7 +709,7 @@
     "slug": "atbench-stress-testing-agent-safety-across-long",
     "title_en": "ATBench: Stress-Testing Agent Safety Across Long Trajectories, Not Single Prompts",
     "date": "2026-05-08",
-    "dek_en": "A new benchmark from Shanghai AI Lab and collaborators argues that agent safety can't be judged from a single response. The paper introduces **ATBench**, 1,000 multi-turn trajectories built around an explicit three-axis taxonomy of risk sou",
+    "dek_en": "ATBench tests how well models detect and explain safety risks in multi-turn agent trajectories.",
     "tags": [],
     "languages": [
       "en",
@@ -751,7 +732,7 @@
     "slug": "webforge-generating-browser-agent-benchmarks-that-are",
     "title_en": "WebForge: Generating Browser Agent Benchmarks That Are Realistic, Reproducible, and Scalable at the Same Time",
     "date": "2026-05-08",
-    "dek_en": "Browser agent benchmarks force a three-way tradeoff: live websites give realism but rot within months, sandboxed environments give reproducibility but feel sterile, and both demand expensive manual curation. A new paper from Tencent BAC and",
+    "dek_en": "WebForge studies generating reproducible browser environments and tasks for agent evaluation.",
     "tags": [],
     "languages": [
       "en",
@@ -774,7 +755,7 @@
     "slug": "the-harness-as-a-distributed-context-management-system",
     "title_en": "The Harness as a Distributed Context Management System",
     "date": "2026-05-08",
-    "dek_en": "In a recent LinkedIn post, Glean co-founder Tony Gentilcore argues that the central engineering challenge in agent design has shifted from prompting to context management — and that the agent harness is increasingly the place where that wor",
+    "dek_en": "Tony Gentilcore discusses agent harnesses as systems for managing context across distributed work.",
     "tags": [
       "agents",
       "llm",
@@ -800,7 +781,7 @@
     "slug": "synthetic-computers-at-scale-microsofts-substrate-for",
     "title_en": "Synthetic Computers at Scale: Microsoft's Substrate for Training Long-Horizon Productivity Agents",
     "date": "2026-05-08",
-    "dek_en": "Productivity agents need rich user-specific context — files, project history, collaborator threads — to do realistic work, but real trajectories of that work are private and costly to collect. A Microsoft technical report by Ge, Peng, Cheng",
+    "dek_en": "A Microsoft research project explores synthetic computer environments for training and evaluating productivity agents.",
     "tags": [
       "research",
       "paper-reading",
@@ -827,7 +808,7 @@
     "slug": "sequoias-ai-thesis-a-computation-revolution-not-a-faster",
     "title_en": "Sequoia's AI Thesis: A Computation Revolution, Not a Faster Internet",
     "date": "2026-05-08",
-    "dek_en": "At Sequoia Capital's AI Summit, partners Pat Grady, Sonya Huang, and Konstantine Buhler argued that the AI wave is categorically different from every prior tech cycle — large enough to swallow software *and* services, fast enough to compres",
+    "dek_en": "Sequoia partners discuss AI’s effects on computation, software, services, and startup opportunities.",
     "tags": [],
     "languages": [
       "en",
@@ -842,13 +823,14 @@
       "topic:agents",
       "format:keynote",
       "speaker:independent"
-    ]
+    ],
+    "source_kind": "video"
   },
   {
     "slug": "ralph-loops-why-chris-parsons-stopped-orchestrating-agents",
     "title_en": "Ralph Loops: Why Chris Parsons Stopped Orchestrating Agents and Started Looping Them",
     "date": "2026-05-08",
-    "dek_en": "In a two-hour workshop at what appears to be an AI engineering conference, Chris Parsons argued that the future of working with AI is not elaborate orchestration but a deceptively simple pattern: a loop that does one thing, picks the next m",
+    "dek_en": "Chris Parsons explains an iterative agent workflow that chooses a task, executes it, checks the result, and repeats.",
     "tags": [
       "llm",
       "video-summary",
@@ -868,35 +850,36 @@
       "topic:product",
       "format:workshop",
       "speaker:independent"
-    ]
+    ],
+    "source_kind": "video"
   },
   {
     "slug": "how-anthropics-claude-code-team-ships-features-in-a-week",
     "title_en": "How Anthropic's Claude Code Team Ships Features in a Week — and What It Means for the PM Role",
     "date": "2026-05-08",
-    "dek_en": "In a recent appearance on Lenny's Podcast, Cat Woo, head of product for Claude Code and Co-work at Anthropic, lays out how her team has compressed product timelines from quarters to days, why \"product taste\" has overtaken project management",
+    "dek_en": "Cat Wu discusses product judgment, short release cycles, and the work of the Claude Code team.",
     "tags": [],
     "languages": [
       "en",
       "zh"
     ],
-    "title_zh": "在最前沿做产品经理：Anthropic 的 Cat Woo 谈如何在 AI 时代造产品",
-    "dek_zh": "在 Lenny 的播客上，Anthropic Claude Code 与 co-work 产品负责人 Cat Woo 描述了一种与传统 PM 几乎截然相反的工作方式：发布周期从季度压缩到一周甚至一天，团队几乎没有流程，PRD 大多被淘汰，工程师可以从在 Twitter 上看到一条反馈一路独立交付到上线。她认为 AI 让代码变便宜，于是真正稀缺的能力变成了\"决定要写什么\"。",
+    "title_zh": "在最前沿做产品经理：Anthropic 的 Cat Wu 谈如何在 AI 时代造产品",
+    "dek_zh": "Cat Wu 在 Lenny’s Podcast 中讨论 Claude Code 团队的产品判断、发布节奏和工程协作。",
     "source": "https://www.youtube.com/watch?v=PplmzlgE0kg&t=226s",
-    "image": "/images/blog/how-anthropics-claude-code-team-ships-features-in-a-week.png",
     "labels": [
       "topic:product",
       "topic:engineering",
       "topic:business",
       "format:podcast",
       "speaker:anthropic"
-    ]
+    ],
+    "source_kind": "video"
   },
   {
     "slug": "harness-engineering-how-openais-ryan-lapopolo-builds",
-    "title_en": "Harness Engineering: How OpenAI's Ryan Lapopolo Builds Software Without Touching the Editor",
+    "title_en": "Harness Engineering: How OpenAI's Ryan Lopopolo Builds Software Without Touching the Editor",
     "date": "2026-05-07",
-    "dek_en": "In a London keynote, OpenAI's Ryan Lapopolo argues that implementation has stopped being the scarce resource in software engineering. The job now, he says, is to build the scaffolding — documentation, lints, review agents, repo structure — ",
+    "dek_en": "A keynote attributed to Ryan Lopopolo discusses harnesses, constraints, and feedback loops for engineering with coding agents.",
     "tags": [
       "agents",
       "llm",
@@ -906,15 +889,14 @@
       "en",
       "zh"
     ],
-    "title_zh": "代码已经免费：Ryan Lapopolo 谈如何让代理\"做完整的工作\"",
-    "dek_zh": "在伦敦一场以\"Harness 工程\"为题的演讲中，OpenAI 技术员工 Ryan Lapopolo 抛出了一个挑衅性的论断：实现层面的代码不再是软件工程的稀缺资源——稀缺的是人类的时间和注意力，以及模型的上下文窗口。他把过去九个月称为自己\"完全用代理写代码\"的实验，并禁止团队成员触碰编辑器，所有工作必须经由模型完成。",
+    "title_zh": "代码已经免费：Ryan Lopopolo 谈如何让代理\"做完整的工作\"",
+    "dek_zh": "在伦敦一场以\"Harness 工程\"为题的演讲中，OpenAI 技术员工 Ryan Lopopolo 抛出了一个挑衅性的论断：实现层面的代码不再是软件工程的稀缺资源——稀缺的是人类的时间和注意力，以及模型的上下文窗口。他把过去九个月称为自己\"完全用代理写代码\"的实验，并禁止团队成员触碰编辑器，所有工作必须经由模型完成。",
     "labels": [
       "topic:engineering",
       "topic:agents",
       "topic:llm",
       "format:keynote",
       "speaker:openai"
-    ],
-    "image": "/images/blog/harness-engineering-how-openais-ryan-lapopolo-builds.png"
+    ]
   }
 ]

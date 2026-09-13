@@ -48,7 +48,7 @@ test('Work & Projects links to the 58.com web infrastructure case study', () => 
   assert.doesNotMatch(html, /CASE STUDIES COMING SOON/);
   assert.match(html, /href="\/work\/58-web-infrastructure"/);
   assert.match(html, /Shared web infrastructure at 58\.com/);
-  assert.match(html, /Industry Case Studies/);
+  assert.match(html, /Industry projects/);
 });
 
 test('58.com case study explains the shared middleware and Nginx traffic router', () => {

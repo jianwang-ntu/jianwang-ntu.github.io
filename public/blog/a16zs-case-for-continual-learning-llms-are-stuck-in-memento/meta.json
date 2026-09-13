@@ -2,7 +2,7 @@
   "slug": "a16zs-case-for-continual-learning-llms-are-stuck-in-memento",
   "title_en": "A16Z's Case for Continual Learning: LLMs Are Stuck in *Memento*",
   "date": "2026-05-10",
-  "dek_en": "In a new essay for a16z, Malika Aubakirova and Matt Bornstein argue that today's large language models live in the same fractured present as Leonard Shelby in Christopher Nolan's *Memento* — capable in any single scene, but unable to compou",
+  "dek_en": "Malika Aubakirova and Matt Bornstein argue that deployed AI systems need better ways to learn from experience.",
   "tags": [],
   "languages": [
     "en",

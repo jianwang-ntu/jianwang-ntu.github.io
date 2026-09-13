@@ -2,7 +2,7 @@
   "slug": "leworldmodel-simplifying-joint-embedding-predictive",
   "title_en": "LeWorldModel: Simplifying Joint-Embedding Predictive Architectures for World Models",
   "date": "2026-05-17",
-  "dek_en": "The paper introduces LeWorldModel (LeWM), a novel approach for training Joint Embedding Predictive Architectures (JEPA) to create stable world models. Unlike existing methods that are prone to representation collapse and require complex mul",
+  "dek_en": "LeWorldModel studies how to train stable world models using joint-embedding predictive architectures.",
   "tags": [],
   "languages": [
     "en",

@@ -14,6 +14,7 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { PUB_META } from '../src/data-pubs.js';
 
 const SITE_URL = (process.env.SITE_URL || 'https://www.wj2ai.com').replace(/\/$/, '');
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -36,6 +37,9 @@ const STATIC_ROUTES = [
   { path: '/cv',   changefreq: 'monthly', priority: '0.7' },
   { path: '/blog', changefreq: 'weekly',  priority: '0.9' },
 ];
+for (const publication of Object.values(PUB_META)) {
+  STATIC_ROUTES.push({ path: `/pubs/${publication.key}`, changefreq: 'yearly', priority: '0.7' });
+}
 
 let posts = [];
 try {

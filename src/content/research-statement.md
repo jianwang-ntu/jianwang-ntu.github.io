@@ -114,17 +114,3 @@ Together, these problems support a longer-term program in autonomous research an
 [12] N. Li et al. [EvoSafeHarness: Evolving Model- and Domain-Specific Harnesses for Securing Agents.](https://arxiv.org/abs/2609.05903v1) arXiv:2609.05903v1, 5 September 2026.
 
 [13] T. Sheasha. [How We Built Safety Into Muse.](https://research.meta.ai/blog/security-and-safety-for-ai-agents-our-approach-with-muse) Meta AI Research, 8 September 2026.
-
-[14] E. Debenedetti et al. [AgentDojo: A Dynamic Environment to Evaluate Prompt Injection Attacks and Defenses for LLM Agents.](https://arxiv.org/abs/2406.13352v3) arXiv:2406.13352v3, 2024.
-
-[15] IMDA. [Model AI Governance Framework for Agentic AI.](https://www.imda.gov.sg/assets/63438074-73f6-4dcc-a281-030f42642cf4.pdf) Version 1.5, 20 May 2026; updated 5 June 2026.
-
-[16] NIST. [AI Agent Standards Initiative.](https://www.nist.gov/artificial-intelligence/ai-agent-standards-initiative) Created 17 February 2026; updated 14 August 2026.
-
-### Provenance of the statement
-
-The research foundation is based on the two supplied statements and the cited publications. The industry mapping uses the supplied JD snapshots; role links identify source postings and do not certify current vacancies. The three problems and candidate mechanisms are a proposed agenda, requiring project-specific novelty analysis and new evidence before claims of effectiveness or priority.
-
-The accompanying 120-person research-interest inventory, 25-person Agent Commons fit ranking, 26-person follow-up, and their shards were discovery material. Their fit scores were not reused as market evidence; shards were not counted as independent signals. The research direction follows the problems and sources above.
-
-> Source files for the JD mapping: openai_filtered_technical_research_jobs_2026-09-13.jsonl; openai_safe.jsonl; anthropic_technical_jobs_2026-09-13.jsonl; anthropic_safe.jsonl; deepseek_selected_categories_jobs_2026-09-13.jsonl; minimax_feishu_rnd_jobs_2026-09-13.jsonl; moonshot_moka_technical_ai_jobs_2026-09-13.jsonl; zhipuai_moka_all_jobs_2026-09-13.jsonl. All are contained in the supplied data.zip.

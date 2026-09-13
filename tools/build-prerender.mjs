@@ -22,6 +22,7 @@
 import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync } from 'node:fs';
 import { resolve, dirname, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { BLOG_ALIASES } from '../src/blog-aliases.js';
 
 const SITE_URL = (process.env.SITE_URL || 'https://www.wj2ai.com').replace(/\/$/, '');
 const S3_IMAGE_BASE = (process.env.S3_IMAGE_BASE
@@ -78,7 +79,7 @@ function metaBlock({ title, description, canonicalPath, image, ogType = 'website
     `<meta name="twitter:image" content="${escape(img)}" />`,
   ];
   if (TWITTER_HANDLE) lines.push(`<meta name="twitter:creator" content="${escape(TWITTER_HANDLE)}" />`);
-  if (ldJson) lines.push(`<script type="application/ld+json">${JSON.stringify(ldJson)}</script>`);
+  if (ldJson) lines.push(`<script type="application/ld+json" data-seo="page">${JSON.stringify(ldJson).replace(/</g, '\\u003c')}</script>`);
   return lines.map((l) => '    ' + l).join('\n');
 }
 
@@ -99,6 +100,7 @@ function patchHead(html, block) {
   html = html.replace(/\s*<link\s+rel="canonical"[^>]*\/?>/g, '');
   html = html.replace(/\s*<meta\s+property="og:[^"]*"[^>]*\/?>/g, '');
   html = html.replace(/\s*<meta\s+name="twitter:[^"]*"[^>]*\/?>/g, '');
+  html = html.replace(/\s*<script\b(?=[^>]*data-seo="page")[^>]*>[\s\S]*?<\/script>/g, '');
   // Drop the explanatory comment block we ship in index.html so it doesn't
   // appear in every prerendered file.
   html = html.replace(/\n\s*<!--\s*These tags are sane defaults[\s\S]*?-->\n?/g, '\n');
@@ -121,15 +123,15 @@ function writeRoute(routePath, html) {
 // Per-route descriptions — keep terse, ~150 chars max. These match the dynamic
 // Seo component's defaults so the static and JS-rendered metadata agree.
 const STATIC_ROUTES = [
-  { path: '/home', title: 'Home',           desc: 'Jian Wang — PhD, NTU Singapore. Software engineering and reliable autonomy for adaptive AI agents.' },
+  { path: '/home', title: 'Home',           desc: 'Jian Wang — PhD, NTU Singapore. Reliable autonomy for adaptive AI agents, building on software engineering and AI evaluation.' },
   { path: '/statement', title: 'Research Statement', desc: 'Reliable autonomy for adaptive AI agents through scalable oversight, safety-preserving learning, and secure delegation.' },
   { path: '/research', canonicalPath: '/statement', title: 'Research Statement', desc: 'Reliable autonomy for adaptive AI agents through scalable oversight, safety-preserving learning, and secure delegation.' },
-  { path: '/pubs', title: 'Publications',   desc: 'Peer-reviewed research and preprints by Jian Wang on code LLM security, fake-content detection, and program repair.' },
-  { path: '/work', title: 'Work & Projects', desc: 'Research artifacts and industry projects by Jian Wang, indexed by year, skill and project room.' },
+  { path: '/pubs', title: 'Publications',   desc: 'Publications by Jian Wang on program repair, code-model evaluation, neural-network testing, and robustness.' },
+  { path: '/work', title: 'Work & Projects', desc: 'Jian Wang’s work on shared web infrastructure, mobile portrait AI, program repair, and code-model evaluation.' },
   {
     path: '/work/xiaomi-portrait-ai',
     title: 'Portrait Intelligence at Xiaomi',
-    desc: 'Portrait semantic segmentation and GAN-based selfie cartoonisation, taken from GPU training to on-device inference.',
+    desc: 'A visual case study of portrait semantic segmentation and GAN-based selfie cartoonisation, from GPU training to on-device inference.',
     image: `${SITE_URL}/images/projects/xiaomi/portrait-segmentation-reconstruction.jpg`,
   },
   {
@@ -145,8 +147,8 @@ const STATIC_ROUTES = [
     image: `${SITE_URL}/images/projects/58/shared-web-infrastructure.png`,
     lang: 'zh-CN',
   },
-  { path: '/cv',   title: 'CV',             desc: 'Curriculum vitae — education, employment, talks, awards.' },
-  { path: '/blog', title: 'Blog',           desc: 'Notes and summaries — auto-drafted from talks, papers, and posts; edited by hand.' },
+  { path: '/cv',   title: 'CV',             desc: 'Jian Wang’s education, research and industry experience, selected publications, and awards.' },
+  { path: '/blog', title: 'Blog',           desc: 'AI-assisted reading notes on talks, papers, and posts about AI and software engineering, with links to original sources.' },
 ];
 
 console.log(`build-prerender: SITE_URL=${SITE_URL}`);
@@ -156,7 +158,7 @@ const pubMod = await import(pathToFileURL(resolve(repoRoot, 'src', 'data-pubs.js
 for (const [, m] of Object.entries(pubMod.PUB_META)) {
   STATIC_ROUTES.push({
     path: `/pubs/${m.key}`,
-    title: 'Publication',
+    title: m.bibtex.match(/^\s*title\s*=\s*\{(.+)\},?$/m)?.[1] || 'Publication',
     desc: m.brief,
   });
 }
@@ -179,6 +181,15 @@ for (const r of STATIC_ROUTES) {
 
 // 2) Each blog post, with BlogPosting JSON-LD for richer search results.
 const posts = readPosts();
+for (const [slug, target] of Object.entries(BLOG_ALIASES)) {
+  const post = posts.find(p => p.slug === target);
+  if (!post) throw new Error(`Missing destination for blog alias: ${slug}`);
+  writeRoute(`/blog/${slug}`, patchHead(baseHtml, metaBlock({
+    title: post.title_en,
+    description: post.dek_en,
+    canonicalPath: `/blog/${target}`,
+  })));
+}
 for (const p of posts) {
   if (!p?.slug) continue;
   const title = p.title_en || p.slug;

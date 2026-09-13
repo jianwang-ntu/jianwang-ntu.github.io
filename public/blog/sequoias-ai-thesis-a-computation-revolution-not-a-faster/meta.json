@@ -2,7 +2,7 @@
   "slug": "sequoias-ai-thesis-a-computation-revolution-not-a-faster",
   "title_en": "Sequoia's AI Thesis: A Computation Revolution, Not a Faster Internet",
   "date": "2026-05-08",
-  "dek_en": "At Sequoia Capital's AI Summit, partners Pat Grady, Sonya Huang, and Konstantine Buhler argued that the AI wave is categorically different from every prior tech cycle — large enough to swallow software *and* services, fast enough to compres",
+  "dek_en": "Sequoia partners discuss AI’s effects on computation, software, services, and startup opportunities.",
   "tags": [],
   "languages": [
     "en",
@@ -17,5 +17,6 @@
     "topic:agents",
     "format:keynote",
     "speaker:independent"
-  ]
+  ],
+  "source_kind": "video"
 }

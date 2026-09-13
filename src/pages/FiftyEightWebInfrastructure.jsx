@@ -39,13 +39,13 @@ const COPY = {
       implementation: 'Asynchronous I/O covered downstream waits. A middleware chain exposed authentication, request parsing, service access, caching, and response handling through stable interfaces to common components; business handlers stayed outside the framework.',
       efficiency: 'The documented production system handled 100M+ daily requests. Because even a small middleware cost was multiplied across that volume, the common request path had to remain short and predictable.',
       difficulty: 'A shared component removed repeated work but also increased the impact of a regression. Backward compatibility across teams moving at different speeds, per-request overhead, and failure isolation all had to be handled at the shared boundary.',
-      evidence: 'The original latency and CPU reports are no longer available, so this page retains the documented request scale without reconstructing performance measurements.',
+      evidence: 'Historical latency and CPU measurements are unavailable.',
     },
     router: {
       title: 'Traffic routing in Nginx',
       intro: [
         'The traffic router applied shared policy before a request reached an application service. It selected an upstream business pool in the Nginx request path instead of asking every downstream service to repeat the same routing decisions.',
-        'Its programming goal was comparable to OpenResty in one specific sense: both add programmable behaviour to the Nginx lifecycle. This system used a custom module; it was not an OpenResty or Lua implementation.',
+        'The custom module added programmable behaviour to the Nginx lifecycle, a goal similar to OpenResty. The comparison describes its role in the system.',
       ],
       image: '/images/projects/58/nginx-traffic-router.svg',
       alt: 'Requests enter Nginx, pass through a custom routing module, and are sent to different business service pools.',
@@ -85,13 +85,13 @@ const COPY = {
       implementation: '框架使用异步 I/O 处理下游等待。鉴权、请求解析、服务访问、缓存和响应处理等公共能力通过中间件组合，并以稳定接口向业务方提供；具体业务处理不写入框架。',
       efficiency: '该生产系统有记录的规模为日请求量 1 亿+。在这个量级，中间件链路上的微小开销都会被整体流量放大，因此公共路径必须保持短而稳定。',
       difficulty: '公共组件减少了重复建设，也放大了回归影响。不同团队的升级节奏、接口向后兼容、单次请求开销和故障隔离都必须在共享边界内考虑。',
-      evidence: '原始的延迟和 CPU 报表目前不在手边，因此这里只保留仍有记录的请求规模，不重建具体性能数据。',
+      evidence: '历史延迟和 CPU 测量数据目前不可用。',
     },
     router: {
       title: 'Nginx 内的流量路由',
       intro: [
         '流量路由器在请求进入应用服务之前执行统一策略，并在 Nginx 请求链路内选择对应的业务服务池，避免每个下游服务重复实现路由判断。',
-        '从编程目标看，它与 OpenResty 的相似点是在 Nginx 生命周期中加入可编程逻辑。当时的实现是自定义模块，并不是使用 OpenResty 或 Lua。',
+        '自定义模块在 Nginx 生命周期中加入可编程逻辑，这一点与 OpenResty 的目标相近。这里的比较主要说明它在系统中的作用。',
       ],
       image: '/images/projects/58/nginx-traffic-router-zh.svg',
       alt: '请求进入 Nginx 后经过自定义流量路由模块，再被转发到不同的业务服务池。',
