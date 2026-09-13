@@ -1,0 +1,27 @@
+{
+  "slug": "the-ai-tipping-point-in-software-engineering",
+  "title_en": "The AI Tipping Point in Software Engineering: Why Teams Need to Think in Ecosystems, Not Tools",
+  "date": "2026-05-19",
+  "dek_en": "Adam Bender argues software engineering is hitting a 10x moment — but generating code faster is not engineering faster. Through the lens of \"software ecology\", he warns AI amplifies a team's existing strengths and weaknesses alike, and the bottleneck simply moves to review, testing, builds, and releases.",
+  "tags": [
+    "agents",
+    "engineering",
+    "llm"
+  ],
+  "languages": [
+    "en",
+    "zh"
+  ],
+  "title_zh": "AI 正在把软件工程推向临界点：为什么团队需要像管理生态系统一样管理开发",
+  "dek_zh": "Adam Bender 指出软件工程正迎来\"10x 时刻\"——但代码写得更快不等于工程更快。他用\"软件生态学\"的视角警告：AI 会同时放大团队既有的优点与缺点，瓶颈只会转移到审查、测试、构建与发布。",
+  "source": "https://www.youtube.com/watch?v=2n41YjR5QfU",
+  "source_kind": "video",
+  "image": "https://publicsg.s3.ap-southeast-1.amazonaws.com/github.io/images/blog/the-ai-tipping-point-in-software-engineering.png",
+  "labels": [
+    "topic:engineering",
+    "topic:agents",
+    "topic:infra",
+    "format:talk",
+    "speaker:google"
+  ]
+}

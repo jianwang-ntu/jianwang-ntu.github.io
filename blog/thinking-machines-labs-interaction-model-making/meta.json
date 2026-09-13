@@ -1,0 +1,23 @@
+{
+  "slug": "thinking-machines-labs-interaction-model-making",
+  "title_en": "Thinking Machines Lab's Interaction Model: Making Conversation Native to the Model",
+  "date": "2026-05-14",
+  "dek_en": "On May 11, Thinking Machines Lab — the venture founded by former OpenAI CTO Mira Murati — published research on what it calls the **Interaction Model**. The central claim, as relayed in the video: every frontier AI lab has optimized for the",
+  "tags": [],
+  "languages": [
+    "en",
+    "zh"
+  ],
+  "title_zh": "Thinking Machines Lab 的交互模型:让 AI 从\"发邮件\"变成\"面对面对话\"",
+  "dek_zh": "5 月 11 日,前 OpenAI 首席技术官 Mira Murati 创办的 Thinking Machines Lab 发布了一项新研究,名为\"交互模型\"(Interaction Model)。在最佳拍档频道一期由主持人大飞带来的解读中,这次发布被定位为对人机协作底层逻辑的重构——把\"交互\"从一项外挂功能,变成大模型的原生基因。大飞在视频中梳理了 Thinking Machines Lab 的核心论点、技术路径和基准数据,以下是这场解读的要点。",
+  "source": "https://www.youtube.com/watch?v=PTN9oPdLtUA",
+  "source_kind": "video",
+  "image": "https://publicsg.s3.ap-southeast-1.amazonaws.com/github.io/images/blog/thinking-machines-labs-interaction-model-making.png",
+  "labels": [
+    "topic:research",
+    "topic:llm",
+    "topic:engineering",
+    "format:talk",
+    "speaker:independent"
+  ]
+}

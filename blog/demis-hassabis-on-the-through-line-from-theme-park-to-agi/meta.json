@@ -1,0 +1,23 @@
+{
+  "slug": "demis-hassabis-on-the-through-line-from-theme-park-to-agi",
+  "title_en": "Demis Hassabis on the Through-line from Theme Park to AGI",
+  "date": "2026-05-11",
+  "dek_en": "In a wide-ranging interview, DeepMind founder and CEO Demis Hassabis traces his path from teenage chess prodigy to running one of the most consequential AI labs in the world, and lays out a thesis that reframes what AI is for: a tool for do",
+  "tags": [],
+  "languages": [
+    "en",
+    "zh"
+  ],
+  "title_zh": "Demis Hassabis 谈 AGI、AI for Science 与\"信息即宇宙基底\"",
+  "dek_zh": "在一场创始人聚会的炉边对话中，DeepMind 创始人 Demis Hassabis 回顾了自己从游戏开发者到神经科学家、再到 AGI 追逐者的轨迹。他给出了对 AGI 时间表的一个具体押注——**2030 年**——并阐述了一个更大胆的看法：信息可能比物质和能量更接近宇宙的基本结构。",
+  "source": "https://www.youtube.com/watch?v=AFpeWo1GTeg",
+  "source_kind": "video",
+  "image": "https://publicsg.s3.ap-southeast-1.amazonaws.com/github.io/images/blog/demis-hassabis-on-the-through-line-from-theme-park-to-agi.png",
+  "labels": [
+    "topic:research",
+    "topic:agents",
+    "topic:llm",
+    "format:interview",
+    "speaker:google"
+  ]
+}

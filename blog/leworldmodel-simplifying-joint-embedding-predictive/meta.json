@@ -1,0 +1,16 @@
+{
+  "slug": "leworldmodel-simplifying-joint-embedding-predictive",
+  "title_en": "LeWorldModel: Simplifying Joint-Embedding Predictive Architectures for World Models",
+  "date": "2026-05-17",
+  "dek_en": "The paper introduces LeWorldModel (LeWM), a novel approach for training Joint Embedding Predictive Architectures (JEPA) to create stable world models. Unlike existing methods that are prone to representation collapse and require complex mul",
+  "tags": [],
+  "languages": [
+    "en",
+    "zh"
+  ],
+  "title_zh": "LeWorldModel：从像素中稳定学习世界模型的新方法",
+  "dek_zh": "本文提出了一种名为LeWorldModel（LeWM）的新方法，旨在在紧凑的潜在空间中稳定学习世界模型。这种方法克服了现有联合嵌入预测架构（JEPAs）在训练过程中的不稳定性问题，并实现了全栈端到端的训练，从而无需依赖复杂的多项损失函数、预训练编码器或外部监督信息。",
+  "source": "https://arxiv.org/pdf/2603.19312",
+  "source_kind": "paper",
+  "image": "https://publicsg.s3.ap-southeast-1.amazonaws.com/github.io/images/blog/leworldmodel-simplifying-joint-embedding-predictive_diagram.png"
+}

@@ -1,0 +1,23 @@
+{
+  "slug": "code-review-broke-because-writing-code-got-faster-than",
+  "title_en": "Code Review Broke Because Writing Code Got Faster Than Reading It",
+  "date": "2026-09-10",
+  "dek_en": "A recent Chinese-language post on lightnote.com.cn argues that the fifty-year-old practice of human code review — formalised by Fagan in 1976 — has lost the economic condition that made it work. The author's claim is narrow and specific: re",
+  "tags": [],
+  "languages": [
+    "en",
+    "zh"
+  ],
+  "title_zh": "当写代码比读代码快：一篇中文博文为「代码审查已死」做的辩护与修正",
+  "dek_zh": "一篇发表在 lightnote 的中文长文提出，从 Fagan 在 1976 年正式提出代码检查算起，「让另一位人类在合并前读一遍」这条延续了五十年的基石实践，正在 2026 年失效。作者的论据不是 AI 更聪明了，而是一个更朴素的理由：代码审查一直依赖「读比写快」这个偶然的速度差，而这个前提已经不成立。",
+  "source": "https://blog.lightnote.com.cn/google-senior-engineer-code-review-is-dead-ai-4x-output-programmers-career-survival/",
+  "source_kind": "post",
+  "image": "https://publicsg.s3.ap-southeast-1.amazonaws.com/github.io/images/blog/code-review-broke-because-writing-code-got-faster-than.png",
+  "labels": [
+    "topic:engineering",
+    "topic:agents",
+    "topic:product",
+    "format:post",
+    "speaker:independent"
+  ]
+}

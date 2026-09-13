@@ -1,0 +1,23 @@
+{
+  "slug": "webforge-generating-browser-agent-benchmarks-that-are",
+  "title_en": "WebForge: Generating Browser Agent Benchmarks That Are Realistic, Reproducible, and Scalable at the Same Time",
+  "date": "2026-05-08",
+  "dek_en": "Browser agent benchmarks force a three-way tradeoff: live websites give realism but rot within months, sandboxed environments give reproducibility but feel sterile, and both demand expensive manual curation. A new paper from Tencent BAC and",
+  "tags": [],
+  "languages": [
+    "en",
+    "zh"
+  ],
+  "title_zh": "WebForge：一个把\"真实—可复现—可扩展\"三难困局打开的浏览器智能体评测框架",
+  "dek_zh": "腾讯 BAC 与清华联合发布的论文 *WebForge* 提出了一个观察：现有的浏览器智能体基准在真实性、可复现性与可扩展性三者之间始终只能取其二。作者把这一矛盾命名为 **benchmark trilemma**(基准三难),并给出一条完全自动化的解法——一个由 Plan、Generate、Refine、Validate 四个智能体串起来的流水线,可以端到端地造出\"自带噪声、自带答案、自带验证机制\"的可交互网页环境。基于这个流水线生成的 WebForge-Bench 包含 ",
+  "source": "https://arxiv.org/pdf/2604.10988",
+  "source_kind": "paper",
+  "image": "https://publicsg.s3.ap-southeast-1.amazonaws.com/github.io/images/blog/webforge-generating-browser-agent-benchmarks-that-are.png",
+  "labels": [
+    "topic:agents",
+    "topic:research",
+    "topic:engineering",
+    "format:paper",
+    "speaker:academia"
+  ]
+}

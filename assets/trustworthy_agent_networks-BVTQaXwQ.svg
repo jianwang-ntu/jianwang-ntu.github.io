@@ -1,0 +1,188 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     viewBox="0 0 1672 940"
+     width="1672" height="940"
+     role="img" aria-labelledby="title desc">
+  <title id="title">Trustworthy Agent Networks</title>
+  <desc id="desc">Research statement diagram showing assured agency, collective agency, and a shared foundation of independent evidence and controlled adaptation.</desc>
+
+  <defs>
+    <style>
+      .serif { font-family: Georgia, "Times New Roman", serif; fill:#0b0f14; }
+      .blue { fill:#0b57a4; }
+      .title { font-size:64px; font-weight:700; }
+      .subtitle { font-size:30px; }
+      .section { font-size:38px; font-weight:700; }
+      .sectionSub { font-size:27px; }
+      .question { font-size:26px; font-style:italic; }
+      .boxText { font-size:24px; }
+      .label { font-size:22px; }
+      .foundationTitle { font-size:34px; font-weight:700; }
+      .foundationSub { font-size:25px; }
+      .footerBlue { font-size:26px; font-weight:700; }
+      .footer { font-size:18px; }
+      .stroke { stroke:#0b0f14; stroke-width:3; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+      .thin { stroke:#0b0f14; stroke-width:2; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+      .blueStroke { stroke:#0b67c7; stroke-width:3; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+      .dash { stroke:#0b67c7; stroke-width:3; fill:none; stroke-dasharray:9 7; stroke-linecap:round; }
+      .pale { fill:#d9ecfb; }
+      .white { fill:#fff; }
+    </style>
+
+    <marker id="arrowBlack" markerWidth="10" markerHeight="10" refX="8.2" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 z" fill="#0b0f14"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="8.2" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 z" fill="#0b67c7"/>
+    </marker>
+    <marker id="arrowBlueOpen" markerWidth="10" markerHeight="10" refX="8.5" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0.8,1 L9,5 L0.8,9" fill="none" stroke="#0b67c7" stroke-width="1.8"/>
+    </marker>
+  </defs>
+
+  <!-- background -->
+  <rect x="0" y="0" width="1672" height="940" fill="#ffffff"/>
+
+  <!-- title -->
+  <text x="836" y="61" text-anchor="middle" class="serif title">Trustworthy Agent Networks</text>
+  <text x="836" y="107" text-anchor="middle" class="serif subtitle">Expanding human agency through accountable individual and collective action</text>
+
+  <!-- left section -->
+  <text x="390" y="168" text-anchor="middle" class="serif section blue">I. Assured Agency</text>
+  <text x="390" y="202" text-anchor="middle" class="serif sectionSub">Representing individuals and organizations</text>
+
+  <!-- left icon: person -->
+  <g transform="translate(292 222)">
+    <circle cx="32" cy="27" r="17" class="pale" stroke="#0b0f14" stroke-width="3"/>
+    <path d="M9 76 C11 55, 19 46, 32 46 C45 46, 53 55, 55 76 Z" class="pale" stroke="#0b0f14" stroke-width="3"/>
+    <!-- document -->
+    <rect x="80" y="4" width="72" height="92" rx="3" class="white" stroke="#0b0f14" stroke-width="3"/>
+    <path d="M135 4 L152 21" class="thin"/>
+    <path d="M96 23 H134 M96 39 H134 M96 55 H128 M96 71 H130" class="thin"/>
+    <!-- shield -->
+    <path d="M165 42 L186 34 L207 42 V63 C207 77 198 88 186 95 C174 88 165 77 165 63 Z" class="pale" stroke="#0b0f14" stroke-width="3"/>
+  </g>
+
+  <!-- center contribution arrows -->
+  <text x="835" y="232" text-anchor="middle" class="serif label">Authorized contributions</text>
+  <path d="M644 273 C757 226, 915 226, 1024 273" class="thin" marker-end="url(#arrowBlack)"/>
+  <path d="M1024 298 C907 342, 758 342, 649 300" class="thin" marker-end="url(#arrowBlack)"/>
+  <text x="836" y="352" text-anchor="middle" class="serif label">Accepted commitments</text>
+
+  <!-- right section -->
+  <text x="1268" y="168" text-anchor="middle" class="serif section blue">II. Collective Agency</text>
+  <text x="1268" y="202" text-anchor="middle" class="serif sectionSub">Cooperation across independent principals</text>
+
+  <!-- right icon: networked principals -->
+  <g transform="translate(1172 214)">
+    <!-- top person -->
+    <circle cx="98" cy="15" r="11" class="pale" stroke="#0b0f14" stroke-width="3"/>
+    <path d="M78 49 C80 34, 87 27, 98 27 C109 27, 116 34, 118 49 Z" class="pale" stroke="#0b0f14" stroke-width="3"/>
+    <ellipse cx="136" cy="37" rx="11" ry="5" class="pale" stroke="#0b0f14" stroke-width="3"/>
+    <path d="M125 37 V55 C125 62 147 62 147 55 V37" class="pale" stroke="#0b0f14" stroke-width="3"/>
+    <path d="M125 46 C125 53 147 53 147 46" class="thin"/>
+    <!-- left person -->
+    <circle cx="18" cy="62" r="11" class="pale" stroke="#0b0f14" stroke-width="3"/>
+    <path d="M0 98 C2 82, 8 74, 18 74 C29 74, 35 82, 37 98 Z" class="pale" stroke="#0b0f14" stroke-width="3"/>
+    <ellipse cx="56" cy="87" rx="11" ry="5" class="pale" stroke="#0b0f14" stroke-width="3"/>
+    <path d="M45 87 V105 C45 112 67 112 67 105 V87" class="pale" stroke="#0b0f14" stroke-width="3"/>
+    <path d="M45 96 C45 103 67 103 67 96" class="thin"/>
+    <!-- right person -->
+    <circle cx="184" cy="62" r="11" class="pale" stroke="#0b0f14" stroke-width="3"/>
+    <path d="M166 98 C168 82, 174 74, 184 74 C195 74, 201 82, 203 98 Z" class="pale" stroke="#0b0f14" stroke-width="3"/>
+    <ellipse cx="222" cy="87" rx="11" ry="5" class="pale" stroke="#0b0f14" stroke-width="3"/>
+    <path d="M211 87 V105 C211 112 233 112 233 105 V87" class="pale" stroke="#0b0f14" stroke-width="3"/>
+    <path d="M211 96 C211 103 233 103 233 96" class="thin"/>
+    <!-- edges -->
+    <path d="M67 57 L82 48 M119 49 L164 68 M64 88 H158" class="stroke"/>
+  </g>
+
+  <!-- questions -->
+  <text x="390" y="344" text-anchor="middle" class="serif question">How does agency persist through change?</text>
+  <text x="1265" y="344" text-anchor="middle" class="serif question">When does cooperation create lasting value?</text>
+
+  <!-- trapezoid boxes left -->
+  <g class="serif boxText">
+    <polygon points="137,365 642,365 662,421 117,421" fill="#fff" stroke="#0b0f14" stroke-width="2.5"/>
+    <text x="390" y="401" text-anchor="middle">Persistent mandates, state &amp; commitments</text>
+
+    <polygon points="119,430 660,430 681,486 98,486" fill="#fff" stroke="#0b0f14" stroke-width="2.5"/>
+    <text x="390" y="466" text-anchor="middle">Authorized execution &amp; recovery</text>
+
+    <polygon points="102,495 678,495 699,551 81,551" fill="#fff" stroke="#0b0f14" stroke-width="2.5"/>
+    <text x="390" y="531" text-anchor="middle">Capability growth under live obligations</text>
+  </g>
+
+  <!-- trapezoid boxes right -->
+  <g class="serif boxText">
+    <polygon points="1011,365 1516,365 1536,421 991,421" fill="#fff" stroke="#0b0f14" stroke-width="2.5"/>
+    <text x="1264" y="401" text-anchor="middle">Limited group representation</text>
+
+    <polygon points="993,430 1534,430 1555,486 972,486" fill="#fff" stroke="#0b0f14" stroke-width="2.5"/>
+    <text x="1264" y="466" text-anchor="middle" style="font-size:22px">Private coordination &amp; conditional commitments</text>
+
+    <polygon points="976,495 1552,495 1573,551 955,551" fill="#fff" stroke="#0b0f14" stroke-width="2.5"/>
+    <text x="1264" y="531" text-anchor="middle">Delivery, exit &amp; shared accountability</text>
+  </g>
+
+  <!-- evidence arrows -->
+  <path d="M390 558 V625" class="stroke" marker-end="url(#arrowBlack)"/>
+  <text x="423" y="597" class="serif label">Action evidence</text>
+  <path d="M1264 558 V625" class="stroke" marker-end="url(#arrowBlack)"/>
+  <text x="1062" y="597" class="serif label">Delivery evidence</text>
+
+  <!-- shared foundation -->
+  <polygon points="145,628 1525,628 1552,809 115,809" fill="#fff" stroke="#0b0f14" stroke-width="2.5"/>
+  <text x="835" y="666" text-anchor="middle" class="serif foundationTitle blue">Independent Evidence &amp; Controlled Adaptation</text>
+  <text x="835" y="698" text-anchor="middle" class="serif foundationSub">Shared foundation</text>
+
+  <!-- internal separators -->
+  <line x1="586" y1="709" x2="586" y2="789" stroke="#7f8b96" stroke-width="1.8"/>
+  <line x1="1072" y1="709" x2="1072" y2="789" stroke="#7f8b96" stroke-width="1.8"/>
+
+  <!-- verification icon + label -->
+  <g transform="translate(205 711)">
+    <rect x="0" y="3" width="53" height="65" rx="3" class="white" stroke="#0b0f14" stroke-width="3"/>
+    <path d="M11 18 H42 M11 29 H42 M11 40 H35" class="thin"/>
+    <circle cx="57" cy="47" r="16" class="pale" stroke="#0b0f14" stroke-width="3"/>
+    <path d="M68 59 L80 72" class="stroke"/>
+    <text x="110" y="46" class="serif boxText">Outcome verification</text>
+  </g>
+
+  <!-- failure attribution icon + label -->
+  <g transform="translate(642 714)">
+    <circle cx="11" cy="34" r="9" class="pale" stroke="#0b0f14" stroke-width="3"/>
+    <circle cx="51" cy="5" r="9" class="pale" stroke="#0b0f14" stroke-width="3"/>
+    <circle cx="51" cy="65" r="9" class="pale" stroke="#0b0f14" stroke-width="3"/>
+    <path d="M19 29 L42 11 M19 39 L42 59" class="blueStroke"/>
+    <path d="M43 34 H82" class="blueStroke" marker-end="url(#arrowBlueOpen)"/>
+    <text x="105" y="42" class="serif boxText">Failure attribution &amp; recovery</text>
+  </g>
+
+  <!-- update icon + label -->
+  <g transform="translate(1122 710)">
+    <path d="M12 41 C14 16, 38 3, 59 14 C68 18, 75 26, 78 36" class="stroke"/>
+    <path d="M78 36 L64 32 M78 36 L75 22" class="stroke"/>
+    <path d="M78 44 C76 69, 52 82, 31 71 C22 67, 15 59, 12 49" class="stroke"/>
+    <path d="M12 49 L26 53 M12 49 L15 63" class="stroke"/>
+    <circle cx="45" cy="43" r="25" fill="none" stroke="#b8dcf6" stroke-width="8"/>
+    <text x="111" y="31" class="serif boxText">Evaluated capability &amp;</text>
+    <text x="111" y="60" class="serif boxText">coordination updates</text>
+  </g>
+
+  <!-- evaluated update loops -->
+  <path d="M115 735 H78 C63 735 60 726 60 712 V459 C60 447 70 438 83 438 H96"
+        class="dash" marker-end="url(#arrowBlue)"/>
+  <text x="22" y="620" class="serif label blue">Evaluated</text>
+  <text x="22" y="646" class="serif label blue">updates</text>
+
+  <path d="M1552 735 H1589 C1604 735 1607 726 1607 712 V459 C1607 447 1597 438 1584 438 H1572"
+        class="dash" marker-end="url(#arrowBlue)"/>
+  <text x="1543" y="620" class="serif label blue">Evaluated</text>
+  <text x="1543" y="646" class="serif label blue">updates</text>
+
+  <!-- bottom statements -->
+  <text x="835" y="835" text-anchor="middle" class="serif footer">Updates remain subject to each principal’s authority.</text>
+  <text x="835" y="878" text-anchor="middle" class="serif footerBlue blue">Useful autonomy. Effective cooperation. Accountable outcomes.</text>
+  <text x="835" y="908" text-anchor="middle" class="serif footer">Jian Wang  |  Research Statement  |  2026-2029</text>
+</svg>

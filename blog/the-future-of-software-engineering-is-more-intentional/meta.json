@@ -1,0 +1,27 @@
+{
+  "slug": "the-future-of-software-engineering-is-more-intentional",
+  "title_en": "The Future of Software Engineering Is Not Less Human — It Is More Intentional",
+  "date": "2026-05-19",
+  "dek_en": "A panel on how AI is reshaping software engineering argues that seniority is shifting from writing difficult code to understanding systems, framing problems, and evaluating AI output — and that the biggest risk is \"cognitive surrender\", accepting AI answers without understanding them.",
+  "tags": [
+    "agents",
+    "engineering",
+    "llm"
+  ],
+  "languages": [
+    "en",
+    "zh"
+  ],
+  "title_zh": "AI 时代的软件工程，不是更少的人，而是更强的判断力",
+  "dek_zh": "一场关于 AI 如何重塑软件工程的圆桌讨论指出：高级工程师的核心正从\"写复杂代码\"转向理解系统、拆解问题、评估 AI 产出，而最大的风险是\"认知投降\"——不加思考地接受 AI 生成的答案。",
+  "source": "https://www.youtube.com/watch?v=VTYx7Ex-0bA",
+  "source_kind": "video",
+  "image": "https://publicsg.s3.ap-southeast-1.amazonaws.com/github.io/images/blog/the-future-of-software-engineering-is-more-intentional.png",
+  "labels": [
+    "topic:engineering",
+    "topic:agents",
+    "topic:llm",
+    "format:talk",
+    "speaker:independent"
+  ]
+}
