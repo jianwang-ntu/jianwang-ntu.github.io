@@ -80,6 +80,51 @@ test('the top connectors stay below the research-area headings', () => {
   }
 });
 
+test('the long learning heading breaks before the adjacent icon', () => {
+  const svg = readFileSync(svgFile, 'utf8');
+  assert.match(
+    svg,
+    /<text class="area area-long" x="910" y="238"><tspan x="910">II\. Safety-Preserving<\/tspan><tspan x="910" dy="36">Learning<\/tspan><\/text>/,
+  );
+});
+
+test('the overview reports company-level JD signals with their evidence boundary', () => {
+  const svg = readFileSync(svgFile, 'utf8');
+  const expected = {
+    'industry-oversight': [
+      ['OpenAI', '11.2%'], ['Anthropic', '7.0%'], ['DeepSeek', '0.0%'],
+      ['MiniMax', '1.3%'], ['Moonshot', '1.9%'], ['Zhipu', '0.0%'],
+    ],
+    'industry-learning': [
+      ['OpenAI', '3.7%'], ['Anthropic', '1.2%'], ['DeepSeek', '0.0%'],
+      ['MiniMax', '0.0%'], ['Moonshot', '1.9%'], ['Zhipu', '0.0%'],
+    ],
+    'industry-control': [
+      ['OpenAI', '5.3%'], ['Anthropic', '3.0%'], ['DeepSeek', '8.7%'],
+      ['MiniMax', '2.7%'], ['Moonshot', '3.8%'], ['Zhipu', '3.1%'],
+    ],
+  };
+
+  assert.match(svg, />Industry Signals in the Collected JD Sample</);
+  assert.match(svg, />829 deduplicated JDs</);
+  assert.match(svg, />Theme matches ÷ each company’s collected JDs</);
+  assert.match(svg, />Sample proxy, not company endorsement or investment</);
+
+  for (const [id, rows] of Object.entries(expected)) {
+    const start = svg.indexOf(`id="${id}"`);
+    const end = svg.indexOf('</g>', start);
+    assert.ok(start >= 0 && end > start, id);
+    const card = svg.slice(start, end);
+    for (const [company, percentage] of rows) {
+      assert.match(card, new RegExp(`>${company}<[\\s\\S]{0,220}>${percentage.replace('.', '\\.') }<`));
+    }
+  }
+
+  const html = renderRoute('/statement');
+  assert.match(html, /Industry grounding: 829 deduplicated JDs/);
+  assert.match(html, /not company endorsement/i);
+});
+
 test('the public statement omits appendices while retaining the core agenda and references', () => {
   const html = renderRoute('/statement');
   const linkedPages = `${renderRoute('/home')}\n${renderRoute('/pubs/defects4c')}`;

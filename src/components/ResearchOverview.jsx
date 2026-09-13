@@ -18,7 +18,7 @@ export default function ResearchOverview() {
         <li><Link to="/statement#iii-control-across-time-and-delegation">Control across time and delegation</Link></li>
       </ul>
       <figcaption>
-        <span>Select a research area; on a small screen, swipe the figure to read it.</span>
+        <span>Industry grounding: 829 deduplicated JDs across six companies. Percentages are coded theme matches within each company’s collected sample, not company endorsement.</span>
         <a href={overviewUrl} target="_blank" rel="noreferrer">Open full-size SVG ↗</a>
       </figcaption>
     </figure>
