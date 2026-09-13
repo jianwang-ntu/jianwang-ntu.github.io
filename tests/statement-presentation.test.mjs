@@ -66,6 +66,24 @@ test('Home displays the supplied agent-world image with full-size access and sta
   assert.doesNotMatch(html, /Industry grounding|Percentages|company endorsement/);
 });
 
+test('Home keeps the three Chinese research questions in the caption below the image', () => {
+  const html = renderRoute('/home');
+  const figure = html.match(/<figure\b[^>]*id="research-overview"[^>]*>[\s\S]*?<\/figure>/)?.[0] || '';
+  const caption = figure.match(/<figcaption\b[^>]*>[\s\S]*?<\/figcaption>/)?.[0] || '';
+  const questions = [...caption.matchAll(/<li>([\s\S]*?)<\/li>/g)]
+    .map(([, item]) => item.replace(/<[^>]+>/g, ''));
+
+  assert.ok(figure.indexOf('<img') < figure.indexOf('<figcaption'), 'The caption must follow the original image');
+  assert.deepEqual(questions, [
+    '可扩展监督：当前行动有什么可信依据？',
+    '安全保持的学习：能力提升后，原有约束是否仍然有效？',
+    '跨时间与委派的控制：任务变长、参与者增多后，授权是否仍然有效？',
+  ]);
+  assert.match(caption, /<ol class="home-research-questions" lang="zh-Hans">/);
+  assert.ok(caption.indexOf('</ol>') < caption.indexOf('Open full-size image'), 'The English link stays outside the Chinese language region');
+  assert.doesNotMatch(renderRoute('/statement'), /当前行动有什么可信依据|能力提升后|任务变长/);
+});
+
 test('the overview is a vector SVG whose nine research blocks are links', () => {
   assert.ok(existsSync(svgFile), 'vector overview SVG is missing');
   const svg = readFileSync(svgFile, 'utf8');

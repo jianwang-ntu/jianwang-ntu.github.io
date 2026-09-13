@@ -46,7 +46,12 @@ function AcademicPagesHome() {
                 loading="lazy" decoding="async"
                 alt="A world connected by agents: people, communities, and organizations interact through agents, motivating research on evidence, learning, and delegation and control." />
             </a>
-            <figcaption>
+            <figcaption className="home-research-caption">
+              <ol className="home-research-questions" lang="zh-Hans">
+                <li><strong>可扩展监督：</strong>当前行动有什么可信依据？</li>
+                <li><strong>安全保持的学习：</strong>能力提升后，原有约束是否仍然有效？</li>
+                <li><strong>跨时间与委派的控制：</strong>任务变长、参与者增多后，授权是否仍然有效？</li>
+              </ol>
               <a href={agentWorldUrl} target="_blank" rel="noreferrer">Open full-size image ↗</a>
             </figcaption>
           </figure>
