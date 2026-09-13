@@ -34,7 +34,7 @@ const COPY = {
       caption: 'The shared layer handled request processing and common components; each product kept its own business logic.',
       implementation: 'Asynchronous I/O covered downstream waits. A middleware chain exposed authentication, request parsing, service access, caching, and response handling through stable interfaces to common components; business handlers stayed outside the framework.',
       efficiency: 'The documented production system handled 100M+ daily requests. Because even a small middleware cost was multiplied across that volume, the common request path had to remain short and predictable.',
-      difficulty: 'A shared component removed repeated work but increased the blast radius of a regression. Backward compatibility across teams moving at different speeds, per-request overhead, and failure isolation all had to be designed into the shared boundary.',
+      difficulty: 'A shared component removed repeated work but also increased the impact of a regression. Backward compatibility across teams moving at different speeds, per-request overhead, and failure isolation all had to be handled at the shared boundary.',
       evidence: 'The original latency and CPU reports are no longer available, so this page retains the documented request scale without reconstructing performance measurements.',
     },
     router: {
@@ -48,7 +48,7 @@ const COPY = {
       caption: 'Routing decisions were made in the Nginx request path before traffic reached an application service.',
       implementation: 'The module read the request attributes required by policy, matched centrally managed rules, selected an upstream, and followed an explicit fallback when a rule or destination was unavailable.',
       efficiency: 'Rule matching sat on the hot path, so its cost needed to stay bounded as the rule set grew. Configuration changes also needed to become visible without interrupting active traffic.',
-      difficulty: 'Centralising routing simplified policy management but concentrated risk. Safe rule updates, isolation between destinations, and predictable fallback behaviour were therefore part of the routing design rather than afterthoughts.',
+      difficulty: 'Centralising routing simplified policy management but concentrated risk. Safe rule updates, isolation between destinations, and predictable fallback behaviour therefore had to be defined explicitly.',
     },
   },
   zh: {

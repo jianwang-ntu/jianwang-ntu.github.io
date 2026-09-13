@@ -54,7 +54,7 @@ export default function XiaomiPortraitAI() {
             <p className="case-study-overline">Xiaomi AI Lab · Beijing · 2017–2019</p>
             <h1>Portrait intelligence, built for the phone</h1>
             <p className="case-study-deck">
-              Two image systems shared one engineering constraint: research-grade portrait models had to become dependable mobile experiences. The work connected semantic segmentation for portrait effects with GAN-based selfie cartoonisation, then carried the models from GPU training toward on-device inference.
+              I worked on two image systems: semantic segmentation for portrait effects and GAN-based selfie cartoonisation. Both also had to move from GPU training toward dependable on-device inference.
             </p>
             <p className="case-study-evidence-intro">
               The visuals below are illustrative reconstructions made from portfolio portraits, not original Xiaomi product captures. The retained record confirms the project domains and deployment path, but not proprietary model topology or benchmark tables.
@@ -64,7 +64,7 @@ export default function XiaomiPortraitAI() {
           <section className="case-study-section">
             <h2>Portrait semantic segmentation</h2>
             <p>
-              The product contract was to separate the person from the surrounding scene so a phone could blur, replace, or restyle the background. The visible quality depended on the least forgiving pixels: the subject boundary.
+              The task was to separate the person from the surrounding scene so a phone could blur, replace, or restyle the background. Most visible errors appeared at the subject boundary.
             </p>
             <ResultFigure
               src="/images/projects/xiaomi/portrait-segmentation-reconstruction.jpg"
@@ -94,7 +94,7 @@ export default function XiaomiPortraitAI() {
             <EngineeringNotes
               implementation="The retained record identifies GAN-based face cartoonisation. At the product level, that meant structuring the portrait, translating it into the target visual language, and constraining face shape, hair, and feature placement so the output stayed recognisable."
               efficiency="A visually strong generator still needed stable outputs after compression and graph conversion. Model size, supported operations, and ordinary selfie conditions shaped what could move from a GPU experiment into a handset pipeline."
-              difficulty="Identity and style pull in opposite directions: too little stylisation looks like a filter, while too much removes the identifying details. Neutral, smiling, surprised, and focused outputs also had to read as one consistent character rather than unrelated faces."
+              difficulty="Balancing identity and style was difficult: too little stylisation looks like a filter, while too much removes the identifying details. Neutral, smiling, surprised, and focused outputs also had to read as one consistent character rather than unrelated faces."
             />
           </section>
 
