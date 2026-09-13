@@ -3,6 +3,7 @@ import { useParams, Link, Navigate } from 'react-router-dom';
 import Nav from '../components/Nav.jsx';
 import Footer from '../components/Footer.jsx';
 import Seo from '../components/Seo.jsx';
+import ApHead from '../components/ApHead.jsx';
 import Figure from '../components/figures.jsx';
 import Authors from '../components/Authors.jsx';
 import { ALL_PUBS } from '../data.jsx';
@@ -31,8 +32,10 @@ export default function PublicationDetail() {
         description={meta.brief}
         path={`/pubs/${meta.key}`}
       />
-      <Nav />
-      <article className="pub-detail">
+      <Nav skipToContent />
+      <div className="portfolio-shell publication-detail-shell">
+        <ApHead sidebar />
+        <article id="main-content" className="portfolio-content pub-detail publication-detail">
         <Link to="/pubs" className="pub-back">← all publications</Link>
 
         <h1 className="pub-detail-title">{pub.title}</h1>
@@ -50,27 +53,26 @@ export default function PublicationDetail() {
 
         {pub.figure && <Figure id={pub.figure} className="pub-detail-fig" />}
 
-        <p className="pub-detail-brief">{meta.brief}</p>
+        <p className="pub-detail-brief publication-detail-summary">{meta.brief}</p>
 
-        {meta.abstract ? (
-          <>
-            <h2 className="ap-h2">Abstract</h2>
-            <p className="ap-text">{meta.abstract}</p>
-          </>
-        ) : (
-          <p className="pub-detail-noabs">
-            An abstract has not been added to this page. Follow the publication links above for the source.
-          </p>
+        {meta.abstract && (
+          <section className="publication-reading">
+            <h2>About this paper</h2>
+            <p>{meta.abstract}</p>
+          </section>
         )}
 
-        <ResearchConnection publication={meta.key} />
+        <ResearchConnection publication={meta.key} variant="editorial" />
 
-        <h2 className="ap-h2">
-          Cite
-          <button className="pub-cite-copy" onClick={copy}>{copied ? 'copied' : 'copy'}</button>
-        </h2>
-        <pre className="pub-bibtex">{meta.bibtex}</pre>
-      </article>
+        <details className="pub-citation">
+          <summary>Citation</summary>
+          <div className="pub-citation-body">
+            <button type="button" className="pub-cite-copy" onClick={copy}>{copied ? 'copied' : 'Copy BibTeX'}</button>
+            <pre className="pub-bibtex">{meta.bibtex}</pre>
+          </div>
+        </details>
+        </article>
+      </div>
       <Footer />
     </div>
   );

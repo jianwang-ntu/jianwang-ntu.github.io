@@ -43,6 +43,10 @@ function mainContent(html) {
   return html.match(/<main\b[\s\S]*<\/main>/)?.[0] || '';
 }
 
+function articleContent(html) {
+  return html.match(/<article\b[\s\S]*<\/article>/)?.[0] || '';
+}
+
 test('Publications presents every paper as a concise text entry', () => {
   const html = renderRoute('/pubs');
   const main = mainContent(html);
@@ -78,4 +82,24 @@ test('Work keeps research projects and their evidence reachable', () => {
   assert.match(html, /Execution-trace reasoning/);
   assert.match(html, /href="\/pubs\/defects4c"/);
   assert.match(html, /href="https:\/\/github\.com\/defects4c\/defects4c"/);
+});
+
+test('Publication details keep the figure prominent and the citation collapsed', () => {
+  const article = articleContent(renderRoute('/pubs/defects4c'));
+
+  assert.match(article, /<figure/);
+  assert.match(article, /Provides 248 buggy functions and 102 vulnerable functions/);
+  assert.match(article, /<h2[^>]*>About this paper<\/h2>/);
+  assert.equal((article.match(/<h2\b/g) || []).length, 1);
+  assert.match(article, /<details[^>]*class="[^"]*pub-citation[^"]*"/);
+  assert.match(article, /<summary>Citation<\/summary>/);
+  assert.doesNotMatch(article, /<details[^>]*\sopen(?:[\s=>])/);
+});
+
+test('Publication details do not invent prose when an abstract is unavailable', () => {
+  const article = articleContent(renderRoute('/pubs/trustworthy-ai-assisted-programming'));
+
+  assert.match(article, /A thesis summary tying vulnerability detection/);
+  assert.match(article, /<details[^>]*class="[^"]*pub-citation[^"]*"/);
+  assert.doesNotMatch(article, /An abstract has not been added|undefined|null/);
 });
