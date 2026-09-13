@@ -7,92 +7,9 @@ import SiteFrame from '../components/SiteFrame.jsx';
 
 const PROJECT_SOCIAL_IMAGE = 'https://www.wj2ai.com/images/projects/xiaomi/portrait-segmentation-reconstruction.jpg';
 
-const segmentationSteps = [
-  {
-    number: '01',
-    title: 'Frame',
-    text: 'Normalize the camera frame while preserving the full portrait, not only the face crop.',
-  },
-  {
-    number: '02',
-    title: 'Separate',
-    text: 'Use global scene context and local visual evidence to estimate a person-level foreground mask.',
-  },
-  {
-    number: '03',
-    title: 'Refine',
-    text: 'Resolve hair, shoulders, and blur boundaries with the explored GCN, CNN, GAN, and cascaded multi-mask designs.',
-  },
-  {
-    number: '04',
-    title: 'Ship',
-    text: 'Compress, convert, and validate the model against the operators available on the target mobile accelerator.',
-  },
-];
-
-const deploymentSteps = [
-  { label: 'Train', detail: 'PyTorch · CUDA' },
-  { label: 'Compress', detail: 'quantise · prune' },
-  { label: 'Convert', detail: 'ONNX/IR' },
-  { label: 'Accelerate', detail: 'Hexagon DSP · Kirin NPU' },
-];
-
-const segmentationChallenges = [
-  {
-    title: 'Hair is not a hard edge',
-    text: 'Fine strands and semi-transparent boundaries make a coarse foreground mask visibly artificial.',
-  },
-  {
-    title: 'Real scenes break clean assumptions',
-    text: 'Clutter, similar foreground and background colours, low light, and motion blur all compete with the subject boundary.',
-  },
-  {
-    title: 'The GPU model is not the phone model',
-    text: 'Quantisation, pruning, conversion, and unsupported operators can each change accuracy or block deployment.',
-  },
-];
-
-const emojiSteps = [
-  {
-    number: '01',
-    title: 'Structure',
-    text: 'Center the portrait representation so pose and framing do not overwhelm identity-bearing features.',
-  },
-  {
-    number: '02',
-    title: 'Translate',
-    text: 'Treat cartoonisation as a GAN-based image-to-image translation problem rather than a fixed artistic filter.',
-  },
-  {
-    number: '03',
-    title: 'Constrain',
-    text: 'Keep face shape, hair, and feature placement recognizable while simplifying texture, colour, and line work.',
-  },
-  {
-    number: '04',
-    title: 'Productise',
-    text: 'Control model size, conversion compatibility, and output stability across ordinary selfie conditions.',
-  },
-];
-
-const emojiChallenges = [
-  {
-    title: 'Identity versus style',
-    text: 'Too little stylisation looks like a filter; too much removes the details that make the avatar recognizable.',
-  },
-  {
-    title: 'Expressions must share one character',
-    text: 'A neutral, smiling, surprised, or focused face should still look like the same designed persona.',
-  },
-  {
-    title: 'Training quality is not deployment quality',
-    text: 'A visually strong generator must remain stable after compression and graph conversion on constrained hardware.',
-  },
-];
-
 function ResultFigure({ src, srcSmall, alt, caption, priority = false }) {
   return (
-    <figure className="xp-result">
+    <figure className="case-study-figure xiaomi-result">
       <img
         src={src}
         srcSet={`${srcSmall} 768w, ${src} 1536w`}
@@ -104,36 +21,17 @@ function ResultFigure({ src, srcSmall, alt, caption, priority = false }) {
         decoding="async"
         alt={alt}
       />
-      <figcaption>
-        <strong>Illustrative reconstruction.</strong> {caption}
-      </figcaption>
+      <figcaption><strong>Illustrative reconstruction.</strong> {caption}</figcaption>
     </figure>
   );
 }
 
-function StepGrid({ steps }) {
+function EngineeringNotes({ implementation, efficiency, difficulty }) {
   return (
-    <div className="xp-step-grid">
-      {steps.map((step) => (
-        <section className="xp-step" key={step.number}>
-          <span>{step.number}</span>
-          <h3>{step.title}</h3>
-          <p>{step.text}</p>
-        </section>
-      ))}
-    </div>
-  );
-}
-
-function ChallengeGrid({ items }) {
-  return (
-    <div className="xp-challenge-grid">
-      {items.map((item) => (
-        <section className="xp-challenge" key={item.title}>
-          <h3>{item.title}</h3>
-          <p>{item.text}</p>
-        </section>
-      ))}
+    <div className="case-study-notes">
+      <p className="case-study-note"><strong>Implementation.</strong> {implementation}</p>
+      <p className="case-study-note"><strong>Efficiency.</strong> {efficiency}</p>
+      <p className="case-study-note"><strong>What was difficult.</strong> {difficulty}</p>
     </div>
   );
 }
@@ -149,131 +47,72 @@ export default function XiaomiPortraitAI() {
       />
       <Nav skipToContent />
       <SiteFrame mainClassName="case-study-main">
-        <article className="industry-case-study xiaomi-project">
-          <Link to="/work" className="xp-back">← Work &amp; Projects</Link>
+        <article className="editorial-case-study xiaomi-project">
+          <Link to="/work" className="case-study-back">← Work &amp; Projects</Link>
 
-          <header className="xp-hero">
-            <p className="xp-overline">Xiaomi AI Lab · Beijing · 2017–2019</p>
+          <header className="case-study-header xiaomi-header">
+            <p className="case-study-overline">Xiaomi AI Lab · Beijing · 2017–2019</p>
             <h1>Portrait intelligence, built for the phone</h1>
-            <p className="xp-dek">
-              Two image systems, one engineering constraint: turn research-grade
-              portrait models into dependable mobile experiences. The work joined
-              semantic segmentation for portrait effects with GAN-based selfie
-              cartoonisation—and carried both from GPU training toward on-device inference.
+            <p className="case-study-deck">
+              Two image systems shared one engineering constraint: research-grade portrait models had to become dependable mobile experiences. The work connected semantic segmentation for portrait effects with GAN-based selfie cartoonisation, then carried the models from GPU training toward on-device inference.
             </p>
-            <div className="xp-fact-row" aria-label="Project scope">
-              <span>Portrait segmentation</span>
-              <span>GAN generation</span>
-              <span>On-device inference</span>
-            </div>
+            <p className="case-study-evidence-intro">
+              The visuals below are illustrative reconstructions made from portfolio portraits, not original Xiaomi product captures. The retained record confirms the project domains and deployment path, but not proprietary model topology or benchmark tables.
+            </p>
           </header>
 
-          <aside className="xp-evidence-note">
-            <strong>About the visuals and evidence.</strong> The images on this page are
-            illustrative reconstructions made from portfolio portraits, not original
-            Xiaomi product captures. The public record confirms the project domains and
-            deployment path, but not the proprietary model topology or benchmark tables.
-          </aside>
-
-          <section className="xp-section" aria-labelledby="segmentation-title">
-            <p className="xp-overline">Project 01 · Understand the portrait</p>
-            <h2 id="segmentation-title">Portrait semantic segmentation</h2>
-            <p className="xp-lead">
-              The product task was deceptively simple: isolate the person so a phone
-              camera could blur, replace, or restyle the background. The visible quality
-              of the feature depended on the least forgiving pixels—the boundary.
+          <section className="case-study-section">
+            <h2>Portrait semantic segmentation</h2>
+            <p>
+              The product contract was to separate the person from the surrounding scene so a phone could blur, replace, or restyle the background. The visible quality depended on the least forgiving pixels: the subject boundary.
             </p>
             <ResultFigure
               src="/images/projects/xiaomi/portrait-segmentation-reconstruction.jpg"
               srcSmall="/images/projects/xiaomi/portrait-segmentation-reconstruction-768.jpg"
               alt="Portrait segmentation demonstration: the same portrait shown as a source image, a binary semantic mask, and a foreground composite over a blurred outdoor background."
-              caption="A compact view of the product contract: preserve the subject, estimate a clean mask, and make the composite feel natural."
+              caption="The product contract in one sequence: preserve the subject, estimate a clean mask, and make the final composite feel natural."
               priority
             />
-
-            <div className="xp-model-note">
-              <strong>Verified scope, system-level reconstruction.</strong>{' '}
-              Retained portfolio records name GCN, CNN, GAN variants, and a cascaded
-              multi-mask design. The stages below explain the verified deployment logic
-              without asserting Xiaomi’s proprietary topology or losses.
-            </div>
-
-            <h3 className="xp-subhead">Implementation logic</h3>
-            <StepGrid steps={segmentationSteps} />
-
-            <h3 className="xp-subhead">What made it difficult</h3>
-            <ChallengeGrid items={segmentationChallenges} />
+            <EngineeringNotes
+              implementation="The explored system designs included GCN, CNN, GAN variants, and a cascaded multi-mask approach. They combined scene context with local evidence to estimate the foreground and refine hair, shoulders, and transition regions. This is a system-level reconstruction of the verified deployment logic without asserting Xiaomi’s proprietary topology or losses."
+              efficiency="A segmentation model was useful only if the full mask-and-composite path remained practical on the target phone. Compression and operator support therefore had to be considered alongside visible boundary quality, not after the visual model was finished."
+              difficulty="Fine hair, semi-transparent edges, occlusion, low light, motion blur, clutter, and similar foreground and background colours all break the clean-edge assumption. Small mask errors become obvious as halos or missing subject detail."
+            />
           </section>
 
-          <section className="xp-efficiency" aria-labelledby="efficiency-title">
-            <p className="xp-overline">Efficiency · The model was only half the system</p>
-            <h2 id="efficiency-title">From a CUDA graph to a mobile graph</h2>
-            <p className="xp-lead">
-              Efficiency was an end-to-end deployment loop: reduce the model, preserve
-              acceptable visual boundaries, convert the graph, and retest it on the
-              accelerator that would actually execute it.
-            </p>
-            <div className="xp-pipeline" aria-label="Model deployment pipeline">
-              {deploymentSteps.map((step, index) => (
-                <div className="xp-pipeline-step" key={step.label}>
-                  <span>{String(index + 1).padStart(2, '0')}</span>
-                  <strong>{step.label}</strong>
-                  <small>{step.detail}</small>
-                </div>
-              ))}
-            </div>
-            <div className="xp-efficiency-copy">
-              <p>
-                <strong>Optimisation targets.</strong> Parameter count, memory traffic,
-                latency, supported operators, and visual boundary quality had to be
-                considered together; improving one could degrade another.
-              </p>
-              <p>
-                <strong>Evidence boundary.</strong> Historical model size, FPS, and latency
-                measurements were not retained in the public portfolio materials, so this
-                page describes the verified deployment workflow without inventing numbers.
-              </p>
-            </div>
-          </section>
-
-          <section className="xp-section" aria-labelledby="emoji-title">
-            <p className="xp-overline">Project 02 · Redesign the portrait</p>
-            <h2 id="emoji-title">Selfie to emoji with GANs</h2>
-            <p className="xp-lead">
-              This project treated a selfie as a character-design problem: simplify the
-              image into an expressive visual language without losing the face that makes
-              the result personal.
+          <section className="case-study-section">
+            <h2>Selfie to emoji with GANs</h2>
+            <p>
+              This project treated a selfie as a character-design problem: simplify the portrait into an expressive visual language without losing the face that makes the result personal.
             </p>
             <ResultFigure
               src="/images/projects/xiaomi/selfie-emoji-reconstruction.jpg"
               srcSmall="/images/projects/xiaomi/selfie-emoji-reconstruction-768.jpg"
               alt="Selfie-to-emoji generation demonstration: one source portrait beside four consistent cartoon avatar expressions of the same person."
-              caption="The key tension is visible across the set: expressions change, while identity and the character system remain stable."
+              caption="Expressions change across the set while identity and the character system remain recognisable."
             />
-
-            <div className="xp-model-note">
-              <strong>System-level reconstruction, not a proprietary architecture claim.</strong>{' '}
-              The archived record identifies GAN-based face cartoonisation, but not the
-              exact generator, discriminator, or loss formulation. The stages below explain
-              the product logic that such a system must satisfy.
-            </div>
-
-            <h3 className="xp-subhead">Implementation logic</h3>
-            <StepGrid steps={emojiSteps} />
-
-            <h3 className="xp-subhead">What made it difficult</h3>
-            <ChallengeGrid items={emojiChallenges} />
+            <EngineeringNotes
+              implementation="The retained record identifies GAN-based face cartoonisation. At the product level, that meant structuring the portrait, translating it into the target visual language, and constraining face shape, hair, and feature placement so the output stayed recognisable."
+              efficiency="A visually strong generator still needed stable outputs after compression and graph conversion. Model size, supported operations, and ordinary selfie conditions shaped what could move from a GPU experiment into a handset pipeline."
+              difficulty="Identity and style pull in opposite directions: too little stylisation looks like a filter, while too much removes the identifying details. Neutral, smiling, surprised, and focused outputs also had to read as one consistent character rather than unrelated faces."
+            />
           </section>
 
-          <section className="xp-takeaway" aria-labelledby="takeaway-title">
-            <p className="xp-overline">What carried forward</p>
-            <h2 id="takeaway-title">A model is trustworthy only inside its delivery path</h2>
+          <section className="case-study-section">
+            <h2>Mobile deployment and validation</h2>
             <p>
-              These projects made failure concrete: a halo around hair, a changed identity,
-              a graph that converted but ran differently, or an accelerator that could not
-              execute the chosen operator. That systems view later became a useful lens for
-              studying deep-learning robustness, model behaviour, and reliable AI-assisted
-              software.
+              The model was only one part of the system. The practical path was PyTorch and CUDA training, compression through quantisation or pruning, ONNX/IR graph conversion, and validation on the accelerator that would actually execute the model: Hexagon DSP or Kirin NPU.
+            </p>
+            <EngineeringNotes
+              implementation="Each conversion stage had to preserve the intended graph closely enough to validate the same image behaviour on the target runtime. Unsupported operators or changed numerical behaviour could require revisiting either the model or its exported graph."
+              efficiency="Parameter count, memory traffic, latency, supported operators, and visual quality were coupled constraints. Improving one dimension could make another worse, so validation covered the delivered graph rather than only the training checkpoint."
+              difficulty="The GPU model and the phone model were not automatically equivalent. Quantisation, pruning, conversion, and accelerator constraints could change boundary quality, destabilise generated faces, or prevent execution entirely."
+            />
+            <p className="case-study-evidence">
+              Historical model size, FPS, and latency measurements were not retained in the public portfolio materials. This page therefore explains the supported engineering path without inventing those numbers, the exact generator or discriminator, or a proprietary loss formulation.
+            </p>
+            <p className="case-study-closing">
+              The lasting lesson was concrete: model quality includes the halo around hair, whether a generated face still looks like the same person, whether a converted graph behaves differently, and whether the target accelerator can execute it at all.
             </p>
           </section>
         </article>
