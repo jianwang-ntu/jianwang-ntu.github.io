@@ -72,6 +72,7 @@ export default function Seo({
   description,
   image,
   path,
+  lang = 'en',
   type = 'website',
   ldJson,
 }) {
@@ -84,6 +85,7 @@ export default function Seo({
     const canonicalPath = path || (typeof window !== 'undefined' ? window.location.pathname : '/');
     const canonicalUrl = `${SITE_URL}${canonicalPath}`;
 
+    document.documentElement.lang = lang;
     document.title = fullTitle;
     setMeta('meta[name="description"]', 'content', desc);
     setLink('canonical', canonicalUrl);
@@ -101,7 +103,7 @@ export default function Seo({
     setMeta('meta[name="twitter:image"]', 'content', img);
 
     setLdJson(ldJson || null);
-  }, [title, description, image, path, type, JSON.stringify(ldJson || null)]);
+  }, [title, description, image, path, lang, type, JSON.stringify(ldJson || null)]);
 
   return null;
 }
