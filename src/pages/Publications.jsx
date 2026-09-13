@@ -1,84 +1,40 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Nav from '../components/Nav.jsx';
 import Footer from '../components/Footer.jsx';
 import Seo from '../components/Seo.jsx';
-import { ALL_PUBS } from '../data.jsx';
-import Figure, { PAPER_IMAGES } from '../components/figures.jsx';
 import ApHead from '../components/ApHead.jsx';
 import Authors from '../components/Authors.jsx';
-import { Link } from 'react-router-dom';
+import { ALL_PUBS } from '../data.jsx';
 import { PUB_META } from '../data-pubs.js';
-import ResearchConnection from '../components/ResearchConnection.jsx';
 
-function ApPubRow({ p }) {
-  const meta = PUB_META[p.id];
+function PublicationRow({ publication }) {
+  const meta = PUB_META[publication.id];
+
   return (
-    <article className="ap-pub ap-pub-2col">
-      <div className="ap-pub-figcol">
-        {p.figure
-          ? <Figure id={p.figure} />
-          : <div className="ap-fig-none">{p.venue}<span>{p.year}</span></div>}
-      </div>
-      <div className="ap-pub-body">
-        <h3 className="ap-pub-title">
-          {meta
-            ? <Link to={`/pubs/${meta.key}`}>{p.title}</Link>
-            : p.title}
-        </h3>
-        <p className="ap-pub-authors">
-          {meta ? <Authors names={meta.authors} /> : p.authors}
+    <article className="text-index-row publication-index-row">
+      <div className="text-index-year">{publication.year}</div>
+      <div className="text-index-body">
+        <h2>{publication.title}</h2>
+        <p className="text-index-meta">
+          {meta ? <Authors names={meta.authors} /> : publication.authors}
+          <span aria-hidden="true"> · </span>
+          <i>{publication.venue}</i>
+          {publication.note && <span> · {publication.note}</span>}
         </p>
-        <p className="ap-pub-venue">
-          <i>{p.venue}</i>, {p.year}
-          {p.note && <span className="ap-pub-note"> · {p.note}</span>}
-        </p>
-        <p className="ap-pub-links">
-          {(p.badges || []).map((b, i) => (
-            <a key={i} href={b.href} target="_blank" rel="noreferrer" className="ap-lnk">{b.label}</a>
+        {meta?.brief && <p className="text-index-summary">{meta.brief}</p>}
+        <p className="text-index-links">
+          {(publication.badges || []).map((link) => (
+            <a key={`${publication.id}-${link.label}`} href={link.href} target="_blank" rel="noreferrer">{link.label}</a>
           ))}
-          {meta && <Link to={`/pubs/${meta.key}`} className="ap-lnk ap-lnk-more">details</Link>}
+          {meta && <Link to={`/pubs/${meta.key}`}>Details</Link>}
         </p>
-        {meta?.brief && <p className="ap-pub-brief">{meta.brief}</p>}
-        {meta && <ResearchConnection publication={meta.key} compact />}
       </div>
     </article>
   );
 }
 
-function AcademicPagesPublications({ byYear, years }) {
-  // count only figures lifted from the papers themselves; the rest are
-  // hand-drawn schematics and must not be described as the paper's own
-  const fromPaper = ALL_PUBS.filter((p) => p.figure && PAPER_IMAGES[p.figure]).length;
-  const drawn = ALL_PUBS.filter((p) => p.figure && !PAPER_IMAGES[p.figure]).length;
-  return (
-    <div className="portfolio-shell publications-shell">
-      <ApHead sidebar />
-      <main id="main-content" className="portfolio-content publications-content">
-        <p className="portfolio-eyebrow">Software engineering · AI evaluation · Security</p>
-        <h1>Publications</h1>
-        <p>My published work spans program repair, code-model evaluation and earlier research on AI testing and robustness.
-          The <Link to="/statement#published-foundations">research statement</Link> connects methods and lessons from this work
-          to my future agenda in trustworthy agent networks.</p>
-        <p className="publication-index-note">{ALL_PUBS.length} papers · {fromPaper} original paper figures · {drawn} explanatory schematics · My name appears in <b>bold</b>.</p>
-        <Link className="text-link" to="/work?type=research#project-index">Browse research projects & artifacts ↗</Link>
-        {years.map((y) => (
-          <React.Fragment key={y}>
-            <h2 className="ap-year">{y}</h2>
-            {byYear[y].map((p) => <ApPubRow key={p.id} p={p} />)}
-          </React.Fragment>
-        ))}
-      </main>
-    </div>
-  );
-}
-
-/* ─── Page shell ──────────────────────────────────────────────────── */
 export default function Publications() {
-
-  const byYear = {};
-  ALL_PUBS.forEach((p) => { (byYear[p.year] = byYear[p.year] || []).push(p); });
-  const years = Object.keys(byYear).map(Number).sort((a, b) => b - a);
-
   return (
     <div className="page">
       <Seo
@@ -87,7 +43,22 @@ export default function Publications() {
         path="/pubs"
       />
       <Nav skipToContent />
-      <AcademicPagesPublications byYear={byYear} years={years} />
+      <div className="portfolio-shell publications-shell">
+        <ApHead sidebar />
+        <main id="main-content" className="portfolio-content publications-content text-index-page">
+          <p className="portfolio-eyebrow">Software engineering · AI evaluation · Security</p>
+          <h1>Publications</h1>
+          <p className="page-deck">Research on program repair, code-model evaluation, neural-network testing, and robustness.</p>
+          <p className="text-index-intro">
+            Each entry gives the paper's question or contribution in one sentence. Figures, research context,
+            and citation material are available on the detail pages. My name appears in <b>bold</b>.
+          </p>
+          <p><Link className="text-link" to="/work#research-projects">Research projects and artifacts ↗</Link></p>
+          <div className="text-index-list">
+            {ALL_PUBS.map((publication) => <PublicationRow key={publication.id} publication={publication} />)}
+          </div>
+        </main>
+      </div>
       <Footer />
     </div>
   );

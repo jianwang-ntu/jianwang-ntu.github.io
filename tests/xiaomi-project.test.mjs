@@ -38,6 +38,10 @@ function renderRoute(route) {
   );
 }
 
+function articleContent(html) {
+  return html.match(/<article\b[\s\S]*<\/article>/)?.[0] || '';
+}
+
 test('Work & Projects links to the Xiaomi portrait intelligence case study', () => {
   const html = renderRoute('/work');
 
@@ -47,6 +51,7 @@ test('Work & Projects links to the Xiaomi portrait intelligence case study', () 
 
 test('Xiaomi case study explains both visual pipelines and their deployment constraints', () => {
   const html = renderRoute('/work/xiaomi-portrait-ai');
+  const article = articleContent(html);
 
   assert.match(html, /Portrait intelligence, built for the phone/);
   assert.match(html, /Portrait semantic segmentation/);
@@ -66,4 +71,9 @@ test('Xiaomi case study explains both visual pipelines and their deployment cons
   assert.match(html, /Historical model size, FPS, and latency measurements were not retained/);
   assert.match(html, /verified deployment logic without asserting Xiaomi’s proprietary topology or losses/);
   assert.match(html, /aria-label="Profile"/);
+  assert.equal((article.match(/<h2\b/g) || []).length, 3);
+  assert.match(article, /Mobile deployment and validation/);
+  assert.equal((article.match(/<strong>Implementation\.<\/strong>/g) || []).length, 3);
+  assert.equal((article.match(/<strong>Efficiency\.<\/strong>/g) || []).length, 3);
+  assert.equal((article.match(/<strong>What was difficult\.<\/strong>/g) || []).length, 3);
 });
