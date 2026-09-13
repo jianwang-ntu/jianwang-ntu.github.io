@@ -1,90 +1,39 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900" role="img" aria-labelledby="title desc">
   <title id="title">Shared asynchronous web framework architecture</title>
-  <desc id="desc">App-facing services, Mobile WAP, and multiple business lines connect through a shared asynchronous web framework containing a request lifecycle, middleware chain, and common components before reaching business and platform services.</desc>
+  <desc id="desc">App-facing services, Mobile WAP and business sites enter a shared asynchronous request lifecycle. A middleware chain calls common capabilities and business handlers, waits on downstream services without blocking the shared path, and returns a response through explicit failure boundaries.</desc>
   <defs>
-    <linearGradient id="ground" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#fff9f4"/>
-      <stop offset="1" stop-color="#f3f6f8"/>
-    </linearGradient>
-    <linearGradient id="core" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#1c2940"/>
-      <stop offset="1" stop-color="#111d31"/>
-    </linearGradient>
-    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0 0 10 5 0 10Z" fill="#b6532d"/>
-    </marker>
-    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
-      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#16233a" flood-opacity=".12"/>
-    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#536f80"/></marker>
+    <marker id="returnArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#c2673f"/></marker>
+    <pattern id="slot" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="10" height="10" fill="#f5f0fb"/><line y2="10" stroke="#ded1ee" stroke-width="3"/></pattern>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="140%"><feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#2a3d4d" flood-opacity=".1"/></filter>
+    <style>text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}.kicker{font-size:18px;font-weight:750;letter-spacing:3px;fill:#a95837}.title{font-size:40px;font-weight:760;fill:#223744}.sub{font-size:20px;fill:#60717c}.stage{font-size:16px;font-weight:760;letter-spacing:1.8px;fill:#60717c}.box-title{font-size:21px;font-weight:720;fill:#263c48}.box-sub{font-size:15px;fill:#65747d}.small{font-size:14px;fill:#6f7b82}.white-sub{font-size:14px;fill:#cbd8df}.tag{font-size:11px;font-weight:780;letter-spacing:1.1px;fill:#6f4c88}.legend{font-size:14px;fill:#596871}.arrow{fill:none;stroke:#536f80;stroke-width:4;marker-end:url(#arrow)}.return{fill:none;stroke:#c2673f;stroke-width:3;stroke-dasharray:8 7;marker-end:url(#returnArrow)}</style>
   </defs>
-
-  <rect width="1440" height="900" fill="url(#ground)"/>
-  <circle cx="1325" cy="95" r="180" fill="#ec8a57" opacity=".08"/>
-  <circle cx="84" cy="824" r="170" fill="#2d6f83" opacity=".06"/>
-
-  <text x="76" y="86" fill="#a7461f" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="22" font-weight="700" letter-spacing="4">SHARED WEB FRAMEWORK</text>
-  <text x="76" y="143" fill="#17233b" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="43" font-weight="750">Shared request handling for several products</text>
-  <text x="76" y="183" fill="#59636d" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="22">App, Mobile WAP, and business sites use the same infrastructure layer.</text>
-
-  <g font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
-    <text x="74" y="285" fill="#69727b" font-size="18" font-weight="700" letter-spacing="2">BUSINESS SURFACES</text>
-    <g filter="url(#shadow)">
-      <rect x="74" y="316" width="282" height="104" rx="18" fill="#ffffff" stroke="#e5d7cd" stroke-width="2"/>
-      <circle cx="112" cy="350" r="12" fill="#dc733f"/>
-      <text x="140" y="359" fill="#17233b" font-size="25" font-weight="700">App-facing services</text>
-      <text x="112" y="392" fill="#68717a" font-size="18">mobile product endpoints</text>
-
-      <rect x="74" y="444" width="282" height="104" rx="18" fill="#ffffff" stroke="#e5d7cd" stroke-width="2"/>
-      <circle cx="112" cy="478" r="12" fill="#dc733f"/>
-      <text x="140" y="487" fill="#17233b" font-size="25" font-weight="700">Mobile WAP</text>
-      <text x="112" y="520" fill="#68717a" font-size="18">browser-facing experience</text>
-
-      <rect x="74" y="572" width="282" height="104" rx="18" fill="#ffffff" stroke="#e5d7cd" stroke-width="2"/>
-      <circle cx="112" cy="606" r="12" fill="#dc733f"/>
-      <text x="140" y="615" fill="#17233b" font-size="25" font-weight="700">Business lines</text>
-      <text x="112" y="648" fill="#68717a" font-size="18">independent product logic</text>
-    </g>
-
-    <path d="M356 368H440" fill="none" stroke="#b6532d" stroke-width="4" marker-end="url(#arrow)"/>
-    <path d="M356 496H440" fill="none" stroke="#b6532d" stroke-width="4" marker-end="url(#arrow)"/>
-    <path d="M356 624H440" fill="none" stroke="#b6532d" stroke-width="4" marker-end="url(#arrow)"/>
-
-    <g filter="url(#shadow)">
-      <rect x="452" y="272" width="538" height="474" rx="30" fill="url(#core)"/>
-    </g>
-    <text x="500" y="328" fill="#f0a278" font-size="18" font-weight="700" letter-spacing="2">SHARED ASYNCHRONOUS WEB FRAMEWORK</text>
-    <text x="500" y="375" fill="#ffffff" font-size="32" font-weight="750">Asynchronous web framework</text>
-    <text x="500" y="410" fill="#bdc8d3" font-size="18">shared request lifecycle and middleware</text>
-
-    <rect x="500" y="452" width="442" height="66" rx="13" fill="#ffffff" opacity=".08" stroke="#ffffff" stroke-opacity=".19"/>
-    <text x="530" y="493" fill="#ffffff" font-size="23" font-weight="700">Request lifecycle</text>
-    <text x="922" y="492" fill="#8fd3df" font-size="15" text-anchor="end">accept → schedule → return</text>
-
-    <rect x="500" y="536" width="442" height="66" rx="13" fill="#ffffff" opacity=".08" stroke="#ffffff" stroke-opacity=".19"/>
-    <text x="530" y="577" fill="#ffffff" font-size="23" font-weight="700">Middleware chain</text>
-    <text x="922" y="576" fill="#8fd3df" font-size="15" text-anchor="end">compose per business</text>
-
-    <rect x="500" y="620" width="442" height="78" rx="13" fill="#ffffff" opacity=".08" stroke="#ffffff" stroke-opacity=".19"/>
-    <text x="530" y="656" fill="#ffffff" font-size="23" font-weight="700">Common components</text>
-    <text x="530" y="682" fill="#bdc8d3" font-size="17">shared capabilities behind stable interfaces</text>
-
-    <path d="M990 432H1068" fill="none" stroke="#b6532d" stroke-width="4" marker-end="url(#arrow)"/>
-    <path d="M990 580H1068" fill="none" stroke="#b6532d" stroke-width="4" marker-end="url(#arrow)"/>
-
-    <text x="1072" y="285" fill="#69727b" font-size="18" font-weight="700" letter-spacing="2">DESTINATIONS</text>
-    <g filter="url(#shadow)">
-      <rect x="1072" y="316" width="292" height="136" rx="18" fill="#ffffff" stroke="#d7dfe4" stroke-width="2"/>
-      <text x="1110" y="361" fill="#17233b" font-size="24" font-weight="700">Business services</text>
-      <text x="1110" y="397" fill="#68717a" font-size="18">domain-specific handlers</text>
-      <text x="1110" y="424" fill="#68717a" font-size="18">owned by product teams</text>
-
-      <rect x="1072" y="482" width="292" height="136" rx="18" fill="#ffffff" stroke="#d7dfe4" stroke-width="2"/>
-      <text x="1110" y="527" fill="#17233b" font-size="24" font-weight="700">Platform services</text>
-      <text x="1110" y="563" fill="#68717a" font-size="18">shared data and systems</text>
-      <text x="1110" y="590" fill="#68717a" font-size="18">behind common contracts</text>
-    </g>
-
-    <rect x="452" y="786" width="912" height="58" rx="16" fill="#ffffff" stroke="#e1d8d1"/>
-    <text x="908" y="823" text-anchor="middle" fill="#4d5963" font-size="20">Business-specific handlers remain outside the shared framework.</text>
-  </g>
+  <rect width="1440" height="900" fill="#fbfaf8"/>
+  <text x="64" y="67" class="kicker">58.COM · SHARED WEB FRAMEWORK</text>
+  <text x="64" y="120" class="title">One request path, reusable across product teams</text>
+  <text x="64" y="158" class="sub">Business logic stays with each team; request plumbing and common capabilities stay shared</text>
+  <text x="64" y="218" class="stage">01 · ENTRY POINTS</text><text x="336" y="218" class="stage">02 · SHARED REQUEST PATH</text><text x="1100" y="218" class="stage">03 · SERVICES</text>
+  <g filter="url(#shadow)"><rect x="64" y="244" width="226" height="420" rx="24" fill="#fff" stroke="#d9e3e8" stroke-width="2"/></g>
+  <rect x="88" y="282" width="178" height="92" rx="16" fill="#fff3ec" stroke="#e3b49e"/><text x="177" y="320" text-anchor="middle" class="box-title">App-facing</text><text x="177" y="348" text-anchor="middle" class="box-sub">service endpoints</text>
+  <rect x="88" y="402" width="178" height="92" rx="16" fill="#eaf2f5" stroke="#c6d9e1"/><text x="177" y="440" text-anchor="middle" class="box-title">Mobile WAP</text><text x="177" y="468" text-anchor="middle" class="box-sub">browser requests</text>
+  <rect x="88" y="522" width="178" height="112" rx="16" fill="#edf4e8" stroke="#bfd3b4"/><text x="177" y="560" text-anchor="middle" class="box-title">Business sites</text><text x="177" y="588" text-anchor="middle" class="box-sub">independent handlers</text><text x="177" y="614" text-anchor="middle" class="box-sub">and release cadence</text>
+  <path d="M290 454H336" class="arrow"/>
+  <rect x="336" y="244" width="718" height="420" rx="26" fill="#edf3f6" stroke="#c9d9e1" stroke-width="2"/>
+  <text x="364" y="280" class="stage">REQUEST LIFECYCLE</text>
+  <g><rect x="364" y="302" width="140" height="64" rx="14" fill="#fff" stroke="#c7d8e0"/><rect x="530" y="302" width="140" height="64" rx="14" fill="#fff" stroke="#c7d8e0"/><rect x="696" y="302" width="140" height="64" rx="14" fill="#fff" stroke="#c7d8e0"/><rect x="862" y="302" width="164" height="64" rx="14" fill="#fff" stroke="#c7d8e0"/><text x="434" y="342" text-anchor="middle" class="box-title">Accept</text><text x="600" y="342" text-anchor="middle" class="box-title">Schedule</text><text x="766" y="342" text-anchor="middle" class="box-title">Compose</text><text x="944" y="342" text-anchor="middle" class="box-title">Return response</text><path d="M504 334H530" class="arrow"/><path d="M670 334H696" class="arrow"/><path d="M836 334H862" class="arrow"/></g>
+  <text x="364" y="411" class="stage">MIDDLEWARE CHAIN</text>
+  <rect x="364" y="432" width="662" height="92" rx="18" fill="#263d4a"/>
+  <g class="white-sub" text-anchor="middle"><text x="427" y="472">auth</text><text x="532" y="472">parse</text><text x="637" y="472">cache</text><text x="750" y="472">service access</text><text x="875" y="472">response</text></g>
+  <g fill="#567482"><rect x="389" y="487" width="76" height="14" rx="7"/><rect x="494" y="487" width="76" height="14" rx="7"/><rect x="599" y="487" width="76" height="14" rx="7"/><rect x="704" y="487" width="92" height="14" rx="7"/><rect x="837" y="487" width="76" height="14" rx="7"/></g>
+  <rect x="930" y="448" width="72" height="58" rx="12" fill="url(#slot)" stroke="#ae91c2" stroke-dasharray="6 5"/><text x="966" y="470" text-anchor="middle" class="tag">ROLE</text><text x="966" y="490" text-anchor="middle" class="tag">SLOT</text>
+  <rect x="364" y="550" width="318" height="84" rx="16" fill="#fff" stroke="#c7d8e0"/><text x="388" y="584" class="box-title">Common capabilities</text><text x="388" y="612" class="box-sub">stable interfaces shared by teams</text>
+  <rect x="708" y="550" width="318" height="84" rx="16" fill="#fff3ec" stroke="#e3b49e"/><text x="732" y="584" class="box-title">Asynchronous downstream wait</text><text x="732" y="612" class="box-sub">resume request when I/O completes</text>
+  <path d="M1054 454H1100" class="arrow"/>
+  <g filter="url(#shadow)"><rect x="1100" y="244" width="276" height="420" rx="24" fill="#fff" stroke="#d9e3e8" stroke-width="2"/></g>
+  <rect x="1126" y="282" width="224" height="104" rx="16" fill="#fff3ec" stroke="#e3b49e"/><text x="1238" y="322" text-anchor="middle" class="box-title">Business handler</text><text x="1238" y="351" text-anchor="middle" class="box-sub">product-owned logic</text>
+  <rect x="1126" y="414" width="224" height="92" rx="16" fill="#eaf2f5" stroke="#c6d9e1"/><text x="1238" y="451" text-anchor="middle" class="box-title">Business services</text><text x="1238" y="480" text-anchor="middle" class="box-sub">domain systems</text>
+  <rect x="1126" y="534" width="224" height="100" rx="16" fill="#edf4e8" stroke="#bfd3b4"/><text x="1238" y="573" text-anchor="middle" class="box-title">Platform services</text><text x="1238" y="602" text-anchor="middle" class="box-sub">shared data + systems</text><path d="M1238 386V406" class="arrow"/><path d="M1238 506V526" class="arrow"/>
+  <rect x="64" y="704" width="1312" height="86" rx="18" fill="#fff3ec" stroke="#e6b9a3"/><text x="92" y="738" class="box-title">Shared-boundary constraints</text><text x="92" y="768" class="box-sub">backward-compatible interfaces · short predictable middleware path · per-request failure isolation · product-specific logic remains outside the framework</text>
+  <path d="M1200 664V696H750V642" class="return"/><text x="1000" y="689" class="small">response / error boundary</text>
+  <rect x="64" y="820" width="1312" height="50" rx="14" fill="#fff" stroke="#dfe6e9"/><line x1="92" y1="845" x2="136" y2="845" class="arrow"/><text x="150" y="850" class="legend">request path</text><line x1="298" y1="845" x2="342" y2="845" class="return"/><text x="356" y="850" class="legend">return / isolation boundary</text><rect x="590" y="836" width="28" height="18" rx="4" fill="url(#slot)" stroke="#9372ac" stroke-dasharray="5 4"/><text x="630" y="850" class="legend">extension role; not an internal component name</text><text x="1344" y="850" text-anchor="end" class="legend">100M+ daily requests · no reconstructed latency</text>
 </svg>

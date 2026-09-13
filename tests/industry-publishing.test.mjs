@@ -75,6 +75,9 @@ test('production build publishes both industry case studies and their visual ass
 
   const xiaomiImageDir = resolve(repoRoot, 'dist/images/projects/xiaomi');
   const imageBudgets = [
+    ['portrait-segmentation-architecture.svg', 120_000],
+    ['selfie-emoji-architecture.svg', 120_000],
+    ['mobile-deployment-architecture.svg', 120_000],
     ['portrait-segmentation-reconstruction.jpg', 600_000],
     ['portrait-segmentation-reconstruction-768.jpg', 160_000],
     ['selfie-emoji-reconstruction.jpg', 600_000],
