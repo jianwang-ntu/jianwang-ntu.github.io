@@ -39,6 +39,8 @@ test('the supplied reliable-autonomy source and overview are installed', () => {
   assert.match(web, /^## I\. Scalable oversight under adaptation$/m);
   assert.match(web, /^## II\. Safety-preserving learning and feedback$/m);
   assert.match(web, /^## III\. Control across time and delegation$/m);
+  assert.match(full, /^## Appendix A:/m);
+  assert.doesNotMatch(web, /^## Appendix [AB]/m);
   assert.doesNotMatch(web, /```mermaid|^# Reliable Autonomy/m);
   assert.doesNotMatch(web, /<br>/);
 
@@ -67,11 +69,9 @@ test('the statement page exposes the three-part agenda without a crowded index',
   assert.match(page, /Jian_Wang_Research_Statement_2026\.pdf/);
   assert.doesNotMatch(page, /ResearchPath|Previous version|archive/i);
 
-  const regions = [...overview.matchAll(/id: '([^']+)'/g)].map(match => match[1]);
-  assert.deepEqual(regions, agenda);
-  assert.match(overview, /reliable-autonomy-overview\.png/);
+  assert.match(overview, /reliable-autonomy-overview\.svg/);
   assert.match(overview, /className="research-overview-canvas"/);
-  assert.match(styles, /\.research-overview-canvas\s*>\s*svg\s*{[^}]*min-width:\s*760px/s);
+  assert.match(styles, /\.research-overview-object\s*{[^}]*min-width:\s*760px/s);
   assert.match(styles, /\.research-overview-canvas\s*{[^}]*overflow-x:\s*auto/s);
 });
 

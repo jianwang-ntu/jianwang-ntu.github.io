@@ -1,0 +1,140 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1448 1086" role="img" aria-labelledby="title description">
+  <title id="title">Reliable Autonomy for Adaptive AI Agents</title>
+  <desc id="description">A vector research overview linking nine research blocks to three sections: scalable oversight, safety-preserving learning, and control across time and delegation.</desc>
+  <defs>
+    <radialGradient id="core" cx="46%" cy="38%" r="68%">
+      <stop offset="0" stop-color="#f9fcff"/>
+      <stop offset="1" stop-color="#dceeff"/>
+    </radialGradient>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="140%">
+      <feDropShadow dx="0" dy="5" stdDeviation="7" flood-color="#17365d" flood-opacity=".10"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#263746"/>
+    </marker>
+    <style>
+      text { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #18232e; }
+      .title { font-size: 58px; font-weight: 760; letter-spacing: -1.8px; }
+      .subtitle { font-size: 34px; font-weight: 650; fill: #3e4e5d; }
+      .kicker { font-size: 23px; fill: #526372; }
+      .area { font-size: 34px; font-weight: 760; fill: #2d6eb6; }
+      .question { font-size: 22px; font-weight: 600; }
+      .block { fill: #ffffff; stroke: #263746; stroke-width: 2.5; rx: 8; filter: url(#shadow); }
+      .block-title { font-size: 21px; font-weight: 650; text-anchor: middle; pointer-events: none; }
+      .block-detail { font-size: 17px; fill: #4d6070; text-anchor: middle; pointer-events: none; }
+      .connector { fill: none; stroke: #263746; stroke-width: 2.5; marker-end: url(#arrow); }
+      .core-title { font-size: 30px; font-weight: 760; text-anchor: middle; }
+      .core-subtitle { font-size: 21px; text-anchor: middle; }
+      .core-note { font-size: 18px; font-weight: 650; text-anchor: middle; fill: #40566a; }
+      .footer { font-size: 18px; text-anchor: middle; fill: #536574; }
+      a { cursor: pointer; outline: none; }
+      a:hover .block, a:focus .block { fill: #eef6ff; stroke: #1c63ad; stroke-width: 4; }
+      a:hover .block-title, a:focus .block-title { fill: #124f91; }
+    </style>
+  </defs>
+
+  <rect width="1448" height="1086" fill="#ffffff"/>
+  <text class="title" x="724" y="70" text-anchor="middle">Research Overview</text>
+  <text class="subtitle" x="724" y="112" text-anchor="middle">Evidence and control through change</text>
+  <text class="kicker" x="724" y="148" text-anchor="middle">Proposed research agenda</text>
+
+  <path class="connector" d="M 580 390 C 560 390 552 400 540 410"/>
+  <path class="connector" d="M 868 390 C 888 390 896 400 908 410"/>
+  <path class="connector" d="M 1160 636 C 1135 726 1060 770 990 812"/>
+  <path class="connector" d="M 480 823 C 390 786 320 728 302 648"/>
+
+  <text class="area" x="72" y="226">I. Scalable Oversight</text>
+  <text class="question" x="72" y="264">What evidence justifies action?</text>
+  <g transform="translate(252 278)" fill="none" stroke="#2d6eb6" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="0" y="0" width="70" height="58" rx="5"/>
+    <path d="M 14 17 l 7 7 12 -14 M 14 36 l 7 7 12 -14 M 42 17 h 14 M 42 38 h 14"/>
+    <circle cx="76" cy="48" r="18" fill="#fff"/>
+    <path d="M 89 61 l 16 16"/>
+  </g>
+
+  <a href="/statement#i-scalable-oversight-under-adaptation" target="_top" aria-label="Scalable oversight: Select decision-relevant evidence">
+    <title>Select decision-relevant evidence</title>
+    <rect class="block" x="70" y="374" width="470" height="72"/>
+    <text class="block-title" x="305" y="405">Select decision-relevant evidence</text>
+    <text class="block-detail" x="305" y="430">Observe what changes the decision</text>
+  </a>
+  <a href="/statement#i-scalable-oversight-under-adaptation" target="_top" aria-label="Scalable oversight: Learn when to review or intervene">
+    <title>Learn when to review or intervene</title>
+    <rect class="block" x="70" y="462" width="470" height="72"/>
+    <text class="block-title" x="305" y="493">Learn when to review or intervene</text>
+    <text class="block-detail" x="305" y="518">Spend limited oversight where it matters</text>
+  </a>
+  <a href="/statement#i-scalable-oversight-under-adaptation" target="_top" aria-label="Scalable oversight: Withstand adaptive actors">
+    <title>Withstand adaptive actors</title>
+    <rect class="block" x="70" y="550" width="470" height="72"/>
+    <text class="block-title" x="305" y="581">Withstand adaptive actors</text>
+    <text class="block-detail" x="305" y="606">Test evidence under strategic pressure</text>
+  </a>
+
+  <text class="area" x="930" y="226">II. Safety-Preserving Learning</text>
+  <text class="question" x="930" y="264">Which updates improve behavior?</text>
+  <g transform="translate(1080 278)" fill="none" stroke="#2d6eb6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="8" cy="45" r="8" fill="#dceeff"/><circle cx="38" cy="10" r="8" fill="#dceeff"/><circle cx="68" cy="45" r="8" fill="#dceeff"/>
+    <path d="M 14 38 L 32 17 M 44 17 L 62 38 M 17 45 H 59 M 85 28 h 38"/>
+    <path d="M 116 19 l 14 9 -14 9"/>
+    <path d="M 145 17 l 18 -8 18 8 v 17 c 0 17 -18 27 -18 27 s -18 -10 -18 -27 z" fill="#eef6ff"/>
+  </g>
+
+  <a href="/statement#ii-safety-preserving-learning-and-feedback" target="_top" aria-label="Safety-preserving learning: Learn consequential distinctions">
+    <title>Learn consequential distinctions</title>
+    <rect class="block" x="908" y="374" width="470" height="72"/>
+    <text class="block-title" x="1143" y="405">Learn consequential distinctions</text>
+    <text class="block-detail" x="1143" y="430">Contrast safe and unsafe decisions</text>
+  </a>
+  <a href="/statement#ii-safety-preserving-learning-and-feedback" target="_top" aria-label="Safety-preserving learning: Prioritize feedback repairs">
+    <title>Prioritize feedback repairs</title>
+    <rect class="block" x="908" y="462" width="470" height="72"/>
+    <text class="block-title" x="1143" y="493">Prioritize feedback repairs</text>
+    <text class="block-detail" x="1143" y="518">Measure effects on later behavior</text>
+  </a>
+  <a href="/statement#ii-safety-preserving-learning-and-feedback" target="_top" aria-label="Safety-preserving learning: Retain safety through adaptation">
+    <title>Retain safety through adaptation</title>
+    <rect class="block" x="908" y="550" width="470" height="72"/>
+    <text class="block-title" x="1143" y="581">Retain safety through adaptation</text>
+    <text class="block-detail" x="1143" y="606">Revalidate after capability updates</text>
+  </a>
+
+  <circle cx="724" cy="430" r="152" fill="url(#core)" stroke="#263746" stroke-width="3" filter="url(#shadow)"/>
+  <g fill="none" stroke="#263746" stroke-width="4" stroke-linecap="round">
+    <circle cx="724" cy="348" r="14" fill="#75aee8"/>
+    <circle cx="670" cy="394" r="14" fill="#75aee8"/>
+    <circle cx="778" cy="394" r="14" fill="#75aee8"/>
+    <path d="M 713 357 l -32 27 M 735 357 l 32 27 M 684 394 h 80"/>
+  </g>
+  <text class="core-title" x="724" y="455">Reliable Autonomy</text>
+  <text class="core-subtitle" x="724" y="489">for Adaptive AI Agents</text>
+  <text class="core-note" x="724" y="528">Useful · Safe · Authorized</text>
+
+  <text class="area" x="724" y="704" text-anchor="middle">III. Control Across Time &amp; Delegation</text>
+  <text class="question" x="724" y="740" text-anchor="middle">When do permissions remain valid?</text>
+  <g transform="translate(620 758)" fill="none" stroke="#2d6eb6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="0" y="0" width="58" height="48" rx="5"/><path d="M 13 15 h 32 M 13 25 h 32 M 13 35 h 22"/>
+    <circle cx="92" cy="12" r="10"/><path d="M 102 12 h 40 M 130 12 v 10 M 140 12 v 7"/>
+    <path d="M 150 24 h 55" marker-end="url(#arrow)"/>
+    <rect x="224" y="0" width="58" height="48" rx="5"/><path d="M 237 15 h 32 M 237 25 h 32 M 237 35 h 22"/>
+  </g>
+
+  <a href="/statement#iii-control-across-time-and-delegation" target="_top" aria-label="Control across time and delegation: Carry constraints across handoffs">
+    <title>Carry constraints across handoffs</title>
+    <rect class="block" x="455" y="824" width="538" height="60"/>
+    <text class="block-title" x="724" y="862">Carry constraints across handoffs</text>
+  </a>
+  <a href="/statement#iii-control-across-time-and-delegation" target="_top" aria-label="Control across time and delegation: Revalidate changed dependencies">
+    <title>Revalidate changed dependencies</title>
+    <rect class="block" x="455" y="898" width="538" height="60"/>
+    <text class="block-title" x="724" y="936">Revalidate changed dependencies</text>
+  </a>
+  <a href="/statement#iii-control-across-time-and-delegation" target="_top" aria-label="Control across time and delegation: Enforce independent action boundaries">
+    <title>Enforce independent action boundaries</title>
+    <rect class="block" x="455" y="972" width="538" height="60"/>
+    <text class="block-title" x="724" y="1010">Enforce independent action boundaries</text>
+  </a>
+
+  <line x1="72" y1="1051" x2="1376" y2="1051" stroke="#b8c5cf" stroke-width="1.5"/>
+  <text class="footer" x="724" y="1076">Independent assessment · Task completion · Harm · Authorization violations · Total cost</text>
+</svg>
