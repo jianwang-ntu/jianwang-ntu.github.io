@@ -50,8 +50,7 @@ Reuse the Vite SSR setup already present in the industry-project tests. Render `
 assert.match(html, /Publications/);
 assert.match(html, /Details/);
 assert.match(html, new RegExp(PUB_META.defects4c.brief.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
-assert.doesNotMatch(html, /class="[^"]*ap-pub-figcol/);
-assert.doesNotMatch(html, /class="[^"]*ap-fig-wrap/);
+assert.doesNotMatch(html, /<figure|<img/);
 ```
 
 Count detail links from the rendered output and compare them with the number of publication records so every paper remains reachable.
@@ -70,7 +69,7 @@ assert.match(html, /Hexagon DSP|Kirin NPU/);
 assert.match(html, /href="\/work\/58-web-infrastructure"/);
 assert.match(html, /href="\/work\/xiaomi-portrait-ai"/);
 assert.doesNotMatch(html, /<select/);
-assert.doesNotMatch(html, /project-map|industry-feature-visual/);
+assert.doesNotMatch(html, /Project rooms|Filter projects/i);
 ```
 
 Also assert at least one existing research-project title and its source link so simplification does not remove research work.
@@ -234,15 +233,17 @@ git commit -m "refactor: enrich publication detail pages"
 
 - [ ] **Step 1: Add failing EN/ZH structural tests.**
 
-Keep the existing evidence and language assertions, then add checks that both routes contain exactly two major project headings, shared editorial note markup, and both diagrams. Assert that the obsolete detail-grid/scale-dashboard markup is absent.
+Keep the existing evidence and language assertions, then add checks that both routes contain exactly two major project headings, both diagrams, and the implementation, efficiency, and difficulty narratives in the matching language. Visual-grid removal is verified during browser QA rather than by locking tests to CSS internals.
 
 ```js
 assert.equal((enHtml.match(/<h2/g) || []).length, 2);
 assert.equal((zhHtml.match(/<h2/g) || []).length, 2);
-assert.match(enHtml, /class="[^"]*case-study-note/);
-assert.match(zhHtml, /class="[^"]*case-study-note/);
-assert.doesNotMatch(enHtml, /f8-detail-grid|f8-scale/);
-assert.doesNotMatch(zhHtml, /f8-detail-grid|f8-scale/);
+assert.match(enHtml, /Implementation[.:]/);
+assert.match(enHtml, /Efficiency[.:]/);
+assert.match(enHtml, /What was difficult[.:]/);
+assert.match(zhHtml, /实现[：:]/);
+assert.match(zhHtml, /效率[：:]/);
+assert.match(zhHtml, /难点[：:]/);
 ```
 
 - [ ] **Step 2: Run the 58.com test and confirm RED.**
@@ -309,13 +310,14 @@ git commit -m "refactor: present 58.com work as an editorial case study"
 
 - [ ] **Step 1: Add failing editorial-structure tests.**
 
-Preserve assertions for both reconstruction images and the known deployment stack. Add checks for exactly three major headings, indented implementation/efficiency/difficulty notes, reconstruction labels, and the absence of fact pills, step grids, challenge grids, or dark efficiency panels.
+Preserve assertions for both reconstruction images and the known deployment stack. Add checks for exactly three major headings, implementation/efficiency/difficulty narratives, reconstruction labels, and the absence of extra dashboard-only headings. Grid/panel removal is verified during browser QA rather than by locking tests to CSS internals.
 
 ```js
 assert.equal((html.match(/<h2/g) || []).length, 3);
-assert.match(html, /class="[^"]*case-study-note/);
+assert.match(html, /Implementation[.:]/);
+assert.match(html, /Efficiency[.:]/);
+assert.match(html, /What was difficult[.:]/);
 assert.match(html, /illustrative reconstruction/i);
-assert.doesNotMatch(html, /industry-fact-pill|industry-step-grid|industry-challenge-grid|industry-efficiency-panel/);
 ```
 
 - [ ] **Step 2: Run the Xiaomi test and confirm RED.**
