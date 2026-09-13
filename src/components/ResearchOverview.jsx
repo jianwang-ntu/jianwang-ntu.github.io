@@ -1,13 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import overviewUrl from '../assets/reliable-autonomy-overview.svg';
+import agendaUrl from '../assets/reliable-autonomy-agenda.svg';
 
-export default function ResearchOverview() {
+export default function ResearchOverview({ showIndustryEvidence = true }) {
+  const imageUrl = showIndustryEvidence ? overviewUrl : agendaUrl;
   return (
     <figure className="research-overview" id="research-overview">
       <div className="research-overview-canvas" role="region"
         aria-label="Research overview; scroll horizontally on a small screen" tabIndex={0}>
-        <object className="research-overview-object" data={overviewUrl} type="image/svg+xml"
+        <object className={'research-overview-object' + (showIndustryEvidence ? '' : ' research-overview-object--agenda')}
+          data={imageUrl} type="image/svg+xml"
           aria-label="Interactive vector overview of reliable autonomy for adaptive AI agents">
           <span>The interactive research overview is available through the links below.</span>
         </object>
@@ -18,8 +21,8 @@ export default function ResearchOverview() {
         <li><Link to="/statement#iii-control-across-time-and-delegation">Control across time and delegation</Link></li>
       </ul>
       <figcaption>
-        <span>Industry grounding: 829 deduplicated JDs across six companies. Percentages are coded theme matches within each company’s collected sample, not company endorsement.</span>
-        <a href={overviewUrl} target="_blank" rel="noreferrer">Open full-size SVG ↗</a>
+        {showIndustryEvidence && <span>Industry grounding: 829 deduplicated JDs across six companies. Percentages are coded theme matches within each company’s collected sample, not company endorsement.</span>}
+        <a href={imageUrl} target="_blank" rel="noreferrer">Open full-size SVG ↗</a>
       </figcaption>
     </figure>
   );

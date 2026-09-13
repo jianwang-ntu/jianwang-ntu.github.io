@@ -4,6 +4,7 @@ import Nav from '../components/Nav.jsx';
 import Footer from '../components/Footer.jsx';
 import Seo from '../components/Seo.jsx';
 import SiteFrame from '../components/SiteFrame.jsx';
+import ResearchOverview from '../components/ResearchOverview.jsx';
 import { NEWS, ALL_PUBS } from '../data.jsx';
 import { PUB_META } from '../data-pubs.js';
 
@@ -39,6 +40,7 @@ function AcademicPagesHome() {
           <p>The agenda connects <Link to="/statement#i-scalable-oversight-under-adaptation">scalable oversight</Link>,{' '}
             <Link to="/statement#ii-safety-preserving-learning-and-feedback">safety-preserving learning</Link>, and{' '}
             <Link to="/statement#iii-control-across-time-and-delegation">control across time and delegation</Link>.</p>
+          <ResearchOverview showIndustryEvidence={false} />
         </section>
         <section className="home-section" aria-labelledby="selected-title">
           <div className="section-heading"><h2 id="selected-title">Selected publications</h2>
