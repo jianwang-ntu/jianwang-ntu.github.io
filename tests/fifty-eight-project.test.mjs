@@ -38,6 +38,10 @@ function renderRoute(route) {
   );
 }
 
+function articleContent(html) {
+  return html.match(/<article\b[\s\S]*<\/article>/)?.[0] || '';
+}
+
 test('Work & Projects links to the 58.com web infrastructure case study', () => {
   const html = renderRoute('/work');
 
@@ -49,6 +53,7 @@ test('Work & Projects links to the 58.com web infrastructure case study', () => 
 
 test('58.com case study explains the shared middleware and Nginx traffic router', () => {
   const html = renderRoute('/work/58-web-infrastructure');
+  const article = articleContent(html);
 
   assert.match(html, /lang="en"/);
   assert.match(html, /Web Infrastructure at 58\.com/);
@@ -66,10 +71,15 @@ test('58.com case study explains the shared middleware and Nginx traffic router'
   assert.match(html, /href="\/images\/projects\/58\/shared-middleware-architecture\.svg" target="_blank"/);
   assert.match(html, /href="\/images\/projects\/58\/nginx-traffic-router\.svg" target="_blank"/);
   assert.match(html, /aria-label="Profile"/);
+  assert.equal((article.match(/<h2\b/g) || []).length, 2);
+  assert.match(article, /<strong>Implementation\.<\/strong>/);
+  assert.match(article, /<strong>Efficiency\.<\/strong>/);
+  assert.match(article, /<strong>What was difficult\.<\/strong>/);
 });
 
 test('Chinese 58.com route renders a complete localized project page', () => {
   const html = renderRoute('/zh/work/58-web-infrastructure');
+  const article = articleContent(html);
 
   assert.match(html, /lang="zh-CN"/);
   assert.match(html, /58同城的 Web 基础设施/);
@@ -82,4 +92,8 @@ test('Chinese 58.com route renders a complete localized project page', () => {
   assert.match(html, /\/images\/projects\/58\/shared-middleware-architecture-zh\.svg/);
   assert.match(html, /\/images\/projects\/58\/nginx-traffic-router-zh\.svg/);
   assert.match(html, /aria-label="Profile"/);
+  assert.equal((article.match(/<h2\b/g) || []).length, 2);
+  assert.match(article, /<strong>实现：<\/strong>/);
+  assert.match(article, /<strong>效率：<\/strong>/);
+  assert.match(article, /<strong>难点：<\/strong>/);
 });
