@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Nav from '../components/Nav.jsx';
 import Footer from '../components/Footer.jsx';
 import Seo from '../components/Seo.jsx';
-import ApHead from '../components/ApHead.jsx';
+import SiteFrame from '../components/SiteFrame.jsx';
 import ResearchOverview from '../components/ResearchOverview.jsx';
 import ResearchConnection from '../components/ResearchConnection.jsx';
 import { NEWS, ALL_PUBS } from '../data.jsx';
@@ -13,26 +13,23 @@ const selectedPubs = ALL_PUBS.filter(p => ['C5', 'C4', 'C3', 'C2'].includes(p.id
 
 function AcademicPagesHome() {
   return (
-    <div className="portfolio-shell">
-      <ApHead sidebar />
-      <main id="main-content" className="portfolio-content">
-        <p className="portfolio-eyebrow">Trustworthy agent networks · Software engineering · AI security</p>
+    <SiteFrame mainClassName="home-content">
         <h1>About me</h1>
         <div className="home-bio">
           <p>
             I am a recent PhD from the College of Computing and Data Science (CCDS) at{' '}
             <strong>Nanyang Technological University</strong>, advised by{' '}
             <a href="https://personal.ntu.edu.sg/yi_li/" target="_blank" rel="noreferrer">Prof. Li Yi</a>.
-            My research connects <strong>software engineering</strong>,{' '}
-            <strong>large language models</strong> and <strong>trustworthy AI systems</strong>.
+            My research connects software engineering,{' '}
+            large language models and trustworthy AI systems.
             My PhD work focused on{' '}
-            <strong>automated program repair</strong>, <strong>AI-generated code detection</strong> and{' '}
-            <strong>execution-grounded reasoning</strong> over programs.
+            automated program repair, AI-generated code detection and{' '}
+            execution-grounded reasoning over programs.
           </p>
           <p>
-            Before research I spent <strong>~8 years in industry</strong>: the AI Lab at <strong>Xiaomi</strong>,
+            Before research I spent ~8 years in industry: the AI Lab at <Link to="/work/xiaomi-portrait-ai">Xiaomi</Link>,
             training GANs for portrait background removal and face cartoonisation, and a backend
-            role at <strong>58.com</strong>, building an async web framework serving 100M+ daily requests.
+            role at <Link to="/work/58-web-infrastructure">58.com</Link>, building an async web framework serving 100M+ daily requests.
           </p>
         </div>
         <section className="home-section" aria-labelledby="interests-title">
@@ -89,8 +86,7 @@ function AcademicPagesHome() {
           <h2 id="award-title">Recognition</h2>
           <p><strong>AI Singapore Deepfake Detection Challenge, 2022</strong><br />3rd place · S$100,000 prize</p>
         </section>
-      </main>
-    </div>
+    </SiteFrame>
   );
 }
 

@@ -3,9 +3,9 @@ import { Link, NavLink, useLocation } from 'react-router-dom';
 
 const NAV_ITEMS = [
   { to: '/home', label: 'Home' },
-  { to: '/statement', label: 'Research statement' },
+  { to: '/statement', label: 'Research statement', short: 'Research' },
   { to: '/pubs', label: 'Publications' },
-  { to: '/work', label: 'Work & Projects' },
+  { to: '/work', label: 'Work & Projects', short: 'Work' },
   { to: '/cv',   label: 'CV' },
   { to: '/blog', label: 'Blog' },
 ];
@@ -23,16 +23,18 @@ export default function Nav({ skipToContent = false }) {
       </NavLink>
       <div className="links">
         {NAV_ITEMS.map((n) => {
+          const label = n.short ? <><span className="nav-label-full">{n.label}</span><span className="nav-label-short" aria-hidden="true">{n.short}</span></> : n.label;
           if (n.to === '/work' && isChineseWorkPage) {
-            return <Link key={n.to} to={n.to} className="active" aria-current="page">{n.label}</Link>;
+            return <Link key={n.to} to={n.to} className="active" aria-current="page" aria-label={n.label}>{label}</Link>;
           }
           return (
             <NavLink
               key={n.to}
               to={n.to}
+              aria-label={n.label}
               className={({ isActive }) => (isActive ? 'active' : '')}
             >
-              {n.label}
+              {label}
             </NavLink>
           );
         })}

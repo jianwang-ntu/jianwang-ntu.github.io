@@ -47,6 +47,20 @@ function articleContent(html) {
   return html.match(/<article\b[\s\S]*<\/article>/)?.[0] || '';
 }
 
+test('Every page family has one main landmark reachable from the skip link', () => {
+  const routes = ['/home', '/statement', '/pubs', '/work', '/cv', '/blog',
+    '/blog/example', '/work/58-web-infrastructure', '/zh/work/58-web-infrastructure',
+    '/work/xiaomi-portrait-ai', ...Object.values(PUB_META).map(meta => `/pubs/${meta.key}`)];
+
+  for (const route of routes) {
+    const html = renderRoute(route);
+    assert.equal((html.match(/<main\b/g) || []).length, 1, route);
+    assert.match(html, /href="#main-content"/, route);
+    assert.match(html, /<main[^>]*id="main-content"[^>]*tabindex="-1"/, route);
+    assert.match(html, /<aside[^>]*aria-label="Profile"/, route);
+  }
+});
+
 test('Publications presents every paper as a concise text entry', () => {
   const html = renderRoute('/pubs');
   const main = mainContent(html);

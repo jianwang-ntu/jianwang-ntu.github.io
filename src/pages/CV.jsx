@@ -1,9 +1,8 @@
 import React from 'react';
 import Nav from '../components/Nav.jsx';
 import Footer from '../components/Footer.jsx';
-import PageHead from '../components/PageHead.jsx';
+import SiteFrame from '../components/SiteFrame.jsx';
 import Seo from '../components/Seo.jsx';
-import { Box, Chip, Tag } from '../components/primitives.jsx';
 
 function CVBlock({ left, right, title, sub, body }) {
   return (
@@ -21,14 +20,8 @@ function CVBlock({ left, right, title, sub, body }) {
   );
 }
 
-function CVH({ num, children }) {
-  return (
-    <div className="cv-section-h">
-      <span className="num">{num}</span>
-      <h2>{children}</h2>
-      <div className="rule" />
-    </div>
-  );
+function CVH({ children }) {
+  return <h2 className="cv-section-title">{children}</h2>;
 }
 
 export default function CV() {
@@ -39,22 +32,18 @@ export default function CV() {
         description="Curriculum vitae of Jian Wang — education, employment, talks, awards. PhD conferred Mar 2026."
         path="/cv"
       />
-      <Nav />
-      <PageHead
-        kicker="CURRICULUM VITAE · WEB EDITION"
-        title={<span>Jian Wang — <u>cv.</u></span>}
-        blurb={<>Education, research and industry experience. PhD conferred Mar 2026. The downloadable CV is the May 2026 snapshot;
-          the <a href="/statement">research statement</a> describes my proposed next direction.</>}
-        right={
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 6, alignItems: 'flex-end' }}>
-            <Chip solid href="/data/Jian_Wang_CV_Academic_202605.pdf">↓ cv.pdf</Chip>
-            <Chip sm href="/data/jornbowrl-bio.txt">↓ bio.txt</Chip>
-          </div>
-        }
-      />
+      <Nav skipToContent />
+      <SiteFrame mainClassName="cv-content">
+        <h1>Curriculum vitae</h1>
+        <p className="page-deck">Education, research and industry experience.</p>
+        <p className="text-index-intro">PhD conferred March 2026. The downloadable CV is the May 2026 snapshot;
+          the <a href="/statement">research statement</a> describes my proposed next direction.</p>
+        <div className="reading-links">
+          <a href="/data/Jian_Wang_CV_Academic_202605.pdf" target="_blank" rel="noreferrer">Download CV (PDF) ↗</a>
+          <a href="/data/jornbowrl-bio.txt">Short bio</a>
+        </div>
 
-      <section className="content" style={{ paddingTop: 16 }}>
-        <CVH num="01">Education</CVH>
+        <CVH>Education</CVH>
         <CVBlock
           left="2021 — 2026"
           right="Singapore"
@@ -65,7 +54,7 @@ export default function CV() {
         <CVBlock left="2019" right="Beijing" title="Certification · AI / Computer Vision" sub="Tsinghua University" />
         <CVBlock left="2007 — 2011" right="Tianjin" title="BEng, Software Engineering" sub="Tianjin University" />
 
-        <CVH num="02">Research & industry experience</CVH>
+        <CVH>Research & industry experience</CVH>
         <CVBlock
           left="Aug 2023 — now"
           right="Singapore"
@@ -104,8 +93,8 @@ export default function CV() {
         />
         <CVBlock left="2011" right="Beijing" title="Data Engineering Intern" sub="Baidu, Inc." body="Contributed to large-scale data pipelines." />
 
-        <CVH num="03">Selected publications</CVH>
-        <div style={{ fontSize: 12.5, lineHeight: 1.7, paddingTop: 6 }}>
+        <CVH>Selected publications</CVH>
+        <div className="cv-publications">
           <div><b>Wang J.</b>, Xie X., Hu Q., Liu S., Yu J., Kong J., Li Y. <i>Defects4C: Benchmarking Large Language Model Repair Capability with C/C++ Bugs.</i> <b>ASE '25</b>.</div>
           <div style={{ marginTop: 6 }}><b>Wang J.</b>, Xie X., Hu Q., Liu S., Li Y. <i>Do Code Semantics Help? A Comprehensive Study on Execution Trace-Based Information for Code LLMs.</i> <b>EMNLP Findings '25</b>.</div>
           <div style={{ marginTop: 6 }}><b>Wang J.</b>, Liu S., Xie X., Siow J. K., Liu K., Li Y. <i>RATCHET: Retrieval Augmented Transformer for Program Repair.</i> <b>ISSRE '24</b>.</div>
@@ -116,38 +105,35 @@ export default function CV() {
           <div style={{ marginTop: 6 }}>Xie X., Guo W., Ma L., Le W., <b>Wang J.</b>, et al. <i>Automatic RNN Repair via Model-based Analysis.</i> <b>ICML '21</b>.</div>
           <div style={{ marginTop: 6 }}>Guo Q., Juefei-Xu F., Xie X., Ma L., <b>Wang J.</b>, et al. <i>Watch out! Motion is Blurring the Vision of Your Deep Neural Networks.</i> <b>NeurIPS '20</b>.</div>
           <div style={{ marginTop: 6 }}>Wang R., Juefei-Xu F., Ma L., Xie X., Huang Y., <b>Wang J.</b>, Liu Y. <i>FakeSpotter: A Simple yet Robust Baseline for Spotting AI-Synthesized Fake Faces.</i> <b>IJCAI '20</b>.</div>
-          <div style={{ marginTop: 8, fontFamily: 'var(--mono)', fontSize: 10, opacity: 0.6 }}>full list → <a href="/pubs">Publications</a> · <a href="https://scholar.google.com/citations?hl=en&user=GAe_mJUAAAAJ" target="_blank" rel="noreferrer">Google Scholar</a></div>
+          <p className="reading-links"><a href="/pubs">All publications</a><a href="https://scholar.google.com/citations?hl=en&user=GAe_mJUAAAAJ" target="_blank" rel="noreferrer">Google Scholar ↗</a></p>
         </div>
 
-        <CVH num="04">Honors & awards</CVH>
-        <div style={{ fontSize: 12.5, lineHeight: 1.85 }}>
-          <div>★ <b>2022</b> · S$100,000 prize · 3rd place · AI Singapore Deepfake Detection Challenge (international)</div>
-          <div>★ <b>2019</b> · AI / Computer Vision Certification · Tsinghua University</div>
+        <CVH>Honors & awards</CVH>
+        <div className="cv-prose">
+          <p><b>2022</b> · S$100,000 prize · 3rd place · AI Singapore Deepfake Detection Challenge (international)</p>
+          <p><b>2019</b> · AI / Computer Vision Certification · Tsinghua University</p>
         </div>
 
-        <CVH num="05">Engineering highlights</CVH>
-        <div style={{ fontSize: 12.5, lineHeight: 1.7 }}>
-          <div><b>Production scale:</b> async web framework powering 100M+ daily requests at 58.com.</div>
-          <div style={{ marginTop: 4 }}><b>End-to-end ML:</b> trained, quantised, and deployed GAN-based portrait models onto Qualcomm Hexagon DSP / HiSilicon Kirin NPU at Xiaomi.</div>
-          <div style={{ marginTop: 4 }}><b>Research artifacts:</b> <a href="/work?type=research#project-index">Defects4C, tracewise probing, RATCHET, FGVulDet and the AIGC-detector study</a>.</div>
+        <CVH>Engineering highlights</CVH>
+        <div className="cv-prose">
+          <p><b>Production scale:</b> async web framework powering 100M+ daily requests at 58.com.</p>
+          <p><b>End-to-end ML:</b> trained, quantised, and deployed GAN-based portrait models onto Qualcomm Hexagon DSP / HiSilicon Kirin NPU at Xiaomi.</p>
+          <p><b>Research artifacts:</b> <a href="/work#research-projects">Defects4C, tracewise probing, RATCHET, FGVulDet and the AIGC-detector study</a>.</p>
         </div>
 
-        <CVH num="06">Skills</CVH>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 6 }}>
+        <CVH>Skills</CVH>
+        <p className="cv-skills">
           {[
             'Python', 'PyTorch', 'C/C++', 'CUDA', 'ONNX',
             'LLMs / SFT / PEFT', 'Transformers', 'GNN/GGNN',
             'Symbolic methods', 'Adversarial robustness', 'Quantisation',
             'Backend / Async Web Frameworks',
             'Mandarin (native)', 'English (fluent)',
-          ].map((s) => <Tag key={s}>{s}</Tag>)}
-        </div>
+          ].join(' · ')}
+        </p>
 
-        <Box dashed style={{ marginTop: 32, padding: 14, fontFamily: 'var(--mono)', fontSize: 11, display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>
-          <span>References available on request.</span>
-          <span>↓ <a href="/data/Jian_Wang_CV_Academic_202605.pdf" target="_blank" rel="noreferrer">cv.pdf</a> · ↓ <a href="/data/jornbowrl-bio.txt" target="_blank" rel="noreferrer">bio.txt</a></span>
-        </Box>
-      </section>
+        <p className="cv-closing">References available on request.</p>
+      </SiteFrame>
 
       <Footer />
     </div>

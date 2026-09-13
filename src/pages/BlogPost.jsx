@@ -5,7 +5,8 @@ import remarkGfm from 'remark-gfm';
 import Nav from '../components/Nav.jsx';
 import Footer from '../components/Footer.jsx';
 import Seo from '../components/Seo.jsx';
-import { Tag } from '../components/primitives.jsx';
+import SiteFrame from '../components/SiteFrame.jsx';
+import ReadingTable from '../components/ReadingTable.jsx';
 
 // Cover-image URLs in meta.json are stored as `/images/blog/<slug>.png` for
 // local dev. The deploy workflow rewrites them to S3 URLs in dist/, but the
@@ -26,6 +27,12 @@ function pickInitialLang(meta) {
     if (nav.startsWith('zh') && langs.includes('zh')) return 'zh';
   }
   return langs.includes('en') ? 'en' : langs[0];
+}
+
+function ReadingImage({ src, alt }) {
+  const [unavailable, setUnavailable] = useState(null);
+  if (unavailable === src) return null;
+  return <img src={src} alt={alt || ''} decoding="async" onError={() => setUnavailable(src)} />;
 }
 
 export default function BlogPost() {
@@ -78,13 +85,12 @@ export default function BlogPost() {
   }, [slug, lang]);
 
   const langs = meta?.languages || [];
-  const title = meta && (meta[`title_${lang}`] || meta.title_en || meta.title);
-
   // Per-post head tags — only render Seo once meta has loaded so we don't
   // overwrite the prerendered head with empty defaults.
   const seo = meta && (
     <Seo
       title={meta.title_en || meta.slug}
+      lang={lang === 'zh' ? 'zh-CN' : 'en'}
       description={meta.dek_en}
       image={absoluteImage(meta.image)}
       path={`/blog/${meta.slug}`}
@@ -108,17 +114,18 @@ export default function BlogPost() {
   return (
     <div className="page">
       {seo}
-      <Nav />
-      <section style={{ padding: '32px 0', maxWidth: 760, margin: '0 auto' }}>
-        <div style={{ fontSize: 11, fontFamily: 'var(--mono)', marginBottom: 16, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <Nav skipToContent />
+      <SiteFrame mainClassName="blog-reading">
+        <div className="article-tools">
           <Link to="/blog">← back to blog</Link>
           {langs.length > 1 && (
-            <div style={{ display: 'flex', gap: 6 }}>
+            <div className="article-language" role="group" aria-label="Article language">
               {langs.map((code) => (
                 <button
                   key={code}
                   onClick={() => setLang(code)}
                   className={'chip sm' + (code === lang ? ' solid' : '')}
+                  aria-pressed={code === lang}
                   type="button"
                 >
                   {code === 'en' ? 'EN' : code === 'zh' ? '中文' : code.toUpperCase()}
@@ -131,28 +138,22 @@ export default function BlogPost() {
         {error && <div style={{ color: 'crimson' }}>{error}</div>}
 
         {meta && (
-          <div style={{ marginBottom: 16, fontSize: 11, fontFamily: 'var(--mono)', opacity: 0.7 }}>
+          <p className="article-meta">
             Reading note · {meta.date}
             {meta.source
               ? <> · <a href={meta.source} target="_blank" rel="noreferrer">original source</a></>
               : <> · Original source link not recorded</>}
-          </div>
-        )}
-
-        {meta?.tags?.length > 0 && (
-          <div className="tags" style={{ marginBottom: 24 }}>
-            {meta.tags.map((t) => <Tag key={t}>{t}</Tag>)}
-          </div>
+          </p>
         )}
 
         {body && (
           <article className="blog-body" lang={lang}>
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>{body}</ReactMarkdown>
+            <ReactMarkdown remarkPlugins={[remarkGfm]} components={{ table: ReadingTable, img: ReadingImage }}>{body}</ReactMarkdown>
           </article>
         )}
 
         {meta && !body && !error && <div>Loading…</div>}
-      </section>
+      </SiteFrame>
       <Footer />
     </div>
   );

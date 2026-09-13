@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Nav from '../components/Nav.jsx';
 import Footer from '../components/Footer.jsx';
 import Seo from '../components/Seo.jsx';
-import ApHead from '../components/ApHead.jsx';
+import SiteFrame from '../components/SiteFrame.jsx';
 import { WORK_PROJECTS, projectPeriod } from '../data-work.js';
 
 function ResourceLink({ link }) {
@@ -42,10 +42,7 @@ export default function WorkProjects() {
         path="/work"
       />
       <Nav skipToContent />
-      <div className="portfolio-shell work-shell">
-        <ApHead sidebar />
-        <main id="main-content" className="portfolio-content work-text-page">
-          <p className="portfolio-eyebrow">From research to working systems</p>
+      <SiteFrame className="work-shell" mainClassName="work-text-page">
           <div className="work-heading">
             <div>
               <h1>Work &amp; projects</h1>
@@ -53,13 +50,7 @@ export default function WorkProjects() {
             </div>
             <Link className="text-link" to="/cv">Experience &amp; CV ↗</Link>
           </div>
-          <p className="text-index-intro">
-            The main industry projects are explained here without requiring another click. Detail pages add diagrams,
-            reconstruction images, and the longer engineering record.
-          </p>
-
           <section className="work-text-section" aria-labelledby="industry-work-title">
-            <p className="portfolio-eyebrow">Industry</p>
             <h2 id="industry-work-title">Industry Case Studies</h2>
 
             <article className="work-editorial-entry">
@@ -88,7 +79,6 @@ export default function WorkProjects() {
           </section>
 
           <section className="work-text-section" id="research-projects" aria-labelledby="research-projects-title">
-            <p className="portfolio-eyebrow">Research</p>
             <h2 id="research-projects-title">Research projects</h2>
             <p className="section-intro">A compact index of the systems, benchmarks, and evaluations behind the publication record.</p>
             <div className="text-index-list">
@@ -97,7 +87,6 @@ export default function WorkProjects() {
           </section>
 
           <section className="work-text-section" aria-labelledby="other-industry-title">
-            <p className="portfolio-eyebrow">Earlier work</p>
             <h2 id="other-industry-title">Other industry experience</h2>
             {otherIndustry.map((project) => (
               <article className="other-industry-entry" key={project.id}>
@@ -107,8 +96,7 @@ export default function WorkProjects() {
               </article>
             ))}
           </section>
-        </main>
-      </div>
+      </SiteFrame>
       <Footer />
     </div>
   );

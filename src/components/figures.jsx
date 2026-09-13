@@ -169,7 +169,9 @@ export default function Figure({ id, className = '' }) {
   if (img) {
     return (
       <figure className={`ap-fig-wrap ap-fig-photo ${className}`}>
-        <img src={img.src} alt={img.alt} loading="lazy" className="ap-fig-img" />
+        <a href={img.src} target="_blank" rel="noreferrer" aria-label="Open full-size figure">
+          <img src={img.src} alt={img.alt} loading="lazy" className="ap-fig-img" />
+        </a>
         <figcaption className="ap-fig-credit">{img.caption}</figcaption>
       </figure>
     );
