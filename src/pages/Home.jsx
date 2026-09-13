@@ -4,7 +4,7 @@ import Nav from '../components/Nav.jsx';
 import Footer from '../components/Footer.jsx';
 import Seo from '../components/Seo.jsx';
 import SiteFrame from '../components/SiteFrame.jsx';
-import ResearchOverview from '../components/ResearchOverview.jsx';
+import agentWorldUrl from '../assets/world-connected-by-agents.png';
 import { NEWS, ALL_PUBS } from '../data.jsx';
 import { PUB_META } from '../data-pubs.js';
 
@@ -40,7 +40,16 @@ function AcademicPagesHome() {
           <p>The agenda connects <Link to="/statement#i-scalable-oversight-under-adaptation">scalable oversight</Link>,{' '}
             <Link to="/statement#ii-safety-preserving-learning-and-feedback">safety-preserving learning</Link>, and{' '}
             <Link to="/statement#iii-control-across-time-and-delegation">control across time and delegation</Link>.</p>
-          <ResearchOverview showIndustryEvidence={false} />
+          <figure className="research-overview" id="research-overview">
+            <a href={agentWorldUrl} target="_blank" rel="noreferrer">
+              <img className="home-research-image" src={agentWorldUrl} width="1672" height="941"
+                loading="lazy" decoding="async"
+                alt="A world connected by agents: people, communities, and organizations interact through agents, motivating research on evidence, learning, and delegation and control." />
+            </a>
+            <figcaption>
+              <a href={agentWorldUrl} target="_blank" rel="noreferrer">Open full-size image ↗</a>
+            </figcaption>
+          </figure>
         </section>
         <section className="home-section" aria-labelledby="selected-title">
           <div className="section-heading"><h2 id="selected-title">Selected publications</h2>
