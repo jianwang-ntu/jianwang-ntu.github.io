@@ -141,6 +141,7 @@ a:focus-visible, button:focus-visible, select:focus-visible, summary:focus-visib
 .research-connection > a { display: inline-block; font-size: 13px; }
 [data-style="apages"] .research-connection-link { font-size: 14px; line-height: 1.7; margin: 12px 0 0; }
 .research-overview { margin: 25px 0; border: 1px solid #dce5ea; background: #fff; scroll-margin-top: 28px; }
+.home-research-image { display: block; width: 100%; height: auto; }
 .research-overview-canvas { max-width: 100%; overflow-x: auto; overscroll-behavior-x: contain; }
 .research-overview-object { display: block; width: 100%; aspect-ratio: 1448 / 1760; border: 0; }
 .research-overview-object--agenda { aspect-ratio: 1448 / 1120; }
