@@ -81,7 +81,16 @@ function AcademicPagesHome() {
         </section>
         <section className="home-section" aria-labelledby="award-title">
           <h2 id="award-title">Recognition</h2>
-          <p><strong>AI Singapore Deepfake Detection Challenge, 2022</strong><br />3rd place · S$100,000 prize</p>
+          <p>
+            <a href="https://www.straitstimes.com/tech/tech-news/singaporean-wins-100k-prize-in-challenge-to-build-ai-models-that-detect-deepfakes" target="_blank" rel="noreferrer">
+              <strong>AI Singapore Deepfake Detection Challenge, 2022</strong>
+            </a>
+            <br />3rd place · S$100,000 prize
+          </p>
+        </section>
+        <section className="home-section" aria-labelledby="service-title">
+          <h2 id="service-title">Academic service</h2>
+          <p><strong>Reviewer</strong> · NeurIPS 2026 · ACM TOSEM (2026) · ICSE 2026 Shadow PC · ASE 2026 Artifact Evaluation</p>
         </section>
     </SiteFrame>
   );

@@ -86,6 +86,32 @@ test('Home keeps the three Chinese research questions in the caption below the i
   assert.doesNotMatch(renderRoute('/statement'), /当前行动有什么可信依据|能力提升后|任务变长/);
 });
 
+test('Home links the deepfake recognition to the supplied news report', () => {
+  const html = renderRoute('/home');
+  const recognition = html.match(/<section\b[^>]*aria-labelledby="award-title"[^>]*>[\s\S]*?<\/section>/)?.[0] || '';
+
+  assert.match(
+    recognition,
+    /<a href="https:\/\/www\.straitstimes\.com\/tech\/tech-news\/singaporean-wins-100k-prize-in-challenge-to-build-ai-models-that-detect-deepfakes" target="_blank" rel="noreferrer"><strong>AI Singapore Deepfake Detection Challenge, 2022<\/strong><\/a>/,
+  );
+  assert.match(recognition, /3rd place · S\$100,000 prize/);
+});
+
+test('Home presents the four reviewer services as compact prose', () => {
+  const html = renderRoute('/home');
+  const service = html.match(/<section\b[^>]*aria-labelledby="service-title"[^>]*>[\s\S]*?<\/section>/)?.[0] || '';
+
+  assert.match(service, /<h2 id="service-title">Academic service<\/h2>/);
+  assert.match(service, /Reviewer/);
+  for (const label of [
+    'NeurIPS 2026',
+    'ACM TOSEM (2026)',
+    'ICSE 2026 Shadow PC',
+    'ASE 2026 Artifact Evaluation',
+  ]) assert.ok(service.includes(label), label);
+  assert.doesNotMatch(service, /<table\b|class="[^"]*(?:card|grid)/);
+});
+
 test('the overview is a vector SVG whose nine research blocks are links', () => {
   assert.ok(existsSync(svgFile), 'vector overview SVG is missing');
   const svg = readFileSync(svgFile, 'utf8');
