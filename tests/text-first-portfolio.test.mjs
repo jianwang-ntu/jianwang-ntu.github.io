@@ -117,3 +117,15 @@ test('Publication details do not invent prose when an abstract is unavailable', 
   assert.match(article, /<details[^>]*class="[^"]*pub-citation[^"]*"/);
   assert.doesNotMatch(article, /An abstract has not been added|undefined|null/);
 });
+
+test('Blog identifies the notes as summaries of other people\'s ideas', () => {
+  const index = mainContent(renderRoute('/blog'));
+  const post = mainContent(renderRoute('/blog/example'));
+
+  for (const page of [index, post]) {
+    assert.match(page, /role="note"/);
+    assert.match(page, /External-source reading notes?/);
+    assert.match(page, /ideas belong to the cited speakers and authors/i);
+    assert.match(page, /not my original work/i);
+  }
+});

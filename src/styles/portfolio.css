@@ -506,8 +506,12 @@ a:focus-visible, button:focus-visible, select:focus-visible, summary:focus-visib
 .blog-filter-options .chip { font-family: var(--body); font-size: 13px; line-height: 1.5; padding: 7px 10px; min-height: 36px; border-color: #d6dfe3; border-radius: 4px; }
 .blog-filter-options .chip.solid { color: #fff; background: var(--ap-blue); border-color: var(--ap-blue); }
 [data-style="apages"] .blog-result-count { margin: 16px 0 0; font-size: 13px; color: #5c6970; }
+.blog-provenance-notice { margin: 18px 0 0; padding: 13px 15px; border-left: 3px solid var(--ap-blue); background: #f2f6f8; color: #43545c; font-size: 14px; line-height: 1.7; }
+.blog-provenance-notice strong { color: #254e60; }
+.blog-reading > .blog-provenance-notice { margin: 0 0 20px; }
 .blog-entry { padding: 26px 0 28px; border-bottom: 1px solid #e8ecee; }
 [data-style="apages"] .blog-entry .blog-entry-meta { margin: 0 0 8px; font-size: 13px; color: #5c6970; font-variant-numeric: tabular-nums; }
+.blog-source-tag { color: #255b70; font-weight: 600; }
 [data-style="apages"] .blog-entry h2 { margin: 0 0 12px; font-size: 20px; line-height: 1.5; font-weight: 600; }
 [data-style="apages"] .blog-entry h2 a { color: #2a414b; }
 [data-style="apages"] .blog-entry .blog-entry-deck { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; margin: 0; font-size: 16px; line-height: 1.8; color: #5c6970; }
