@@ -144,11 +144,18 @@ function ReadingPost({ slug }) {
           )}
         </div>
 
+        <p className="blog-provenance-notice" role="note" lang={lang === 'zh' ? 'zh-Hans' : 'en'}>
+          <strong>{lang === 'zh' ? '外部来源阅读笔记。' : 'External-source reading note.'}</strong>{' '}
+          {lang === 'zh'
+            ? '文中观点属于所引用的演讲者或作者。这是 AI 辅助的整理与评论，并非本人原创观点。'
+            : 'The ideas belong to the cited speakers and authors. This is an AI-assisted summary and commentary, not my original work.'}
+        </p>
+
         {error && <div style={{ color: 'crimson' }}>{error}</div>}
 
         {meta && (
           <p className="article-meta">
-            {lang === 'zh' ? '阅读笔记' : 'Reading note'} · {meta.date}
+            {lang === 'zh' ? '外部来源阅读笔记' : 'External-source reading note'} · {meta.date}
             {meta.source
               ? <> · <a href={meta.source} target="_blank" rel="noreferrer">{lang === 'zh' ? '原始来源' : 'Original source'}</a></>
               : <> · {lang === 'zh' ? '原始来源链接未记录' : 'Original source link not recorded'}</>}

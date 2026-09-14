@@ -156,6 +156,7 @@ function BlogCard({ post, globalCount, onClick }) {
     <article className="blog-entry">
       <p className="blog-entry-meta">
         <time dateTime={post.date}>{post.date}</time>
+        <span className="blog-source-tag"> · External-source note</span>
         {langs.length > 1 && <span> · EN / 中文</span>}
         {globalCount > 0 && <span> · {globalCount} reads</span>}
       </p>
@@ -267,8 +268,9 @@ export default function Blog() {
         <header>
           <h1 className="blog-page-title">Reading notes</h1>
           <p className="page-deck">Notes on talks, papers and posts by other researchers and practitioners.</p>
-          <p className="text-index-intro">
-            Written with AI assistance. Each note links to its original source where available.
+          <p className="blog-provenance-notice" role="note">
+            <strong>External-source reading notes.</strong> The ideas belong to the cited speakers and authors.
+            These are AI-assisted summaries and commentary, not my original work. Each note links to its original source where available.
           </p>
         </header>
         <div className="blog-toolbar">
