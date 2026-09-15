@@ -21,8 +21,21 @@ export default function ProgramReasoningStatement() {
       <Nav skipToContent />
       <SiteFrame className="statement-shell program-reasoning-shell">
         <p className="portfolio-eyebrow">Targeted research statement · September 2026</p>
-        <h1>Reliable Program Reasoning through Learning and Formal Feedback</h1>
-        <p className="statement-lead">Learn useful semantic artifacts; check them against program behaviour.</p>
+        <h1>Learning and Formal Reasoning for Program Understanding, Verification, and Synthesis</h1>
+        <p className="statement-lead">A focused research agenda for Imperial Global Singapore’s Program Reasoning project.</p>
+        <figure className="program-reasoning-overview">
+          <div className="program-reasoning-overview-canvas" tabIndex="0" aria-label="Scrollable program reasoning overview">
+            <a href="/figures/program-reasoning-overview.svg" target="_blank" rel="noreferrer">
+              <img
+                src="/figures/program-reasoning-overview.svg"
+                alt="Program reasoning problems flow through learned proposals and formal checks into verifiable research outputs."
+                width="1200"
+                height="300"
+              />
+            </a>
+          </div>
+          <figcaption>Research overview: learned models propose; formal tools check; evaluation tests generalisation.</figcaption>
+        </figure>
         <div className="statement-download">
           <a href="/data/Jian_Wang_Program_Reasoning_Statement_2026.pdf" target="_blank" rel="noreferrer">Two-page statement (PDF) ↗</a>
           <Link to="/statement">Primary research statement ↗</Link>
