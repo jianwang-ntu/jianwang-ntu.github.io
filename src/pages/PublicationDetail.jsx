@@ -61,6 +61,19 @@ export default function PublicationDetail() {
           </section>
         )}
 
+        {meta.sections?.map((section) => (
+          <section className="publication-reading" key={section.title}>
+            <h2>{section.title}</h2>
+            <p>{section.body}</p>
+          </section>
+        ))}
+
+        {meta.statementPath && (
+          <p className="publication-statement-link">
+            <Link to={meta.statementPath}>How this paper connects to my program-reasoning agenda →</Link>
+          </p>
+        )}
+
         <ResearchConnection publication={meta.key} variant="editorial" />
 
         <details className="pub-citation">

@@ -8,10 +8,37 @@
    render as plain text. Add entries here and they become links everywhere. */
 export const AUTHOR_LINKS = {
   'Wang J.': '/home',
+  'Wang J. J.': '/home',
   'Li Y.': 'https://personal.ntu.edu.sg/yi_li/',
 };
 
 export const PUB_META = {
+  C7: {
+    key: "loop-r1",
+    authors: ["Wang J. J.", "Quan L.", "Hu Q.", "Cheng M.", "Li Y.", "Xie X."],
+    brief: "Trains small code models to synthesize loop invariants from semantically filtered reasoning data and formal-verification feedback.",
+    abstract: null,
+    sections: [
+      {
+        title: "Problem",
+        body: "Loop invariants summarize what remains true through every iteration, but they are difficult to infer and easy to validate incorrectly when the program-to-solver translation is imperfect. The paper asks whether task-specific reasoning supervision and formal feedback can make small code models better invariant synthesizers.",
+      },
+      {
+        title: "Method",
+        body: "Loop-R1 expands seed programs, removes overlaps with evaluation benchmarks, filters invalid programs, infers candidate invariants, and checks source-to-SMT semantic consistency. This produces 42,638 filtered program–invariant pairs and 28,420 reasoning triples. The study then compares supervised fine-tuning, reinforcement learning from formal rewards, and supervised initialization followed by reinforcement learning.",
+      },
+      {
+        title: "Evidence",
+        body: "On Clause2Inv, Qwen3-1.7B rises from 19.39% pass@10 as a base model to 61.25% after supervised and reinforcement learning. Under the iterative LaM4Inv procedure, its success rate rises from 37.5% to 77.8%. Supervised fine-tuning also reduces solver queries and elapsed time for the Qwen2.5-Coder-1.5B setting reported in the paper.",
+      },
+      {
+        title: "Limitations",
+        body: "Reinforcement learning alone is weak or unstable in the tested small models, and the combined method adds only a small gain over supervised fine-tuning in several settings. InvBench performance remains low, so the evidence does not establish robust generalization to complex programs. Results also depend on the stated translator, solver, model, and benchmark assumptions.",
+      },
+    ],
+    statementPath: "/research_coding_statement",
+    bibtex: "@misc{wang2026loopr1,\n  author = {Wang, J. J. and Quan, L. and Hu, Q. and Cheng, M. and Li, Y. and Xie, X.},\n  title = {Loop-R1: Learning Semantic Reasoning for Loop Invariant Synthesis in Large Language Models},\n  year = {2026},\n  note = {Preprint}\n}",
+  },
   C6: {
     key: "trustworthy-ai-assisted-programming",
     authors: ["Wang J."],

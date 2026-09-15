@@ -35,6 +35,7 @@ export default function Statement() {
         <ResearchOverview />
         <IndustryJDReferences />
         <div className="statement-download"><a href="/data/Jian_Wang_Research_Statement_2026.pdf" target="_blank" rel="noreferrer">Full research statement (PDF) ↗</a>
+          <Link to="/research_coding_statement">Program reasoning statement ↗</Link>
           <a href="#research-foundation-and-approach">Research foundation ↓</a></div>
         <nav className="statement-toc" aria-label="Statement sections">
           <span>The research agenda</span>

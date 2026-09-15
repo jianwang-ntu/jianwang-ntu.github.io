@@ -178,6 +178,9 @@ a:focus-visible, button:focus-visible, select:focus-visible, summary:focus-visib
 .statement-body blockquote p:last-child { margin-bottom: 0; }
 .statement-body hr { border: 0; border-top: 1px solid #dfe6e9; margin: 46px 0 6px; }
 .statement-download { display: flex; flex-wrap: wrap; gap: 15px; font-size: 13px; margin: 20px 0; }
+.program-reasoning-body { max-width: 700px; }
+[data-style="apages"] .program-reasoning-body h2 { margin-top: 34px; }
+.program-reasoning-body > p:first-child { color: #304751; font-size: 18px; }
 @media (max-width: 1000px) {
   [data-style="apages"] { --page-pad-x: 32px; }
   .publications-content .ap-pub-2col { grid-template-columns: minmax(0, 1fr); }
@@ -440,6 +443,7 @@ a:focus-visible, button:focus-visible, select:focus-visible, summary:focus-visib
   font-size: 17px;
   line-height: 1.8;
 }
+.publication-statement-link { margin: 30px 0 0; font-size: 14px; }
 
 .research-connection-editorial {
   margin: 32px 0 0;
