@@ -92,7 +92,10 @@ test('the program-reasoning statement is reachable from the primary statement', 
   const coding = mainContent(renderRoute('/research_coding_statement'));
 
   assert.match(primary, /href="\/research_coding_statement"/);
-  assert.match(coding, /Reliable Program Reasoning through Learning and Formal Feedback/);
+  assert.match(coding, /Learning and Formal Reasoning for Program Understanding, Verification, and Synthesis/);
+  assert.match(coding, /src="\/figures\/program-reasoning-overview\.svg"/);
+  assert.match(coding, /Research overview: learned models propose; formal tools check; evaluation tests generalisation\./);
+  assert.doesNotMatch(coding, /aria-label="Open the program reasoning overview at full size"/);
   assert.match(coding, /href="\/data\/Jian_Wang_Program_Reasoning_Statement_2026\.pdf"/);
   assert.match(coding, /href="\/pubs\/loop-r1"/);
   assert.match(coding, /href="\/pubs\/defects4c"/);
@@ -100,6 +103,36 @@ test('the program-reasoning statement is reachable from the primary statement', 
   assert.match(coding, /href="\/pubs\/ratchet"/);
   assert.doesNotMatch(coding, /<table\b|Appendix/);
   assert.doesNotMatch(coding, /pagebreak/);
+});
+
+test('the targeted statement is concise and organised around four questions', () => {
+  const source = readFileSync(file('src/content/program-reasoning-statement.md'), 'utf8');
+  const headings = [...source.matchAll(/^## (.+)$/gm)].map(match => match[1]);
+  assert.deepEqual(headings, [
+    'Research problem',
+    'Proposed research',
+    'Evidence from prior work',
+    'Fit and contribution',
+  ]);
+
+  const words = source
+    .replace(/<!--.*?-->/gs, ' ')
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+    .replace(/[#*_]/g, ' ')
+    .match(/[\p{L}\p{N}][\p{L}\p{N}\-./]*/gu) || [];
+  assert.ok(words.length >= 600, `statement is too thin: ${words.length} words`);
+  assert.ok(words.length <= 1100, `statement is too long: ${words.length} words`);
+});
+
+test('the program-reasoning overview is a compact accessible SVG', () => {
+  const svg = readFileSync(file('public/figures/program-reasoning-overview.svg'), 'utf8');
+  assert.match(svg, /^<svg\b/);
+  assert.match(svg, /role="img"/);
+  assert.match(svg, /<title id="title">Program reasoning research overview<\/title>/);
+  assert.match(svg, /<desc id="desc">[^<]+<\/desc>/);
+  assert.match(svg, /Program reasoning problems/);
+  assert.match(svg, /Learning \+ formal feedback/);
+  assert.match(svg, /Research outputs/);
 });
 
 test('the public preprint names the authors and removes review-only markings', () => {
@@ -129,6 +162,7 @@ test('the downloadable program-reasoning statement is exactly two pages', () => 
 
   const extracted = spawnSync('pdftotext', [pdf.pathname, '-'], { encoding: 'utf8' });
   assert.equal(extracted.status, 0, extracted.stderr);
-  assert.match(extracted.stdout, /Reliable Program Reasoning through Learning and Formal\s+Feedback/);
+  assert.match(extracted.stdout, /Learning and Formal Reasoning for Program\s+Understanding, Verification, and Synthesis/);
+  assert.match(extracted.stdout, /Verifiers, tests, and analyses check/);
   assert.match(extracted.stdout, /Loop-R1/);
 });

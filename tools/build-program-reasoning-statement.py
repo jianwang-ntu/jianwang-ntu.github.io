@@ -5,12 +5,14 @@ import argparse
 import html
 from pathlib import Path
 import re
+from xml.etree import ElementTree
 
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / 'src/content/program-reasoning-statement.md'
+OVERVIEW = ROOT / 'public/figures/program-reasoning-overview.svg'
 OUTPUT = ROOT / 'public/data/Jian_Wang_Program_Reasoning_Statement_2026.pdf'
-TITLE = 'Reliable Program Reasoning through Learning and Formal Feedback'
+TITLE = 'Learning and Formal Reasoning for Program Understanding, Verification, and Synthesis'
 SITE = 'https://www.wj2ai.com'
 
 
@@ -20,12 +22,84 @@ def validate_source():
         raise ValueError('The statement must contain exactly one explicit page break')
     required = [
         'Loop-R1', 'Defects4C', 'execution-trace study', 'RATCHET',
-        'Research direction', 'Research basis', 'Initial programme',
+        'Research problem', 'Proposed research', 'Evidence from prior work',
+        'Fit and contribution',
     ]
     missing = [item for item in required if item not in source]
     if missing:
         raise ValueError(f'Missing required statement content: {missing}')
+    if not OVERVIEW.exists():
+        raise ValueError('The program-reasoning overview SVG is missing')
+    overview_text()
     return source
+
+
+def overview_text():
+    """Read the PDF figure copy from the website SVG to keep both versions aligned."""
+    required = [
+        'problem-kicker', 'problem-title', 'problem-line-1', 'problem-line-2',
+        'method-kicker', 'method-title', 'method-line-1', 'method-line-2',
+        'method-feedback', 'outputs-kicker', 'outputs-title',
+        'outputs-line-1', 'outputs-line-2',
+    ]
+    root = ElementTree.parse(OVERVIEW).getroot()
+    copy = {
+        element.attrib['id']: ''.join(element.itertext()).strip()
+        for element in root.iter()
+        if element.attrib.get('id') in required
+    }
+    missing = [item for item in required if not copy.get(item)]
+    if missing:
+        raise ValueError(f'Missing overview SVG copy: {missing}')
+    return copy
+
+
+def overview_drawing(width, fonts):
+    """Mirror the website overview as a compact vector figure in the PDF."""
+    from reportlab.graphics.shapes import Drawing, Line, Polygon, Rect, String
+    from reportlab.lib import colors
+
+    height = 108
+    drawing = Drawing(width, height)
+    navy = colors.HexColor('#1f3b4d')
+    blue = colors.HexColor('#52798a')
+    green = colors.HexColor('#7d9e75')
+    border = colors.HexColor('#9db5c0')
+    muted = colors.HexColor('#526772')
+    copy = overview_text()
+
+    def box(x, y, box_width, box_height, fill, kicker, title, lines):
+        drawing.add(Rect(x, y, box_width, box_height, rx=5, ry=5, fillColor=fill, strokeColor=border, strokeWidth=0.8))
+        drawing.add(String(x + 10, y + box_height - 14, kicker, fontName=fonts['sans_bold'], fontSize=5.5, fillColor=blue))
+        drawing.add(String(x + 10, y + box_height - 29, title, fontName=fonts['sans_bold'], fontSize=8.3, fillColor=navy))
+        for index, line in enumerate(lines):
+            drawing.add(String(x + 10, y + box_height - 44 - index * 10, line, fontName=fonts['sans'], fontSize=6.2, fillColor=muted))
+
+    def arrow(start, end, y):
+        drawing.add(Line(start, y, end - 4, y, strokeColor=blue, strokeWidth=1.2))
+        drawing.add(Polygon([end - 4, y - 3, end, y, end - 4, y + 3], fillColor=blue, strokeColor=blue))
+
+    left_x, left_width = 4, 139
+    middle_x, middle_width = 163, 164
+    right_x, right_width = 347, 139
+    box(left_x, 21, left_width, 66, colors.white, copy['problem-kicker'], copy['problem-title'], [
+        copy['problem-line-1'],
+        copy['problem-line-2'],
+    ])
+    box(middle_x, 10, middle_width, 88, colors.HexColor('#eef5f7'), copy['method-kicker'], copy['method-title'], [
+        copy['method-line-1'],
+        copy['method-line-2'],
+    ])
+    drawing.add(Line(middle_x + 26, 29, middle_x + 131, 29, strokeColor=green, strokeWidth=1.1))
+    drawing.add(Polygon([middle_x + 26, 26, middle_x + 20, 29, middle_x + 26, 32], fillColor=green, strokeColor=green))
+    drawing.add(String(middle_x + 32, 18, copy['method-feedback'], fontName=fonts['sans'], fontSize=5.8, fillColor=green))
+    box(right_x, 21, right_width, 66, colors.white, copy['outputs-kicker'], copy['outputs-title'], [
+        copy['outputs-line-1'],
+        copy['outputs-line-2'],
+    ])
+    arrow(left_x + left_width, middle_x, 54)
+    arrow(middle_x + middle_width, right_x, 54)
+    return drawing
 
 
 def inline(text):
@@ -47,7 +121,7 @@ def build(font_dir, output):
     from reportlab.lib.units import mm
     from reportlab.pdfbase import pdfmetrics
     from reportlab.pdfbase.ttfonts import TTFont
-    from reportlab.platypus import PageBreak, Paragraph, SimpleDocTemplate
+    from reportlab.platypus import PageBreak, Paragraph, SimpleDocTemplate, Spacer
 
     for family in ['Serif', 'Sans']:
         for suffix, style in [('Regular', ''), ('Bold', '-Bold'), ('Italic', '-Italic'), ('BoldItalic', '-BoldItalic')]:
@@ -63,13 +137,15 @@ def build(font_dir, output):
     styles = {
         'title': ParagraphStyle('Title', fontName='LibSerif-Bold', fontSize=18.5, leading=22, textColor=navy, spaceAfter=7, keepWithNext=True),
         'byline': ParagraphStyle('Byline', fontName='LibSans', fontSize=8.5, leading=11, textColor=muted, spaceAfter=11, keepWithNext=True),
-        'h2': ParagraphStyle('H2', fontName='LibSerif-Bold', fontSize=12.5, leading=15, textColor=navy, spaceBefore=5, spaceAfter=6, keepWithNext=True),
-        'body': ParagraphStyle('Body', fontName='LibSerif', fontSize=9.4, leading=12.2, textColor=colors.HexColor('#20292e'), spaceAfter=6.2),
+        'h2': ParagraphStyle('H2', fontName='LibSerif-Bold', fontSize=13.5, leading=16, textColor=navy, spaceBefore=6, spaceAfter=7, keepWithNext=True),
+        'body': ParagraphStyle('Body', fontName='LibSerif', fontSize=10.2, leading=13.5, textColor=colors.HexColor('#20292e'), spaceAfter=7),
     }
 
     story = [
         Paragraph(TITLE, styles['title']),
         Paragraph('Jian Wang, PhD · Research statement for Program Reasoning · September 2026', styles['byline']),
+        overview_drawing(174 * mm, {'sans': 'LibSans', 'sans_bold': 'LibSans-Bold'}),
+        Spacer(1, 5),
     ]
     blocks = re.split(r'\n\s*\n', validate_source().strip())
     for block in blocks:
@@ -78,7 +154,7 @@ def build(font_dir, output):
             continue
         if block == '<!-- pagebreak -->':
             story.append(PageBreak())
-            story.append(Paragraph(TITLE.upper(), ParagraphStyle(
+            story.append(Paragraph('PROGRAM REASONING RESEARCH STATEMENT', ParagraphStyle(
                 'RunningTitle', parent=styles['byline'], fontSize=7.5, leading=9,
                 textColor=muted, spaceAfter=8,
             )))
