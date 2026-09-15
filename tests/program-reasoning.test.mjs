@@ -114,7 +114,7 @@ test('the public preprint names the authors and removes review-only markings', (
   }
   assert.doesNotMatch(
     extracted.stdout,
-    /Anonymous Author|anonymous\.4open\.science|Do not distribute|Confidential reviewer copy|Submitted to .*NeurIPS|NeurIPS Paper Checklist|visible to the reviewers|Delete this instruction block|desk rejected|In your output you MUST Include|Overall, I find this submission/i,
+    /Anonymous Author|anonymous\.4open\.science|Do not distribute|Confidential reviewer copy|Submitted to .*NeurIPS|NeurIPS Paper Checklist|visible to the reviewers|Delete this instruction block|desk rejected|we publicly release|In your output you MUST Include|Overall, I find this submission/i,
   );
 });
 
