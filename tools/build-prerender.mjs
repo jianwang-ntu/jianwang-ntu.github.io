@@ -125,6 +125,7 @@ function writeRoute(routePath, html) {
 const STATIC_ROUTES = [
   { path: '/home', title: 'Home',           desc: 'Jian Wang — PhD, NTU Singapore. Reliable autonomy for adaptive AI agents, building on software engineering and AI evaluation.' },
   { path: '/statement', title: 'Research Statement', desc: 'Reliable autonomy for adaptive AI agents through scalable oversight, safety-preserving learning, and secure delegation.' },
+  { path: '/research_coding_statement', title: 'Program Reasoning Research Statement', desc: 'Reliable program reasoning through learned semantic abstractions, formal feedback, and rigorous evaluation.' },
   { path: '/research', canonicalPath: '/statement', title: 'Research Statement', desc: 'Reliable autonomy for adaptive AI agents through scalable oversight, safety-preserving learning, and secure delegation.' },
   { path: '/pubs', title: 'Publications',   desc: 'Publications by Jian Wang on program repair, code-model evaluation, neural-network testing, and robustness.' },
   { path: '/work', title: 'Work & Projects', desc: 'Jian Wang’s work on shared web infrastructure, mobile portrait AI, program repair, and code-model evaluation.' },

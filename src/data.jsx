@@ -63,6 +63,14 @@ export const FEATURED_PUBS = [
 ];
 
 export const ALL_PUBS = [
+  { id: 'C7', figure: 'loopr1', year: 2026, kind: 'preprint',
+    title: 'Loop-R1: Learning Semantic Reasoning for Loop Invariant Synthesis in Large Language Models',
+    authors: <><b>Wang J. J.</b>, Quan L., Hu Q., Cheng M., Li Y., Xie X.</>,
+    venue: 'Preprint',
+    badges: [
+      { label: 'paper', href: '/data/Loop-R1-preprint.pdf' },
+      { label: 'openreview', href: 'https://openreview.net/forum?id=M7n2yGFYza#discussion' },
+    ] },
   { id: 'C6', figure: 'trustworthy', year: 2026, kind: 'conference',
     title: 'Trustworthy AI-Assisted Programming: Detection and Repair of Unreliable Code',
     authors: <><b>Wang J.</b></>,

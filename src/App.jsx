@@ -8,6 +8,7 @@ import Blog from './pages/Blog.jsx';
 import BlogPost from './pages/BlogPost.jsx';
 import PublicationDetail from './pages/PublicationDetail.jsx';
 import Statement from './pages/Statement.jsx';
+import ProgramReasoningStatement from './pages/ProgramReasoningStatement.jsx';
 import XiaomiPortraitAI from './pages/XiaomiPortraitAI.jsx';
 import FiftyEightWebInfrastructure from './pages/FiftyEightWebInfrastructure.jsx';
 
@@ -47,6 +48,7 @@ export default function App() {
         <Route path="/" element={<Navigate to="/home" replace />} />
         <Route path="/home" element={<Home />} />
         <Route path="/statement" element={<Statement />} />
+        <Route path="/research_coding_statement" element={<ProgramReasoningStatement />} />
         <Route path="/research" element={<ResearchRedirect />} />
         <Route path="/pubs" element={<Publications />} />
         <Route path="/pubs/:key" element={<PublicationDetail />} />

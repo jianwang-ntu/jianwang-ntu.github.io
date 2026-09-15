@@ -8,6 +8,11 @@ import React from 'react';
    the PDF becomes available. */
 
 export const PAPER_IMAGES = {
+  loopr1: {
+    src: '/figures/loop-r1-overview.svg',
+    alt: 'Loop-R1 framework: a semantic data pipeline produces verified invariant reasoning data, followed by supervised learning, reinforcement learning, or their combination with formal-verification rewards.',
+    caption: 'Framework overview — Loop-R1 preprint (original vector figure)',
+  },
   defects4c: {
     src: '/images/papers/defects4c.png',
     alt: 'Defects4C data collection pipeline: ~38M commits filtered to ~9M, ~76K, ~3.8K, then 350 human-annotated bugs split into Defects4C_bug and Defects4C_vul.',

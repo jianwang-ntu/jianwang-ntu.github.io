@@ -9,7 +9,7 @@ import { BLOG_ALIASES } from '../src/blog-aliases.js';
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
-test('production build publishes both industry case studies and their visual assets', () => {
+test('production build publishes industry case studies and research routes with their assets', () => {
   execFileSync('npm', ['run', 'build'], {
     cwd: repoRoot,
     stdio: 'pipe',
@@ -113,4 +113,18 @@ test('production build publishes both industry case studies and their visual ass
   }
   assert.equal(existsSync(resolve(xiaomiImageDir, 'portrait-segmentation-reconstruction.png')), false);
   assert.equal(existsSync(resolve(xiaomiImageDir, 'selfie-emoji-reconstruction.png')), false);
+
+  const codingStatementHtml = readFileSync(
+    resolve(repoRoot, 'dist/research_coding_statement/index.html'),
+    'utf8',
+  );
+  assert.match(codingStatementHtml, /<title>Program Reasoning Research Statement — Jian Wang<\/title>/);
+  assert.match(codingStatementHtml, /<link rel="canonical" href="https:\/\/www\.wj2ai\.com\/research_coding_statement" \/>/);
+  assert.equal(
+    sitemap.split('<loc>https://www.wj2ai.com/research_coding_statement</loc>').length - 1,
+    1,
+  );
+  assert.equal(existsSync(resolve(repoRoot, 'dist/data/Loop-R1-preprint.pdf')), true);
+  assert.equal(existsSync(resolve(repoRoot, 'dist/data/Jian_Wang_Program_Reasoning_Statement_2026.pdf')), true);
+  assert.equal(existsSync(resolve(repoRoot, 'dist/figures/loop-r1-overview.svg')), true);
 });
