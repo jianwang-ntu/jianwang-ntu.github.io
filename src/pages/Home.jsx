@@ -7,7 +7,7 @@ import SiteFrame from '../components/SiteFrame.jsx';
 import { NEWS, ALL_PUBS } from '../data.jsx';
 import { PUB_META } from '../data-pubs.js';
 
-const agentWorldUrl = '/images/world-connected-by-agents.png';
+const agentWorldUrl = '/images/research/reliable-agents-human-control.png';
 const selectedPubs = ALL_PUBS.filter(p => ['C5', 'C4', 'C3', 'C2'].includes(p.id));
 
 function AcademicPagesHome() {
@@ -55,9 +55,9 @@ function AcademicPagesHome() {
             <Link to="/statement#iii-control-across-time-and-delegation">control across time and delegation</Link>.</p>
           <figure className="research-overview" id="research-overview">
             <a href={agentWorldUrl} target="_blank" rel="noreferrer">
-              <img className="home-research-image" src={agentWorldUrl} width="1672" height="941"
+              <img className="home-research-image" src={agentWorldUrl} width="1448" height="1086"
                 loading="lazy" decoding="async"
-                alt="A world connected by agents: people, communities, and organizations interact through agents, motivating research on evidence, learning, and delegation and control." />
+                alt="Reliable AI agents under human control: human–agent interaction and agent–agent collaboration share approved requirements for action assurance, safety retention, and workflow control." />
             </a>
             <figcaption className="home-research-caption">
               <ol className="home-research-questions" lang="zh-Hans">

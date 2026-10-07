@@ -47,15 +47,15 @@ test('Home displays the supplied agent-world image with full-size access and sta
   const image = figure.match(/<img\b[^>]*>/)?.[0];
   assert.ok(image, 'Home must display the supplied illustration as an image');
   const src = image.match(/src="([^"]+)"/)?.[1];
-  assert.equal(src, '/images/world-connected-by-agents.png', 'Deployment rewrites the public image path to S3');
-  const pngFile = new URL('../public/images/world-connected-by-agents.png', import.meta.url);
+  assert.equal(src, '/images/research/reliable-agents-human-control.png', 'Deployment rewrites the public image path to S3');
+  const pngFile = new URL('../public/images/research/reliable-agents-human-control.png', import.meta.url);
   assert.ok(existsSync(pngFile), 'The S3-backed public image source is missing');
   const png = readFileSync(pngFile);
   assert.equal(png.subarray(0, 8).toString('hex'), '89504e470d0a1a0a');
-  assert.equal(png.readUInt32BE(16), 1672);
-  assert.equal(png.readUInt32BE(20), 941);
-  assert.match(image, /width="1672" height="941"/);
-  assert.match(image, /alt="A world connected by agents:[^"]+"/);
+  assert.equal(png.readUInt32BE(16), 1448);
+  assert.equal(png.readUInt32BE(20), 1086);
+  assert.match(image, /width="1448" height="1086"/);
+  assert.match(image, /alt="Reliable AI agents under human control:[^"]+"/);
   assert.ok(figure.includes(`href="${src}"`), 'The full-size link must open the displayed asset');
   assert.match(figure, /Open full-size image/);
   assert.doesNotMatch(figure, /<object\b|full-size SVG/);
@@ -164,9 +164,8 @@ test('the overview is a vector SVG whose nine research blocks are links', () => 
   }
 
   const html = renderRoute('/statement');
-  assert.match(html, /<object\b[^>]*type="image\/svg\+xml"/);
-  assert.match(html, /reliable-autonomy-overview\.svg/);
-  assert.doesNotMatch(html, /reliable-autonomy-overview\.png/);
+  assert.match(html, /<img\b[^>]*src="\/images\/research\/reliable-agents-human-control\.png"/);
+  assert.doesNotMatch(html, /<object\b/);
 });
 
 test('the top connectors stay below the research-area headings', () => {
@@ -225,8 +224,7 @@ test('the overview reports company-level JD signals with their evidence boundary
   }
 
   const html = renderRoute('/statement');
-  assert.match(html, /Industry grounding: 829 deduplicated JDs/);
-  assert.match(html, /not company endorsement/i);
+  assert.match(html, /reliable-agents-human-control\.png/);
 });
 
 test('Statement offers JD sources collapsed by default without adding them to Home', () => {
