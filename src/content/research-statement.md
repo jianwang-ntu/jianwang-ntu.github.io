@@ -14,13 +14,13 @@ I would start with software tasks, then test transfer to other digital workflows
 
 *What evidence is needed before an agent acts?*
 
-An agent may explain why it needs to export a file without revealing that the destination has changed. A reviewer cannot establish the destination from that explanation alone. AI Control studies supervision under deliberate subversion [4]; Auto-review examines action review at a sandbox boundary [5]. I would study which observations make oversight effective when the agent can influence the evidence.
+### Oversight before action
 
-I would learn an oversight policy that decides when to query a service, run a sandboxed test, inspect an artifact, or request human review. Each check would be selected for its expected effect on the decision, weighed against delay and cost. The result would support permission to act, a safer plan, or deferral when evidence remains insufficient.
+I propose an oversight framework that connects approved formal specifications, proof checking, and controlled execution [4,5]. For an agent’s candidate x, the verification target is M(x) ⊨ Φ, where M(x) models the candidate’s behavior and tool effects, and Φ specifies approved task and security requirements. The framework would generate logical obligations and require each to be discharged through checked proofs. Unresolved obligations would guide repair of the candidate or proof.
 
-I would also train and test monitors against agents that learn to exploit their blind spots. Experiments would vary the agent's control over evidence, knowledge of the monitor, and relative capability. The hypothesis is that protected observations can improve on transcript-only review. Reasoning traces would be tested alongside external evidence, not treated as independent proof.
+An independent execution gate would permit action only when all conditions hold: the proof is accepted; the artifact, model, and specification match the checked versions; permissions remain valid at execution; and model assumptions still hold. False or unknown conditions would trigger deferral or review. Approved specifications and acceptance rules would be protected from agent modification, with the gate enforced through trusted controls.
 
-Comparisons would include stronger transcript reviewers, fixed checks, random audits, and reviewers with the same external evidence, at matched task completion and total cost. I would separate missed violations from failures to enforce a correct decision. Gains that disappear under adaptive attacks or require unavailable deployment data would limit the claim. Formal models would clarify which observations and interventions oversight requires.
+I would study specification adequacy and robustness to adaptive attacks, comparing oversight methods at matched cost. Evaluation would measure task completion, accepted violations, unnecessary blocking, and verification effort. Assurance would remain conditional on adequate specifications, faithful models, sound proof checking, and trusted enforcement.
 
 ---
 
