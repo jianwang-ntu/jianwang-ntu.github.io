@@ -47,12 +47,12 @@ function AcademicPagesHome() {
             settings show limited gains (<a href="https://arxiv.org/abs/2509.11686" target="_blank" rel="noreferrer">Findings of EMNLP 2025</a>).
             These results motivate my broader work on evidence, adaptation, and control in agents.
           </p>
-          <p>My proposed research focuses on <strong>reliable autonomy for adaptive AI agents</strong>:
-            how agents can learn and interact while remaining safe, reliable, and under meaningful human control as models,
-            tools, and workflows change.</p>
-          <p>The agenda connects <Link to="/statement#i-scalable-oversight-under-adaptation">scalable oversight</Link>,{' '}
-            <Link to="/statement#ii-safety-preserving-learning-and-feedback">safety-preserving learning</Link>, and{' '}
-            <Link to="/statement#iii-control-across-time-and-delegation">control across time and delegation</Link>.</p>
+          <p>My proposed research focuses on <strong>reliable AI agents under human control</strong>:
+            how agents can act, improve, and collaborate while preserving security, reliability, and authorization as models,
+            harnesses, and workflows change.</p>
+          <p>The agenda connects <Link to="/statement#i-scalable-oversight-under-adaptation">oversight before action</Link>,{' '}
+            <Link to="/statement#ii-safety-preserving-learning-and-feedback">preserving safety through continual updates</Link>, and{' '}
+            <Link to="/statement#iii-control-across-time-and-delegation">authorization across delegated workflows</Link>.</p>
           <figure className="research-overview" id="research-overview">
             <a href={agentWorldUrl} target="_blank" rel="noreferrer">
               <img className="home-research-image" src={agentWorldUrl} width="1448" height="1086"
