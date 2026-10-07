@@ -62,6 +62,7 @@ export default function Statement() {
             h2: props => <LinkedHeading {...props} level={2} lineOffset={agendaLineOffset} />,
             h3: props => <LinkedHeading {...props} level={3} lineOffset={agendaLineOffset} />,
             table: ReadingTable,
+            img: ({ node, ...props }) => <a className="statement-diagram-link" href={props.src} target="_blank" rel="noreferrer" title="Open diagram at full size"><img {...props} /></a>,
           }}>{agenda}</ReactMarkdown>
           <details className="industry-references" id="references" tabIndex={-1}>
             <summary>References</summary>

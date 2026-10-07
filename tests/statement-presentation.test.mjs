@@ -41,6 +41,20 @@ function renderRoute(route) {
   );
 }
 
+test('all three section diagrams open their displayed full-size asset in a new tab', () => {
+  const html = renderRoute('/statement');
+  const links = [...html.matchAll(/<a\b[^>]*class="statement-diagram-link"[^>]*>(<img\b[^>]*>)<\/a>/g)];
+  assert.equal(links.length, 3);
+  for (const [link, image] of links) {
+    const src = image.match(/src="([^"]+)"/)?.[1];
+    assert.ok(src);
+    assert.ok(link.includes(`href="${src}"`));
+    assert.match(link, /target="_blank"/);
+    assert.match(link, /rel="noreferrer"/);
+    assert.match(image, /alt="[^"]+"/);
+  }
+});
+
 test('Home displays the supplied agent-world image with full-size access and statement links', () => {
   const html = renderRoute('/home');
   const figure = html.match(/<figure\b[^>]*id="research-overview"[^>]*>[\s\S]*?<\/figure>/)?.[0] || '';

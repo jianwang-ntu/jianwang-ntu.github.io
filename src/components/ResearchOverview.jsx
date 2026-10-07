@@ -15,8 +15,8 @@ export default function ResearchOverview() {
       </ul>
       <figcaption>
         <a href={imageUrl} target="_blank" rel="noreferrer">Open full-size image ↗</a>
-        {' · '}<a href="/data/statement-diagrams/statement-diagrams.pptx?v=original-layout-20261007" download>Editable diagrams (PowerPoint)</a>
-        {' · '}<a href="/data/statement-diagrams/statement-diagrams.pdf?v=original-layout-20261007" target="_blank" rel="noreferrer">Diagrams (PDF) ↗</a>
+        {' · '}<a href="/data/statement-diagrams/statement-diagrams.pptx?v=neutral-background-20261007" download>Editable diagrams (PowerPoint)</a>
+        {' · '}<a href="/data/statement-diagrams/statement-diagrams.pdf?v=neutral-background-20261007" target="_blank" rel="noreferrer">Diagrams (PDF) ↗</a>
         {' · '}<a href="/data/statement-diagrams/comparison.html" target="_blank" rel="noreferrer">Compare with originals ↗</a>
       </figcaption>
     </figure>

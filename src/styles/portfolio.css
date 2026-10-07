@@ -164,6 +164,9 @@ a:focus-visible, button:focus-visible, select:focus-visible, summary:focus-visib
 .statement-toc ol { padding-left: 20px; margin: 10px 0 0; }
 .statement-toc li { margin: 8px 0; font-size: 16px; }
 .statement-body { overflow-wrap: anywhere; }
+.statement-diagram-link { display: block; cursor: zoom-in; }
+.statement-diagram-link img { display: block; width: 100%; height: auto; }
+.statement-diagram-link:focus-visible { outline: 2px solid var(--ap-blue); outline-offset: 4px; }
 [data-style="apages"] .statement-body h2 { padding-top: 12px; margin: 40px 0 20px; }
 [data-style="apages"] .statement-body h3 { font-size: 17px; margin: 25px 0 12px; }
 [data-style="apages"] .statement-body h2 a, [data-style="apages"] .statement-body h3 a { color: inherit; }
