@@ -69,7 +69,7 @@ test('the statement page exposes the three-part agenda without a crowded index',
   assert.match(page, /Jian_Wang_Research_Statement_2026\.pdf/);
   assert.doesNotMatch(page, /ResearchPath|Previous version|archive/i);
 
-  assert.match(overview, /reliable-agents-human-control\.png/);
+  assert.match(overview, /reliable-agents-human-control\.svg/);
   assert.match(overview, /<LinkedResearchImage/);
   assert.match(styles, /\.research-overview-object\s*{[^}]*min-width:\s*760px/s);
   assert.match(styles, /\.research-overview-canvas\s*{[^}]*overflow-x:\s*auto/s);
