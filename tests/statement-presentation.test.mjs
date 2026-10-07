@@ -273,7 +273,7 @@ test('the public statement omits appendices while retaining the core agenda and 
   const article = html.match(/<article\b[\s\S]*<\/article>/)?.[0] || '';
 
   assert.match(article, /I\. Scalable oversight under adaptation/);
-  assert.match(article, /II\. Safety-preserving learning and feedback/);
+  assert.match(article, /II\. Preserving safety through continual updates/);
   assert.match(article, /III\. Control across time and delegation/);
   assert.match(article, /References/);
   assert.doesNotMatch(article, /Appendix A|Appendix B|The eight JD JSONL files|\[J\d|appendic/i);
