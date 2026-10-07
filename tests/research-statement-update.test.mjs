@@ -38,7 +38,7 @@ test('the supplied reliable-autonomy source and overview are installed', () => {
   assert.match(full, /Jian Wang \| 13 September 2026/);
   assert.match(web, /^## I\. Scalable oversight under adaptation$/m);
   assert.match(web, /^## II\. Preserving safety through continual updates$/m);
-  assert.match(web, /^## III\. Control across time and delegation$/m);
+  assert.match(web, /^## III\. Authorization across delegated workflows$/m);
   assert.match(full, /^## Appendix A:/m);
   assert.doesNotMatch(web, /^## Appendix [AB]/m);
   assert.doesNotMatch(web, /```mermaid|^# Reliable Autonomy/m);
