@@ -14,7 +14,7 @@ I would start with software tasks, then test transfer to other digital workflows
 
 *What evidence is needed before an agent acts?*
 
-![Formal oversight before action: approved specifications generate proof obligations; checked proofs and valid execution conditions permit action, while false or unknown conditions defer execution for review.](/images/research/formal-oversight-before-action.svg)
+![Formal oversight before action: approved specifications generate proof obligations; checked proofs and valid execution conditions permit action, while false or unknown conditions defer execution for review.](/images/research/formal-oversight-before-action.svg?v=original-layout-20261007)
 
 I propose an oversight framework that connects approved formal specifications, proof checking, and controlled execution [4,5]. For an agent’s candidate x, the verification target is M(x) ⊨ Φ, where M(x) models the candidate’s behavior and tool effects, and Φ specifies approved task and security requirements. The framework would generate logical obligations and require each to be discharged through checked proofs. Unresolved obligations would guide repair of the candidate or proof.
 
@@ -28,7 +28,7 @@ I would study specification adequacy and robustness to adaptive attacks, compari
 
 *How can models and harnesses improve while preserving security and reliability?*
 
-![Preserving safety through continual updates: propose a model or harness change, revalidate protected requirements and guardrails, repair and retest failures, then apply only the validated change or retain the current system.](/images/research/preserving-safety-continual-updates.svg)
+![Preserving safety through continual updates: propose a model or harness change, revalidate protected requirements and guardrails, repair and retest failures, then apply only the validated change or retain the current system.](/images/research/preserving-safety-continual-updates.svg?v=original-layout-20261007)
 
 I would study how continual learning and harness upgrades can improve AI agents without losing established protection. Fine-tuning can weaken learned safety behavior [6], while changes to tools, monitors, or feedback can invalidate assumptions behind existing guardrails. My focus is identifying when safeguards become ineffective and how to restore protection across system versions.
 
@@ -42,7 +42,7 @@ Evaluation would follow repeated model and harness updates, comparing fixed guar
 
 *How can permissions and data restrictions hold across agent handoffs?*
 
-![Authorization across delegated workflows: a private report can leak through a delegated email draft; track delegated scope, inherited data restrictions, and approval validity before executing, suspending, or replanning affected work.](/images/research/authorization-delegated-workflows.svg)
+![Authorization across delegated workflows: a private report can leak through a delegated email draft; track delegated scope, inherited data restrictions, and approval validity before executing, suspending, or replanning affected work.](/images/research/authorization-delegated-workflows.svg?v=original-layout-20261007)
 
 For an approved model and harness version, I would study how authorization is preserved throughout a delegated workflow. Individually permitted actions may combine to disclose restricted information or exceed the authority originally granted. The challenge is controlling these combined effects across agents, changing permissions, and partial failures.
 

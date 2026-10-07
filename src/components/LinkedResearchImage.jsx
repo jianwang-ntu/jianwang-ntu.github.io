@@ -22,7 +22,7 @@ const regions = [
 
 export default function LinkedResearchImage({ loading }) {
   return <div className="linked-research-image">
-    <img className="home-research-image" src="/images/research/reliable-agents-human-control.svg"
+    <img className="home-research-image" src="/images/research/reliable-agents-human-control.svg?v=original-layout-20261007"
       width="1448" height="1086" loading={loading} decoding="async"
       alt="Reliable AI agents under human control: human–agent interaction and agent–agent collaboration share approved requirements for action assurance, safety retention, and workflow control." />
     {regions.map(([label, section, x, y, width, height]) =>

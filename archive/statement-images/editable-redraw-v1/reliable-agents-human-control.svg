@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1448" height="1086" viewBox="0 0 1448 1086" role="img" aria-labelledby="title"><title id="title">Reliable AI Agents Under Human Control</title><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#203442"/></marker></defs><rect width="1448" height="1086" fill="white"/>
+<text x="724" y="42" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="42" font-weight="700" fill="#203442">Reliable AI Agents Under Human Control</text>
+<text x="724" y="95" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="400" fill="#203442">A proposed research agenda for actions, system updates, and delegation</text>
+<rect x="20" y="124" width="696" height="429" fill="#FFFFFF" stroke="#667985" stroke-width="1.6"/>
+<text x="368" y="161.5" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="32" font-weight="700" fill="#1D6077">Human–Agent Interaction</text>
+<rect x="48" y="214" width="140" height="103" fill="#F1F6F8" stroke="#667985" stroke-width="1.6"/>
+<text x="118" y="265.5" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="27" font-weight="700" fill="#203442">Human</text>
+<rect x="548" y="214" width="140" height="103" fill="#F1F6F8" stroke="#667985" stroke-width="1.6"/>
+<text x="618" y="265.5" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="27" font-weight="700" fill="#203442">AI agent</text>
+<text x="367" y="219" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="400" fill="#203442">Task + authorized scope</text>
+<polyline points="200,248 536,248" fill="none" stroke="#203442" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="536,282 200,282" fill="none" stroke="#203442" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="367" y="314" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="400" fill="#203442">Action proposal + evidence</text>
+<rect x="31" y="360" width="674" height="54" fill="#FFFFFF" stroke="#667985" stroke-width="1.6"/>
+<text x="66" y="387" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="27" font-weight="700" fill="#1D6077">I</text>
+<text x="99" y="387" dominant-baseline="central" text-anchor="start" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" fill="#203442">Check actions against approved requirements</text>
+<rect x="31" y="424" width="674" height="54" fill="#FFFFFF" stroke="#667985" stroke-width="1.6"/>
+<text x="66" y="451" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="27" font-weight="700" fill="#1D6077">II</text>
+<text x="99" y="451" dominant-baseline="central" text-anchor="start" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" fill="#203442">Evaluate protection after system updates</text>
+<rect x="31" y="488" width="674" height="54" fill="#FFFFFF" stroke="#667985" stroke-width="1.6"/>
+<text x="66" y="515" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="27" font-weight="700" fill="#1D6077">III</text>
+<text x="99" y="515" dominant-baseline="central" text-anchor="start" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" fill="#203442">Enforce current scope and permissions across steps</text>
+<rect x="732" y="124" width="696" height="429" fill="#FFFFFF" stroke="#667985" stroke-width="1.6"/>
+<text x="1080" y="161.5" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="32" font-weight="700" fill="#1D6077">Agent–Agent Collaboration</text>
+<rect x="760" y="214" width="140" height="103" fill="#F1F6F8" stroke="#667985" stroke-width="1.6"/>
+<text x="830" y="265.5" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="27" font-weight="700" fill="#203442">Agent A</text>
+<rect x="1260" y="214" width="140" height="103" fill="#F1F6F8" stroke="#667985" stroke-width="1.6"/>
+<text x="1330" y="265.5" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="27" font-weight="700" fill="#203442">Agent B</text>
+<text x="1079" y="219" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="400" fill="#203442">Subtask + data + constraints</text>
+<polyline points="912,248 1248,248" fill="none" stroke="#203442" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="1248,282 912,282" fill="none" stroke="#203442" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="1079" y="314" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="400" fill="#203442">Proposal + evidence + status</text>
+<rect x="743" y="360" width="674" height="54" fill="#FFFFFF" stroke="#667985" stroke-width="1.6"/>
+<text x="778" y="387" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="27" font-weight="700" fill="#1D6077">I</text>
+<text x="811" y="387" dominant-baseline="central" text-anchor="start" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" fill="#203442">Check actions using independent evidence</text>
+<rect x="743" y="424" width="674" height="54" fill="#FFFFFF" stroke="#667985" stroke-width="1.6"/>
+<text x="778" y="451" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="27" font-weight="700" fill="#1D6077">II</text>
+<text x="811" y="451" dominant-baseline="central" text-anchor="start" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" fill="#203442">Assess retention after agent or harness updates</text>
+<rect x="743" y="488" width="674" height="54" fill="#FFFFFF" stroke="#667985" stroke-width="1.6"/>
+<text x="778" y="515" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="27" font-weight="700" fill="#1D6077">III</text>
+<text x="811" y="515" dominant-baseline="central" text-anchor="start" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" fill="#203442">Enforce inherited data limits and valid delegation</text>
+<rect x="20" y="568" width="1408" height="90" fill="#F1F6F8" stroke="#667985" stroke-width="1.6"/>
+<text x="724" y="596" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="32" font-weight="700" fill="#203442">Shared human-approved requirements Φ</text>
+<text x="724" y="635.5" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="400" fill="#203442">Task criteria · security properties · authorization scope</text>
+<rect x="20" y="724" width="369" height="126" fill="#F1F6F8" stroke="#667985" stroke-width="1.6"/>
+<rect x="534" y="724" width="380" height="126" fill="#F1F6F8" stroke="#667985" stroke-width="1.6"/>
+<rect x="1058" y="724" width="370" height="126" fill="#F1F6F8" stroke="#667985" stroke-width="1.6"/>
+<text x="204.5" y="787" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" fill="#203442">I   Action assurance</text>
+<text x="724" y="787" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" fill="#203442">II   Safety retention</text>
+<text x="1243" y="787" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" fill="#203442">III   Workflow control</text>
+<polyline points="205,724 205,690 1243,690 1243,724" fill="none" stroke="#203442" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="612" y="671" width="224" height="36" fill="#FFFFFF" stroke="#667985" stroke-width="1.6"/>
+<text x="724" y="689" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" fill="#203442">scoped approvals</text>
+<polyline points="389,802 534,802" fill="none" stroke="#203442" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="461" y="753.97" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" fill="#203442">checked</text>
+<text x="461" y="782.03" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" fill="#203442">feedback</text>
+<polyline points="914,802 1058,802" fill="none" stroke="#203442" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="986" y="753.97" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" fill="#203442">version +</text>
+<text x="986" y="782.03" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" fill="#203442">evidence</text>
+<polyline points="1243,850 1243,901 205,901 205,850" fill="none" stroke="#203442" stroke-width="2" stroke-dasharray="9 6" marker-end="url(#arrow)"/>
+<polyline points="724,901 724,850" fill="none" stroke="#203442" stroke-width="2" stroke-dasharray="9 6" marker-end="url(#arrow)"/>
+<text x="724" y="931.5" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="400" fill="#203442">workflow feedback</text>
+<text x="724" y="994.36" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="400" fill="#203442">Formal claims require faithful models, sound checking, and trusted enforcement;</text>
+<text x="724" y="1023.64" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="400" fill="#203442">tests provide evidence for evaluated conditions.</text>
+</svg>

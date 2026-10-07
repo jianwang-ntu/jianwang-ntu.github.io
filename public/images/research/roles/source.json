@@ -1,0 +1,26 @@
+{
+  "source": "archive/statement-images/2026-10-07-before-editable-redraw/reliable-agents-human-control.png",
+  "source_sha256": "4c3064fc0c554a3e9ef2dfddc392bc4a9fb50123a8960ff3078c853955374201",
+  "roles": [
+    {
+      "file": "public/images/research/roles/human.png",
+      "crop_box": [
+        46,
+        163,
+        276,
+        319
+      ],
+      "sha256": "8378eda3d5ee6ff7700b80a77da4f4290379b0bc7bc8f7feee9a823c577883bc"
+    },
+    {
+      "file": "public/images/research/roles/robot.png",
+      "crop_box": [
+        536,
+        161,
+        662,
+        315
+      ],
+      "sha256": "0419b5d055002bb324ee0024e0153999ef34bff598e77d42e8b6aa33c321f26b"
+    }
+  ]
+}

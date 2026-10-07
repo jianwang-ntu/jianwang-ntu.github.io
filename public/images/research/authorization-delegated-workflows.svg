@@ -1,72 +1,73 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1448" height="1086" viewBox="0 0 1448 1086" role="img" aria-labelledby="title"><title id="title">III. Authorization Across Delegated Workflows</title><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#203442"/></marker></defs><rect width="1448" height="1086" fill="white"/>
-<text x="724" y="42" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="42" font-weight="700" fill="#203442">III. Authorization Across Delegated Workflows</text>
-<text x="724" y="95" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="400" fill="#203442">A private report can leak through a delegated email draft</text>
-<rect x="20" y="145" width="420" height="795" fill="#FFFFFF" stroke="#667985" stroke-width="1.6"/>
-<text x="230" y="197" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" fill="#1D6077">1  A concrete handoff</text>
-<rect x="514" y="145" width="420" height="795" fill="#FFFFFF" stroke="#667985" stroke-width="1.6"/>
-<text x="724" y="197" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" fill="#1D6077">2  Track workflow context</text>
-<rect x="1008" y="145" width="420" height="795" fill="#FFFFFF" stroke="#667985" stroke-width="1.6"/>
-<text x="1218" y="197" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" fill="#1D6077">3  Enforce and recover</text>
-<rect x="40" y="247" width="380" height="132" fill="#F1F6F8" stroke="#667985" stroke-width="1.6"/>
-<text x="230" y="279" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700" fill="#203442">Approved task</text>
-<text x="230" y="320.36" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="400" fill="#203442">Send a sanitized vendor update</text>
-<text x="230" y="349.64" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="400" fill="#203442">Keep customer IDs internal</text>
-<polyline points="230,379 230,421" fill="none" stroke="#203442" stroke-width="2" marker-end="url(#arrow)"/>
-<text x="326" y="399.5" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="400" fill="#203442">delegated scope</text>
-<rect x="40" y="421" width="380" height="132" fill="#F1F6F8" stroke="#667985" stroke-width="1.6"/>
-<text x="230" y="453" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700" fill="#203442">Agent A: incident analyst</text>
-<text x="230" y="494.36" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="400" fill="#203442">Reads private incident report</text>
-<text x="230" y="523.64" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="400" fill="#203442">Drafts the vendor update</text>
-<polyline points="230,553 230,591" fill="none" stroke="#203442" stroke-width="2" marker-end="url(#arrow)"/>
-<rect x="40" y="591" width="380" height="126" fill="#FFFFFF" stroke="#667985" stroke-width="1.6" stroke-dasharray="9 6"/>
-<text x="230" y="617.5" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700" fill="#203442">Handoff package</text>
-<text x="230" y="660.47" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" fill="#203442">Task: send the vendor update</text>
-<text x="230" y="688.53" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" fill="#203442">Payload: draft with customer IDs</text>
-<polyline points="230,717 230,756" fill="none" stroke="#203442" stroke-width="2" marker-end="url(#arrow)"/>
-<text x="326.5" y="736" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="400" fill="#203442">task + data</text>
-<rect x="40" y="756" width="380" height="120" fill="#F1F6F8" stroke="#667985" stroke-width="1.6"/>
-<text x="230" y="788" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700" fill="#203442">Agent B: vendor liaison</text>
-<text x="230" y="823.97" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" fill="#203442">Can email the external vendor</text>
-<text x="230" y="852.03" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" fill="#203442">Uses A’s draft as message content</text>
-<text x="230" y="895.1899999999999" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="400" fill="#203442">Read access + email access</text>
-<text x="230" y="920.81" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="400" fill="#203442">do not authorize disclosure.</text>
-<text x="478" y="466.52000000000004" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#203442">authority +</text>
-<text x="478" y="488.48" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#203442">data lineage</text>
-<polyline points="448,530 508,530" fill="none" stroke="#203442" stroke-width="2" marker-end="url(#arrow)"/>
-<rect x="534" y="254" width="380" height="174" fill="#F1F6F8" stroke="#667985" stroke-width="1.6"/>
-<text x="724" y="286" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700" fill="#203442">ScopeOK</text>
-<text x="724" y="363" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="400" fill="#203442">Within delegated authority</text>
-<rect x="534" y="457" width="380" height="174" fill="#F1F6F8" stroke="#667985" stroke-width="1.6"/>
-<text x="724" y="489" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700" fill="#203442">FlowOK</text>
-<text x="724" y="550.14" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="400" fill="#203442">Preserves inherited</text>
-<text x="724" y="581.86" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="400" fill="#203442">data restrictions</text>
-<rect x="534" y="660" width="380" height="174" fill="#F1F6F8" stroke="#667985" stroke-width="1.6"/>
-<text x="724" y="692" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700" fill="#203442">FreshOK</text>
-<text x="724" y="753.14" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="400" fill="#203442">Approval dependencies</text>
-<text x="724" y="784.86" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="400" fill="#203442">remain valid</text>
-<text x="724" y="870.75" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="400" fill="#203442">Revocation or changed context</text>
-<text x="724" y="901.25" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="400" fill="#203442">triggers revalidation.</text>
-<text x="974" y="466.52000000000004" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#203442">current</text>
-<text x="974" y="488.48" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#203442">context c</text>
-<polyline points="944,530 1004,530" fill="none" stroke="#203442" stroke-width="2" marker-end="url(#arrow)"/>
-<rect x="1028" y="254" width="380" height="321" fill="#F1F6F8" stroke="#667985" stroke-width="1.6"/>
-<text x="1218" y="286" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700" fill="#203442">Workflow authorization rule</text>
-<text x="1218" y="377.94" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="400" fill="#203442">Allow(a, c) :=</text>
-<text x="1218" y="407.22" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="400" fill="#203442">ScopeOK ∧ FlowOK ∧ FreshOK</text>
-<text x="1218" y="436.5" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="400" fill="#203442"></text>
-<text x="1218" y="465.78" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="400" fill="#203442">a: next delegated action</text>
-<text x="1218" y="495.06" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="400" fill="#203442">c: current workflow context</text>
-<polyline points="1218,575 1218,607" fill="none" stroke="#203442" stroke-width="2"/>
-<polyline points="1218,607 1123,607 1123,671" fill="none" stroke="#203442" stroke-width="2" marker-end="url(#arrow)"/>
-<polyline points="1218,607 1313,607 1313,671" fill="none" stroke="#203442" stroke-width="2" marker-end="url(#arrow)"/>
-<text x="1123" y="590" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="400" fill="#203442">all pass</text>
-<text x="1313" y="590" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="400" fill="#203442">fail / unknown</text>
-<rect x="1028" y="671" width="181" height="65" fill="#F1F6F8" stroke="#667985" stroke-width="1.6"/>
-<rect x="1227" y="671" width="181" height="65" fill="#F1F6F8" stroke="#667985" stroke-width="1.6"/>
-<text x="1118.5" y="703" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#203442">Execute</text>
-<text x="1317.5" y="687.75" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#203442">Suspend /</text>
-<text x="1317.5" y="718.25" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#203442">replan</text>
-<text x="1218" y="807.75" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="400" fill="#203442">Revalidate affected work;</text>
-<text x="1218" y="838.25" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="400" fill="#203442">preserve valid progress.</text>
-<text x="724" y="1027.5" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="400" fill="#203442">Guarantees depend on captured effects and trusted enforcement. Recovery cannot undo completed disclosures.</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1881" height="836" viewBox="0 0 1881 836" role="img" aria-labelledby="title"><title id="title">III. Authorization Across Delegated Workflows</title><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#080808"/></marker></defs><rect width="1881" height="836" fill="white"/>
+<text x="940.5" y="31.5" dominant-baseline="central" text-anchor="middle" font-family="Times New Roman, serif" font-size="50" font-weight="700" font-style="normal" fill="#080808">III. Authorization Across Delegated Workflows</text>
+<text x="940.5" y="84" dominant-baseline="central" text-anchor="middle" font-family="Times New Roman, serif" font-size="37" font-weight="400" font-style="normal" fill="#080808">A private report can leak through a delegated email draft.</text>
+<rect x="29" y="114" width="530" height="696" fill="#FFFFFF" stroke="#080808" stroke-width="2"/>
+<rect x="679" y="147" width="524" height="623" fill="#FFFFFF" stroke="#080808" stroke-width="2"/>
+<rect x="1322" y="147" width="533" height="623" fill="#FFFFFF" stroke="#080808" stroke-width="2"/>
+<ellipse cx="81.5" cy="153.5" rx="32.5" ry="30.5" fill="#FFFFFF" stroke="#080808" stroke-width="2.4"/>
+<text x="81.5" y="153.5" dominant-baseline="central" text-anchor="middle" font-family="Times New Roman, serif" font-size="40" font-weight="700" font-style="normal" fill="#080808">1</text>
+<text x="140" y="152.5" dominant-baseline="central" text-anchor="start" font-family="Times New Roman, serif" font-size="41" font-weight="700" font-style="normal" fill="#080808">A concrete handoff</text>
+<ellipse cx="731.5" cy="186.5" rx="32.5" ry="30.5" fill="#FFFFFF" stroke="#080808" stroke-width="2.4"/>
+<text x="731.5" y="186.5" dominant-baseline="central" text-anchor="middle" font-family="Times New Roman, serif" font-size="40" font-weight="700" font-style="normal" fill="#080808">2</text>
+<text x="790" y="186" dominant-baseline="central" text-anchor="start" font-family="Times New Roman, serif" font-size="37" font-weight="700" font-style="normal" fill="#080808">Track workflow context</text>
+<ellipse cx="1372.5" cy="186.5" rx="32.5" ry="30.5" fill="#FFFFFF" stroke="#080808" stroke-width="2.4"/>
+<text x="1372.5" y="186.5" dominant-baseline="central" text-anchor="middle" font-family="Times New Roman, serif" font-size="40" font-weight="700" font-style="normal" fill="#080808">3</text>
+<text x="1432" y="186" dominant-baseline="central" text-anchor="start" font-family="Times New Roman, serif" font-size="38" font-weight="700" font-style="normal" fill="#080808">Enforce and recover</text>
+<rect x="55" y="196" width="481" height="105" fill="#F8F8F8" stroke="#080808" stroke-width="2"/>
+<text x="295.5" y="217" dominant-baseline="central" text-anchor="middle" font-family="Times New Roman, serif" font-size="32" font-weight="700" font-style="normal" fill="#080808">Approved task</text>
+<text x="295.5" y="248.54000000000002" dominant-baseline="central" text-anchor="middle" font-family="Times New Roman, serif" font-size="28" font-weight="400" font-style="normal" fill="#080808">Send a sanitized vendor update</text>
+<text x="295.5" y="280.46" dominant-baseline="central" text-anchor="middle" font-family="Times New Roman, serif" font-size="28" font-weight="400" font-style="normal" fill="#080808">Keep customer IDs internal</text>
+<polyline points="295,301 295,347" fill="none" stroke="#080808" stroke-width="2.4" marker-end="url(#arrow)"/>
+<text x="313" y="324.5" dominant-baseline="central" text-anchor="start" font-family="Times New Roman, serif" font-size="28" font-weight="400" font-style="normal" fill="#080808">delegated scope</text>
+<rect x="55" y="347" width="481" height="104" fill="#F8F8F8" stroke="#080808" stroke-width="2"/>
+<text x="295.5" y="368.5" dominant-baseline="central" text-anchor="middle" font-family="Times New Roman, serif" font-size="32" font-weight="700" font-style="normal" fill="#080808">Agent A: incident analyst</text>
+<text x="295.5" y="400.53999999999996" dominant-baseline="central" text-anchor="middle" font-family="Times New Roman, serif" font-size="28" font-weight="400" font-style="normal" fill="#080808">Reads private incident report</text>
+<text x="295.5" y="432.46" dominant-baseline="central" text-anchor="middle" font-family="Times New Roman, serif" font-size="28" font-weight="400" font-style="normal" fill="#080808">Drafts the vendor update</text>
+<polyline points="295,451 295,488" fill="none" stroke="#080808" stroke-width="2.4" marker-end="url(#arrow)"/>
+<rect x="55" y="488" width="481" height="109" fill="#F8F8F8" stroke="#080808" stroke-width="2" stroke-dasharray="10 6"/>
+<text x="295.5" y="509" dominant-baseline="central" text-anchor="middle" font-family="Times New Roman, serif" font-size="32" font-weight="700" font-style="normal" fill="#080808">Handoff package</text>
+<text x="295.5" y="543.11" dominant-baseline="central" text-anchor="middle" font-family="Times New Roman, serif" font-size="27" font-weight="400" font-style="normal" fill="#080808">Task: send the vendor update</text>
+<text x="295.5" y="573.89" dominant-baseline="central" text-anchor="middle" font-family="Times New Roman, serif" font-size="27" font-weight="400" font-style="normal" fill="#080808">Payload: draft containing customer IDs</text>
+<polyline points="295,597 295,637" fill="none" stroke="#080808" stroke-width="2.4" marker-end="url(#arrow)"/>
+<text x="313" y="616.5" dominant-baseline="central" text-anchor="start" font-family="Times New Roman, serif" font-size="28" font-weight="400" font-style="normal" fill="#080808">task + data</text>
+<rect x="55" y="637" width="481" height="101" fill="#F8F8F8" stroke="#080808" stroke-width="2"/>
+<text x="295.5" y="657.5" dominant-baseline="central" text-anchor="middle" font-family="Times New Roman, serif" font-size="32" font-weight="700" font-style="normal" fill="#080808">Agent B: vendor liaison</text>
+<text x="295.5" y="689.0400000000001" dominant-baseline="central" text-anchor="middle" font-family="Times New Roman, serif" font-size="28" font-weight="400" font-style="normal" fill="#080808">Can email the external vendor</text>
+<text x="295.5" y="720.96" dominant-baseline="central" text-anchor="middle" font-family="Times New Roman, serif" font-size="28" font-weight="400" font-style="normal" fill="#080808">Uses A’s draft as message content</text>
+<text x="295.5" y="757.5400000000001" dominant-baseline="central" text-anchor="middle" font-family="Times New Roman, serif" font-size="28" font-weight="400" font-style="normal" fill="#080808">Read access + email access</text>
+<text x="295.5" y="789.46" dominant-baseline="central" text-anchor="middle" font-family="Times New Roman, serif" font-size="28" font-weight="400" font-style="normal" fill="#080808">do not authorize disclosure.</text>
+<text x="619" y="381.61" dominant-baseline="central" text-anchor="middle" font-family="Times New Roman, serif" font-size="27" font-weight="400" font-style="normal" fill="#080808">authority +</text>
+<text x="619" y="412.39" dominant-baseline="central" text-anchor="middle" font-family="Times New Roman, serif" font-size="27" font-weight="400" font-style="normal" fill="#080808">data lineage</text>
+<polyline points="559,439 679,439" fill="none" stroke="#080808" stroke-width="2.4" marker-end="url(#arrow)"/>
+<rect x="702" y="235" width="478" height="122" fill="#F8F8F8" stroke="#080808" stroke-width="2"/>
+<text x="941" y="273" dominant-baseline="central" text-anchor="middle" font-family="Times New Roman, serif" font-size="36" font-weight="700" font-style="normal" fill="#080808">ScopeOK</text>
+<text x="941" y="320.5" dominant-baseline="central" text-anchor="middle" font-family="Times New Roman, serif" font-size="30" font-weight="400" font-style="normal" fill="#080808">Within delegated authority</text>
+<rect x="702" y="383" width="478" height="127" fill="#F8F8F8" stroke="#080808" stroke-width="2"/>
+<text x="941" y="424" dominant-baseline="central" text-anchor="middle" font-family="Times New Roman, serif" font-size="36" font-weight="700" font-style="normal" fill="#080808">FlowOK</text>
+<text x="941" y="474.5" dominant-baseline="central" text-anchor="middle" font-family="Times New Roman, serif" font-size="30" font-weight="400" font-style="normal" fill="#080808">Preserves inherited data restrictions</text>
+<rect x="702" y="537" width="478" height="124" fill="#F8F8F8" stroke="#080808" stroke-width="2"/>
+<text x="941" y="574" dominant-baseline="central" text-anchor="middle" font-family="Times New Roman, serif" font-size="36" font-weight="700" font-style="normal" fill="#080808">FreshOK</text>
+<text x="941" y="625" dominant-baseline="central" text-anchor="middle" font-family="Times New Roman, serif" font-size="30" font-weight="400" font-style="normal" fill="#080808">Approval dependencies remain valid</text>
+<text x="941.5" y="700.4" dominant-baseline="central" text-anchor="middle" font-family="Times New Roman, serif" font-size="30" font-weight="400" font-style="normal" fill="#080808">Revocation or changed context</text>
+<text x="941.5" y="734.6" dominant-baseline="central" text-anchor="middle" font-family="Times New Roman, serif" font-size="30" font-weight="400" font-style="normal" fill="#080808">triggers revalidation.</text>
+<text x="1262.5" y="382.61" dominant-baseline="central" text-anchor="middle" font-family="Times New Roman, serif" font-size="27" font-weight="400" font-style="normal" fill="#080808">current</text>
+<text x="1262.5" y="413.39" dominant-baseline="central" text-anchor="middle" font-family="Times New Roman, serif" font-size="27" font-weight="400" font-style="normal" fill="#080808">context c</text>
+<polyline points="1203,439 1322,439" fill="none" stroke="#080808" stroke-width="2.4" marker-end="url(#arrow)"/>
+<rect x="1342" y="235" width="494" height="263" fill="#F8F8F8" stroke="#080808" stroke-width="2"/>
+<text x="1589" y="269.5" dominant-baseline="central" text-anchor="middle" font-family="Times New Roman, serif" font-size="35" font-weight="700" font-style="normal" fill="#080808">Workflow authorization rule</text>
+<text x="1589" y="327" dominant-baseline="central" text-anchor="middle" font-family="Times New Roman, serif" font-size="38" font-weight="400" font-style="italic" fill="#080808">Allow(a, c) :=</text>
+<text x="1589" y="375" dominant-baseline="central" text-anchor="middle" font-family="Times New Roman, serif" font-size="35" font-weight="400" font-style="italic" fill="#080808">ScopeOK ∧ FlowOK ∧ FreshOK</text>
+<text x="1589" y="421.96999999999997" dominant-baseline="central" text-anchor="middle" font-family="Times New Roman, serif" font-size="29" font-weight="400" font-style="normal" fill="#080808">a: next delegated action</text>
+<text x="1589" y="455.03" dominant-baseline="central" text-anchor="middle" font-family="Times New Roman, serif" font-size="29" font-weight="400" font-style="normal" fill="#080808">c: current workflow context</text>
+<polyline points="1587,498 1587,542" fill="none" stroke="#080808" stroke-width="2.4"/>
+<polyline points="1587,542 1485,542 1485,601" fill="none" stroke="#080808" stroke-width="2.4" marker-end="url(#arrow)"/>
+<polyline points="1587,542 1667,542 1667,601" fill="none" stroke="#080808" stroke-width="2.4" marker-end="url(#arrow)"/>
+<text x="1428" y="544" dominant-baseline="central" text-anchor="middle" font-family="Times New Roman, serif" font-size="27" font-weight="400" font-style="normal" fill="#080808">all pass</text>
+<text x="1761" y="544" dominant-baseline="central" text-anchor="middle" font-family="Times New Roman, serif" font-size="27" font-weight="400" font-style="normal" fill="#080808">false / unknown</text>
+<rect x="1342" y="601" width="242" height="75" fill="#F8F8F8" stroke="#080808" stroke-width="2"/>
+<rect x="1604" y="601" width="237" height="75" fill="#F8F8F8" stroke="#080808" stroke-width="2"/>
+<text x="1463" y="639" dominant-baseline="central" text-anchor="middle" font-family="Times New Roman, serif" font-size="34" font-weight="700" font-style="normal" fill="#080808">Execute</text>
+<text x="1722.5" y="639" dominant-baseline="central" text-anchor="middle" font-family="Times New Roman, serif" font-size="29" font-weight="700" font-style="normal" fill="#080808">Suspend / replan</text>
+<text x="1589.5" y="736" dominant-baseline="central" text-anchor="middle" font-family="Times New Roman, serif" font-size="25" font-weight="400" font-style="normal" fill="#080808">Revalidate affected work; preserve valid progress.</text>
+<text x="940.5" y="810.5" dominant-baseline="central" text-anchor="middle" font-family="Times New Roman, serif" font-size="26" font-weight="400" font-style="normal" fill="#080808">Guarantees depend on captured effects and trusted enforcement.</text>
 </svg>
