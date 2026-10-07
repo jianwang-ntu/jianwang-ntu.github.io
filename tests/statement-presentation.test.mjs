@@ -291,3 +291,18 @@ test('research foundation is collapsed while the introduction stays visible', ()
   assert.doesNotMatch(disclosure, /I study AI agents|Assurance/);
   assert.ok(html.indexOf('I study AI agents') < html.indexOf(disclosure));
 });
+
+test('both overview images offer responsive keyboard links to all three statement sections', () => {
+  for (const route of ['/home', '/statement']) {
+    const html = renderRoute(route);
+    const links = [...html.matchAll(/<a\b[^>]*class="research-image-link"[^>]*>/g)].map(match => match[0]);
+    assert.equal(links.length, 13);
+    for (const link of links) {
+      assert.match(link, /aria-label="[^"]+"/);
+      assert.match(link, /left:[\d.]+%;top:[\d.]+%;width:[\d.]+%;height:[\d.]+%/);
+    }
+    for (const target of ['i-scalable-oversight-under-adaptation', 'ii-safety-preserving-learning-and-feedback', 'iii-control-across-time-and-delegation']) {
+      assert.ok(links.some(link => link.includes(`/statement#${target}`)), target);
+    }
+  }
+});

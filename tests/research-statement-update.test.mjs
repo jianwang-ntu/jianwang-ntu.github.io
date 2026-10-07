@@ -70,7 +70,7 @@ test('the statement page exposes the three-part agenda without a crowded index',
   assert.doesNotMatch(page, /ResearchPath|Previous version|archive/i);
 
   assert.match(overview, /reliable-agents-human-control\.png/);
-  assert.match(overview, /className="home-research-image"/);
+  assert.match(overview, /<LinkedResearchImage/);
   assert.match(styles, /\.research-overview-object\s*{[^}]*min-width:\s*760px/s);
   assert.match(styles, /\.research-overview-canvas\s*{[^}]*overflow-x:\s*auto/s);
 });

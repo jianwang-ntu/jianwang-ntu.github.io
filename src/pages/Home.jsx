@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Nav from '../components/Nav.jsx';
 import Footer from '../components/Footer.jsx';
 import Seo from '../components/Seo.jsx';
+import LinkedResearchImage from '../components/LinkedResearchImage.jsx';
 import SiteFrame from '../components/SiteFrame.jsx';
 import { NEWS, ALL_PUBS } from '../data.jsx';
 import { PUB_META } from '../data-pubs.js';
@@ -40,11 +41,7 @@ function AcademicPagesHome() {
             <Link to="/statement#iii-control-across-time-and-delegation">authorization across delegated workflows</Link>.
             My long-term goal is to help agents act, learn, and collaborate while preserving reliability, security, and human authority.</p>
           <figure className="research-overview" id="research-overview">
-            <a href={agentWorldUrl} target="_blank" rel="noreferrer">
-              <img className="home-research-image" src={agentWorldUrl} width="1448" height="1086"
-                loading="lazy" decoding="async"
-                alt="Reliable AI agents under human control: human–agent interaction and agent–agent collaboration share approved requirements for action assurance, safety retention, and workflow control." />
-            </a>
+            <LinkedResearchImage loading="lazy" />
             <figcaption className="home-research-caption">
               <ol className="home-research-questions" lang="zh-Hans">
                 <li><strong>行动前监督：</strong>当前行动有什么可信依据？</li>
