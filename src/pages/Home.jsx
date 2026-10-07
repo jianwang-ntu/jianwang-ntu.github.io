@@ -34,19 +34,6 @@ function AcademicPagesHome() {
             <h2 id="interests-title">Research interests</h2>
             <Link className="text-link" to="/statement">Research statement ↗</Link>
           </div>
-          <p className="home-research-intro">
-            My current research connects <strong>Trustworthy Code LLMs</strong> with{' '}
-            <strong>Reliable LLM Agents</strong>. I evaluate AI-generated code detection and its
-            implications for training-data curation (
-            <a href="https://dl.acm.org/doi/10.1145/3691620.3695468" target="_blank" rel="noreferrer">ASE 2024</a>),
-            study vulnerability detection (
-            <a href="https://arxiv.org/abs/2404.09599" target="_blank" rel="noreferrer">LCTES 2024</a>),
-            and develop retrieval-augmented program repair (<Link to="/pubs/ratchet">ISSRE 2024</Link>).
-            I also benchmark repair capability with Defects4C (<Link to="/pubs/defects4c">ASE 2025</Link>)
-            and test whether execution traces help models reason about program behavior; the evaluated
-            settings show limited gains (<a href="https://arxiv.org/abs/2509.11686" target="_blank" rel="noreferrer">Findings of EMNLP 2025</a>).
-            These results motivate my broader work on evidence, adaptation, and control in agents.
-          </p>
           <p>My proposed research focuses on <strong>reliable AI agents under human control</strong>:
             how agents can act, improve, and collaborate while preserving security, reliability, and authorization as models,
             harnesses, and workflows change.</p>

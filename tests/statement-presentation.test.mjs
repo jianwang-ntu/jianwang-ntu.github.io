@@ -86,37 +86,18 @@ test('Home keeps the three Chinese research questions in the caption below the i
   assert.doesNotMatch(renderRoute('/statement'), /当前行动有什么可信依据|能力提升后|任务变长/);
 });
 
-test('Home adds research evidence links without replacing the existing agent agenda', () => {
+test('Home leads with the current agenda and keeps historical evidence in the collapsed foundation', () => {
   const html = renderRoute('/home');
   const research = html.match(/<section\b[^>]*aria-labelledby="interests-title"[^>]*>[\s\S]*?<\/section>/)?.[0] || '';
-
-  assert.match(research, /class="home-research-intro"/);
-  assert.match(research, /Trustworthy Code LLMs/);
-  assert.match(research, /Reliable LLM Agents/);
-  const anchors = [...research.matchAll(/<a\b[^>]*href="([^"]+)"[^>]*>([^<]+)<\/a>/g)]
-    .map(([, href, label]) => [label, href]);
-  for (const pair of [
-    ['ASE 2024', 'https://dl.acm.org/doi/10.1145/3691620.3695468'],
-    ['LCTES 2024', 'https://arxiv.org/abs/2404.09599'],
-    ['ISSRE 2024', '/pubs/ratchet'],
-    ['ASE 2025', '/pubs/defects4c'],
-    ['Findings of EMNLP 2025', 'https://arxiv.org/abs/2509.11686'],
-  ]) assert.ok(anchors.some(anchor => anchor[0] === pair[0] && anchor[1] === pair[1]), pair.join(' → '));
-  assert.doesNotMatch(research, /\(\s+<a|<\/a>\s+\)/, 'Parenthesised venue links should not contain visible padding');
-
-  const intro = research.match(/<p class="home-research-intro">([\s\S]*?)<\/p>/)?.[1] || '';
-  const introWords = intro.replace(/<[^>]+>/g, '').trim().split(/\s+/);
-  assert.ok(introWords.length <= 90, `Homepage research introduction has ${introWords.length} words`);
-  assert.match(intro, /limited gains/i);
-  assert.doesNotMatch(intro, /evidence can improve/i);
-
+  assert.doesNotMatch(research, /home-research-intro|Trustworthy Code LLMs|limited gains/);
   assert.match(research, /My proposed research focuses on/);
   assert.match(research, /The agenda connects/);
-  assert.ok(
-    research.indexOf('home-research-intro') < research.indexOf('My proposed research focuses on'),
-    'The brief introduction should lead into the existing agent agenda',
-  );
   assert.match(research, /id="research-overview"/);
+  const statement = renderRoute('/statement');
+  const foundation = statement.match(/<details\b[^>]*id="research-foundation-and-approach"[^>]*>[\s\S]*?<\/details>/)?.[0] || '';
+  assert.match(foundation, /Trustworthy Code LLMs/);
+  assert.match(foundation, /LCTES 2024/);
+  assert.match(foundation, /limited gains/);
 });
 
 test('Home links the deepfake recognition to the supplied news report', () => {
@@ -304,7 +285,7 @@ test('research foundation is collapsed while the introduction stays visible', ()
   assert.ok(disclosure);
   assert.doesNotMatch(disclosure.split('>')[0], /\bopen(?:=|\s|$)/);
   assert.match(disclosure, /<summary>Research foundation and approach<\/summary>/);
-  assert.match(disclosure, /Our execution-trace study/);
+  assert.match(disclosure, /the evaluated settings show limited gains/);
   assert.doesNotMatch(disclosure, /I study AI agents|Assurance/);
   assert.ok(html.indexOf('I study AI agents') < html.indexOf(disclosure));
 });

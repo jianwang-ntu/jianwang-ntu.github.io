@@ -4,7 +4,7 @@ I study AI agents that carry out tasks for people and collaborate with other age
 
 ### Research foundation and approach
 
-My work on code models and program repair grounds this agenda in execution-based evaluation. Our execution-trace study found limited gains from trace information in the settings tested [1]. Defects4C provides reproducible C/C++ repair tasks [2], while RATCHET studies retrieval-augmented repair [3]. These projects inform how I design experiments; they do not establish results on agent safety.
+My current research connects **Trustworthy Code LLMs** with **Reliable LLM Agents**. I evaluate AI-generated code detection and its implications for training-data curation ([ASE 2024](https://dl.acm.org/doi/10.1145/3691620.3695468)), study vulnerability detection ([LCTES 2024](https://arxiv.org/abs/2404.09599)), and develop retrieval-augmented program repair ([ISSRE 2024](/pubs/ratchet)). I also benchmark repair capability with Defects4C ([ASE 2025](/pubs/defects4c)) and test whether execution traces help models reason about program behavior; the evaluated settings show limited gains ([Findings of EMNLP 2025](https://arxiv.org/abs/2509.11686)). These results motivate my broader work on evidence, adaptation, and control in agents. These projects inform how I design experiments; they do not establish results on agent safety.
 
 I would start with software tasks, then test transfer to other digital workflows. I measure task completion, harmful outcomes, and authorization violations separately: a correct result can still disclose restricted data. The work below is proposed research, not a report of new results.
 
