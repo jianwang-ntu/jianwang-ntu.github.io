@@ -13,24 +13,24 @@
 <ellipse cx="1369.5" cy="177.5" rx="31.5" ry="30.5" fill="#FFFFFF" stroke="#08090B" stroke-width="2.4"/>
 <text x="1369.5" y="177.5" dominant-baseline="central" text-anchor="middle" font-family="Arial Narrow, sans-serif" font-size="40" font-weight="700" font-style="normal" fill="#08090B">3</text>
 <text x="1432" y="177.5" dominant-baseline="central" text-anchor="start" font-family="Arial Narrow, sans-serif" font-size="42" font-weight="700" font-style="normal" fill="#08090B">Apply validated Δ</text>
-<rect x="66" y="220" width="464" height="173" fill="#F7F7F7" stroke="#08090B" stroke-width="2"/>
+<rect x="66" y="220" width="464" height="173" fill="#F8F8F8" stroke="#08090B" stroke-width="2"/>
 <text x="298" y="257" dominant-baseline="central" text-anchor="middle" font-family="Arial Narrow, sans-serif" font-size="34" font-weight="700" font-style="normal" fill="#08090B">Current system</text>
 <text x="298" y="307.5" dominant-baseline="central" text-anchor="middle" font-family="Times New Roman, serif" font-size="42" font-weight="400" font-style="italic" fill="#08090B">Sₜ = (Lₜ, Hₜ)</text>
 <text x="298" y="356.5" dominant-baseline="central" text-anchor="middle" font-family="Arial Narrow, sans-serif" font-size="28" font-weight="400" font-style="normal" fill="#08090B">LLM + harness, including guardrails</text>
-<rect x="76" y="408" width="447" height="100" fill="#F7F7F7" stroke="#08090B" stroke-width="2"/>
+<rect x="76" y="408" width="447" height="100" fill="#F8F8F8" stroke="#08090B" stroke-width="2"/>
 <text x="299.5" y="438" dominant-baseline="central" text-anchor="middle" font-family="Arial Narrow, sans-serif" font-size="32" font-weight="700" font-style="normal" fill="#08090B">LLM learning</text>
 <text x="299.5" y="479.5" dominant-baseline="central" text-anchor="middle" font-family="Arial Narrow, sans-serif" font-size="28" font-weight="400" font-style="normal" fill="#08090B">Paired authorized tasks</text>
-<rect x="76" y="524" width="447" height="101" fill="#F7F7F7" stroke="#08090B" stroke-width="2"/>
+<rect x="76" y="524" width="447" height="101" fill="#F8F8F8" stroke="#08090B" stroke-width="2"/>
 <text x="299.5" y="554" dominant-baseline="central" text-anchor="middle" font-family="Arial Narrow, sans-serif" font-size="32" font-weight="700" font-style="normal" fill="#08090B">Harness upgrades</text>
 <text x="299.5" y="595.5" dominant-baseline="central" text-anchor="middle" font-family="Arial Narrow, sans-serif" font-size="28" font-weight="400" font-style="normal" fill="#08090B">Tools · monitors · training feedback</text>
 <text x="297" y="684" dominant-baseline="central" text-anchor="middle" font-family="Arial Narrow, sans-serif" font-size="29" font-weight="400" font-style="normal" fill="#08090B">Test a candidate before release.</text>
 <text x="615.5" y="372.68" dominant-baseline="central" text-anchor="middle" font-family="Arial Narrow, sans-serif" font-size="26" font-weight="400" font-style="normal" fill="#08090B">updated</text>
 <text x="615.5" y="402.32" dominant-baseline="central" text-anchor="middle" font-family="Arial Narrow, sans-serif" font-size="26" font-weight="400" font-style="normal" fill="#08090B">candidate</text>
 <polyline points="557,425 676,425" fill="none" stroke="#08090B" stroke-width="2.4" marker-end="url(#arrow)"/>
-<rect x="701" y="219" width="471" height="96" fill="#F7F7F7" stroke="#08090B" stroke-width="2"/>
+<rect x="701" y="219" width="471" height="96" fill="#F8F8F8" stroke="#08090B" stroke-width="2"/>
 <text x="936.5" y="249.5" dominant-baseline="central" text-anchor="middle" font-family="Arial Narrow, sans-serif" font-size="33" font-weight="700" font-style="normal" fill="#08090B">Protected requirements</text>
 <text x="937" y="287.5" dominant-baseline="central" text-anchor="middle" font-family="Arial Narrow, sans-serif" font-size="27" font-weight="400" font-style="normal" fill="#08090B">Security · reliability · task completion</text>
-<rect x="701" y="331" width="471" height="224" fill="#F7F7F7" stroke="#08090B" stroke-width="2"/>
+<rect x="701" y="331" width="471" height="224" fill="#F8F8F8" stroke="#08090B" stroke-width="2"/>
 <text x="936.5" y="357" dominant-baseline="central" text-anchor="middle" font-family="Arial Narrow, sans-serif" font-size="33" font-weight="700" font-style="normal" fill="#08090B">Recheck existing guardrails</text>
 <rect x="726" y="384" width="421" height="73" fill="#FAFAFA" stroke="#9DA6AF" stroke-width="1.1"/>
 <text x="936.5" y="406" dominant-baseline="central" text-anchor="middle" font-family="Arial Narrow, sans-serif" font-size="29" font-weight="700" font-style="normal" fill="#08090B">PolicyOK</text>
@@ -42,13 +42,13 @@
 <text x="909" y="584.5" dominant-baseline="central" text-anchor="middle" font-family="Arial Narrow, sans-serif" font-size="26" font-weight="400" font-style="normal" fill="#08090B">fail / unknown</text>
 <polyline points="1044,616 1044,555" fill="none" stroke="#08090B" stroke-width="2.4" stroke-dasharray="10 6" marker-end="url(#arrow)"/>
 <text x="1104.5" y="584.5" dominant-baseline="central" text-anchor="middle" font-family="Arial Narrow, sans-serif" font-size="26" font-weight="400" font-style="normal" fill="#08090B">retest</text>
-<rect x="700" y="616" width="472" height="87" fill="#F7F7F7" stroke="#08090B" stroke-width="2"/>
+<rect x="700" y="616" width="472" height="87" fill="#F8F8F8" stroke="#08090B" stroke-width="2"/>
 <text x="936" y="643.5" dominant-baseline="central" text-anchor="middle" font-family="Arial Narrow, sans-serif" font-size="33" font-weight="700" font-style="normal" fill="#08090B">Repair update or guardrails</text>
 <text x="936" y="681" dominant-baseline="central" text-anchor="middle" font-family="Arial Narrow, sans-serif" font-size="27" font-weight="400" font-style="normal" fill="#08090B">Keep requirements unchanged</text>
 <text x="1254.5" y="372.68" dominant-baseline="central" text-anchor="middle" font-family="Arial Narrow, sans-serif" font-size="26" font-weight="400" font-style="normal" fill="#08090B">checked</text>
 <text x="1254.5" y="402.32" dominant-baseline="central" text-anchor="middle" font-family="Arial Narrow, sans-serif" font-size="26" font-weight="400" font-style="normal" fill="#08090B">evidence</text>
 <polyline points="1195,425 1316,425" fill="none" stroke="#08090B" stroke-width="2.4" marker-end="url(#arrow)"/>
-<rect x="1343" y="219" width="475" height="206" fill="#F7F7F7" stroke="#08090B" stroke-width="2"/>
+<rect x="1343" y="219" width="475" height="206" fill="#F8F8F8" stroke="#08090B" stroke-width="2"/>
 <text x="1580.5" y="250.5" dominant-baseline="central" text-anchor="middle" font-family="Arial Narrow, sans-serif" font-size="34" font-weight="700" font-style="normal" fill="#08090B">Update gate</text>
 <text x="1580" y="299.5" dominant-baseline="central" text-anchor="middle" font-family="Times New Roman, serif" font-size="36" font-weight="400" font-style="italic" fill="#08090B">Accept(Δ*) :=</text>
 <text x="1580" y="346" dominant-baseline="central" text-anchor="middle" font-family="Times New Roman, serif" font-size="36" font-weight="400" font-style="italic" fill="#08090B">PolicyOK ∧ RetentionOK</text>
@@ -58,11 +58,11 @@
 <polyline points="1581,458 1670,458 1670,501" fill="none" stroke="#08090B" stroke-width="2.4" marker-end="url(#arrow)"/>
 <text x="1444.5" y="458.5" dominant-baseline="central" text-anchor="middle" font-family="Arial Narrow, sans-serif" font-size="26" font-weight="400" font-style="normal" fill="#08090B">pass</text>
 <text x="1755" y="458.5" dominant-baseline="central" text-anchor="middle" font-family="Arial Narrow, sans-serif" font-size="26" font-weight="400" font-style="normal" fill="#08090B">fail / unknown</text>
-<rect x="1335" y="501" width="241" height="64" fill="#F7F7F7" stroke="#08090B" stroke-width="2"/>
-<rect x="1594" y="501" width="235" height="64" fill="#F7F7F7" stroke="#08090B" stroke-width="2"/>
+<rect x="1335" y="501" width="241" height="64" fill="#F8F8F8" stroke="#08090B" stroke-width="2"/>
+<rect x="1594" y="501" width="235" height="64" fill="#F8F8F8" stroke="#08090B" stroke-width="2"/>
 <text x="1455.5" y="531.5" dominant-baseline="central" text-anchor="middle" font-family="Arial Narrow, sans-serif" font-size="33" font-weight="700" font-style="normal" fill="#08090B">Apply Δ*</text>
 <text x="1711.5" y="531.5" dominant-baseline="central" text-anchor="middle" font-family="Arial Narrow, sans-serif" font-size="33" font-weight="700" font-style="normal" fill="#08090B">Retain Sₜ</text>
-<rect x="1332" y="582" width="498" height="131" fill="#F7F7F7" stroke="#08090B" stroke-width="2"/>
+<rect x="1332" y="582" width="498" height="131" fill="#F8F8F8" stroke="#08090B" stroke-width="2"/>
 <text x="1581" y="609" dominant-baseline="central" text-anchor="middle" font-family="Arial Narrow, sans-serif" font-size="34" font-weight="700" font-style="normal" fill="#08090B">On acceptance:</text>
 <text x="1581" y="652.5" dominant-baseline="central" text-anchor="middle" font-family="Times New Roman, serif" font-size="35" font-weight="400" font-style="italic" fill="#08090B">Sₜ₊₁ = Update(Sₜ, Δ*)</text>
 <text x="1581" y="690.5" dominant-baseline="central" text-anchor="middle" font-family="Arial Narrow, sans-serif" font-size="24" font-weight="400" font-style="normal" fill="#08090B">Δ*: checked change, including needed guardrail repairs</text>

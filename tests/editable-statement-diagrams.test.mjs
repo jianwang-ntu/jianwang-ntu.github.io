@@ -48,3 +48,12 @@ test('overview reuses exact separately cropped human and robot assets', () => {
   assert.match(page, /Editable redraw/);
   assert.equal((page.match(/class="comparison"/g) || []).length, 4);
 });
+
+test('the three section diagrams share neutral backgrounds', () => {
+  for (const name of ['formal-oversight-before-action', 'preserving-safety-continual-updates', 'authorization-delegated-workflows']) {
+    const svg = readFileSync(file(`public/images/research/${name}.svg`), 'utf8');
+    assert.match(svg, /fill="white"/);
+    assert.match(svg, /fill="#F8F8F8"/);
+    assert.doesNotMatch(svg, /#F0F3F6|#FAFBFD|#F7F7F7/);
+  }
+});

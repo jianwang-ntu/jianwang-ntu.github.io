@@ -12,7 +12,9 @@ cropped to the original diagram's dimensions. The deck retains white margins
 because PowerPoint requires one canvas size for all slides. The website uses
 matching SVGs at the original dimensions: 1448 × 1086 for the overview, 1870 × 841
 for sections I and II, and 1881 × 836 for section III. All diagram text and lines
-are vectors; only the original human and robot artwork are raster crops.
+are vectors; only the original human and robot artwork are raster crops. The three
+section diagrams share a white canvas and neutral grey panel fill. Clicking any
+section diagram on the statement page opens its full-size SVG in a new tab.
 
 `comparison.html` offers original and redrawn images side by side, plus an opacity
 slider for aligned overlays. It uses the unchanged original PNG assets.
