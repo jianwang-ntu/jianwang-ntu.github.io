@@ -297,3 +297,14 @@ test('Home and Statement use consistent research focus and section labels', () =
     assert.ok(statement.toLowerCase().includes(label.toLowerCase()), label);
   }
 });
+
+test('research foundation is collapsed while the introduction stays visible', () => {
+  const html = renderRoute('/statement');
+  const disclosure = html.match(/<details\b[^>]*id="research-foundation-and-approach"[^>]*>[\s\S]*?<\/details>/)?.[0];
+  assert.ok(disclosure);
+  assert.doesNotMatch(disclosure.split('>')[0], /\bopen(?:=|\s|$)/);
+  assert.match(disclosure, /<summary>Research foundation and approach<\/summary>/);
+  assert.match(disclosure, /Our execution-trace study/);
+  assert.doesNotMatch(disclosure, /I study AI agents|Assurance/);
+  assert.ok(html.indexOf('I study AI agents') < html.indexOf(disclosure));
+});
