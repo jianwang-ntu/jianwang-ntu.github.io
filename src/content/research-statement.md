@@ -26,17 +26,17 @@ I would study specification adequacy and robustness to adaptive attacks, compari
 
 ---
 
-## II. Safety-preserving learning and feedback
+## II. Preserving safety through continual updates
 
-*Which training changes improve behavior without weakening safety?*
+*How can models and harnesses improve while preserving security and reliability?*
 
-Fine-tuning can weaken previously learned safety behavior [6]. RUBAS studies rubric-based rewards [7], and ToolShield uses defensive experience for multi-turn tool use [8]. I would investigate which learning signals transfer to new tasks and remain effective after further capability training.
+![Preserving safety through continual updates: propose a model or harness change, revalidate protected requirements and guardrails, repair and retest failures, then apply only the validated change or retain the current system.](/images/research/preserving-safety-continual-updates.png)
 
-One approach is to train on paired tasks with the same legitimate goal but different recipients, permissions, or tool effects. Each pair would retain a valid authorized solution. I would test whether outcome feedback and independently checked constraints teach why an action is acceptable in one case but not the other. I would compare this with safety fine-tuning, adversarial training, and rubric-based reinforcement learning using matched data.
+I would study how continual learning and harness upgrades can improve AI agents without losing established protection. Fine-tuning can weaken learned safety behavior [6], while changes to tools, monitors, or feedback can invalidate assumptions behind existing guardrails. My focus is identifying when safeguards become ineffective and how to restore protection across system versions.
 
-A second question is which defects in feedback deserve repair first. A frequent labeling error may barely affect learning, while a rare exploitable reward can redirect behavior. I would use limited training experiments to predict the effects of repairing a reward model, evaluator, or simulator. Matched updates with and without a repair would test those predictions against independently assessed outcomes, extending work on automated alignment research [9].
+Building on rubric-based learning [7] and defensive experience [8], I would investigate learning from paired authorized tasks and prioritizing feedback repairs by their influence on subsequent behavior [9]. Each proposed update would be assessed with existing guardrails through protected policy checks and independent retention tests. Failures would guide revisions to the update or guardrails while approved requirements remain fixed. The validated change, Δ*, would include any necessary protective repairs and be applied as Sₜ₊₁ = Update(Sₜ, Δ*). Failed or inconclusive checks would leave the current version in place.
 
-Evaluation would use held-out tasks, fixed safety criteria, and multiple training seeds. Repair selection must beat simple priorities based on error frequency, severity, or reviewer disagreement at matched total cost, including exploratory training. I would measure safety retention after later updates and transfer to unseen repairs. Better evaluator scores or broader refusal would not count as improved behavior.
+Evaluation would follow repeated model and harness updates, comparing fixed guardrails, safety fine-tuning, and alternative repair strategies at matched total cost. I would measure safety retention, reliability, authorized task completion, and transfer to unseen tasks. Success would require sustained protection alongside useful capability gains.
 
 ---
 
