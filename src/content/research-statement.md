@@ -16,6 +16,8 @@ I would start with software tasks, then test transfer to other digital workflows
 
 ### Oversight before action
 
+![Formal oversight before action: approved specifications generate proof obligations; checked proofs and valid execution conditions permit action, while false or unknown conditions defer execution for review.](/images/research/formal-oversight-before-action.png)
+
 I propose an oversight framework that connects approved formal specifications, proof checking, and controlled execution [4,5]. For an agent’s candidate x, the verification target is M(x) ⊨ Φ, where M(x) models the candidate’s behavior and tool effects, and Φ specifies approved task and security requirements. The framework would generate logical obligations and require each to be discharged through checked proofs. Unresolved obligations would guide repair of the candidate or proof.
 
 An independent execution gate would permit action only when all conditions hold: the proof is accepted; the artifact, model, and specification match the checked versions; permissions remain valid at execution; and model assumptions still hold. False or unknown conditions would trigger deferral or review. Approved specifications and acceptance rules would be protected from agent modification, with the gate enforced through trusted controls.
