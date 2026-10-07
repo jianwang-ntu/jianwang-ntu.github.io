@@ -12,9 +12,9 @@ export default function ResearchOverview() {
           alt="Reliable AI agents under human control: human–agent interaction and agent–agent collaboration share approved requirements for action assurance, safety retention, and workflow control." />
       </a>
       <ul className="research-overview-mobile" aria-label="Research overview">
-        <li><Link to="/statement#i-scalable-oversight-under-adaptation">Action assurance</Link></li>
-        <li><Link to="/statement#ii-safety-preserving-learning-and-feedback">Safety retention</Link></li>
-        <li><Link to="/statement#iii-control-across-time-and-delegation">Workflow control</Link></li>
+        <li><Link to="/statement#i-scalable-oversight-under-adaptation">Oversight before action</Link></li>
+        <li><Link to="/statement#ii-safety-preserving-learning-and-feedback">Preserving safety through continual updates</Link></li>
+        <li><Link to="/statement#iii-control-across-time-and-delegation">Authorization across delegated workflows</Link></li>
       </ul>
       <figcaption>
         <a href={imageUrl} target="_blank" rel="noreferrer">Open full-size image ↗</a>

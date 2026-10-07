@@ -41,7 +41,7 @@ const baseHtml = readFileSync(distIndex, 'utf-8');
 
 // Default site-level meta. Used as fallback when a per-route value is missing.
 const SITE_NAME = 'Jian Wang';
-const DEFAULT_DESC = 'Jian Wang — PhD, NTU Singapore. Software engineering and reliable autonomy for adaptive AI agents.';
+const DEFAULT_DESC = 'Jian Wang — PhD, NTU Singapore. Software engineering and reliable AI agents under human control.';
 const DEFAULT_IMAGE = 'https://123publicdata.s3.ap-southeast-1.amazonaws.com/personal/favor.ico';
 const TWITTER_HANDLE = '';  // optional; leave empty to omit twitter:creator
 
@@ -123,10 +123,10 @@ function writeRoute(routePath, html) {
 // Per-route descriptions — keep terse, ~150 chars max. These match the dynamic
 // Seo component's defaults so the static and JS-rendered metadata agree.
 const STATIC_ROUTES = [
-  { path: '/home', title: 'Home',           desc: 'Jian Wang — PhD, NTU Singapore. Reliable autonomy for adaptive AI agents, building on software engineering and AI evaluation.' },
-  { path: '/statement', title: 'Research Statement', desc: 'Reliable autonomy for adaptive AI agents through scalable oversight, safety-preserving learning, and secure delegation.' },
+  { path: '/home', title: 'Home',           desc: 'Jian Wang — PhD, NTU Singapore. Reliable AI agents under human control, building on software engineering and AI evaluation.' },
+  { path: '/statement', title: 'Research Statement', desc: 'Reliable AI agents under human control: oversight before action, preserving safety through continual updates, and authorization across delegated workflows.' },
   { path: '/research_coding_statement', title: 'Program Reasoning Research Statement', desc: 'Reliable program reasoning through learned semantic abstractions, formal feedback, and rigorous evaluation.' },
-  { path: '/research', canonicalPath: '/statement', title: 'Research Statement', desc: 'Reliable autonomy for adaptive AI agents through scalable oversight, safety-preserving learning, and secure delegation.' },
+  { path: '/research', canonicalPath: '/statement', title: 'Research Statement', desc: 'Reliable AI agents under human control: oversight before action, preserving safety through continual updates, and authorization across delegated workflows.' },
   { path: '/pubs', title: 'Publications',   desc: 'Publications by Jian Wang on program repair, code-model evaluation, neural-network testing, and robustness.' },
   { path: '/work', title: 'Work & Projects', desc: 'Jian Wang’s work on shared web infrastructure, mobile portrait AI, program repair, and code-model evaluation.' },
   {

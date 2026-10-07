@@ -6,6 +6,7 @@ export function statementHeadings(markdown) {
     if (!match) return [];
     const title = match[2];
     const stableTitles = {
+      'I. Oversight before action': 'I. Scalable oversight under adaptation',
       'II. Preserving safety through continual updates': 'II. Safety-preserving learning and feedback',
       'III. Authorization across delegated workflows': 'III. Control across time and delegation',
     };

@@ -61,9 +61,9 @@ function AcademicPagesHome() {
             </a>
             <figcaption className="home-research-caption">
               <ol className="home-research-questions" lang="zh-Hans">
-                <li><strong>可扩展监督：</strong>当前行动有什么可信依据？</li>
-                <li><strong>安全保持的学习：</strong>能力提升后，原有约束是否仍然有效？</li>
-                <li><strong>跨时间与委派的控制：</strong>任务变长、参与者增多后，授权是否仍然有效？</li>
+                <li><strong>行动前监督：</strong>当前行动有什么可信依据？</li>
+                <li><strong>持续更新中的安全保持：</strong>能力提升后，原有约束是否仍然有效？</li>
+                <li><strong>委派工作流中的授权：</strong>任务变长、参与者增多后，授权是否仍然有效？</li>
               </ol>
               <a href={agentWorldUrl} target="_blank" rel="noreferrer">Open full-size image ↗</a>
             </figcaption>
@@ -111,7 +111,7 @@ function AcademicPagesHome() {
 
 export default function Home() {
   return <div className="page">
-    <Seo title="Home" description="Jian Wang — PhD, NTU Singapore. Reliable autonomy for adaptive AI agents, building on software engineering and AI evaluation." path="/home" />
+    <Seo title="Home" description="Jian Wang — PhD, NTU Singapore. Reliable AI agents under human control, building on software engineering and AI evaluation." path="/home" />
     <Nav skipToContent /><AcademicPagesHome /><Footer />
   </div>;
 }
