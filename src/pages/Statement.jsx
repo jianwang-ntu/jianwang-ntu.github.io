@@ -13,6 +13,9 @@ import markdown from '../content/research-statement.md?raw';
 import { statementHeadings } from '../statement-headings.js';
 import { resolveStatementHash } from '../research-agenda.js';
 
+const referenceStart = markdown.indexOf('## References');
+const statementBody = markdown.slice(0, referenceStart);
+const references = markdown.slice(referenceStart).replace(/^## References\s*/, '');
 const headings = statementHeadings(markdown);
 const sections = headings.filter(heading => heading.level === 2);
 function LinkedHeading({ node, children, level }) {
@@ -46,7 +49,13 @@ export default function Statement() {
             h2: props => <LinkedHeading {...props} level={2} />,
             h3: props => <LinkedHeading {...props} level={3} />,
             table: ReadingTable,
-          }}>{markdown}</ReactMarkdown>
+          }}>{statementBody}</ReactMarkdown>
+          <details className="industry-references" id="references" tabIndex={-1}>
+            <summary>References</summary>
+            <div className="industry-references-body">
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>{references}</ReactMarkdown>
+            </div>
+          </details>
         </article>
         <div className="statement-download"><Link to="/pubs">Browse the published evidence ↗</Link>
           <Link to="/work#research-projects">Explore earlier research projects ↗</Link>
