@@ -16,10 +16,16 @@ import { resolveStatementHash } from '../research-agenda.js';
 const referenceStart = markdown.indexOf('## References');
 const statementBody = markdown.slice(0, referenceStart);
 const references = markdown.slice(referenceStart).replace(/^## References\s*/, '');
+const foundationStart = statementBody.indexOf('### Research foundation and approach');
+const agendaStart = statementBody.indexOf('\n---', foundationStart);
+const introduction = statementBody.slice(0, foundationStart);
+const foundation = statementBody.slice(foundationStart, agendaStart).replace(/^### Research foundation and approach\s*/, '');
+const agenda = statementBody.slice(agendaStart);
+const agendaLineOffset = statementBody.slice(0, agendaStart).split('\n').length - 1;
 const headings = statementHeadings(markdown);
 const sections = headings.filter(heading => heading.level === 2);
-function LinkedHeading({ node, children, level }) {
-  const heading = headings.find(h => h.line === node.position.start.line);
+function LinkedHeading({ node, children, level, lineOffset = 0 }) {
+  const heading = headings.find(h => h.line === node.position.start.line + lineOffset);
   const Tag = `h${level}`;
   return <Tag id={heading.id} tabIndex={-1}><a href={`#${heading.id}`}>{children}</a></Tag>;
 }
@@ -45,11 +51,18 @@ export default function Statement() {
           <ol>{sections.map(heading => <li key={heading.id}><a href={`#${heading.id}`}>{heading.title}</a></li>)}</ol>
         </nav>
         <article className="statement-body" aria-label="Research statement text">
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>{introduction}</ReactMarkdown>
+          <details className="industry-references" id="research-foundation-and-approach" tabIndex={-1}>
+            <summary>Research foundation and approach</summary>
+            <div className="industry-references-body">
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>{foundation}</ReactMarkdown>
+            </div>
+          </details>
           <ReactMarkdown remarkPlugins={[remarkGfm]} components={{
-            h2: props => <LinkedHeading {...props} level={2} />,
-            h3: props => <LinkedHeading {...props} level={3} />,
+            h2: props => <LinkedHeading {...props} level={2} lineOffset={agendaLineOffset} />,
+            h3: props => <LinkedHeading {...props} level={3} lineOffset={agendaLineOffset} />,
             table: ReadingTable,
-          }}>{statementBody}</ReactMarkdown>
+          }}>{agenda}</ReactMarkdown>
           <details className="industry-references" id="references" tabIndex={-1}>
             <summary>References</summary>
             <div className="industry-references-body">
