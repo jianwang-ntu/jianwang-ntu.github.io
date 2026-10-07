@@ -279,5 +279,14 @@ test('the public statement omits appendices while retaining the core agenda and 
   assert.doesNotMatch(article, /Appendix A|Appendix B|The eight JD JSONL files|\[J\d|appendic/i);
   assert.doesNotMatch(html, /href="[^"]*#appendix-/);
   assert.doesNotMatch(linkedPages, /href="[^"]*#(?:appendix-|how-my-existing-methods-carry-forward)/);
-  assert.equal((article.match(/<h2\b/g) || []).length, 4);
+  assert.equal((article.match(/<h2\b/g) || []).length, 3);
+});
+
+test('statement bibliography is collapsed by default with its bookmark preserved', () => {
+  const html = renderRoute('/statement');
+  const disclosure = html.match(/<details\b[^>]*id="references"[^>]*>[\s\S]*?<\/details>/)?.[0];
+  assert.ok(disclosure);
+  assert.doesNotMatch(disclosure.split('>')[0], /\bopen(?:=|\s|$)/);
+  assert.match(disclosure, /<summary>References<\/summary>/);
+  assert.match(disclosure, /Do Code Semantics Help/);
 });
