@@ -1,0 +1,30 @@
+{
+  "date": "2026-10-07",
+  "purpose": "Original AI-generated images preserved before editable vector redraw",
+  "files": [
+    {
+      "source": "public/images/research/reliable-agents-human-control.png",
+      "backup": "archive/statement-images/2026-10-07-before-editable-redraw/reliable-agents-human-control.png",
+      "sha256": "4c3064fc0c554a3e9ef2dfddc392bc4a9fb50123a8960ff3078c853955374201",
+      "bytes": 1419319
+    },
+    {
+      "source": "public/images/research/formal-oversight-before-action.png",
+      "backup": "archive/statement-images/2026-10-07-before-editable-redraw/formal-oversight-before-action.png",
+      "sha256": "700a4ae679f71b726c5eccfd01d2ea245b18de24a503693ce0cb6efa43efc052",
+      "bytes": 1505434
+    },
+    {
+      "source": "public/images/research/preserving-safety-continual-updates.png",
+      "backup": "archive/statement-images/2026-10-07-before-editable-redraw/preserving-safety-continual-updates.png",
+      "sha256": "f419d4944bcbe31ead100b3a4c48bc2f58e0675a000eeb4f937c376445369e28",
+      "bytes": 1455214
+    },
+    {
+      "source": "public/images/research/authorization-delegated-workflows.png",
+      "backup": "archive/statement-images/2026-10-07-before-editable-redraw/authorization-delegated-workflows.png",
+      "sha256": "832d05b9f235b63f0c92fb4af9b5cc88e236383458034162b26dbc0c70ed487e",
+      "bytes": 1538350
+    }
+  ]
+}

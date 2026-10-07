@@ -8,7 +8,7 @@ import SiteFrame from '../components/SiteFrame.jsx';
 import { NEWS, ALL_PUBS } from '../data.jsx';
 import { PUB_META } from '../data-pubs.js';
 
-const agentWorldUrl = '/images/research/reliable-agents-human-control.png';
+const agentWorldUrl = '/images/research/reliable-agents-human-control.svg';
 const selectedPubs = ALL_PUBS.filter(p => ['C5', 'C4', 'C3', 'C2'].includes(p.id));
 
 function AcademicPagesHome() {

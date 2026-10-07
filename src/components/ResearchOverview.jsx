@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import LinkedResearchImage from './LinkedResearchImage.jsx';
 
-const imageUrl = '/images/research/reliable-agents-human-control.png';
+const imageUrl = '/images/research/reliable-agents-human-control.svg';
 
 export default function ResearchOverview() {
   return (
@@ -15,6 +15,8 @@ export default function ResearchOverview() {
       </ul>
       <figcaption>
         <a href={imageUrl} target="_blank" rel="noreferrer">Open full-size image ↗</a>
+        {' · '}<a href="/data/statement-diagrams/statement-diagrams.pptx" download>Editable diagrams (PowerPoint)</a>
+        {' · '}<a href="/data/statement-diagrams/statement-diagrams.pdf" target="_blank" rel="noreferrer">Diagrams (PDF) ↗</a>
       </figcaption>
     </figure>
   );
