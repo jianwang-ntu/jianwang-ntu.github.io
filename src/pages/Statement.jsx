@@ -29,12 +29,12 @@ export default function Statement() {
   const redirect = resolveStatementHash(hash);
   if (redirect) return <Navigate to={`/statement${search}#${redirect}`} replace />;
   return <div className="page">
-    <Seo title="Research Statement" description="Reliable autonomy for adaptive AI agents through scalable oversight, safety-preserving learning, and secure delegation." path="/statement" />
+    <Seo title="Research Statement" description="Reliable AI agents under human control: oversight before action, preserving safety through continual updates, and authorization across delegated workflows." path="/statement" />
     <Nav skipToContent />
     <SiteFrame className="statement-shell">
         <p className="portfolio-eyebrow">Research statement · 13 September 2026</p>
-        <h1>Reliable autonomy for adaptive AI agents</h1>
-        <p className="statement-lead">Scalable oversight, safety-preserving learning, and secure delegation.</p>
+        <h1>Reliable AI agents under human control</h1>
+        <p className="statement-lead">Oversight before action, preserving safety through continual updates, and authorization across delegated workflows.</p>
         <ResearchOverview />
         <IndustryJDReferences />
         <div className="statement-download"><a href="/data/Jian_Wang_Research_Statement_2026.pdf" target="_blank" rel="noreferrer">Full research statement (PDF) ↗</a>

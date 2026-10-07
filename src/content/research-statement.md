@@ -10,11 +10,9 @@ I would start with software tasks, then test transfer to other digital workflows
 
 ---
 
-## I. Scalable oversight under adaptation
+## I. Oversight before action
 
 *What evidence is needed before an agent acts?*
-
-### Oversight before action
 
 ![Formal oversight before action: approved specifications generate proof obligations; checked proofs and valid execution conditions permit action, while false or unknown conditions defer execution for review.](/images/research/formal-oversight-before-action.png)
 

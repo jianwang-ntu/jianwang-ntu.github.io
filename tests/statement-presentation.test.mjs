@@ -77,9 +77,9 @@ test('Home keeps the three Chinese research questions in the caption below the i
 
   assert.ok(figure.indexOf('<img') < figure.indexOf('<figcaption'), 'The caption must follow the original image');
   assert.deepEqual(questions, [
-    '可扩展监督：当前行动有什么可信依据？',
-    '安全保持的学习：能力提升后，原有约束是否仍然有效？',
-    '跨时间与委派的控制：任务变长、参与者增多后，授权是否仍然有效？',
+    '行动前监督：当前行动有什么可信依据？',
+    '持续更新中的安全保持：能力提升后，原有约束是否仍然有效？',
+    '委派工作流中的授权：任务变长、参与者增多后，授权是否仍然有效？',
   ]);
   assert.match(caption, /<ol class="home-research-questions" lang="zh-Hans">/);
   assert.ok(caption.indexOf('</ol>') < caption.indexOf('Open full-size image'), 'The English link stays outside the Chinese language region');
@@ -270,7 +270,7 @@ test('the public statement omits appendices while retaining the core agenda and 
   const linkedPages = `${renderRoute('/home')}\n${renderRoute('/pubs/defects4c')}`;
   const article = html.match(/<article\b[\s\S]*<\/article>/)?.[0] || '';
 
-  assert.match(article, /I\. Scalable oversight under adaptation/);
+  assert.match(article, /I\. Oversight before action/);
   assert.match(article, /II\. Preserving safety through continual updates/);
   assert.match(article, /III\. Authorization across delegated workflows/);
   assert.match(article, /References/);
@@ -287,4 +287,13 @@ test('statement bibliography is collapsed by default with its bookmark preserved
   assert.doesNotMatch(disclosure.split('>')[0], /\bopen(?:=|\s|$)/);
   assert.match(disclosure, /<summary>References<\/summary>/);
   assert.match(disclosure, /Do Code Semantics Help/);
+});
+
+test('Home and Statement use consistent research focus and section labels', () => {
+  const home = renderRoute('/home');
+  const statement = renderRoute('/statement');
+  for (const label of ['reliable AI agents under human control', 'oversight before action', 'preserving safety through continual updates', 'authorization across delegated workflows']) {
+    assert.ok(home.toLowerCase().includes(label.toLowerCase()), label);
+    assert.ok(statement.toLowerCase().includes(label.toLowerCase()), label);
+  }
 });

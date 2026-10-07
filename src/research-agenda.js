@@ -28,6 +28,7 @@ export const PUBLICATION_CONNECTIONS = {
 
 // Existing bookmarks are redirected to the section that absorbs their topic.
 export const STATEMENT_ALIASES = {
+  'oversight-before-action': 'i-scalable-oversight-under-adaptation',
   'direction-1-learn-which-evidence-changes-the-decision': 'i-scalable-oversight-under-adaptation',
   'direction-2-preserve-oversight-signals-under-optimization': 'i-scalable-oversight-under-adaptation',
   'contribution-and-decisive-evidence': 'i-scalable-oversight-under-adaptation',
