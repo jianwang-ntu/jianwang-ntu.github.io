@@ -5,7 +5,11 @@ export function statementHeadings(markdown) {
     const match = /^(#{2,3}) (.+)$/.exec(line);
     if (!match) return [];
     const title = match[2];
-    const anchorTitle = title === 'II. Preserving safety through continual updates' ? 'II. Safety-preserving learning and feedback' : title;
+    const stableTitles = {
+      'II. Preserving safety through continual updates': 'II. Safety-preserving learning and feedback',
+      'III. Authorization across delegated workflows': 'III. Control across time and delegation',
+    };
+    const anchorTitle = stableTitles[title] || title;
     const slug = anchorTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
     const count = (used.get(slug) || 0) + 1;
     used.set(slug, count);

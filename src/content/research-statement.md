@@ -40,19 +40,17 @@ Evaluation would follow repeated model and harness updates, comparing fixed guar
 
 ---
 
-## III. Control across time and delegation
+## III. Authorization across delegated workflows
 
-*Which permissions remain valid when a workflow changes?*
+*How can permissions and data restrictions hold across agent handoffs?*
 
-An approval may become invalid when a tool changes or access is revoked. Delegation adds another risk: one agent can pass private information to another with permission to send messages externally. Separate local checks may miss the combined disclosure. I would study how control can preserve authorized execution across handoffs and partial failures.
+![Authorization across delegated workflows: a private report can leak through a delegated email draft; track delegated scope, inherited data restrictions, and approval validity before executing, suspending, or replanning affected work.](/images/research/authorization-delegated-workflows.png)
 
-I would attach constraints to delegated work: who authorized it, permitted operations, data dependencies, and conditions for validity. Learned components could propose task splits, while an independent execution layer enforces checkable restrictions. The theory would identify when local checks imply a workflow-wide property, and when they do not. Uncertain effects would require conservative handling or human review.
+For an approved model and harness version, I would study how authorization is preserved throughout a delegated workflow. Individually permitted actions may combine to disclose restricted information or exceed the authority originally granted. The challenge is controlling these combined effects across agents, changing permissions, and partial failures.
 
-I would then track the dependencies behind approvals. A change would trigger new evidence and suspend or replan affected work while preserving valid progress. This builds on information-flow controls such as CaMeL and Fides [10,11]. EvoSafeHarness studies deployment-specific controls [12], while Muse separates action execution from permission authority [13]. My focus is how those controls remain justified during a changing workflow.
+Delegated work would carry explicit constraints on authority, operations, and data use, together with the dependencies that determine when approvals remain valid. Building on information-flow controls [10,11] and separation of execution from permission authority [13], I would investigate when local enforcement supports workflow-wide guarantees. Runtime changes in recipients, access rights, or data dependencies would trigger revalidation, suspension, or replanning of affected work while preserving valid progress.
 
-Comparisons would include stateful access control, information-flow enforcement, whole-workflow suspension, and learned controls with the same information and authority. I would measure completion, violations, review effort, and recovery cost, including tests with compromised agents. Formal guarantees would apply only to stated assumptions and trusted components; rollback cannot undo information already disclosed.
-
-I would begin with oversight and learning, then extend validated methods to delegation. Longer term, I want AI systems to help improve research tools and training processes while independent checks establish whether those changes are useful, safe, and authorized.
+Evaluation would compare stateful access control, information-flow enforcement, and whole-workflow suspension under matched information and authority. Tests would include compromised agents, cross-agent disclosure, revoked permissions, and interrupted handoffs. I would measure authorized completion, violations, review effort, and recovery cost. Formal guarantees would depend on stated assumptions and trusted enforcement; recovery cannot undo completed disclosures.
 
 ---
 
