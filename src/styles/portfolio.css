@@ -595,3 +595,7 @@ a:focus-visible, button:focus-visible, select:focus-visible, summary:focus-visib
   .portfolio-content a { color: inherit; }
   .cv-block, figure, .blog-entry { break-inside: avoid; }
 }
+
+.linked-research-image { position: relative; }
+.research-image-link { position: absolute; display: block; border-radius: 3px; }
+.research-image-link:hover, .research-image-link:focus-visible { background: rgb(82 173 200 / 12%); outline: 2px solid var(--ap-blue); outline-offset: -2px; }
