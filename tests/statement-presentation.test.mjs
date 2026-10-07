@@ -293,7 +293,7 @@ test('Home and Statement use consistent research focus and section labels', () =
   const home = renderRoute('/home');
   const statement = renderRoute('/statement');
   for (const label of ['reliable AI agents under human control', 'oversight before action', 'preserving safety through continual updates', 'authorization across delegated workflows']) {
-    assert.ok(home.toLowerCase().includes(label), label);
-    assert.ok(statement.toLowerCase().includes(label), label);
+    assert.ok(home.toLowerCase().includes(label.toLowerCase()), label);
+    assert.ok(statement.toLowerCase().includes(label.toLowerCase()), label);
   }
 });
