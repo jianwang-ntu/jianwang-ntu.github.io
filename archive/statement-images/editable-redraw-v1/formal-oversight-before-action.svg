@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1448" height="1086" viewBox="0 0 1448 1086" role="img" aria-labelledby="title"><title id="title">I. Formal Oversight Before Action</title><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#203442"/></marker></defs><rect width="1448" height="1086" fill="white"/>
+<text x="724" y="42" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="42" font-weight="700" fill="#203442">I. Formal Oversight Before Action</text>
+<text x="724" y="95" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="400" fill="#203442">Proposed framework: specify properties, prove obligations, enforce execution</text>
+<rect x="20" y="145" width="420" height="795" fill="#FFFFFF" stroke="#667985" stroke-width="1.6"/>
+<text x="230" y="197" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" fill="#1D6077">1  Formal specification</text>
+<rect x="514" y="145" width="420" height="795" fill="#FFFFFF" stroke="#667985" stroke-width="1.6"/>
+<text x="724" y="197" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" fill="#1D6077">2  Proof checking</text>
+<rect x="1008" y="145" width="420" height="795" fill="#FFFFFF" stroke="#667985" stroke-width="1.6"/>
+<text x="1218" y="197" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" fill="#1D6077">3  Execution gate</text>
+<rect x="40" y="254" width="380" height="175" fill="#F1F6F8" stroke="#667985" stroke-width="1.6"/>
+<text x="230" y="286" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700" fill="#203442">Approved specification Φ</text>
+<text x="230" y="345.81" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="29" font-weight="400" fill="#203442">Task correctness</text>
+<text x="230" y="381.19" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="29" font-weight="400" fill="#203442">+ security</text>
+<rect x="40" y="474" width="380" height="240" fill="#F1F6F8" stroke="#667985" stroke-width="1.6"/>
+<text x="230" y="506" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700" fill="#203442">Example security property</text>
+<text x="230" y="573.91" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" fill="#203442">always:</text>
+<text x="230" y="601.9699999999999" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" fill="#203442">Send(d, r) ⇒ Authorized(d, r)</text>
+<text x="230" y="630.03" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" fill="#203442"></text>
+<text x="230" y="658.0899999999999" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" fill="#203442">Every send must be authorized.</text>
+<text x="230" y="821.64" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="400" fill="#203442">Review intent.</text>
+<text x="230" y="853.36" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="400" fill="#203442">Protect the specification.</text>
+<text x="476.5" y="495" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="32" font-weight="400" fill="#203442">Φ</text>
+<polyline points="440,530 514,530" fill="none" stroke="#203442" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="534" y="254" width="380" height="188" fill="#F1F6F8" stroke="#667985" stroke-width="1.6"/>
+<text x="724" y="286" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700" fill="#203442">Generate obligations</text>
+<text x="724" y="340.71999999999997" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="400" fill="#203442">O := Obligations(M(x), Φ)</text>
+<text x="724" y="370" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="400" fill="#203442"></text>
+<text x="724" y="399.28" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="400" fill="#203442">Model candidate and tool effects.</text>
+<polyline points="724,442 724,496" fill="none" stroke="#203442" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="534" y="496" width="380" height="210" fill="#F1F6F8" stroke="#667985" stroke-width="1.6"/>
+<text x="724" y="528" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="700" fill="#203442">Prove and check every obligation</text>
+<text x="724" y="593.72" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="400" fill="#203442">SMT solver / proof assistant</text>
+<text x="724" y="623" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="400" fill="#203442"></text>
+<text x="724" y="652.2800000000001" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="400" fill="#203442">Check(proof, O) = valid</text>
+<text x="724" y="826.3100000000001" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="29" font-weight="400" fill="#203442">Verification target:</text>
+<text x="724" y="861.69" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="29" font-weight="400" fill="#203442">M(x) ⊨ Φ</text>
+<polyline points="914,665 924,665 924,348 914,348" fill="none" stroke="#203442" stroke-width="2" stroke-dasharray="9 6" marker-end="url(#arrow)"/>
+<text x="728.5" y="756" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" fill="#203442">Repair candidate or proof</text>
+<text x="974" y="466.52000000000004" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#203442">checked</text>
+<text x="974" y="488.48" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#203442">evidence</text>
+<polyline points="944,530 1004,530" fill="none" stroke="#203442" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="1028" y="254" width="380" height="385" fill="#F1F6F8" stroke="#667985" stroke-width="1.6"/>
+<text x="1218" y="294" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="27" font-weight="700" fill="#203442">Allow only when ALL hold</text>
+<rect x="1044" y="331" width="348" height="63" fill="#FFFFFF" stroke="#667985" stroke-width="1.6"/>
+<text x="1218" y="362.5" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" fill="#203442">Proof accepted</text>
+<rect x="1044" y="403" width="348" height="63" fill="#FFFFFF" stroke="#667985" stroke-width="1.6"/>
+<text x="1218" y="420.46999999999997" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" fill="#203442">Artifact, model and specification</text>
+<text x="1218" y="448.53" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" fill="#203442">match checked versions</text>
+<rect x="1044" y="475" width="348" height="63" fill="#FFFFFF" stroke="#667985" stroke-width="1.6"/>
+<text x="1218" y="506.5" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" fill="#203442">Permission valid at execution</text>
+<rect x="1044" y="547" width="348" height="63" fill="#FFFFFF" stroke="#667985" stroke-width="1.6"/>
+<text x="1218" y="578.5" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" fill="#203442">Model assumptions still hold</text>
+<polyline points="1218,639 1218,671" fill="none" stroke="#203442" stroke-width="2"/>
+<polyline points="1218,671 1123,671 1123,735" fill="none" stroke="#203442" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="1218,671 1313,671 1313,735" fill="none" stroke="#203442" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="1123" y="654" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="400" fill="#203442">all pass</text>
+<text x="1313" y="654" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="400" fill="#203442">fail / unknown</text>
+<rect x="1028" y="735" width="181" height="65" fill="#F1F6F8" stroke="#667985" stroke-width="1.6"/>
+<rect x="1227" y="735" width="181" height="65" fill="#F1F6F8" stroke="#667985" stroke-width="1.6"/>
+<text x="1118.5" y="767" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#203442">Execute</text>
+<text x="1317.5" y="767" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#203442">Defer / review</text>
+<text x="1218" y="877.5" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="400" fill="#203442">Enforce through trusted controls.</text>
+<text x="724" y="1027.5" dominant-baseline="central" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="400" fill="#203442">Assurance requires adequate specifications, faithful models, sound proof checking, and trusted enforcement.</text>
+</svg>

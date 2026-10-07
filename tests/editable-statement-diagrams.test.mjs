@@ -18,17 +18,33 @@ test('all four original images retain their backed-up content and checksums', ()
 
 test('current diagrams are vectors with the formal gates and assurance limits', () => {
   const expected = {
-    'reliable-agents-human-control': ['Shared human-approved requirements Φ', 'sound checking', 'valid delegation'],
+    'reliable-agents-human-control': ['Shared human-approved requirements Φ', 'sound checking', 'valid delegation scope'],
     'formal-oversight-before-action': ['Send(d, r) ⇒ Authorized(d, r)', 'Check(proof, O) = valid', 'M(x) ⊨ Φ', 'Model assumptions still hold'],
     'preserving-safety-continual-updates': ['PolicyOK ∧ RetentionOK', 'Sₜ₊₁ = Update(Sₜ, Δ*)', 'Keep requirements unchanged', 'Retain Sₜ'],
-    'authorization-delegated-workflows': ['ScopeOK ∧ FlowOK ∧ FreshOK', 'do not authorize disclosure.', 'Recovery cannot undo completed disclosures.'],
+    'authorization-delegated-workflows': ['ScopeOK ∧ FlowOK ∧ FreshOK', 'do not authorize disclosure.', 'Guarantees depend on captured effects and trusted enforcement.'],
   };
   for (const [name, labels] of Object.entries(expected)) {
     const svg = readFileSync(file(`public/images/research/${name}.svg`), 'utf8');
-    assert.match(svg, /viewBox="0 0 1448 1086"/);
-    assert.doesNotMatch(svg, /<image\b|data:image/);
+    const original = readFileSync(file(`${archive}${name}.png`));
+    assert.ok(svg.includes(`viewBox="0 0 ${original.readUInt32BE(16)} ${original.readUInt32BE(20)}"`), `${name}: preserve the original aspect ratio`);
+    if (name !== 'reliable-agents-human-control') assert.doesNotMatch(svg, /<image\b|data:image/);
     for (const label of labels) assert.ok(svg.includes(label), `${name}: ${label}`);
   }
   assert.ok(existsSync(file('public/data/statement-diagrams/statement-diagrams.pptx')));
   assert.match(readFileSync(file('public/data/statement-diagrams/statement-diagrams.pdf')).subarray(0, 5).toString(), /%PDF-/);
+});
+
+test('overview reuses exact separately cropped human and robot assets', () => {
+  const svg = readFileSync(file('public/images/research/reliable-agents-human-control.svg'), 'utf8');
+  const manifest = JSON.parse(readFileSync(file('public/images/research/roles/source.json'), 'utf8'));
+  assert.equal(manifest.roles.length, 2);
+  for (const role of manifest.roles) {
+    const bytes = readFileSync(file(role.file));
+    assert.equal(createHash('sha256').update(bytes).digest('hex'), role.sha256);
+    assert.ok(svg.includes(bytes.toString('base64')));
+  }
+  const page = readFileSync(file('public/data/statement-diagrams/comparison.html'), 'utf8');
+  assert.match(page, /Original backup/);
+  assert.match(page, /Editable redraw/);
+  assert.equal((page.match(/class="comparison"/g) || []).length, 4);
 });

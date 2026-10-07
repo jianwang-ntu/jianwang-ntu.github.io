@@ -47,12 +47,13 @@ test('Home displays the supplied agent-world image with full-size access and sta
   const image = figure.match(/<img\b[^>]*>/)?.[0];
   assert.ok(image, 'Home must display the supplied illustration as an image');
   const src = image.match(/src="([^"]+)"/)?.[1];
-  assert.equal(src, '/images/research/reliable-agents-human-control.svg', 'Deployment rewrites the public image path to S3');
+  assert.equal(src, '/images/research/reliable-agents-human-control.svg?v=original-layout-20261007', 'Deployment rewrites the public image path to S3');
   const vectorFile = new URL('../public/images/research/reliable-agents-human-control.svg', import.meta.url);
   assert.ok(existsSync(vectorFile), 'The S3-backed vector source is missing');
   const vector = readFileSync(vectorFile, 'utf8');
   assert.match(vector, /viewBox="0 0 1448 1086"/);
-  assert.doesNotMatch(vector, /<image\b/);
+  assert.equal((vector.match(/<image\b/g) || []).length, 4, 'Restore the human and three agent illustrations as separate original crops');
+  assert.equal((vector.match(/class="original-role"/g) || []).length, 4);
   assert.match(vector, /<text\b/);
   assert.match(image, /width="1448" height="1086"/);
   assert.match(image, /alt="Reliable AI agents under human control:[^"]+"/);
@@ -147,7 +148,7 @@ test('the overview is a vector SVG whose nine research blocks are links', () => 
   }
 
   const html = renderRoute('/statement');
-  assert.match(html, /<img\b[^>]*src="\/images\/research\/reliable-agents-human-control\.svg"/);
+  assert.match(html, /<img\b[^>]*src="\/images\/research\/reliable-agents-human-control\.svg\?v=original-layout-20261007"/);
   assert.doesNotMatch(html, /<object\b/);
 });
 
