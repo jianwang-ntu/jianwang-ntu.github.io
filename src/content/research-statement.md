@@ -1,6 +1,6 @@
-I study how AI agents can learn and carry out long tasks while remaining safe and under human control. My research asks three questions: what evidence is needed before an agent acts, which training changes preserve safety, and how permissions should change when tasks or tools change.
+I study AI agents that carry out tasks for people and collaborate with other agents. My goal is to preserve reliability, security, and human authority as their capabilities, tools, and responsibilities evolve. This agenda connects three themes: **assurance**, **retention**, and **control**.
 
-The aim is reliable autonomy for scientific research and enterprise work. The collected company JDs provide industry context, not validation of my proposed methods.
+**Assurance** grounds action approval in an explicit evidence base. Formal specifications and independent checks record what has been established, what remains uncertain, and which assumptions apply. **Retention** addresses the risk that model learning or harness upgrades invalidate earlier evidence or weaken existing guardrails. I examine how security and reliability can be reassessed and preserved across system versions. **Control** addresses failures at agent handoffs, where context, evidence, or restrictions may be lost, and individually permitted actions may combine into unauthorized outcomes. I study how delegated workflows can preserve reliability and authorization across these boundaries. Action checks inform learning and scoped approvals, while workflow failures guide further checks and updates.
 
 ### Research foundation and approach
 
