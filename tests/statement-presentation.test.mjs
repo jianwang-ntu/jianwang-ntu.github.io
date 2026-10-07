@@ -90,8 +90,10 @@ test('Home leads with the current agenda and keeps historical evidence in the co
   const html = renderRoute('/home');
   const research = html.match(/<section\b[^>]*aria-labelledby="interests-title"[^>]*>[\s\S]*?<\/section>/)?.[0] || '';
   assert.doesNotMatch(research, /home-research-intro|Trustworthy Code LLMs|limited gains/);
-  assert.match(research, /My proposed research focuses on/);
-  assert.match(research, /The agenda connects/);
+  assert.match(research, /My research focuses on/);
+  assert.match(research, /My long-term goal/);
+  const intro = research.match(/<p>([\s\S]*?)<\/p>/)?.[1] || '';
+  assert.ok(intro.replace(/<[^>]+>/g, '').split(/\s+/).length <= 50);
   assert.match(research, /id="research-overview"/);
   const statement = renderRoute('/statement');
   const foundation = statement.match(/<details\b[^>]*id="research-foundation-and-approach"[^>]*>[\s\S]*?<\/details>/)?.[0] || '';

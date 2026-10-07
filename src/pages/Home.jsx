@@ -34,12 +34,11 @@ function AcademicPagesHome() {
             <h2 id="interests-title">Research interests</h2>
             <Link className="text-link" to="/statement">Research statement ↗</Link>
           </div>
-          <p>My proposed research focuses on <strong>reliable AI agents under human control</strong>:
-            how agents can act, improve, and collaborate while preserving security, reliability, and authorization as models,
-            harnesses, and workflows change.</p>
-          <p>The agenda connects <Link to="/statement#i-scalable-oversight-under-adaptation">oversight before action</Link>,{' '}
+          <p>My research focuses on <strong>reliable AI agents under human control</strong>, connecting{' '}
+            <Link to="/statement#i-scalable-oversight-under-adaptation">oversight before action</Link>,{' '}
             <Link to="/statement#ii-safety-preserving-learning-and-feedback">preserving safety through continual updates</Link>, and{' '}
-            <Link to="/statement#iii-control-across-time-and-delegation">authorization across delegated workflows</Link>.</p>
+            <Link to="/statement#iii-control-across-time-and-delegation">authorization across delegated workflows</Link>.
+            My long-term goal is to help agents act, learn, and collaborate while preserving reliability, security, and human authority.</p>
           <figure className="research-overview" id="research-overview">
             <a href={agentWorldUrl} target="_blank" rel="noreferrer">
               <img className="home-research-image" src={agentWorldUrl} width="1448" height="1086"
