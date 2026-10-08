@@ -40,7 +40,13 @@ export default function Statement() {
     <SiteFrame className="statement-shell">
         <p className="portfolio-eyebrow">Research statement · 13 September 2026</p>
         <h1>Reliable AI agents under human control</h1>
-        <p className="statement-lead">Oversight before action, preserving safety through continual updates, and authorization across delegated workflows.</p>
+        <dl className="statement-meta" aria-label="Research statement metadata">
+          <dt>Scope</dt>
+          <dd>Human–agent interaction and multi-agent collaboration, including action assurance, safety retention, and workflow authorization.</dd>
+          <dt>Aim</dt>
+          <dd>Preserve reliability, security, and human authority as models, tools, and workflows evolve.</dd>
+        </dl>
+        <p className="statement-lead">Multi-agent collaboration introduces risks of miscoordination, collusion, and cascading compromise, making sustained human control a system-level challenge that requires preserving authorization and information-flow constraints across agents, delegated tasks, and evolving workflows.</p>
         <ResearchOverview />
         <IndustryJDReferences />
         <div className="statement-download"><a href="/data/Jian_Wang_Research_Statement_2026.pdf" target="_blank" rel="noreferrer">Full research statement (PDF) ↗</a>
