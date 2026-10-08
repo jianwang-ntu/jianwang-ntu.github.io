@@ -71,6 +71,20 @@ test('Publications presents every paper as a concise text entry', () => {
   assert.doesNotMatch(main, /<figure|<img/);
 });
 
+test('Home retains its profile rail and other page families start with a collapsed profile', () => {
+  for (const route of ['/home', '/home/']) {
+    const html = renderRoute(route);
+    assert.doesNotMatch(html, /profile-disclosure|portfolio-shell--wide/, route);
+    assert.match(html, /<aside[^>]*>[\s\S]*profile-rail/, route);
+  }
+  for (const route of ['/statement/', '/research_coding_statement', '/pubs', '/pubs/defects4c', '/work', '/cv', '/blog', '/blog/example', '/work/xiaomi-portrait-ai']) {
+    const html = renderRoute(route);
+    assert.match(html, /portfolio-shell--wide/, route);
+    assert.match(html, /<details class="profile-disclosure"><summary>Profile<\/summary>/, route);
+    assert.doesNotMatch(html, /<details[^>]*class="profile-disclosure"[^>]*\sopen(?:[\s=>])/, route);
+  }
+});
+
 test('Work explains the two principal industry projects on its first page', () => {
   const html = renderRoute('/work');
   const main = mainContent(html);
