@@ -1,0 +1,22 @@
+{
+  "slug": "how-anthropics-claude-code-team-ships-features-in-a-week",
+  "title_en": "How Anthropic's Claude Code Team Ships Features in a Week — and What It Means for the PM Role",
+  "date": "2026-05-08",
+  "dek_en": "Cat Wu discusses product judgment, short release cycles, and the work of the Claude Code team.",
+  "tags": [],
+  "languages": [
+    "en",
+    "zh"
+  ],
+  "title_zh": "在最前沿做产品经理：Anthropic 的 Cat Wu 谈如何在 AI 时代造产品",
+  "dek_zh": "Cat Wu 在 Lenny’s Podcast 中讨论 Claude Code 团队的产品判断、发布节奏和工程协作。",
+  "source": "https://www.youtube.com/watch?v=PplmzlgE0kg&t=226s",
+  "labels": [
+    "topic:product",
+    "topic:engineering",
+    "topic:business",
+    "format:podcast",
+    "speaker:anthropic"
+  ],
+  "source_kind": "video"
+}

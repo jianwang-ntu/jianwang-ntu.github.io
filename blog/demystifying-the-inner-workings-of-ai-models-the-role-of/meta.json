@@ -1,0 +1,16 @@
+{
+  "slug": "demystifying-the-inner-workings-of-ai-models-the-role-of",
+  "title_en": "Demystifying the Inner Workings of AI Models: The Role of Natural Language Autoencoders",
+  "date": "2026-05-18",
+  "dek_en": "A video explanation of Anthropic’s Natural Language Autoencoders and their use in interpreting model activations.",
+  "tags": [],
+  "languages": [
+    "en",
+    "zh"
+  ],
+  "title_zh": "自然语言自编码器：解密大模型的黑盒子",
+  "dek_zh": "一则视频解读 Anthropic 的自然语言自编码器（NLA）研究，介绍如何用自然语言描述模型激活，以及这种方法的局限。",
+  "source": "https://www.youtube.com/watch?v=aOWdyqUHkmc",
+  "source_kind": "video",
+  "image": "https://publicsg.s3.ap-southeast-1.amazonaws.com/github.io/images/blog/demystifying-the-inner-workings-of-ai-models-the-role-of.png"
+}

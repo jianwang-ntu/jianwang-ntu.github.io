@@ -1,0 +1,11 @@
+Jian Wang, PhD, is a researcher in software engineering and trustworthy AI. He received his PhD from the College of Computing and Data Science at Nanyang Technological University, Singapore, advised by Prof. Li Yi.
+
+His published work focuses on automated program repair, executable C/C++ repair benchmarks, AI-generated code detection and the use of execution traces in code models. RATCHET investigates retrieval-based repair; Defects4C supports reproducible evaluation of C/C++ repairs. His execution-trace study reports limited usefulness in the settings studied, and his detector study examines the limits of transferring prose-based detection to code.
+
+His future research studies reliable autonomy for adaptive AI agents: how oversight can select decision-relevant evidence, how learning can preserve safety through capability updates, and how control can survive long tasks and delegation. The agenda separates useful completion, safety, and authorization, and evaluates how evidence and enforcement remain effective as models, tools, and workflows change.
+
+Before research, he spent approximately eight years in industry. At Xiaomi AI Lab (2017–2019), he worked on portrait segmentation and GAN-based selfie cartoonisation. At 58.com (2011–2017), he worked on backend systems, including an asynchronous web framework serving more than 100 million daily requests and a custom Nginx traffic router. He received his bachelor's degree in software engineering from Tianjin University in 2011.
+
+Research statement: https://www.wj2ai.com/statement
+Publications: https://www.wj2ai.com/pubs
+Projects and industry experience: https://www.wj2ai.com/work
