@@ -160,6 +160,9 @@ a:focus-visible, button:focus-visible, select:focus-visible, summary:focus-visib
 .industry-references-body li { margin: 7px 0; }
 .industry-references-body code { font-size: .85em; white-space: normal; overflow-wrap: anywhere; }
 .statement-toc { margin: 32px 0 40px; padding: 0 0 0 20px; border-left: 1px solid #dfe6e9; }
+.statement-meta { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 8px 18px; margin: 20px 0 28px; font-size: 15px; line-height: 1.65; }
+.statement-meta dt { font-weight: 600; color: #44545d; }
+.statement-meta dd { margin: 0; }
 .statement-toc > span { font-size: 14px; color: #607780; }
 .statement-toc ol { padding-left: 20px; margin: 10px 0 0; }
 .statement-toc li { margin: 8px 0; font-size: 16px; }
