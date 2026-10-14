@@ -18,7 +18,7 @@ export default function ApHead({ sub, sidebar = false }) {
         className="ap-page-avatar"
         onError={(e) => { e.currentTarget.src = '/images/headshot-ai.png'; e.currentTarget.onerror = null; }}
       />
-      <Name className="ap-page-name">Jian Wang <span>王剑</span></Name>
+      <Name className="ap-page-name">Jian Wang <small className="profile-pronouns">(He/Him/His)</small><span>王剑</span></Name>
       {sidebar && <p className="profile-degree">PhD · Computer Science</p>}
       <p className="ap-page-meta">
         NTU Singapore · alumnus
