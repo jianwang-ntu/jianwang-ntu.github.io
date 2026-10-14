@@ -4,7 +4,7 @@ import Nav from '../components/Nav.jsx';
 import Footer from '../components/Footer.jsx';
 import Seo from '../components/Seo.jsx';
 import SiteFrame from '../components/SiteFrame.jsx';
-import { WORK_PROJECTS, projectPeriod } from '../data-work.js';
+import { CAREER_TIMELINE, WORK_PROJECTS, projectPeriod } from '../data-work.js';
 
 function ResourceLink({ link }) {
   return link.href.startsWith('/')
@@ -49,6 +49,22 @@ export default function WorkProjects() {
             </div>
             <Link className="text-link" to="/cv">Experience &amp; CV ↗</Link>
           </div>
+          <section className="work-timeline" id="timeline" aria-labelledby="timeline-title">
+            <h2 id="timeline-title">Timeline</h2>
+            <ol className="work-timeline-list">
+              {CAREER_TIMELINE.map((entry) => (
+                <li className="work-timeline-entry" key={entry.id}>
+                  <span className="work-timeline-date">{entry.period}</span>
+                  <span className="work-timeline-marker" aria-hidden="true" />
+                  <span className={`work-timeline-mark mark-${entry.id}`} aria-hidden="true">{entry.mark}</span>
+                  <div className="work-timeline-body">
+                    <h3><Link to={entry.href}>{entry.institution}</Link></h3>
+                    <p>{entry.role}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </section>
           <section className="work-text-section" aria-labelledby="industry-work-title">
             <h2 id="industry-work-title">Industry projects</h2>
 

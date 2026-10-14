@@ -112,6 +112,20 @@ test('Work keeps research projects and their evidence reachable', () => {
   assert.match(html, /href="https:\/\/github\.com\/defects4c\/defects4c"/);
 });
 
+test('Work timeline combines research, industry, and education with the conferred PhD span', () => {
+  const main = mainContent(renderRoute('/work'));
+  const timeline = main.match(/<section[^>]*id="timeline"[\s\S]*?<\/section>/)?.[0];
+  assert.ok(timeline);
+  assert.match(timeline, /<h2[^>]*>Timeline<\/h2>/);
+  assert.equal((timeline.match(/<li\b/g) || []).length, 7);
+  assert.match(timeline, /2021 — 2026[\s\S]*PhD, Computer Science · conferred March 2026/);
+  assert.match(timeline, /Singapore Management University[\s\S]*Nanyang Technological University[\s\S]*Xiaomi AI Lab[\s\S]*58\.com[\s\S]*Baidu[\s\S]*Tianjin University/);
+  for (const href of ['/work#research-projects', '/work/xiaomi-portrait-ai', '/work/58-web-infrastructure', '/cv']) {
+    assert.ok(timeline.includes(`href="${href}"`), href);
+  }
+  assert.ok(main.indexOf('id="timeline"') < main.indexOf('id="industry-work-title"'));
+});
+
 test('Publication details keep the figure prominent and the citation collapsed', () => {
   const article = articleContent(renderRoute('/pubs/defects4c'));
 

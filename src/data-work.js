@@ -1,6 +1,17 @@
 // Public portfolio facts: existing publication records, the supplied biography,
 // and resume evidence. Years for papers are publication years; industry spans
 // identify the employment period, not a claimed project launch date.
+// Career dates and roles match the public CV; PhD span includes conferral.
+export const CAREER_TIMELINE = [
+  { id: 'smu', period: 'Aug 2023 — present', institution: 'Singapore Management University', role: 'Research Engineer Manager', mark: 'SMU', href: '/work#research-projects' },
+  { id: 'ntu-phd', period: '2021 — 2026', institution: 'Nanyang Technological University', role: 'PhD, Computer Science · conferred March 2026', mark: 'NTU', href: '/cv' },
+  { id: 'ntu-research', period: 'Dec 2019 — Aug 2021', institution: 'Nanyang Technological University', role: 'Research Assistant · Deep Learning Security', mark: 'NTU', href: '/work#research-projects' },
+  { id: 'xiaomi', period: '2017 — 2019', institution: 'Xiaomi AI Lab', role: 'Research Scientist', mark: 'mi', href: '/work/xiaomi-portrait-ai' },
+  { id: '58', period: '2011 — 2017', institution: '58.com', role: 'Backend Engineer · Mobile Web / Backend Infrastructure', mark: '58', href: '/work/58-web-infrastructure' },
+  { id: 'baidu', period: '2011', institution: 'Baidu', role: 'Data Engineering Intern', mark: '百度', href: '/work#other-industry-title' },
+  { id: 'tianjin', period: '2007 — 2011', institution: 'Tianjin University', role: 'BEng, Software Engineering', mark: 'TJU', href: '/cv' },
+];
+
 export const ROOMS = [
   { id: 'code', number: '01', title: 'Code reliability', purpose: 'Repair programs. Test what models understand.', tone: 'blue' },
   { id: 'security', number: '02', title: 'AI security & testing', purpose: 'Study detection, robustness and model behaviour.', tone: 'purple' },
