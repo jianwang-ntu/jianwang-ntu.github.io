@@ -39,7 +39,7 @@ export default function CV() {
       <SiteFrame mainClassName="cv-content">
         <h1>Curriculum vitae</h1>
         <p className="page-deck">Education, research and industry experience.</p>
-        <p className="text-index-intro">PhD conferred June 2026. The downloadable CV is the May 2026 snapshot;
+        <p className="text-index-intro">Graduated with a PhD in June 2026. The downloadable CV is the May 2026 snapshot;
           the <a href="/statement">research statement</a> describes my proposed next direction.</p>
         <div className="reading-links">
           <a href="/data/Jian_Wang_CV_Academic_202605.pdf" target="_blank" rel="noreferrer">Download CV (PDF) ↗</a>
