@@ -59,7 +59,7 @@ export default function WorkProjects() {
                   <span className={`work-timeline-mark mark-${entry.id}`} aria-hidden="true">{entry.mark}</span>
                   <div className="work-timeline-body">
                     <h3><Link to={entry.href}>{entry.institution}</Link></h3>
-                    <p>{entry.role}</p>
+                    <p>{entry.role} · {entry.country}</p>
                   </div>
                 </li>
               ))}

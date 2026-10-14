@@ -117,9 +117,12 @@ test('Work timeline combines research, industry, and education with the conferre
   const timeline = main.match(/<section[^>]*id="timeline"[\s\S]*?<\/section>/)?.[0];
   assert.ok(timeline);
   assert.match(timeline, /<h2[^>]*>Timeline<\/h2>/);
-  assert.equal((timeline.match(/<li\b/g) || []).length, 7);
-  assert.match(timeline, /2021 — 2026[\s\S]*PhD, Computer Science · conferred March 2026/);
-  assert.match(timeline, /Singapore Management University[\s\S]*Nanyang Technological University[\s\S]*Xiaomi AI Lab[\s\S]*58\.com[\s\S]*Baidu[\s\S]*Tianjin University/);
+  assert.equal((timeline.match(/<li\b/g) || []).length, 6);
+  assert.match(timeline, /2021 — 2026[\s\S]*PhD, Computer Science · conferred June 2026/);
+  assert.match(timeline, /Singapore Management University[\s\S]*Nanyang Technological University[\s\S]*Xiaomi AI Lab[\s\S]*58\.com[\s\S]*Tianjin University/);
+  assert.doesNotMatch(timeline, /Baidu|Data Engineering Intern/);
+  assert.equal((timeline.match(/· Singapore/g) || []).length, 3);
+  assert.equal((timeline.match(/· China/g) || []).length, 3);
   for (const href of ['/work#research-projects', '/work/xiaomi-portrait-ai', '/work/58-web-infrastructure', '/cv']) {
     assert.ok(timeline.includes(`href="${href}"`), href);
   }
