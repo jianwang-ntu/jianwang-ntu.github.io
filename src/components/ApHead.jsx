@@ -28,7 +28,7 @@ export default function ApHead({ sub, sidebar = false }) {
         <a href="https://scholar.google.com/citations?hl=en&user=GAe_mJUAAAAJ" target="_blank" rel="noreferrer">Google Scholar</a>
         <a href="https://github.com/jianwang-ntu" target="_blank" rel="noreferrer">GitHub</a>
         <a href="https://twitter.com/jornbowrl" target="_blank" rel="noreferrer">Twitter</a>
-        <a href="/data/Jian_Wang_CV_Academic_202605.pdf" target="_blank" rel="noreferrer">CV</a>
+        <a href="/data/Jian_Wang_CV_Academic_202610.pdf" target="_blank" rel="noreferrer">CV</a>
       </nav>
       {sub && <p className="ap-page-sub">{sub}</p>}
     </header>
