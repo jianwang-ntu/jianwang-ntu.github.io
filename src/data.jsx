@@ -154,7 +154,7 @@ export const ALL_PUBS = [
     ] },
 ];
 
-// Work — newest first. PhD start aligned with bio (Aug 2021).
+// Work — newest first. NTU employment was Research Assistant throughout.
 export const WORK = [
   { year: 'Aug 2023 — now', role: 'Research Engineer Manager',
     where: 'Singapore Management University · Code Intelligence & LLM Security',
@@ -164,7 +164,7 @@ export const WORK = [
     transfer: 'Production-scale system design from 58.com translates directly to building reproducible large-scale benchmarks. The reliability instincts are the same; the substrate is now LLM evaluation pipelines.',
     papers: ["ASE '25 (Defects4C)", "EMNLP '25 (Code Semantics)"],
     pivot: true },
-  { year: 'Aug 2021 — Aug 2023', role: 'PhD Student',
+  { year: 'Dec 2019 — Aug 2023', role: 'Research Assistant',
     where: 'Nanyang Technological University · Deep Learning & LLM Security',
     kind: 'RESEARCH',
     what: <>Large-scale empirical study of 13 AIGC detectors on 2M+ code samples. Built <b>RATCHET</b> — retrieval-augmented APR with BiLSTM fault localisation. Developed neuro-symbolic methods for DL testing: <b>NPC</b> path coverage and <b>Faire</b> fairness repair. Core team in the AI Singapore deepfake challenge.</>,
@@ -172,13 +172,6 @@ export const WORK = [
     transfer: 'The CNN/GAN work at Xiaomi gave me the model-internals lens that NPC and Faire later operationalised — neuron-level coverage and condition synthesis are the same intuition under a research budget.',
     papers: ["ASE '24 (AIGC)", "ISSRE '24 (RATCHET)", "LCTES '24 (FGVulDet)", "TOSEM '23 (Faire)", "TOSEM '22 (NPC)", "ICML '21", "NeurIPS '20", "IJCAI '20"],
     pivot: true },
-  { year: 'Dec 2019 — Aug 2021', role: 'Research Assistant',
-    where: 'Nanyang Technological University · Deep Learning Security',
-    kind: 'RESEARCH',
-    what: <>Pre-PhD research bridge — neural-network testing, robustness analysis, and the early infrastructure that became NPC and the AIGC-detector study.</>,
-    stack: ['PyTorch', 'Adversarial Robustness', 'DL Testing'],
-    transfer: 'Built the experimental scaffolding that the later PhD work ran on top of.',
-    papers: [] },
   { year: '2017 — 2019', role: 'Research Scientist · Xiaomi AI Lab',
     where: 'Xiaomi Group · AI Lab · Beijing',
     kind: 'INDUSTRY',

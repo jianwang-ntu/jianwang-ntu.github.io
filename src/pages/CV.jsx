@@ -67,18 +67,11 @@ export default function CV() {
             Studied execution traces in fine-tuning and inference; the <a href="/pubs/code-semantics-execution-traces">EMNLP '25 paper</a> reports limited usefulness in the settings tested.</>}
         />
         <CVBlock
-          left="Aug 2021 — Aug 2023"
-          right="Singapore"
-          title="PhD Student"
-          sub="Nanyang Technological University · Deep Learning & LLM Security"
-          body="Studied AI-generated code detection and retrieval-augmented program repair. Co-authored work on neural-network testing and fairness repair, including NPC and Faire."
-        />
-        <CVBlock
-          left="Dec 2019 — Aug 2021"
+          left="Dec 2019 — Aug 2023"
           right="Singapore"
           title="Research Assistant"
-          sub="Nanyang Technological University · Deep Learning Security"
-          body="Research on neural-network testing, robustness, and repair."
+          sub="Nanyang Technological University · Deep Learning & LLM Security"
+          body="Studied AI-generated code detection and retrieval-augmented program repair. Co-authored work on neural-network testing and fairness repair, including NPC and Faire."
         />
         <CVBlock
           left="2017 — 2019"
