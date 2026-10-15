@@ -3,7 +3,7 @@ import React from 'react';
 // News — most recent first. Trimmed to the last two years.
 export const NEWS = [
   ['2026', <span>Thesis summary "<i>Trustworthy AI-Assisted Programming</i>" published in <b>Proceedings of AAAI 2026</b>.</span>],
-  ['2026', <span>PhD conferred at <b>NTU Singapore</b> — research on code LLM security and program repair.</span>],
+  ['30th June 2026', <span>PhD conferred at <b>NTU Singapore</b> — research on code LLM security and program repair.</span>],
   ['2025', <span>Paper "<i>Defects4C</i>" accepted to <b>ASE 2025</b> — comprehensive C/C++ APR benchmark for LLMs.</span>],
   ['2025', <span>Paper "<i>Do Code Semantics Help?</i>" accepted to <b>EMNLP Findings 2025</b>.</span>],
   ['2024', <span>Paper "<i>RATCHET</i>" accepted to <b>ISSRE 2024</b>; "<i>AIGC Detectors on Code</i>" to <b>ASE 2024</b>.</span>],
