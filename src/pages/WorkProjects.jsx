@@ -6,46 +6,22 @@ import Seo from '../components/Seo.jsx';
 import SiteFrame from '../components/SiteFrame.jsx';
 import { CAREER_TIMELINE, WORK_PROJECTS, projectPeriod } from '../data-work.js';
 
-function ResourceLink({ link }) {
-  return link.href.startsWith('/')
-    ? <Link to={link.href}>{link.label}</Link>
-    : <a href={link.href} target="_blank" rel="noreferrer">{link.label}</a>;
-}
-
-function ResearchProject({ project }) {
-  return (
-    <article className="text-index-row work-project-row" id={project.id}>
-      <div className="text-index-year">{projectPeriod(project)}</div>
-      <div className="text-index-body">
-        <h3>{project.title}</h3>
-        <p className="text-index-meta">{project.venue} · {project.affiliation}</p>
-        <p className="text-index-summary">{project.summary}</p>
-        <p className="text-index-links">
-          {project.publication && <Link to={`/pubs/${project.publication}`}>Publication details</Link>}
-          {project.links.map((link) => <ResourceLink key={link.href} link={link} />)}
-        </p>
-      </div>
-    </article>
-  );
-}
-
 export default function WorkProjects() {
-  const researchProjects = WORK_PROJECTS.filter((project) => project.type === 'research');
   const otherIndustry = WORK_PROJECTS.filter((project) => project.type === 'industry' && project.id === 'baidu-data');
 
   return (
     <div className="page">
       <Seo
-        title="Work & Projects"
-        description="Jian Wang’s work on shared web infrastructure, mobile portrait AI, program repair, and code-model evaluation."
+        title="Work"
+        description="Jian Wang’s career timeline and industry experience in shared web infrastructure and mobile portrait AI."
         path="/work"
       />
       <Nav skipToContent />
       <SiteFrame className="work-shell" mainClassName="work-text-page">
           <div className="work-heading">
             <div>
-              <h1>Work &amp; projects</h1>
-              <p className="page-deck">Web infrastructure, mobile AI, and software research.</p>
+              <h1>Work</h1>
+              <p className="page-deck">Career timeline and industry experience.</p>
             </div>
             <Link className="text-link" to="/cv">Experience &amp; CV ↗</Link>
           </div>
@@ -66,7 +42,7 @@ export default function WorkProjects() {
             </ol>
           </section>
           <section className="work-text-section" aria-labelledby="industry-work-title">
-            <h2 id="industry-work-title">Industry projects</h2>
+            <h2 id="industry-work-title">Industry experience</h2>
 
             <article className="work-editorial-entry">
               <h3>Shared web infrastructure at 58.com</h3>
@@ -88,13 +64,6 @@ export default function WorkProjects() {
               </div>
               <p className="work-detail-links"><Link to="/work/xiaomi-portrait-ai">Details</Link></p>
             </article>
-          </section>
-
-          <section className="work-text-section" id="research-projects" aria-labelledby="research-projects-title">
-            <h2 id="research-projects-title">Research projects</h2>
-            <div className="text-index-list">
-              {researchProjects.map((project) => <ResearchProject key={project.id} project={project} />)}
-            </div>
           </section>
 
           <section className="work-text-section" aria-labelledby="other-industry-title">

@@ -128,7 +128,7 @@ const STATIC_ROUTES = [
   { path: '/research_coding_statement', title: 'Program Reasoning Research Statement', desc: 'Reliable program reasoning through learned semantic abstractions, formal feedback, and rigorous evaluation.' },
   { path: '/research', canonicalPath: '/statement', title: 'Research Statement', desc: 'Reliable AI agents under human control: oversight before action, preserving safety through continual updates, and authorization across delegated workflows.' },
   { path: '/pubs', title: 'Publications',   desc: 'Publications by Jian Wang on program repair, code-model evaluation, neural-network testing, and robustness.' },
-  { path: '/work', title: 'Work & Projects', desc: 'Jian Wang’s work on shared web infrastructure, mobile portrait AI, program repair, and code-model evaluation.' },
+  { path: '/work', title: 'Work', desc: 'Jian Wang’s career timeline and industry experience in shared web infrastructure and mobile portrait AI.' },
   {
     path: '/work/xiaomi-portrait-ai',
     title: 'Portrait Intelligence at Xiaomi',

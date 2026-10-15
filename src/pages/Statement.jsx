@@ -78,7 +78,6 @@ export default function Statement() {
           </details>
         </article>
         <div className="statement-download"><Link to="/pubs">Browse the published evidence ↗</Link>
-          <Link to="/work#research-projects">Explore earlier research projects ↗</Link>
           <a href="#research-overview">Back to the overview ↑</a></div>
     </SiteFrame><Footer />
   </div>;

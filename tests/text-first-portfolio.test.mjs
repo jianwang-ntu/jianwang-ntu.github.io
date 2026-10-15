@@ -103,13 +103,13 @@ test('Work explains the two principal industry projects on its first page', () =
   assert.doesNotMatch(main, /The project rooms|Project index/);
 });
 
-test('Work keeps research projects and their evidence reachable', () => {
-  const html = renderRoute('/work');
-
-  assert.match(html, /Defects4C/);
-  assert.match(html, /Execution-trace reasoning/);
-  assert.match(html, /href="\/pubs\/defects4c"/);
-  assert.match(html, /href="https:\/\/github\.com\/defects4c\/defects4c"/);
+test('Work directs research readers to Publications without repeating its paper list', () => {
+  const main = mainContent(renderRoute('/work'));
+  assert.doesNotMatch(main, /Research projects|Defects4C|Execution-trace reasoning|work#research-projects/);
+  assert.match(main, /href="\/pubs"/);
+  const publications = mainContent(renderRoute('/pubs'));
+  assert.match(publications, /Defects4C/);
+  assert.match(publications, /href="\/pubs\/defects4c"/);
 });
 
 test('Work timeline combines research, industry, and education with the conferred PhD span', () => {
@@ -123,7 +123,7 @@ test('Work timeline combines research, industry, and education with the conferre
   assert.doesNotMatch(timeline, /Baidu|Data Engineering Intern/);
   assert.equal((timeline.match(/· Singapore/g) || []).length, 3);
   assert.equal((timeline.match(/· China/g) || []).length, 3);
-  for (const href of ['/work#research-projects', '/work/xiaomi-portrait-ai', '/work/58-web-infrastructure', '/cv']) {
+  for (const href of ['/pubs', '/work/xiaomi-portrait-ai', '/work/58-web-infrastructure', '/cv']) {
     assert.ok(timeline.includes(`href="${href}"`), href);
   }
   assert.ok(main.indexOf('id="timeline"') < main.indexOf('id="industry-work-title"'));
