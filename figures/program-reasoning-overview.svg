@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc" viewBox="0 0 1200 300">
+  <title id="title">Program reasoning research overview</title>
+  <desc id="desc">Program understanding, verification, and synthesis problems flow through learned proposals and formal feedback into methods, tools, and benchmarks.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#52798a"/>
+    </marker>
+    <style>
+      .box { fill: #fff; stroke: #9db5c0; stroke-width: 2; }
+      .middle { fill: #eef5f7; stroke: #52798a; }
+      .kicker { font: 600 15px system-ui, -apple-system, sans-serif; fill: #52798a; letter-spacing: 1.5px; }
+      .title { font: 650 25px system-ui, -apple-system, sans-serif; fill: #1f3b4d; }
+      .copy { font: 16px system-ui, -apple-system, sans-serif; fill: #526772; }
+      .arrow { fill: none; stroke: #52798a; stroke-width: 3; marker-end: url(#arrow); }
+      .feedback { fill: none; stroke: #7d9e75; stroke-width: 2.5; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect class="box" x="25" y="55" width="320" height="170" rx="12"/>
+  <text id="problem-kicker" class="kicker" x="50" y="92">RESEARCH PROBLEM</text>
+  <text id="problem-title" class="title" x="50" y="127">Program reasoning problems</text>
+  <text id="problem-line-1" class="copy" x="50" y="162">Understanding · verification · synthesis</text>
+  <text id="problem-line-2" class="copy" x="50" y="190">What must be true of this program?</text>
+
+  <path class="arrow" d="M 360 140 H 417"/>
+
+  <rect class="box middle" x="432" y="35" width="336" height="210" rx="12"/>
+  <text id="method-kicker" class="kicker" x="458" y="74">METHOD</text>
+  <text id="method-title" class="title" x="458" y="109">Learning + formal feedback</text>
+  <text id="method-line-1" class="copy" x="458" y="146">Models propose candidates</text>
+  <text id="method-line-2" class="copy" x="458" y="174">Verifiers, tests, and analyses check</text>
+  <path class="feedback" d="M 694 194 C 654 225, 510 225, 472 194"/>
+  <text id="method-feedback" class="copy" x="516" y="219">Counterexamples improve learning</text>
+
+  <path class="arrow" d="M 783 140 H 840"/>
+
+  <rect class="box" x="855" y="55" width="320" height="170" rx="12"/>
+  <text id="outputs-kicker" class="kicker" x="880" y="92">VERIFIABLE OUTPUTS</text>
+  <text id="outputs-title" class="title" x="880" y="127">Research outputs</text>
+  <text id="outputs-line-1" class="copy" x="880" y="162">Methods · models · tools · benchmarks</text>
+  <text id="outputs-line-2" class="copy" x="880" y="190">Correctness · generalisation · cost</text>
+</svg>
