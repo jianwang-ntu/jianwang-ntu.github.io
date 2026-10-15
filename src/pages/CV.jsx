@@ -15,7 +15,7 @@ function CVBlock({ left, right, title, sub, body }) {
         {right && <div className="w">{right}</div>}
       </div>
       <div className="body">
-        <div className="ttl">{title}</div>
+        <h3 className="ttl">{title}</h3>
         {sub && <div className="sub">{sub}</div>}
         {body && <div className="desc">{body}</div>}
       </div>
@@ -42,7 +42,7 @@ export default function CV() {
         <p className="text-index-intro">PhD conferred June 2026. The downloadable CV was updated in October 2026;
           the <a href="/statement">research statement</a> describes my proposed next direction.</p>
         <div className="reading-links">
-          <a href="/data/Jian_Wang_CV_Academic_202610.pdf" target="_blank" rel="noreferrer">Download CV (PDF) ↗</a>
+          <a className="cv-download-link" href="/data/Jian_Wang_CV_Academic_202610.pdf" target="_blank" rel="noreferrer">Download CV (PDF) ↗</a>
           <a href="/data/jornbowrl-bio.txt">Short bio</a>
         </div>
 
@@ -91,28 +91,29 @@ export default function CV() {
         <CVH>Selected publications</CVH>
         <div className="cv-publications">
           {ALL_PUBS.filter(pub => ['C5', 'C4', 'C3'].includes(pub.id)).map(pub => (
-            <p key={pub.id}><Authors names={PUB_META[pub.id].authors} />.{' '}
-              <a href={`/pubs/${PUB_META[pub.id].key}`}>{pub.title}</a>. {pub.venue}, {pub.year}.</p>
+            <CVBlock key={pub.id}
+              left={pub.year}
+              title={<a href={`/pubs/${PUB_META[pub.id].key}`}>{pub.title}</a>}
+              sub={<><Authors names={PUB_META[pub.id].authors} />. {pub.venue}.</>}
+            />
           ))}
           <p className="reading-links"><a href="/pubs">All publications</a><a href="https://scholar.google.com/citations?hl=en&user=GAe_mJUAAAAJ" target="_blank" rel="noreferrer">Google Scholar ↗</a></p>
         </div>
 
         <CVH>Honors & awards</CVH>
-        <div className="cv-prose">
-          <p><b>2022</b> · S$100,000 prize · 3rd place · AI Singapore Deepfake Detection Challenge (international)</p>
-        </div>
+        <CVBlock left="2022" title="AI Singapore Deepfake Detection Challenge"
+          sub="3rd place · S$100,000 prize · International competition" />
         <CVBlock left="2019" right="Beijing" title="Certification · AI / Computer Vision" sub="Tsinghua University" />
 
         <CVH>Skills</CVH>
-        <p className="cv-skills">
-          {[
-            'Python', 'PyTorch', 'C/C++', 'CUDA', 'ONNX',
-            'LLMs / SFT / PEFT', 'Transformers', 'GNN/GGNN',
-            'Symbolic methods', 'Adversarial robustness', 'Quantisation',
-            'Backend / Async Web Frameworks',
-            'Mandarin (native)', 'English (fluent)',
-          ].join(' · ')}
-        </p>
+        <dl className="cv-skill-list">
+          <dt>Engineering</dt>
+          <dd>Python · C/C++ · CUDA · ONNX · Backend / Async Web Frameworks</dd>
+          <dt>Machine learning</dt>
+          <dd>PyTorch · LLMs / SFT / PEFT · Transformers · GNN/GGNN · Symbolic methods · Adversarial robustness · Quantisation</dd>
+          <dt>Languages</dt>
+          <dd>Mandarin (native) · English (fluent)</dd>
+        </dl>
 
       </SiteFrame>
 
