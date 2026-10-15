@@ -24,10 +24,7 @@ function AcademicPagesHome() {
             and the evaluation of execution-trace information for code models.
           </p>
           <p>
-            Before research, I spent about eight years in industry. At <Link to="/work/xiaomi-portrait-ai">Xiaomi AI Lab</Link>,
-            I worked on portrait segmentation and GAN-based selfie cartoonisation. At{' '}
-            <Link to="/work/58-web-infrastructure">58.com</Link>, I built shared web infrastructure
-            and a custom Nginx traffic router.
+            I bring eight years of <Link to="/work">industry experience</Link> in applied AI and large-scale software systems.
           </p>
         </div>
         <section className="home-section" aria-labelledby="interests-title">
