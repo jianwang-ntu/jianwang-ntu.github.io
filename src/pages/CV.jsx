@@ -54,7 +54,6 @@ export default function CV() {
           sub="Nanyang Technological University · College of Computing and Data Science"
           body={<>Advisor: <a href="https://personal.ntu.edu.sg/yi_li/" target="_blank" rel="noreferrer">Prof. Li Yi</a>. PhD research: automated program repair, AI-generated code detection and the evaluation of execution-trace information for code models.</>}
         />
-        <CVBlock left="2019" right="Beijing" title="Certification · AI / Computer Vision" sub="Tsinghua University" />
         <CVBlock left="2007 — 2011" right="Tianjin" title="BEng, Software Engineering" sub="Tianjin University" />
 
         <CVH>Research & industry experience</CVH>
@@ -102,6 +101,7 @@ export default function CV() {
         <div className="cv-prose">
           <p><b>2022</b> · S$100,000 prize · 3rd place · AI Singapore Deepfake Detection Challenge (international)</p>
         </div>
+        <CVBlock left="2019" right="Beijing" title="Certification · AI / Computer Vision" sub="Tsinghua University" />
 
         <CVH>Skills</CVH>
         <p className="cv-skills">
