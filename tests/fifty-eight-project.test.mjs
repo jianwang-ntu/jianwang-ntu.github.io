@@ -42,13 +42,13 @@ function articleContent(html) {
   return html.match(/<article\b[\s\S]*<\/article>/)?.[0] || '';
 }
 
-test('Work & Projects links to the 58.com web infrastructure case study', () => {
+test('Work links to the 58.com web infrastructure case study', () => {
   const html = renderRoute('/work');
 
   assert.doesNotMatch(html, /CASE STUDIES COMING SOON/);
   assert.match(html, /href="\/work\/58-web-infrastructure"/);
   assert.match(html, /Shared web infrastructure at 58\.com/);
-  assert.match(html, /Industry projects/);
+  assert.match(html, /Industry experience/);
 });
 
 test('58.com case study explains the shared middleware and Nginx traffic router', () => {

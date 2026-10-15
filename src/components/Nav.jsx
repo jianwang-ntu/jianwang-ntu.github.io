@@ -5,7 +5,7 @@ const NAV_ITEMS = [
   { to: '/home', label: 'Home' },
   { to: '/statement', label: 'Research statement', short: 'Research' },
   { to: '/pubs', label: 'Publications' },
-  { to: '/work', label: 'Work & Projects', short: 'Work' },
+  { to: '/work', label: 'Work' },
   { to: '/cv',   label: 'CV' },
   { to: '/blog', label: 'Blog' },
 ];

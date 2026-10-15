@@ -53,7 +53,7 @@ export default function XiaomiPortraitAI() {
       <Nav skipToContent />
       <SiteFrame mainClassName="case-study-main">
         <article className="editorial-case-study xiaomi-project">
-          <Link to="/work" className="case-study-back">← Work &amp; Projects</Link>
+          <Link to="/work" className="case-study-back">← Work</Link>
 
           <header className="case-study-header xiaomi-header">
             <p className="case-study-overline">Xiaomi AI Lab · Beijing · 2017–2019</p>

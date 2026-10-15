@@ -3,9 +3,9 @@
 // identify the employment period, not a claimed project launch date.
 // Career records use the public CV and author corrections; PhD span includes conferral.
 export const CAREER_TIMELINE = [
-  { id: 'smu', country: 'Singapore', period: 'Aug 2023 — present', institution: 'Singapore Management University', role: 'Research Engineer Manager', mark: 'SMU', href: '/work#research-projects' },
+  { id: 'smu', country: 'Singapore', period: 'Aug 2023 — present', institution: 'Singapore Management University', role: 'Research Engineer Manager', mark: 'SMU', href: '/pubs' },
   { id: 'ntu-phd', country: 'Singapore', period: '2021 — 2026', institution: 'Nanyang Technological University', role: 'PhD, Computer Science · conferred June 2026', mark: 'NTU', href: '/cv' },
-  { id: 'ntu-research', country: 'Singapore', period: 'Dec 2019 — Aug 2023', institution: 'Nanyang Technological University', role: 'Research Assistant · Deep Learning Security', mark: 'NTU', href: '/work#research-projects' },
+  { id: 'ntu-research', country: 'Singapore', period: 'Dec 2019 — Aug 2023', institution: 'Nanyang Technological University', role: 'Research Assistant · Deep Learning Security', mark: 'NTU', href: '/pubs' },
   { id: 'xiaomi', country: 'China', period: '2017 — 2019', institution: 'Xiaomi AI Lab', role: 'Research Scientist', mark: 'mi', href: '/work/xiaomi-portrait-ai' },
   { id: '58', country: 'China', period: '2011 — 2017', institution: '58.com', role: 'Backend Engineer · Mobile Web / Backend Infrastructure', mark: '58', href: '/work/58-web-infrastructure' },
   { id: 'tianjin', country: 'China', period: '2007 — 2011', institution: 'Tianjin University', role: 'BEng, Software Engineering', mark: 'TJU', href: '/cv' },

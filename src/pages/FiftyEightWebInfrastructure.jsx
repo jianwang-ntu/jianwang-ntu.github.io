@@ -15,7 +15,7 @@ const COPY = {
     alternatePath: '/zh/work/58-web-infrastructure',
     title: 'Web Infrastructure at 58.com',
     description: 'Two infrastructure projects from 58.com: a shared asynchronous web framework and a custom traffic-routing module for Nginx.',
-    back: '← Work & Projects',
+    back: '← Work',
     overline: '58.com · Backend Engineer · Beijing · 2011–2017',
     intro: 'At 58.com I worked on the shared web layer behind several mobile and web products. This page covers two connected projects: an asynchronous framework for reusable request handling, and a company traffic router implemented as a custom Nginx module.',
     labels: {
@@ -61,7 +61,7 @@ const COPY = {
     alternatePath: '/work/58-web-infrastructure',
     title: '58同城的 Web 基础设施',
     description: '在 58同城参与的两个基础设施项目：面向多业务线的异步 Web 框架，以及运行在 Nginx 内的流量路由模块。',
-    back: '← 项目列表',
+    back: '← 工作经历',
     overline: '58同城 · 后端工程师 · 北京 · 2011–2017',
     intro: '在 58同城期间，我主要做移动 Web 与后端基础设施。这里整理两个相互关联的项目：用于复用请求处理能力的异步 Web 框架，以及作为自定义 Nginx 模块运行的公司级流量路由器。',
     labels: {
