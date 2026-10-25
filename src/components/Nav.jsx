@@ -3,7 +3,7 @@ import { Link, NavLink, useLocation } from 'react-router-dom';
 
 const NAV_ITEMS = [
   { to: '/home', label: 'Home' },
-  { to: '/statement', label: 'Research statement', short: 'Research' },
+  { to: '/statement_multi_agent', label: 'Research statement', short: 'Research' },
   { to: '/pubs', label: 'Publications' },
   { to: '/work', label: 'Work' },
   { to: '/cv',   label: 'CV' },

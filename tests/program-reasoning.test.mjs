@@ -88,7 +88,7 @@ test('Loop-R1 detail presents the original framework, measured evidence and limi
 });
 
 test('the program-reasoning statement is reachable from the primary statement', () => {
-  const primary = mainContent(renderRoute('/statement'));
+  const primary = mainContent(renderRoute('/statement_multi_agent'));
   const coding = mainContent(renderRoute('/research_coding_statement'));
 
   assert.match(primary, /href="\/research_coding_statement"/);

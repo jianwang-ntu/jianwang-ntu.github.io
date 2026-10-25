@@ -124,9 +124,10 @@ function writeRoute(routePath, html) {
 // Seo component's defaults so the static and JS-rendered metadata agree.
 const STATIC_ROUTES = [
   { path: '/home', title: 'Home',           desc: 'Jian Wang — PhD, NTU Singapore. Reliable AI agents under human control, building on software engineering and AI evaluation.' },
-  { path: '/statement', title: 'Research Statement', desc: 'Reliable AI agents under human control: oversight before action, preserving safety through continual updates, and authorization across delegated workflows.' },
+  { path: '/statement_multi_agent', title: 'Research Statement', desc: 'Reliable AI agents under human control: oversight before action, preserving safety through continual updates, and authorization across delegated workflows.' },
+  { path: '/statement', canonicalPath: '/statement_multi_agent', title: 'Research Statement', desc: 'Reliable AI agents under human control: oversight before action, preserving safety through continual updates, and authorization across delegated workflows.' },
   { path: '/research_coding_statement', title: 'Program Reasoning Research Statement', desc: 'Reliable program reasoning through learned semantic abstractions, formal feedback, and rigorous evaluation.' },
-  { path: '/research', canonicalPath: '/statement', title: 'Research Statement', desc: 'Reliable AI agents under human control: oversight before action, preserving safety through continual updates, and authorization across delegated workflows.' },
+  { path: '/research', canonicalPath: '/statement_multi_agent', title: 'Research Statement', desc: 'Reliable AI agents under human control: oversight before action, preserving safety through continual updates, and authorization across delegated workflows.' },
   { path: '/pubs', title: 'Publications',   desc: 'Publications by Jian Wang on program repair, code-model evaluation, neural-network testing, and robustness.' },
   { path: '/work', title: 'Work', desc: 'Jian Wang’s career timeline and industry experience in shared web infrastructure and mobile portrait AI.' },
   {
