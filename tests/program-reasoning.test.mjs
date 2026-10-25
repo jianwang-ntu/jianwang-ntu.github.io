@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { createServer } from 'vite';
@@ -63,7 +64,7 @@ test('the primary agenda resolves every homepage direction and retains access to
   assert.match(multiAgent, /statement-diagram-link/);
 });
 
-test('the generated research diagrams offer full-size downloads and overview navigation', () => {
+test('PDF-derived research diagrams offer vector previews, matching PDF pages and overview navigation', () => {
   const home = mainContent(renderRoute('/home'));
   const primary = mainContent(renderRoute('/statement'));
   for (const html of [home, primary]) {
@@ -73,11 +74,16 @@ test('the generated research diagrams offer full-size downloads and overview nav
       assert.ok(overview.includes(`href="/statement#${target}"`), target);
     }
   }
-  for (const name of ['overview', 'learning-proof-strategies', 'compositional-verification', 'trustworthy-feedback']) {
+  for (const [index, name] of ['overview', 'learning-proof-strategies', 'compositional-verification', 'trustworthy-feedback'].entries()) {
     const path = `/figures/formal-reasoning/${name}.png`;
-    assert.ok(primary.includes(`href="${path}"`), path);
+    assert.ok(primary.includes(`href="${path}?v=`), path);
     assert.deepEqual([...readFileSync(file(`public${path}`)).subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10]);
     assert.ok(existsSync(file(`public/figures/formal-reasoning/${name}.webp`)));
+    assert.ok(primary.includes(`src="/figures/formal-reasoning/${name}.svg?`));
+    assert.match(primary, new RegExp(`href="/data/formal-reasoning-diagrams/formal-reasoning-diagrams\\.pdf\\?v=[^"#]+#page=${index + 1}"`));
+    const svg = readFileSync(file(`public/figures/formal-reasoning/${name}.svg`), 'utf8');
+    assert.match(svg, /<svg\b/);
+    assert.doesNotMatch(svg, /<(?:image|script)\b/);
   }
   const diagrams = [...primary.matchAll(/<figure\b[^>]*class="[^"]*formal-research-figure[^"]*"[\s\S]*?<\/figure>/g)].map(match => match[0]);
   assert.equal(diagrams.length, 4);
@@ -88,6 +94,9 @@ test('the generated research diagrams offer full-size downloads and overview nav
     }
   }
   assert.ok(existsSync(file('public/data/formal-reasoning-diagrams.zip')));
+  const manifest = JSON.parse(readFileSync(file('public/figures/formal-reasoning/exports.json'), 'utf8'));
+  const pdf = readFileSync(file(`public${manifest.source_pdf}`));
+  assert.equal(createHash('sha256').update(pdf).digest('hex'), manifest.source_pdf_sha256);
 });
 
 test('Loop-R1 is indexed as a public preprint with paper and OpenReview links', () => {

@@ -4,24 +4,28 @@ import { Link } from 'react-router-dom';
 const figures = {
   overview: {
     file: 'overview',
+    page: 1,
     title: 'Formal reasoning research overview',
     caption: 'Proposed research: learn transferable strategies, reuse checked dependency evidence, and assess intended requirements.',
     alt: 'Existing code and a test harness inform an explicit property under a stated input domain and execution model. An agent proposes proofs for an independent checker. Feedback motivates transfer, reuse through checked dependency interfaces, and assessment of intended requirements.',
   },
   'learning-reusable-proof-strategies': {
     file: 'learning-proof-strategies',
+    page: 2,
     title: 'Learning reusable proof strategies',
     caption: 'Proposed comparison: distinguish proof retrieval, within-task refinement, and learning through held-out transfer tests.',
     alt: 'Checker feedback guides the next proof proposal. Retrieval, within-task refinement, and cross-task learning are compared separately through transfer tests under matched budgets.',
   },
   'compositional-verification': {
     file: 'compositional-verification',
+    page: 3,
     title: 'Compositional verification',
     caption: 'Proposed research: reuse checked components only after validating caller obligations, interfaces, and assumptions.',
     alt: 'An agent decomposes a global software property across shared libraries and callers. Independent checks and a separate interface and assumption gate support composition; changed components trigger revalidation of affected evidence.',
   },
   'trustworthy-verification-feedback': {
     file: 'trustworthy-feedback',
+    page: 4,
     title: 'Trustworthy verification feedback',
     caption: 'Proposed research: assess requirement coverage and behavior preservation separately from theorem checking.',
     alt: 'A checked theorem receives a separate assessment of requirement coverage, artifact matching, explicit assumptions, and behavior preservation. Invalid or unresolved results and failed assessments require investigation, revision, or review.',
@@ -31,7 +35,8 @@ const figures = {
 const learn = '/statement#learning-reusable-proof-strategies';
 const compose = '/statement#compositional-verification';
 const audit = '/statement#trustworthy-verification-feedback';
-// Regions measured against the restyled 1672 × 941 overview PNG.
+const assetVersion = '20261026-html-citations';
+// The PDF-derived vector preview keeps the editable slide's 1672 × 941 canvas.
 const overviewRegions = [
   ['Code and test harness', audit, 31, 143, 275, 230],
   ['Explicit property and execution model', audit, 359, 143, 266, 230],
@@ -47,13 +52,15 @@ const overviewRegions = [
 export default function FormalReasoningFigure({ kind = 'overview', loading = 'lazy' }) {
   const figure = figures[kind];
   if (!figure) return null;
-  const original = `/figures/formal-reasoning/${figure.file}.png`;
+  const original = `/figures/formal-reasoning/${figure.file}.png?v=${assetVersion}`;
+  const vector = `/figures/formal-reasoning/${figure.file}.svg?v=${assetVersion}`;
+  const pdf = `/data/formal-reasoning-diagrams/formal-reasoning-diagrams.pdf?v=${assetVersion}#page=${figure.page}`;
   const overview = kind === 'overview';
   return <figure className="research-overview formal-research-figure" aria-label={figure.title}>
     <div className="formal-research-scroll" tabIndex="0" aria-label={`Scrollable diagram: ${figure.title}`}>
       <div className="linked-research-image formal-research-canvas">
-        <a className="formal-research-open" href={original} target="_blank" rel="noreferrer" aria-label={`Open ${figure.title} at full size`}>
-          <img className="home-research-image" src={`/figures/formal-reasoning/${figure.file}.webp?v=20261026-academic-white`} alt={figure.alt} width="1672" height="941" loading={loading} decoding="async" />
+        <a className="formal-research-open" href={pdf} target="_blank" rel="noreferrer" aria-label={`Open ${figure.title} as PDF, page ${figure.page}`}>
+          <img className="home-research-image" src={vector} alt={figure.alt} width="1672" height="941" loading={loading} decoding="async" />
         </a>
         {overview && overviewRegions.map(([label, to, x, y, width, height]) =>
           <Link key={label} className="research-image-link" to={to} aria-label={label} title={label}
@@ -70,11 +77,11 @@ export default function FormalReasoningFigure({ kind = 'overview', loading = 'la
       <span className="formal-research-context">Sources for context: <a href="https://www.anthropic.com/research/formal-verification" target="_blank" rel="noreferrer">Anthropic and Theorem: formal software verification [1]</a> · <a href="https://theorem.dev/blog/verified-software-stack/" target="_blank" rel="noreferrer">Theorem: the verified software stack [2]</a>.</span>
       {overview && <span>Click a research area to read its section.</span>}
       <span className="formal-research-actions">
-        <a href={original} target="_blank" rel="noreferrer">Open full size ↗</a>
+        <a href={pdf} target="_blank" rel="noreferrer">Open PDF ↗</a>
+        <a href={vector} download>Download SVG</a>
         <a href={original} download>Download PNG</a>
-        {overview && <a href="/data/formal-reasoning-diagrams/formal-reasoning-diagrams.pptx" download>Editable PowerPoint</a>}
-        {overview && <a href="/data/formal-reasoning-diagrams/formal-reasoning-diagrams.pdf" target="_blank" rel="noreferrer">PDF</a>}
-        {overview && <a href="/data/formal-reasoning-diagrams.zip" download>Download all diagrams</a>}
+        {overview && <a href={`/data/formal-reasoning-diagrams/formal-reasoning-diagrams.pptx?v=${assetVersion}`} download>Editable PowerPoint</a>}
+        {overview && <a href={`/data/formal-reasoning-diagrams.zip?v=${assetVersion}`} download>Download all diagrams</a>}
       </span>
     </figcaption>
   </figure>;
