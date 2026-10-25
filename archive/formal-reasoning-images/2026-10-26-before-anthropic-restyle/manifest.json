@@ -1,0 +1,38 @@
+{
+  "trustworthy-feedback.png": {
+    "source": "public/figures/formal-reasoning/trustworthy-feedback.png",
+    "sha256": "19c5d0943ae56fc23122e737059219a183434727388853cdf0d7458ffb74f93d"
+  },
+  "compositional-verification.png": {
+    "source": "public/figures/formal-reasoning/compositional-verification.png",
+    "sha256": "2e4614e069891a23e282f9cf0c59cba63f2531d3c5ca58786be5198f97d3c71f"
+  },
+  "overview.png": {
+    "source": "public/figures/formal-reasoning/overview.png",
+    "sha256": "e6359889f1e9086e8866efe6215c176e22a82efe619b1314c1861ef7cf784fe7"
+  },
+  "compositional-verification.webp": {
+    "source": "public/figures/formal-reasoning/compositional-verification.webp",
+    "sha256": "828b66e0a0cf4d6b502cd3d6c471ce3ae64f23d61320334c47874af352b5b8e4"
+  },
+  "overview.webp": {
+    "source": "public/figures/formal-reasoning/overview.webp",
+    "sha256": "f67bb1508af264fbaeacfac3f1ca7bb9b792f2dd685af3f5e316945c80fa0e64"
+  },
+  "learning-proof-strategies.png": {
+    "source": "public/figures/formal-reasoning/learning-proof-strategies.png",
+    "sha256": "7a960b2bbd3dd888500fac47620bdacfef2b7e02239a6a54db0f977426ed344d"
+  },
+  "learning-proof-strategies.webp": {
+    "source": "public/figures/formal-reasoning/learning-proof-strategies.webp",
+    "sha256": "e6ca577d2d30e6a32cdea2b2ddb011758d126bcdf29e6aa0ff82981701dabc15"
+  },
+  "trustworthy-feedback.webp": {
+    "source": "public/figures/formal-reasoning/trustworthy-feedback.webp",
+    "sha256": "d548c8503551448ee6cfbb4113cb0ad748a05995dfbf67041103fc6ff102a398"
+  },
+  "formal-reasoning-diagrams.zip": {
+    "source": "public/data/formal-reasoning-diagrams.zip",
+    "sha256": "206df7360240a4720fcb769876858f6ac6cf6b70b74da601f19f793d5895b022"
+  }
+}
