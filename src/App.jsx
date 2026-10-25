@@ -37,7 +37,7 @@ function ScrollToTop() {
 
 function ResearchRedirect() {
   const { search, hash } = useLocation();
-  return <Navigate to={`/statement${search}${hash}`} replace />;
+  return <Navigate to={`/statement_multi_agent${search}${hash}`} replace />;
 }
 
 export default function App() {
@@ -47,7 +47,8 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/home" replace />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/statement" element={<Statement />} />
+        <Route path="/statement_multi_agent" element={<Statement />} />
+        <Route path="/statement" element={<ResearchRedirect />} />
         <Route path="/research_coding_statement" element={<ProgramReasoningStatement />} />
         <Route path="/research" element={<ResearchRedirect />} />
         <Route path="/pubs" element={<Publications />} />

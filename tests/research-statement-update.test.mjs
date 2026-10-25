@@ -63,7 +63,7 @@ test('the statement page exposes the three-part agenda without a crowded index',
 
   for (const id of agenda) {
     assert.ok(sections.includes(id), id);
-    assert.match(home, new RegExp(`/statement#${id}`));
+    assert.match(home, new RegExp(`/statement_multi_agent#${id}`));
   }
   assert.match(page, /headings\.filter\(heading => heading\.level === 2\)/);
   assert.match(page, /Jian_Wang_Research_Statement_2026\.pdf/);

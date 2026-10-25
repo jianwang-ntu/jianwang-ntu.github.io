@@ -27,7 +27,7 @@ export default function LinkedResearchImage({ loading }) {
       alt="Reliable AI agents under human control: human–agent interaction and agent–agent collaboration share approved requirements for action assurance, safety retention, and workflow control." />
     {regions.map(([label, section, x, y, width, height]) =>
       <Link key={label} className="research-image-link" aria-label={label} title={label}
-        to={`/statement#${sections[section]}`}
+        to={`/statement_multi_agent#${sections[section]}`}
         style={{ left: `${x / 1448 * 100}%`, top: `${y / 1086 * 100}%`, width: `${width / 1448 * 100}%`, height: `${height / 1086 * 100}%` }} />)}
   </div>;
 }

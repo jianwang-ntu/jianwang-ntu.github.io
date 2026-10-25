@@ -124,6 +124,12 @@ test('production build publishes industry case studies and research routes with 
     sitemap.split('<loc>https://www.wj2ai.com/research_coding_statement</loc>').length - 1,
     1,
   );
+  for (const route of ['statement_multi_agent', 'statement', 'research']) {
+    const html = readFileSync(resolve(repoRoot, `dist/${route}/index.html`), 'utf8');
+    assert.match(html, /<link rel="canonical" href="https:\/\/www\.wj2ai\.com\/statement_multi_agent" \/>/);
+  }
+  assert.equal(sitemap.split('<loc>https://www.wj2ai.com/statement_multi_agent</loc>').length - 1, 1);
+  assert.doesNotMatch(sitemap, /<loc>https:\/\/www\.wj2ai\.com\/statement<\/loc>/);
   assert.equal(existsSync(resolve(repoRoot, 'dist/data/Loop-R1-preprint.pdf')), true);
   assert.equal(existsSync(resolve(repoRoot, 'dist/data/Jian_Wang_Program_Reasoning_Statement_2026.pdf')), true);
   assert.equal(existsSync(resolve(repoRoot, 'dist/figures/loop-r1-overview.svg')), true);

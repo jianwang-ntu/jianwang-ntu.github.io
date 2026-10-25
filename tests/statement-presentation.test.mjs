@@ -42,7 +42,7 @@ function renderRoute(route) {
 }
 
 test('all three section diagrams open their displayed full-size asset in a new tab', () => {
-  const html = renderRoute('/statement');
+  const html = renderRoute('/statement_multi_agent');
   const links = [...html.matchAll(/<a\b[^>]*class="statement-diagram-link"[^>]*>(<img\b[^>]*>)<\/a>/g)];
   assert.equal(links.length, 3);
   for (const [link, image] of links) {
@@ -79,7 +79,7 @@ test('Home displays the supplied agent-world image with full-size access and sta
     'i-scalable-oversight-under-adaptation',
     'ii-safety-preserving-learning-and-feedback',
     'iii-control-across-time-and-delegation',
-  ]) assert.ok(html.includes(`href="/statement#${target}"`), target);
+  ]) assert.ok(html.includes(`href="/statement_multi_agent#${target}"`), target);
   assert.doesNotMatch(html, /Industry grounding|Percentages|company endorsement/);
 });
 
@@ -98,7 +98,7 @@ test('Home keeps the three Chinese research questions in the caption below the i
   ]);
   assert.match(caption, /<ol class="home-research-questions" lang="zh-Hans">/);
   assert.ok(caption.indexOf('</ol>') < caption.indexOf('Open full-size image'), 'The English link stays outside the Chinese language region');
-  assert.doesNotMatch(renderRoute('/statement'), /当前行动有什么可信依据|能力提升后|任务变长/);
+  assert.doesNotMatch(renderRoute('/statement_multi_agent'), /当前行动有什么可信依据|能力提升后|任务变长/);
 });
 
 test('Home leads with the current agenda and keeps historical evidence in the collapsed foundation', () => {
@@ -110,7 +110,7 @@ test('Home leads with the current agenda and keeps historical evidence in the co
   const intro = research.match(/<p>([\s\S]*?)<\/p>/)?.[1] || '';
   assert.ok(intro.replace(/<[^>]+>/g, '').split(/\s+/).length <= 50);
   assert.match(research, /id="research-overview"/);
-  const statement = renderRoute('/statement');
+  const statement = renderRoute('/statement_multi_agent');
   const foundation = statement.match(/<details\b[^>]*id="research-foundation-and-approach"[^>]*>[\s\S]*?<\/details>/)?.[0] || '';
   assert.match(foundation, /Trustworthy Code LLMs/);
   assert.match(foundation, /LCTES 2024/);
@@ -161,7 +161,7 @@ test('the overview is a vector SVG whose nine research blocks are links', () => 
     assert.equal(linkedBlocks.filter(([, href]) => href === target).length, 3, target);
   }
 
-  const html = renderRoute('/statement');
+  const html = renderRoute('/statement_multi_agent');
   assert.match(html, /<img\b[^>]*src="\/images\/research\/reliable-agents-human-control\.svg\?v=original-layout-20261007"/);
   assert.doesNotMatch(html, /<object\b/);
 });
@@ -221,12 +221,12 @@ test('the overview reports company-level JD signals with their evidence boundary
     }
   }
 
-  const html = renderRoute('/statement');
+  const html = renderRoute('/statement_multi_agent');
   assert.match(html, /reliable-agents-human-control\.svg/);
 });
 
 test('Statement offers JD sources collapsed by default without adding them to Home', () => {
-  const html = renderRoute('/statement');
+  const html = renderRoute('/statement_multi_agent');
   const disclosure = html.match(/<details\b[^>]*id="industry-jd-references"[^>]*>[\s\S]*?<\/details>/)?.[0];
   assert.ok(disclosure, 'The percentage figure needs its JD source disclosure');
   assert.match(disclosure, /<summary>References \(JD sources\)<\/summary>/);
@@ -236,7 +236,7 @@ test('Statement offers JD sources collapsed by default without adding them to Ho
 });
 
 test('the JD reference list preserves all matched records grouped by research direction and company', () => {
-  const html = renderRoute('/statement');
+  const html = renderRoute('/statement_multi_agent');
   const disclosure = html.match(/<details\b[^>]*id="industry-jd-references"[^>]*>[\s\S]*?<\/details>/)?.[0] || '';
   const ids = [...disclosure.matchAll(/<code>([^<]+)<\/code>/g)].map(match => match[1]);
   assert.equal(ids.length, 89, 'All theme assignments must be inspectable');
@@ -264,7 +264,7 @@ test('the JD reference list preserves all matched records grouped by research di
 });
 
 test('the public statement omits appendices while retaining the core agenda and references', () => {
-  const html = renderRoute('/statement');
+  const html = renderRoute('/statement_multi_agent');
   const linkedPages = `${renderRoute('/home')}\n${renderRoute('/pubs/defects4c')}`;
   const article = html.match(/<article\b[\s\S]*<\/article>/)?.[0] || '';
 
@@ -279,7 +279,7 @@ test('the public statement omits appendices while retaining the core agenda and 
 });
 
 test('statement bibliography is collapsed by default with its bookmark preserved', () => {
-  const html = renderRoute('/statement');
+  const html = renderRoute('/statement_multi_agent');
   const disclosure = html.match(/<details\b[^>]*id="references"[^>]*>[\s\S]*?<\/details>/)?.[0];
   assert.ok(disclosure);
   assert.doesNotMatch(disclosure.split('>')[0], /\bopen(?:=|\s|$)/);
@@ -289,7 +289,7 @@ test('statement bibliography is collapsed by default with its bookmark preserved
 
 test('Home and Statement use consistent research focus and section labels', () => {
   const home = renderRoute('/home');
-  const statement = renderRoute('/statement');
+  const statement = renderRoute('/statement_multi_agent');
   for (const label of ['reliable AI agents under human control', 'oversight before action', 'preserving safety through continual updates', 'authorization across delegated workflows']) {
     assert.ok(home.toLowerCase().includes(label.toLowerCase()), label);
     assert.ok(statement.toLowerCase().includes(label.toLowerCase()), label);
@@ -297,7 +297,7 @@ test('Home and Statement use consistent research focus and section labels', () =
 });
 
 test('research foundation is collapsed while the introduction stays visible', () => {
-  const html = renderRoute('/statement');
+  const html = renderRoute('/statement_multi_agent');
   const disclosure = html.match(/<details\b[^>]*id="research-foundation-and-approach"[^>]*>[\s\S]*?<\/details>/)?.[0];
   assert.ok(disclosure);
   assert.doesNotMatch(disclosure.split('>')[0], /\bopen(?:=|\s|$)/);
@@ -308,7 +308,7 @@ test('research foundation is collapsed while the introduction stays visible', ()
 });
 
 test('both overview images offer responsive keyboard links to all three statement sections', () => {
-  for (const route of ['/home', '/statement']) {
+  for (const route of ['/home', '/statement_multi_agent']) {
     const html = renderRoute(route);
     const links = [...html.matchAll(/<a\b[^>]*class="research-image-link"[^>]*>/g)].map(match => match[0]);
     assert.equal(links.length, 13);
@@ -317,7 +317,7 @@ test('both overview images offer responsive keyboard links to all three statemen
       assert.match(link, /left:[\d.]+%;top:[\d.]+%;width:[\d.]+%;height:[\d.]+%/);
     }
     for (const target of ['i-scalable-oversight-under-adaptation', 'ii-safety-preserving-learning-and-feedback', 'iii-control-across-time-and-delegation']) {
-      assert.ok(links.some(link => link.includes(`/statement#${target}`)), target);
+      assert.ok(links.some(link => link.includes(`/statement_multi_agent#${target}`)), target);
     }
   }
 });

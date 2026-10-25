@@ -50,7 +50,7 @@ test('site links and legacy bookmarks never target hidden appendix sections', ()
   for (const [oldId, target] of Object.entries(STATEMENT_ALIASES)) {
     assert.equal(hiddenIds.has(target), false, `${oldId} -> ${target}`);
   }
-  for (const [, target] of home.matchAll(/to="\/statement#([^"]+)"/g)) {
+  for (const [, target] of home.matchAll(/to="\/statement_multi_agent#([^"]+)"/g)) {
     assert.equal(hiddenIds.has(target), false, target);
   }
 });
@@ -70,7 +70,7 @@ test('homepage research interests point to real statement sections', () => {
   const home = readFileSync(new URL('../src/pages/Home.jsx', import.meta.url), 'utf8');
   const statement = readFileSync(new URL('../src/pages/Statement.jsx', import.meta.url), 'utf8');
   const targets = new Set([...headings.map(h => h.id), ...[...statement.matchAll(/id="([^"]+)"/g)].map(m => m[1])]);
-  for (const [, id] of home.matchAll(/to="\/statement#([^"]+)"/g)) assert.ok(targets.has(id), id);
+  for (const [, id] of home.matchAll(/to="\/statement_multi_agent#([^"]+)"/g)) assert.ok(targets.has(id), id);
 });
 
 test('bookmarks for shortened statement subsections reach their retained research area', () => {

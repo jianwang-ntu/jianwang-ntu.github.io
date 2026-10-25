@@ -33,9 +33,9 @@ function LinkedHeading({ node, children, level, lineOffset = 0 }) {
 export default function Statement() {
   const { hash, search } = useLocation();
   const redirect = resolveStatementHash(hash);
-  if (redirect) return <Navigate to={`/statement${search}#${redirect}`} replace />;
+  if (redirect) return <Navigate to={`/statement_multi_agent${search}#${redirect}`} replace />;
   return <div className="page">
-    <Seo title="Research Statement" description="Reliable AI agents under human control: oversight before action, preserving safety through continual updates, and authorization across delegated workflows." path="/statement" />
+    <Seo title="Research Statement" description="Reliable AI agents under human control: oversight before action, preserving safety through continual updates, and authorization across delegated workflows." path="/statement_multi_agent" />
     <Nav skipToContent />
     <SiteFrame className="statement-shell">
         <p className="portfolio-eyebrow">Research statement · 13 September 2026</p>

@@ -30,12 +30,12 @@ function AcademicPagesHome() {
         <section className="home-section" aria-labelledby="interests-title">
           <div className="section-heading">
             <h2 id="interests-title">Research interests</h2>
-            <Link className="text-link" to="/statement">Research statement ↗</Link>
+            <Link className="text-link" to="/statement_multi_agent">Research statement ↗</Link>
           </div>
           <p>My research focuses on <strong>reliable AI agents under human control</strong>, connecting{' '}
-            <Link to="/statement#i-scalable-oversight-under-adaptation">oversight before action</Link>,{' '}
-            <Link to="/statement#ii-safety-preserving-learning-and-feedback">preserving safety through continual updates</Link>, and{' '}
-            <Link to="/statement#iii-control-across-time-and-delegation">authorization across delegated workflows</Link>.
+            <Link to="/statement_multi_agent#i-scalable-oversight-under-adaptation">oversight before action</Link>,{' '}
+            <Link to="/statement_multi_agent#ii-safety-preserving-learning-and-feedback">preserving safety through continual updates</Link>, and{' '}
+            <Link to="/statement_multi_agent#iii-control-across-time-and-delegation">authorization across delegated workflows</Link>.
             My long-term goal is to help agents act, learn, and collaborate while preserving reliability, security, and human authority.</p>
           <figure className="research-overview" id="research-overview">
             <LinkedResearchImage loading="lazy" />
