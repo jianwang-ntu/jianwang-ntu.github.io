@@ -53,7 +53,7 @@ export default function FormalReasoningFigure({ kind = 'overview', loading = 'la
     <div className="formal-research-scroll" tabIndex="0" aria-label={`Scrollable diagram: ${figure.title}`}>
       <div className="linked-research-image formal-research-canvas">
         <a className="formal-research-open" href={original} target="_blank" rel="noreferrer" aria-label={`Open ${figure.title} at full size`}>
-          <img className="home-research-image" src={`/figures/formal-reasoning/${figure.file}.webp?v=20261026-motivation`} alt={figure.alt} width="1672" height="941" loading={loading} decoding="async" />
+          <img className="home-research-image" src={`/figures/formal-reasoning/${figure.file}.webp?v=20261026-academic-white`} alt={figure.alt} width="1672" height="941" loading={loading} decoding="async" />
         </a>
         {overview && overviewRegions.map(([label, to, x, y, width, height]) =>
           <Link key={label} className="research-image-link" to={to} aria-label={label} title={label}
