@@ -97,8 +97,7 @@ function smallDocStack(x, y, w = 51, h = 68) { for (let i = 2; i >= 0; i--) { bo
 function database(x, y, w = 58, h = 70) { box(x, y + 9, w, h - 18, 'Editable proof library'); for (let i = 0; i < 3; i++) box(x, y + i * 24, w, 18, 'Proof library layer', false, 'ellipse'); }
 function footer(note) {
   text(note, 90, 889, 1492, 25, 20);
-  text(sources[0][0], 480, 919, 375, 19, 16, false, 'center', 'Arial Narrow', sources[0][1]);
-  text(sources[1][0], 875, 919, 300, 19, 16, false, 'center', 'Arial Narrow', sources[1][1]);
+  // Sources are linked in the HTML caption and retained in speaker notes.
 }
 function sectionPanel(label, subtitle, x, y, w, h, letter, url) {
   box(x, y, w, h, `${label} panel`); badge(letter, x + 16, y + 11, 44);

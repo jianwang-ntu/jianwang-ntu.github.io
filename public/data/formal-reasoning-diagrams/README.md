@@ -15,16 +15,28 @@ The canvas is 1672 × 941 CSS pixels (17.4167 × 9.8021 inches).
 Fonts: Arial and Arial Narrow. Font substitution can affect text width.
 
 `formal-reasoning-diagrams.pdf` is a vector export of the PowerPoint with
-selectable text and clickable links. Source links are also in every slide's
-speaker notes. The overview headings link to the corresponding statement sections.
+selectable text. Source citations appear in the website's HTML figure captions,
+not inside the figures. They are also retained in every slide's speaker notes.
+The overview headings link to the corresponding statement sections.
 
-The ZIP includes the editable PowerPoint, PDF, and the four consolidated PNGs
-used on the website. The PNGs remain the existing published figures; the PPTX
-is a native-object reconstruction rather than an embedded copy of those PNGs.
+The website now displays vector SVG previews exported directly from this PDF.
+Each preview opens its corresponding PDF page; the overview also preserves its
+section-navigation regions. Downloadable PNGs are rendered at 2× resolution.
+The ZIP includes the editable PowerPoint, PDF, four SVGs, four PNGs, and an
+export manifest with source and output checksums.
+
+The eight original published PNG/WebP assets were backed up before replacement:
+`backups/pre-pdf-previews-20261026.zip` includes their original SHA-256 checksums.
+The backup was committed and pushed before generating the replacement previews.
+The previous masters with visible source footers are preserved separately in
+`backups/pre-html-citations-masters-20261026.zip`.
 
 Authoring source: `tools/redraw-formal-reasoning-diagrams.mjs` uses
 `@oai/artifact-tool` and `@napi-rs/canvas` (for text measurement). It exports a
 private candidate and slide previews; the published deck is separately validated.
+After exporting the PowerPoint to PDF, run
+`python3 tools/export-formal-reasoning-figures.py` to regenerate website previews
+and the ZIP. This needs Poppler (`pdftocairo`, `pdftoppm`), Pillow, and pypdf.
 
 Context sources:
 [1] Anthropic and Theorem. LLMs are making formal software verification feasible
