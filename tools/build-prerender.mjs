@@ -123,9 +123,9 @@ function writeRoute(routePath, html) {
 // Per-route descriptions — keep terse, ~150 chars max. These match the dynamic
 // Seo component's defaults so the static and JS-rendered metadata agree.
 const STATIC_ROUTES = [
-  { path: '/home', title: 'Home',           desc: 'Jian Wang — PhD, NTU Singapore. Reliable AI agents under human control, building on software engineering and AI evaluation.' },
+  { path: '/home', title: 'Home',           desc: 'Jian Wang — PhD, NTU Singapore. Learning reusable formal reasoning for secure and reliable software through AI coding agents and verification feedback.' },
   { path: '/statement_multi_agent', title: 'Research Statement', desc: 'Reliable AI agents under human control: oversight before action, preserving safety through continual updates, and authorization across delegated workflows.' },
-  { path: '/statement', canonicalPath: '/statement_multi_agent', title: 'Research Statement', desc: 'Reliable AI agents under human control: oversight before action, preserving safety through continual updates, and authorization across delegated workflows.' },
+  { path: '/statement', title: 'Research Statement', desc: 'Learning reusable formal reasoning for secure and reliable software: proof strategies, compositional verification, and trustworthy verification feedback.' },
   { path: '/research_coding_statement', title: 'Program Reasoning Research Statement', desc: 'Reliable program reasoning through learned semantic abstractions, formal feedback, and rigorous evaluation.' },
   { path: '/research', canonicalPath: '/statement_multi_agent', title: 'Research Statement', desc: 'Reliable AI agents under human control: oversight before action, preserving safety through continual updates, and authorization across delegated workflows.' },
   { path: '/pubs', title: 'Publications',   desc: 'Publications by Jian Wang on program repair, code-model evaluation, neural-network testing, and robustness.' },

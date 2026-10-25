@@ -3,12 +3,10 @@ import { Link } from 'react-router-dom';
 import Nav from '../components/Nav.jsx';
 import Footer from '../components/Footer.jsx';
 import Seo from '../components/Seo.jsx';
-import LinkedResearchImage from '../components/LinkedResearchImage.jsx';
 import SiteFrame from '../components/SiteFrame.jsx';
 import { NEWS, ALL_PUBS } from '../data.jsx';
 import { PUB_META } from '../data-pubs.js';
 
-const agentWorldUrl = '/images/research/reliable-agents-human-control.svg?v=original-layout-20261007';
 const selectedPubs = ALL_PUBS.filter(p => ['C5', 'C4', 'C3', 'C2'].includes(p.id));
 
 function AcademicPagesHome() {
@@ -30,24 +28,12 @@ function AcademicPagesHome() {
         <section className="home-section" aria-labelledby="interests-title">
           <div className="section-heading">
             <h2 id="interests-title">Research interests</h2>
-            <Link className="text-link" to="/statement_multi_agent">Research statement ↗</Link>
+            <Link className="text-link" to="/statement">Research statement ↗</Link>
           </div>
-          <p>My research focuses on <strong>reliable AI agents under human control</strong>, connecting{' '}
-            <Link to="/statement_multi_agent#i-scalable-oversight-under-adaptation">oversight before action</Link>,{' '}
-            <Link to="/statement_multi_agent#ii-safety-preserving-learning-and-feedback">preserving safety through continual updates</Link>, and{' '}
-            <Link to="/statement_multi_agent#iii-control-across-time-and-delegation">authorization across delegated workflows</Link>.
-            My long-term goal is to help agents act, learn, and collaborate while preserving reliability, security, and human authority.</p>
-          <figure className="research-overview" id="research-overview">
-            <LinkedResearchImage loading="lazy" />
-            <figcaption className="home-research-caption">
-              <ol className="home-research-questions" lang="zh-Hans">
-                <li><strong>行动前监督：</strong>当前行动有什么可信依据？</li>
-                <li><strong>持续更新中的安全保持：</strong>能力提升后，原有约束是否仍然有效？</li>
-                <li><strong>委派工作流中的授权：</strong>任务变长、参与者增多后，授权是否仍然有效？</li>
-              </ol>
-              <a href={agentWorldUrl} target="_blank" rel="noreferrer">Open full-size image ↗</a>
-            </figcaption>
-          </figure>
+          <p>My research focuses on <strong>learning reusable formal reasoning for secure and reliable software</strong>: how AI coding agents can learn from verification feedback and apply it across programs and tasks. My proposed agenda connects{' '}
+            <Link to="/statement#learning-reusable-proof-strategies">learning proof strategies</Link>,{' '}
+            <Link to="/statement#compositional-verification">compositional verification</Link>, and{' '}
+            <Link to="/statement#trustworthy-verification-feedback">trustworthy verification feedback</Link>.</p>
         </section>
         <section className="home-section" aria-labelledby="selected-title">
           <div className="section-heading"><h2 id="selected-title">Selected publications</h2>
@@ -91,7 +77,7 @@ function AcademicPagesHome() {
 
 export default function Home() {
   return <div className="page">
-    <Seo title="Home" description="Jian Wang — PhD, NTU Singapore. Reliable AI agents under human control, building on software engineering and AI evaluation." path="/home" />
+    <Seo title="Home" description="Jian Wang — PhD, NTU Singapore. Learning reusable formal reasoning for secure and reliable software through AI coding agents and verification feedback." path="/home" />
     <Nav skipToContent /><AcademicPagesHome /><Footer />
   </div>;
 }

@@ -55,8 +55,8 @@ test('all three section diagrams open their displayed full-size asset in a new t
   }
 });
 
-test('Home displays the supplied agent-world image with full-size access and statement links', () => {
-  const html = renderRoute('/home');
+test('the multi-agent page retains its supplied image with full-size access and statement links', () => {
+  const html = renderRoute('/statement_multi_agent');
   const figure = html.match(/<figure\b[^>]*id="research-overview"[^>]*>[\s\S]*?<\/figure>/)?.[0] || '';
   const image = figure.match(/<img\b[^>]*>/)?.[0];
   assert.ok(image, 'Home must display the supplied illustration as an image');
@@ -80,41 +80,21 @@ test('Home displays the supplied agent-world image with full-size access and sta
     'ii-safety-preserving-learning-and-feedback',
     'iii-control-across-time-and-delegation',
   ]) assert.ok(html.includes(`href="/statement_multi_agent#${target}"`), target);
-  assert.doesNotMatch(html, /Industry grounding|Percentages|company endorsement/);
+  assert.doesNotMatch(figure, /Industry grounding|Percentages|company endorsement/);
 });
 
-test('Home keeps the three Chinese research questions in the caption below the image', () => {
-  const html = renderRoute('/home');
-  const figure = html.match(/<figure\b[^>]*id="research-overview"[^>]*>[\s\S]*?<\/figure>/)?.[0] || '';
-  const caption = figure.match(/<figcaption\b[^>]*>[\s\S]*?<\/figcaption>/)?.[0] || '';
-  const questions = [...caption.matchAll(/<li>([\s\S]*?)<\/li>/g)]
-    .map(([, item]) => item.replace(/<[^>]+>/g, ''));
-
-  assert.ok(figure.indexOf('<img') < figure.indexOf('<figcaption'), 'The caption must follow the original image');
-  assert.deepEqual(questions, [
-    '行动前监督：当前行动有什么可信依据？',
-    '持续更新中的安全保持：能力提升后，原有约束是否仍然有效？',
-    '委派工作流中的授权：任务变长、参与者增多后，授权是否仍然有效？',
-  ]);
-  assert.match(caption, /<ol class="home-research-questions" lang="zh-Hans">/);
-  assert.ok(caption.indexOf('</ol>') < caption.indexOf('Open full-size image'), 'The English link stays outside the Chinese language region');
-  assert.doesNotMatch(renderRoute('/statement_multi_agent'), /当前行动有什么可信依据|能力提升后|任务变长/);
-});
-
-test('Home leads with the current agenda and keeps historical evidence in the collapsed foundation', () => {
-  const html = renderRoute('/home');
-  const research = html.match(/<section\b[^>]*aria-labelledby="interests-title"[^>]*>[\s\S]*?<\/section>/)?.[0] || '';
-  assert.doesNotMatch(research, /home-research-intro|Trustworthy Code LLMs|limited gains/);
-  assert.match(research, /My research focuses on/);
-  assert.match(research, /My long-term goal/);
+test('the homepage keeps the new agenda concise and leaves the multi-agent overview on its own page', () => {
+  const home = renderRoute('/home');
+  const research = home.match(/<section\b[^>]*aria-labelledby="interests-title"[^>]*>[\s\S]*?<\/section>/)?.[0] || '';
   const intro = research.match(/<p>([\s\S]*?)<\/p>/)?.[1] || '';
   assert.ok(intro.replace(/<[^>]+>/g, '').split(/\s+/).length <= 50);
-  assert.match(research, /id="research-overview"/);
-  const statement = renderRoute('/statement_multi_agent');
-  const foundation = statement.match(/<details\b[^>]*id="research-foundation-and-approach"[^>]*>[\s\S]*?<\/details>/)?.[0] || '';
-  assert.match(foundation, /Trustworthy Code LLMs/);
-  assert.match(foundation, /LCTES 2024/);
-  assert.match(foundation, /limited gains/);
+  assert.doesNotMatch(research, /<figure|research-image-link|Trustworthy Code LLMs|limited gains/);
+  assert.match(research, /href="\/statement"/);
+  const primary = renderRoute('/statement');
+  const foundation = primary.match(/<details\b[^>]*id="research-foundation-and-approach"[^>]*>[\s\S]*?<\/details>/)?.[0] || '';
+  assert.ok(foundation);
+  assert.doesNotMatch(foundation.split('>')[0], /\bopen(?:=|\s|$)/);
+  assert.match(foundation, /href="\/pubs\/loop-r1"/);
 });
 
 test('Home links the deepfake recognition to the supplied news report', () => {
@@ -287,12 +267,12 @@ test('statement bibliography is collapsed by default with its bookmark preserved
   assert.match(disclosure, /Do Code Semantics Help/);
 });
 
-test('Home and Statement use consistent research focus and section labels', () => {
+test('Home and the primary statement link the same three research directions', () => {
   const home = renderRoute('/home');
-  const statement = renderRoute('/statement_multi_agent');
-  for (const label of ['reliable AI agents under human control', 'oversight before action', 'preserving safety through continual updates', 'authorization across delegated workflows']) {
-    assert.ok(home.toLowerCase().includes(label.toLowerCase()), label);
-    assert.ok(statement.toLowerCase().includes(label.toLowerCase()), label);
+  const statement = renderRoute('/statement');
+  for (const target of ['learning-reusable-proof-strategies', 'compositional-verification', 'trustworthy-verification-feedback']) {
+    assert.ok(home.includes(`href="/statement#${target}"`), target);
+    assert.ok(statement.includes(`id="${target}"`), target);
   }
 });
 
@@ -307,8 +287,8 @@ test('research foundation is collapsed while the introduction stays visible', ()
   assert.ok(html.indexOf('I study AI agents') < html.indexOf(disclosure));
 });
 
-test('both overview images offer responsive keyboard links to all three statement sections', () => {
-  for (const route of ['/home', '/statement_multi_agent']) {
+test('the multi-agent overview offers responsive keyboard links to all three statement sections', () => {
+  for (const route of ['/statement_multi_agent']) {
     const html = renderRoute(route);
     const links = [...html.matchAll(/<a\b[^>]*class="research-image-link"[^>]*>/g)].map(match => match[0]);
     assert.equal(links.length, 13);

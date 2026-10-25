@@ -52,7 +52,6 @@ test('the statement page exposes the three-part agenda without a crowded index',
   const page = text('src/pages/Statement.jsx');
   const overview = text('src/components/ResearchOverview.jsx');
   const styles = text('src/styles/portfolio.css');
-  const home = text('src/pages/Home.jsx');
   const headings = statementHeadings(text('src/content/research-statement.md'));
   const sections = headings.filter(heading => heading.level === 2).map(heading => heading.id);
   const agenda = [
@@ -63,7 +62,7 @@ test('the statement page exposes the three-part agenda without a crowded index',
 
   for (const id of agenda) {
     assert.ok(sections.includes(id), id);
-    assert.match(home, new RegExp(`/statement_multi_agent#${id}`));
+    assert.match(overview, new RegExp(`/statement_multi_agent#${id}`));
   }
   assert.match(page, /headings\.filter\(heading => heading\.level === 2\)/);
   assert.match(page, /Jian_Wang_Research_Statement_2026\.pdf/);

@@ -49,6 +49,20 @@ function mainContent(html) {
   return html.match(/<main\b[\s\S]*<\/main>/)?.[0] || '';
 }
 
+test('the primary agenda resolves every homepage direction and retains access to the multi-agent statement', () => {
+  const home = mainContent(renderRoute('/home'));
+  const primary = mainContent(renderRoute('/statement'));
+  const multiAgent = mainContent(renderRoute('/statement_multi_agent'));
+  assert.ok(primary, '/statement must render its own main content');
+  const directionLinks = [...home.matchAll(/href="\/statement#([^"]+)"/g)];
+  assert.equal(directionLinks.length, 3);
+  for (const [, target] of directionLinks) assert.ok(primary.includes(`id="${target}"`), target);
+  assert.match(primary, /href="\/statement_multi_agent"/);
+  assert.match(primary, /href="\/research_coding_statement"/);
+  assert.match(primary, /<details[^>]*id="references"[^>]*><summary>References<\/summary>/);
+  assert.match(multiAgent, /statement-diagram-link/);
+});
+
 test('Loop-R1 is indexed as a public preprint with paper and OpenReview links', () => {
   const meta = PUB_META.C7;
   assert.ok(meta, 'Loop-R1 metadata is missing');
