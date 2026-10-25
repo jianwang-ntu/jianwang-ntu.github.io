@@ -6,43 +6,43 @@ const figures = {
     file: 'overview',
     page: 1,
     title: 'Formal reasoning research overview',
-    caption: 'Proposed research: learn transferable strategies, reuse checked dependency evidence, and assess intended requirements.',
-    alt: 'Existing code and a test harness inform an explicit property under a stated input domain and execution model. An agent proposes proofs for an independent checker. Feedback motivates transfer, reuse through checked dependency interfaces, and assessment of intended requirements.',
+    caption: 'Proposed research: learn across tasks, check composition arguments, and audit the scope and use of verification evidence.',
+    alt: 'Existing code and a test harness inform an explicit property under a stated input domain and execution model. An agent proposes proof artifacts for independent verification. Checked proofs, rejected proofs, validated counterexamples, and unknown results remain distinct. Research studies transfer, checked composition arguments, and evidence assessment.',
   },
   'learning-reusable-proof-strategies': {
     file: 'learning-proof-strategies',
     page: 2,
     title: 'Learning reusable proof strategies',
-    caption: 'Proposed comparison: distinguish proof retrieval, within-task refinement, and learning through held-out transfer tests.',
-    alt: 'Checker feedback guides the next proof proposal. Retrieval, within-task refinement, and cross-task learning are compared separately through transfer tests under matched budgets.',
+    caption: 'Proposed comparison: distinguish retrieval, within-task refinement, and learning through held-out evaluation with frozen model weights and retrieval banks.',
+    alt: 'Distinct verification outcomes guide the next proof attempt. Retrieval rechecks stored artifacts, refinement keeps model weights fixed, and learning uses training tasks. Held-out evaluation freezes model weights and a training-only retrieval bank, separates related program families, and reports each mechanism under matched budgets.',
   },
   'compositional-verification': {
     file: 'compositional-verification',
     page: 3,
     title: 'Compositional verification',
-    caption: 'Proposed research: reuse checked components only after validating caller obligations, interfaces, and assumptions.',
-    alt: 'An agent decomposes a global software property across shared libraries and callers. Independent checks and a separate interface and assumption gate support composition; changed components trigger revalidation of affected evidence.',
+    caption: 'Proposed research: check local proofs and the composition argument, including caller conditions, shared state, and model assumptions.',
+    alt: 'An agent decomposes a global verification goal across libraries and callers. Local proofs and a composition argument must discharge caller preconditions, shared-state and frame obligations, and model assumptions. Relevant changes trigger rechecking of affected local and composition obligations.',
   },
   'trustworthy-verification-feedback': {
     file: 'trustworthy-feedback',
     page: 4,
     title: 'Trustworthy verification feedback',
-    caption: 'Proposed research: assess requirement coverage and behavior preservation separately from theorem checking.',
-    alt: 'A checked theorem receives a separate assessment of requirement coverage, artifact matching, explicit assumptions, and behavior preservation. Invalid or unresolved results and failed assessments require investigation, revision, or review.',
+    caption: 'Proposed research: assess coverage, exact artifacts, assumption validity, and required behavior before recording evidence for a declared use.',
+    alt: 'Fix the approved verification target, check its formal claim, assess requirement coverage, artifact binding, assumption validity, and behavior preservation, then record evidence eligible for learning or change review under declared criteria. Rejected proofs, validated counterexamples, and unknown results remain distinct. Requirement tests can still miss behavior.',
   },
 };
 
 const learn = '/statement#learning-reusable-proof-strategies';
 const compose = '/statement#compositional-verification';
 const audit = '/statement#trustworthy-verification-feedback';
-const assetVersion = '20261026-html-citations';
+const assetVersion = '20261026-reviewed-clarity';
 // The PDF-derived vector preview keeps the editable slide's 1672 × 941 canvas.
 const overviewRegions = [
   ['Code and test harness', audit, 31, 143, 275, 230],
   ['Explicit property and execution model', audit, 359, 143, 266, 230],
   ['Agent proposes proofs: learn proof strategies', learn, 681, 143, 308, 230],
-  ['Independent checker: assess verification evidence', audit, 1037, 143, 256, 230],
-  ['Verification feedback: checked, counterexample, or unresolved', audit, 1324, 143, 319, 230],
+  ['Independent verification: assess evidence', audit, 1037, 143, 256, 230],
+  ['Verification outcomes: checked proof, rejected proof, valid counterexample, or unknown', audit, 1324, 143, 319, 230],
   ['Learn reusable strategies', learn, 31, 494, 560, 322],
   ['Compose verification evidence', compose, 611, 494, 476, 322],
   ['Audit verification feedback', audit, 1110, 494, 532, 322],

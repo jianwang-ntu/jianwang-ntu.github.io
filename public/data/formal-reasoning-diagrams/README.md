@@ -12,7 +12,8 @@ PowerPoint text boxes. Boxes, lines, arrows, symbols, and small icons are native
 shapes or editable vector paths. There are no embedded raster pictures.
 Select text to edit it; select a path and use Edit Points to adjust its geometry.
 The canvas is 1672 × 941 CSS pixels (17.4167 × 9.8021 inches).
-Fonts: Arial and Arial Narrow. Font substitution can affect text width.
+Font: Arial throughout, with larger body labels and consistent heading sizes.
+Font substitution can affect text width.
 
 `formal-reasoning-diagrams.pdf` is a vector export of the PowerPoint with
 selectable text. Source citations appear in the website's HTML figure captions,
@@ -37,6 +38,19 @@ private candidate and slide previews; the published deck is separately validated
 After exporting the PowerPoint to PDF, run
 `python3 tools/export-formal-reasoning-figures.py` to regenerate website previews
 and the ZIP. This needs Poppler (`pdftocairo`, `pdftoppm`), Pillow, and pypdf.
+
+Clarity and rigor review:
+- Keep checked proofs, rejected attempts, validated counterexamples, and unknown
+  outcomes distinct. A failed auxiliary invariant need not imply a software bug.
+- Freeze model weights and retrieval banks before held-out evaluation. Separate
+  related program families and report the three mechanisms independently.
+- Check the composition argument as well as local proofs and caller obligations.
+- Record evidence eligible for a declared use. Requirement checks remain
+  potentially incomplete and do not turn theorem acceptance into blanket safety.
+- Keep citations in HTML and speaker notes, with no visible source footers.
+
+The preceding figures and editable masters are preserved in
+`backups/pre-clarity-review-20261026.zip`.
 
 Context sources:
 [1] Anthropic and Theorem. LLMs are making formal software verification feasible
