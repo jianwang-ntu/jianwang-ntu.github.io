@@ -1,7 +1,7 @@
 {
   "source_pdf": "/data/formal-reasoning-diagrams/formal-reasoning-diagrams.pdf",
-  "source_pdf_sha256": "095e2c8637e7d75e3563b8bab1274ae83db7236ad65cfd8e8507f430d7199c37",
-  "editable_pptx_sha256": "d599d6e6026ed16f7bce753064fc24918fad09c155875d535788efc790a212d3",
+  "source_pdf_sha256": "c53ab9cb26af21ad9b045b05f10c8ff8e7d63199f47e9ad80e3e8a52b92fd003",
+  "editable_pptx_sha256": "26f2145954477e834d262a39b1dde313445d529cf26e3715d92a593d03770e58",
   "canvas": {
     "width": 1672,
     "height": 941
@@ -12,36 +12,36 @@
       "name": "overview",
       "pdf_page": 1,
       "files": {
-        "svg": "284681a8de4efe4a27cb40d4c32002f9e01cbedffb29a186a8c538b2f12d9f98",
-        "png": "586a1064c46040771725c237d43e803ffd7e4dc4ea3e067c51a490cab540f0cb",
-        "webp": "ce1eb1576c05452c72ebb8888023705b452fe3c0cecfd58e742806d7e635d376"
+        "svg": "c831a1a4b4776d102d547d331c4c50a871aaf63c37fc34a58ebef44828d471c1",
+        "png": "8908359dd6561d81066f1da78d279b7b75707fd2b905c849f54f2afbbc11f9a8",
+        "webp": "b34ac22a838c8199fbde0eef0a6dc209c13d8d615707b149a8fae617ac41c47d"
       }
     },
     {
       "name": "learning-proof-strategies",
       "pdf_page": 2,
       "files": {
-        "svg": "f055f38440fe8aa7b7a3415c94efb73a96d0886b5d59f78e05cea32443709080",
-        "png": "6b7e90304e064ac0d1393d1023502ea0ed70affb57718fb877c751508c57d8b1",
-        "webp": "26152499a897689e25d8c98a9a690329398e304c3c190a8b36e8e30acee0258f"
+        "svg": "172804f5e37add0bed50807d8776cbeccdaf2314428df6ea9d41cbfc886525c1",
+        "png": "8e1e73c466e0866d8cceea1f98823e0664c1f3cbc28a47138ff93e3f8cfa45ea",
+        "webp": "34a72b60bd7bc50f5e4666f493449f6c9d504655232b2927fd549397af48ac06"
       }
     },
     {
       "name": "compositional-verification",
       "pdf_page": 3,
       "files": {
-        "svg": "bb8b135539e3f9061b09303d585e856432c4d784d95d9fa51ee22be03a4547c7",
-        "png": "9a3cd695b8cbaf72afe413eb18bfd5976a588346695492d5c87e84d9258e26f8",
-        "webp": "b8fb8610376c51ccbd3b49ccf408f0d4596ec1ba2a01cfec1798d17efe9825ad"
+        "svg": "d879b78d80359f5d40c23d795dbc3e93824dae2e04c52a1a3777a24d0b86e43d",
+        "png": "6d9b1afacf2046701a190fcb1c273a2b261300f84470f90ea86a51c4bf2a9811",
+        "webp": "e1efc8d26b769d513f9907fd5eec7e98243cfc747ece794dc5220435b8aafb1f"
       }
     },
     {
       "name": "trustworthy-feedback",
       "pdf_page": 4,
       "files": {
-        "svg": "0b89cd8583dd87b8d686ef59c1fed3b7040bb0325b13d3bc39357316c059eb32",
-        "png": "6dc4fefa3a4c24148fe4c62688884b3faf59fcec2121c7fbabeef88fc00a2597",
-        "webp": "ac7b746dc7f6189e9f452060b65827299129d8b208d83dfa71ba3fa061746ef5"
+        "svg": "abec44e8b572c22e659ccbba64daf97e006e414c4be7be78f1ecb6761cce8ef0",
+        "png": "3c4e67d49c5cd2e54480e495979c8ce41393ecc3ee326e445cdef80ea374a937",
+        "webp": "da0ee780aeebf25a5a6aae60acb926d21ae22ea6d72beb5e90a56dcae6f97a20"
       }
     }
   ]
