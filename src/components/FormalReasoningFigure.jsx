@@ -72,6 +72,8 @@ export default function FormalReasoningFigure({ kind = 'overview', loading = 'la
       <span className="formal-research-actions">
         <a href={original} target="_blank" rel="noreferrer">Open full size ↗</a>
         <a href={original} download>Download PNG</a>
+        {overview && <a href="/data/formal-reasoning-diagrams/formal-reasoning-diagrams.pptx" download>Editable PowerPoint</a>}
+        {overview && <a href="/data/formal-reasoning-diagrams/formal-reasoning-diagrams.pdf" target="_blank" rel="noreferrer">PDF</a>}
         {overview && <a href="/data/formal-reasoning-diagrams.zip" download>Download all diagrams</a>}
       </span>
     </figcaption>
