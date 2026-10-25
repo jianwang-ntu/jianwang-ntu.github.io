@@ -27,17 +27,17 @@ const figures = {
 const learn = '/statement#learning-reusable-proof-strategies';
 const compose = '/statement#compositional-verification';
 const audit = '/statement#trustworthy-verification-feedback';
-// Regions measured against the original 1672 × 941 overview PNG.
+// Regions measured against the restyled 1672 × 941 overview PNG.
 const overviewRegions = [
-  ['Approved program and specification', audit, 21, 132, 261, 221],
-  ['AI coding agent: learn proof strategies', learn, 310, 132, 270, 221],
-  ['Proof artifacts: compose verification evidence', compose, 608, 132, 350, 221],
-  ['Independent checker: assess verification evidence', audit, 986, 132, 269, 221],
-  ['Verification feedback: checked, counterexample, or unresolved', audit, 1282, 132, 369, 221],
-  ['Learn reusable strategies', learn, 22, 485, 534, 323],
-  ['Compose verification evidence', compose, 575, 485, 523, 323],
-  ['Audit verification feedback', audit, 1118, 485, 533, 323],
-  ['Read the full formal reasoning research statement', '/statement', 208, 833, 1256, 65],
+  ['Approved program and specification', audit, 31, 143, 275, 230],
+  ['AI coding agent: learn proof strategies', learn, 342, 143, 264, 230],
+  ['Proof artifacts: compose verification evidence', compose, 640, 143, 330, 230],
+  ['Independent checker: assess verification evidence', audit, 1006, 143, 272, 230],
+  ['Verification feedback: checked, counterexample, or unresolved', audit, 1311, 143, 332, 230],
+  ['Learn reusable strategies', learn, 30, 508, 572, 308],
+  ['Compose verification evidence', compose, 622, 508, 471, 308],
+  ['Audit verification feedback', audit, 1114, 508, 530, 308],
+  ['Read the full formal reasoning research statement', '/statement', 201, 835, 1272, 63],
 ];
 
 export default function FormalReasoningFigure({ kind = 'overview', loading = 'lazy' }) {
@@ -49,7 +49,7 @@ export default function FormalReasoningFigure({ kind = 'overview', loading = 'la
     <div className="formal-research-scroll" tabIndex="0" aria-label={`Scrollable diagram: ${figure.title}`}>
       <div className="linked-research-image formal-research-canvas">
         <a className="formal-research-open" href={original} target="_blank" rel="noreferrer" aria-label={`Open ${figure.title} at full size`}>
-          <img className="home-research-image" src={`/figures/formal-reasoning/${figure.file}.webp`} alt={figure.alt} width="1672" height="941" loading={loading} decoding="async" />
+          <img className="home-research-image" src={`/figures/formal-reasoning/${figure.file}.webp?v=20261026-editorial`} alt={figure.alt} width="1672" height="941" loading={loading} decoding="async" />
         </a>
         {overview && overviewRegions.map(([label, to, x, y, width, height]) =>
           <Link key={label} className="research-image-link" to={to} aria-label={label} title={label}

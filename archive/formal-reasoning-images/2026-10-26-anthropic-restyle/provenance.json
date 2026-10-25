@@ -1,0 +1,24 @@
+{
+  "created": "2026-10-26",
+  "method": "ChatGPT Create image editing via connected Chrome",
+  "style_reference": "https://www.anthropic.com/research/formal-verification?focus=true",
+  "backup": "../2026-10-26-before-anthropic-restyle",
+  "files": {
+    "overview.png": {
+      "sha256": "7b1af1b0cf41dbc17da8ef19f9885a8944859deff7c142479c3d9d3306875ba3",
+      "original_download": "Learning Reusable Formal Reasoning (1).png"
+    },
+    "learning-proof-strategies.png": {
+      "sha256": "a079c0b92471bde1e8568de35a3ec40f0daf6d1028648a7f299f03db1cea177f",
+      "original_download": "Learning Reusable Proof Strategies (1).png"
+    },
+    "compositional-verification.png": {
+      "sha256": "a20ab54272b6b62f61f3f426d6ae3cf5404763cd036ac4f2d59ff4cdffe2bea0",
+      "original_download": "Compositional Verification Research Flowchart.png"
+    },
+    "trustworthy-feedback.png": {
+      "sha256": "c3eae4f95806ba641b58017b5cfeaed7198602671c308ddf78ca4a19edd9664c",
+      "original_download": "Trustworthy Verification Feedback Flowchart (2).png"
+    }
+  }
+}
