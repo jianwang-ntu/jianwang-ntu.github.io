@@ -79,6 +79,14 @@ test('the generated research diagrams offer full-size downloads and overview nav
     assert.deepEqual([...readFileSync(file(`public${path}`)).subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10]);
     assert.ok(existsSync(file(`public/figures/formal-reasoning/${name}.webp`)));
   }
+  const diagrams = [...primary.matchAll(/<figure\b[^>]*class="[^"]*formal-research-figure[^"]*"[\s\S]*?<\/figure>/g)].map(match => match[0]);
+  assert.equal(diagrams.length, 4);
+  for (const diagram of diagrams) {
+    assert.ok(diagram.includes('Proposed '), 'each diagram must distinguish proposed work from source results');
+    for (const source of ['https://www.anthropic.com/research/formal-verification', 'https://theorem.dev/blog/verified-software-stack/']) {
+      assert.ok(diagram.includes(`href="${source}"`), `missing diagram context link: ${source}`);
+    }
+  }
   assert.ok(existsSync(file('public/data/formal-reasoning-diagrams.zip')));
 });
 

@@ -1,0 +1,27 @@
+{
+  "created": "2026-10-26",
+  "method": "ChatGPT Create image via connected Chrome; existing published images supplied as references",
+  "context_sources": [
+    "https://www.anthropic.com/research/formal-verification",
+    "https://theorem.dev/blog/verified-software-stack/"
+  ],
+  "backup": "../2026-10-26-before-motivation-update",
+  "files": {
+    "overview.png": {
+      "sha256": "7257da9a53cfe5e92f95237fbcfdc1d7f915e3c49f0ef115e947a06ef75d61da",
+      "original_download": "Learning Reusable Formal Reasoning (2).png"
+    },
+    "learning-proof-strategies.png": {
+      "sha256": "dd6563d94e2ca286da7435d6fa50717e8cdaa30ec2a5852274d930ebac1c1a57",
+      "original_download": "Learning Reusable Proof Strategies (3).png"
+    },
+    "compositional-verification.png": {
+      "sha256": "d9f7d09662b46e37730465364f655eeca3a89480621e85539622a3c736508f4f",
+      "original_download": "Compositional Verification Pipeline.png"
+    },
+    "trustworthy-feedback.png": {
+      "sha256": "f4d0c22bd7009473af7498756fe274b71ab8abbbcb8a5682fbcbb7b37c81e6db",
+      "original_download": "Trustworthy Verification Feedback Flowchart (4).png"
+    }
+  }
+}

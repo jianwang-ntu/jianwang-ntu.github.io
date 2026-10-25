@@ -665,3 +665,6 @@ a:focus-visible, button:focus-visible, select:focus-visible, summary:focus-visib
 @media (max-width: 600px) {
   .formal-research-canvas { min-width: 900px; }
 }
+
+.formal-research-caption, .formal-research-context { display: block; }
+.formal-research-context { margin-block: 4px 8px; }

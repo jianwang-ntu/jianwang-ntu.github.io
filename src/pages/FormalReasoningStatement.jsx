@@ -48,7 +48,7 @@ export default function FormalReasoningStatement() {
       <h1>Learning Reusable Formal Reasoning for Secure and Reliable Software</h1>
       <dl className="statement-meta" aria-label="Research statement metadata">
         <dt>Scope</dt>
-        <dd>AI coding agents, verification-guided learning, and reusable proof artifacts across programs and tasks.</dd>
+        <dd>AI coding agents, verification-guided learning, and reusable proof artifacts across programs, components, and software dependencies.</dd>
         <dt>Aim</dt>
         <dd>Learn transferable reasoning strategies and produce independently checkable evidence of software correctness and security.</dd>
       </dl>
