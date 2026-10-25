@@ -83,12 +83,13 @@ test('the multi-agent page retains its supplied image with full-size access and 
   assert.doesNotMatch(figure, /Industry grounding|Percentages|company endorsement/);
 });
 
-test('the homepage keeps the new agenda concise and leaves the multi-agent overview on its own page', () => {
+test('the homepage keeps its introduction concise and displays the current research overview', () => {
   const home = renderRoute('/home');
   const research = home.match(/<section\b[^>]*aria-labelledby="interests-title"[^>]*>[\s\S]*?<\/section>/)?.[0] || '';
   const intro = research.match(/<p>([\s\S]*?)<\/p>/)?.[1] || '';
   assert.ok(intro.replace(/<[^>]+>/g, '').split(/\s+/).length <= 50);
-  assert.doesNotMatch(research, /<figure|research-image-link|Trustworthy Code LLMs|limited gains/);
+  assert.doesNotMatch(research, /reliable-agents-human-control\.svg|Trustworthy Code LLMs|limited gains/);
+  assert.match(research, /aria-label="Formal reasoning research overview"/);
   assert.match(research, /href="\/statement"/);
   const primary = renderRoute('/statement');
   const foundation = primary.match(/<details\b[^>]*id="research-foundation-and-approach"[^>]*>[\s\S]*?<\/details>/)?.[0] || '';
