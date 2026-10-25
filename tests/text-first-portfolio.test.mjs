@@ -48,7 +48,7 @@ function articleContent(html) {
 }
 
 test('Every page family has one main landmark reachable from the skip link', () => {
-  const routes = ['/home', '/statement_multi_agent', '/pubs', '/work', '/cv', '/blog',
+  const routes = ['/home', '/statement', '/statement_multi_agent', '/pubs', '/work', '/cv', '/blog',
     '/blog/example', '/work/58-web-infrastructure', '/zh/work/58-web-infrastructure',
     '/work/xiaomi-portrait-ai', ...Object.values(PUB_META).map(meta => `/pubs/${meta.key}`)];
 
@@ -77,7 +77,7 @@ test('Home retains its profile rail and other page families start with a collaps
     assert.doesNotMatch(html, /profile-disclosure|portfolio-shell--wide/, route);
     assert.match(html, /<aside[^>]*>[\s\S]*profile-rail/, route);
   }
-  for (const route of ['/statement_multi_agent/', '/research_coding_statement', '/pubs', '/pubs/defects4c', '/work', '/cv', '/blog', '/blog/example', '/work/xiaomi-portrait-ai']) {
+  for (const route of ['/statement/', '/statement_multi_agent/', '/research_coding_statement', '/pubs', '/pubs/defects4c', '/work', '/cv', '/blog', '/blog/example', '/work/xiaomi-portrait-ai']) {
     const html = renderRoute(route);
     assert.match(html, /portfolio-shell--wide/, route);
     assert.match(html, /<details class="profile-disclosure"><summary>Profile<\/summary>/, route);
