@@ -1,0 +1,28 @@
+{
+  "created": "2026-10-26",
+  "method": "ChatGPT Create image editing via connected Chrome",
+  "style": "Simple academic monochrome diagrams with white backgrounds and unfilled panels",
+  "context_sources": [
+    "https://www.anthropic.com/research/formal-verification",
+    "https://theorem.dev/blog/verified-software-stack/"
+  ],
+  "backup": "../2026-10-26-before-academic-white",
+  "files": {
+    "overview.png": {
+      "sha256": "2d3dafed457108d2e46be4c79708625ac6dffa2d03c5bec32c11124ec68e7f3a",
+      "original_download": "Learning Reusable Formal Reasoning (3).png"
+    },
+    "learning-proof-strategies.png": {
+      "sha256": "bd7a7180a5ab2aeace566f214b6047079090fe4023d9d82f4b7e9266c1c588bd",
+      "original_download": "Reusable Proof Strategy Learning Diagram.png"
+    },
+    "compositional-verification.png": {
+      "sha256": "0f74f02cb83e205000ef458566bac300410fbdbd65b34ffa399fe6ead2714c5f",
+      "original_download": "Compositional Verification Workflow.png"
+    },
+    "trustworthy-feedback.png": {
+      "sha256": "d80252355c5f141fccf002c7f79f8a05adce1583a9029212065192a74d8f84c1",
+      "original_download": "Trustworthy Verification Feedback Diagram.png"
+    }
+  }
+}
