@@ -54,13 +54,32 @@ test('the primary agenda resolves every homepage direction and retains access to
   const primary = mainContent(renderRoute('/statement'));
   const multiAgent = mainContent(renderRoute('/statement_multi_agent'));
   assert.ok(primary, '/statement must render its own main content');
-  const directionLinks = [...home.matchAll(/href="\/statement#([^"]+)"/g)];
-  assert.equal(directionLinks.length, 3);
-  for (const [, target] of directionLinks) assert.ok(primary.includes(`id="${target}"`), target);
+  const directionTargets = new Set([...home.matchAll(/href="\/statement#([^"]+)"/g)].map(match => match[1]));
+  assert.equal(directionTargets.size, 3);
+  for (const target of directionTargets) assert.ok(primary.includes(`id="${target}"`), target);
   assert.match(primary, /href="\/statement_multi_agent"/);
   assert.match(primary, /href="\/research_coding_statement"/);
   assert.match(primary, /<details[^>]*id="references"[^>]*><summary>References<\/summary>/);
   assert.match(multiAgent, /statement-diagram-link/);
+});
+
+test('the generated research diagrams offer full-size downloads and overview navigation', () => {
+  const home = mainContent(renderRoute('/home'));
+  const primary = mainContent(renderRoute('/statement'));
+  for (const html of [home, primary]) {
+    const overview = html.match(/<figure\b[^>]*aria-label="Formal reasoning research overview"[^>]*>[\s\S]*?<\/figure>/)?.[0];
+    assert.ok(overview, 'the current research overview is missing');
+    for (const target of ['learning-reusable-proof-strategies', 'compositional-verification', 'trustworthy-verification-feedback']) {
+      assert.ok(overview.includes(`href="/statement#${target}"`), target);
+    }
+  }
+  for (const name of ['overview', 'learning-proof-strategies', 'compositional-verification', 'trustworthy-feedback']) {
+    const path = `/figures/formal-reasoning/${name}.png`;
+    assert.ok(primary.includes(`href="${path}"`), path);
+    assert.deepEqual([...readFileSync(file(`public${path}`)).subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10]);
+    assert.ok(existsSync(file(`public/figures/formal-reasoning/${name}.webp`)));
+  }
+  assert.ok(existsSync(file('public/data/formal-reasoning-diagrams.zip')));
 });
 
 test('Loop-R1 is indexed as a public preprint with paper and OpenReview links', () => {

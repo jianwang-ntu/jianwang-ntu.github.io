@@ -4,6 +4,7 @@ import Nav from '../components/Nav.jsx';
 import Footer from '../components/Footer.jsx';
 import Seo from '../components/Seo.jsx';
 import SiteFrame from '../components/SiteFrame.jsx';
+import FormalReasoningFigure from '../components/FormalReasoningFigure.jsx';
 import { NEWS, ALL_PUBS } from '../data.jsx';
 import { PUB_META } from '../data-pubs.js';
 
@@ -34,6 +35,7 @@ function AcademicPagesHome() {
             <Link to="/statement#learning-reusable-proof-strategies">learning proof strategies</Link>,{' '}
             <Link to="/statement#compositional-verification">compositional verification</Link>, and{' '}
             <Link to="/statement#trustworthy-verification-feedback">trustworthy verification feedback</Link>.</p>
+          <FormalReasoningFigure />
         </section>
         <section className="home-section" aria-labelledby="selected-title">
           <div className="section-heading"><h2 id="selected-title">Selected publications</h2>

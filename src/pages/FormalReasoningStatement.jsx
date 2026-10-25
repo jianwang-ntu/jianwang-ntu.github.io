@@ -6,6 +6,7 @@ import Nav from '../components/Nav.jsx';
 import Footer from '../components/Footer.jsx';
 import Seo from '../components/Seo.jsx';
 import SiteFrame from '../components/SiteFrame.jsx';
+import FormalReasoningFigure from '../components/FormalReasoningFigure.jsx';
 import markdown from '../content/formal-reasoning-statement.md?raw';
 import { statementHeadings } from '../statement-headings.js';
 import { resolveStatementHash } from '../research-agenda.js';
@@ -29,7 +30,10 @@ const legacySections = new Set([
 
 function LinkedHeading({ node, children }) {
   const heading = headings.find(item => item.line === node.position.start.line + agendaLineOffset);
-  return <h2 id={heading.id} tabIndex={-1}><a href={`#${heading.id}`}>{children}</a></h2>;
+  return <>
+    <h2 id={heading.id} tabIndex={-1}><a href={`#${heading.id}`}>{children}</a></h2>
+    <FormalReasoningFigure kind={heading.id} />
+  </>;
 }
 
 export default function FormalReasoningStatement() {
@@ -50,6 +54,7 @@ export default function FormalReasoningStatement() {
       </dl>
       <article className="statement-body" aria-label="Research statement text">
         <ReactMarkdown remarkPlugins={[remarkGfm]}>{introduction}</ReactMarkdown>
+        <FormalReasoningFigure loading="eager" />
         <nav className="statement-toc" aria-label="Statement sections">
           <span>The research agenda</span>
           <ol>{headings.map(heading => <li key={heading.id}><a href={`#${heading.id}`}>{heading.title}</a></li>)}</ol>

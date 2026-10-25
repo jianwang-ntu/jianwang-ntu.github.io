@@ -1,0 +1,22 @@
+{
+  "created": "2026-10-26",
+  "method": "ChatGPT Create image via connected Chrome",
+  "files": {
+    "overview.png": {
+      "sha256": "e6359889f1e9086e8866efe6215c176e22a82efe619b1314c1861ef7cf784fe7",
+      "original_download": "Learning Reusable Formal Reasoning.png"
+    },
+    "learning-proof-strategies.png": {
+      "sha256": "7a960b2bbd3dd888500fac47620bdacfef2b7e02239a6a54db0f977426ed344d",
+      "original_download": "Learning Reusable Proof Strategies.png"
+    },
+    "compositional-verification.png": {
+      "sha256": "2e4614e069891a23e282f9cf0c59cba63f2531d3c5ca58786be5198f97d3c71f",
+      "original_download": "Compositional Verification Flowchart.png"
+    },
+    "trustworthy-feedback.png": {
+      "sha256": "19c5d0943ae56fc23122e737059219a183434727388853cdf0d7458ffb74f93d",
+      "original_download": "Trustworthy Verification Feedback Flowchart.png"
+    }
+  }
+}
