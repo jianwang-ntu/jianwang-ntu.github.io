@@ -64,7 +64,7 @@ test('the primary agenda resolves every homepage direction and retains access to
   assert.match(multiAgent, /statement-diagram-link/);
 });
 
-test('PDF-derived research diagrams offer vector previews, matching PDF pages and overview navigation', () => {
+test('simple research diagrams offer full-size access, matching previews and overview navigation', () => {
   const home = mainContent(renderRoute('/home'));
   const primary = mainContent(renderRoute('/statement'));
   for (const html of [home, primary]) {
@@ -74,16 +74,21 @@ test('PDF-derived research diagrams offer vector previews, matching PDF pages an
       assert.ok(overview.includes(`href="/statement#${target}"`), target);
     }
   }
-  for (const [index, name] of ['overview', 'learning-proof-strategies', 'compositional-verification', 'trustworthy-feedback'].entries()) {
-    const path = `/figures/formal-reasoning/${name}.png`;
+  for (const name of ['01-overview', '02-programming-strategies', '03-software-changes', '04-intended-behavior']) {
+    const path = `/figures/reliable-programming/${name}.png`;
     assert.ok(primary.includes(`href="${path}?v=`), path);
     assert.deepEqual([...readFileSync(file(`public${path}`)).subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10]);
-    assert.ok(existsSync(file(`public/figures/formal-reasoning/${name}.webp`)));
-    assert.ok(primary.includes(`src="/figures/formal-reasoning/${name}.svg?`));
-    assert.match(primary, new RegExp(`href="/data/formal-reasoning-diagrams/formal-reasoning-diagrams\\.pdf\\?v=[^"#]+#page=${index + 1}"`));
-    const svg = readFileSync(file(`public/figures/formal-reasoning/${name}.svg`), 'utf8');
-    assert.match(svg, /<svg\b/);
-    assert.doesNotMatch(svg, /<(?:image|script)\b/);
+    assert.ok(existsSync(file(`public/figures/reliable-programming/${name}.webp`)));
+    assert.ok(primary.includes(`src="/figures/reliable-programming/${name}.webp?`));
+  }
+  // New PNG drafts must not advertise an unrelated editable master or PDF.
+  assert.doesNotMatch(primary, /Download SVG|Editable PowerPoint|Open PDF/);
+  assert.match(primary, /Download PNG/);
+  assert.match(primary, /independently checked evidence/);
+  assert.match(primary, /Learning Formal Reasoning for Reliable AI-Assisted Programming/);
+  const manifest = JSON.parse(readFileSync(file('public/figures/reliable-programming/manifest.json'), 'utf8'));
+  for (const entry of manifest) {
+    assert.equal(createHash('sha256').update(readFileSync(file(`public/figures/reliable-programming/${entry.file}`))).digest('hex'), entry.sha256);
   }
   const diagrams = [...primary.matchAll(/<figure\b[^>]*class="[^"]*formal-research-figure[^"]*"[\s\S]*?<\/figure>/g)].map(match => match[0]);
   assert.equal(diagrams.length, 4);
@@ -93,10 +98,11 @@ test('PDF-derived research diagrams offer vector previews, matching PDF pages an
       assert.ok(diagram.includes(`href="${source}"`), `missing diagram context link: ${source}`);
     }
   }
-  assert.ok(existsSync(file('public/data/formal-reasoning-diagrams.zip')));
-  const manifest = JSON.parse(readFileSync(file('public/figures/formal-reasoning/exports.json'), 'utf8'));
-  const pdf = readFileSync(file(`public${manifest.source_pdf}`));
-  assert.equal(createHash('sha256').update(pdf).digest('hex'), manifest.source_pdf_sha256);
+  assert.ok(existsSync(file('public/data/reliable-programming-diagrams.zip')));
+  const previousManifest = JSON.parse(readFileSync(file('public/figures/formal-reasoning/exports.json'), 'utf8'));
+  const previousPdf = readFileSync(file(`public${previousManifest.source_pdf}`));
+  assert.equal(createHash('sha256').update(previousPdf).digest('hex'), previousManifest.source_pdf_sha256);
+
 });
 
 test('Loop-R1 is indexed as a public preprint with paper and OpenReview links', () => {

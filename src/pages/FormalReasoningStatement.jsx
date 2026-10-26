@@ -41,16 +41,16 @@ export default function FormalReasoningStatement() {
   const legacyTarget = resolveStatementHash(hash) || (legacySections.has(hash.slice(1)) ? hash.slice(1) : null);
   if (legacyTarget) return <Navigate to={`/statement_multi_agent${search}#${legacyTarget}`} replace />;
   return <div className="page">
-    <Seo title="Research Statement" description="Learning reusable formal reasoning for secure and reliable software: proof strategies, compositional verification, and trustworthy verification feedback." path="/statement" />
+    <Seo title="Research Statement" description="Learning formal reasoning for reliable AI-assisted programming: verification-guided strategies, guarantees across software changes, and feedback aligned with intended behavior." path="/statement" />
     <Nav skipToContent />
     <SiteFrame className="statement-shell">
-      <p className="portfolio-eyebrow">Research statement · 26 October 2026</p>
-      <h1>Learning Reusable Formal Reasoning for Secure and Reliable Software</h1>
+      <p className="portfolio-eyebrow">Research statement · 27 October 2026</p>
+      <h1>Learning Formal Reasoning for Reliable AI-Assisted Programming</h1>
       <dl className="statement-meta" aria-label="Research statement metadata">
         <dt>Scope</dt>
-        <dd>AI coding agents, verification-guided learning, and reusable proof artifacts across programs, components, and software dependencies.</dd>
+        <dd>AI-assisted software generation, repair, and maintenance.</dd>
         <dt>Aim</dt>
-        <dd>Learn transferable reasoning strategies and produce independently checkable evidence of software correctness and security.</dd>
+        <dd>Learn transferable formal reasoning that supports useful software changes with independently checked evidence.</dd>
       </dl>
       <article className="statement-body" aria-label="Research statement text">
         <ReactMarkdown remarkPlugins={[remarkGfm]}>{introduction}</ReactMarkdown>

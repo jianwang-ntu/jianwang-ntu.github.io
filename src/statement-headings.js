@@ -6,6 +6,9 @@ export function statementHeadings(markdown) {
     if (!match) return [];
     const title = match[2];
     const stableTitles = {
+      'Learning verification-guided programming strategies': 'Learning reusable proof strategies',
+      'Preserving guarantees across software changes': 'Compositional verification',
+      'Verification feedback aligned with intended behavior': 'Trustworthy verification feedback',
       'I. Oversight before action': 'I. Scalable oversight under adaptation',
       'II. Preserving safety through continual updates': 'II. Safety-preserving learning and feedback',
       'III. Authorization across delegated workflows': 'III. Control across time and delegation',
