@@ -662,9 +662,7 @@ a:focus-visible, button:focus-visible, select:focus-visible, summary:focus-visib
 .formal-research-scroll:focus-visible { outline: 2px solid var(--ap-blue); outline-offset: -2px; }
 .formal-research-open { display: block; }
 .formal-research-actions { display: flex; flex-wrap: wrap; gap: 8px 18px; }
-@media (max-width: 600px) {
-  .formal-research-canvas { min-width: 900px; }
-}
+.formal-research-canvas { width: 100%; }
 
 .formal-research-caption, .formal-research-context { display: block; }
 .formal-research-context { margin-block: 4px 8px; }

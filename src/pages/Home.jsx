@@ -31,10 +31,10 @@ function AcademicPagesHome() {
             <h2 id="interests-title">Research interests</h2>
             <Link className="text-link" to="/statement">Research statement ↗</Link>
           </div>
-          <p>My research focuses on <strong>learning reusable formal reasoning for secure and reliable software</strong>: how AI coding agents can learn from verification feedback and apply it across programs and tasks. My proposed agenda connects{' '}
-            <Link to="/statement#learning-reusable-proof-strategies">learning proof strategies</Link>,{' '}
-            <Link to="/statement#compositional-verification">compositional verification</Link>, and{' '}
-            <Link to="/statement#trustworthy-verification-feedback">trustworthy verification feedback</Link>.</p>
+          <p>My research focuses on <strong>reliable AI-assisted programming</strong>: how coding agents can learn formal reasoning to write, repair, and maintain software. My proposed agenda connects{' '}
+            <Link to="/statement#learning-reusable-proof-strategies">learning from verification</Link>,{' '}
+            <Link to="/statement#compositional-verification">preserving guarantees through change</Link>, and{' '}
+            <Link to="/statement#trustworthy-verification-feedback">aligning feedback with intended behavior</Link>.</p>
           <FormalReasoningFigure />
         </section>
         <section className="home-section" aria-labelledby="selected-title">
@@ -79,7 +79,7 @@ function AcademicPagesHome() {
 
 export default function Home() {
   return <div className="page">
-    <Seo title="Home" description="Jian Wang — PhD, NTU Singapore. Learning reusable formal reasoning for secure and reliable software through AI coding agents and verification feedback." path="/home" />
+    <Seo title="Home" description="Jian Wang — PhD, NTU Singapore. Reliable AI-assisted programming through learned formal reasoning, verification feedback, and evidence for software changes." path="/home" />
     <Nav skipToContent /><AcademicPagesHome /><Footer />
   </div>;
 }

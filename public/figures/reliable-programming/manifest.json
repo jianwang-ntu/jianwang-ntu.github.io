@@ -1,0 +1,76 @@
+[
+  {
+    "id": "01-overview",
+    "title": "Formal reasoning for reliable programming",
+    "labels": [
+      "Learn reasoning",
+      "Compose guarantees",
+      "Audit feedback",
+      "Reliable programming"
+    ],
+    "concept": "Three complementary research directions support one shared goal.",
+    "file": "01-overview.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "sha256": "0f2c9de3062dbb3488b99152b6612f195788a575f6639ab5a4abf3fc9cfc79c4",
+    "status": "Generated in ChatGPT in Chrome; downloaded and visually inspected. Raster draft, not an editable master.",
+    "preview_sha256": "be27a39e2be9f770b3e9cff5a31456d74b459960592ff343c969b14b10e6128a"
+  },
+  {
+    "id": "02-programming-strategies",
+    "title": "Learning from verification",
+    "labels": [
+      "Program",
+      "Reason",
+      "Check",
+      "Learn"
+    ],
+    "concept": "Verification feedback informs reusable reasoning.",
+    "file": "02-programming-strategies.png",
+    "dimensions": [
+      1672,
+      940
+    ],
+    "sha256": "0c4d99dd0be5a667079d2a3295646cd2289cb9ffaee1d7c373fbec0d77e8e9ff",
+    "status": "Generated in ChatGPT in Chrome; downloaded and visually inspected. Raster draft, not an editable master.",
+    "preview_sha256": "a893b8527c136e388958b9f7cecfe0de02da8ff022615e0b2bab1594c54f2eda"
+  },
+  {
+    "id": "03-software-changes",
+    "title": "From local proofs to program guarantees",
+    "labels": [
+      "Local proofs",
+      "Checked composition",
+      "Program guarantee"
+    ],
+    "concept": "A program-level claim requires a checked composition argument.",
+    "file": "03-software-changes.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "sha256": "d33f139beac8b255d71acb6fac73f70f3b8df4f31841fe71ca58a52d972616fc",
+    "status": "Generated in ChatGPT in Chrome; downloaded and visually inspected. Raster draft, not an editable master.",
+    "preview_sha256": "6dedae635444efff3e86c8de2f232880769c18f03063be538cccb6149eaa9bbe"
+  },
+  {
+    "id": "04-intended-behavior",
+    "title": "Beyond proof acceptance",
+    "labels": [
+      "Check the claim",
+      "Assess the behavior",
+      "Evidence for decisions"
+    ],
+    "concept": "Formal checking and behavioral assessment inform decisions together.",
+    "file": "04-intended-behavior.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "sha256": "1a519619aceaef2d43a426dffbd73802fac3ad2d1270c622974417f1b738c138",
+    "status": "Generated in ChatGPT in Chrome; downloaded and visually inspected. Raster draft, not an editable master.",
+    "preview_sha256": "7ebd1c2e20b2e0ecbb10c78c2b10afc3cd77aced0cad6af9a7d6d87cce9f1348"
+  }
+]
