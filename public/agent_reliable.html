@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="author" content="Jian Wang">
+  <meta name="description" content="Research on reusable reasoning for programming and reliable coding agents, connecting learning, software changes, and evidence from execution, testing, and verification.">
+  <link rel="canonical" href="https://www.wj2ai.com/agent_reliable.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Reusable Reasoning and Reliable Coding Agents — Jian Wang">
+  <meta property="og:description" content="Two connected research directions for reliable AI-assisted programming.">
+  <meta property="og:url" content="https://www.wj2ai.com/agent_reliable.html">
+  <meta property="og:image" content="https://www.wj2ai.com/figures/agent-reliable/01-overview.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>Reusable Reasoning and Reliable Coding Agents — Jian Wang</title>
+  <style>
+    :root{color-scheme:light;--ink:#26333a;--muted:#63717a;--link:#256176;--line:#dde3e7}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:28px}
+    body{margin:0;background:#fff;color:var(--ink);font:17px/1.75 Arial,Helvetica,sans-serif;-webkit-font-smoothing:antialiased}
+    a{color:var(--link);text-underline-offset:3px}a:hover{text-decoration:none}a:focus-visible,summary:focus-visible{outline:2px solid var(--link);outline-offset:4px}
+    .skip{position:absolute;top:-80px;left:20px;background:#fff;padding:8px 14px}.skip:focus{top:12px}
+    .frame{max-width:1000px;margin:auto;padding:0 36px}.site-nav{display:flex;justify-content:space-between;gap:24px;padding:25px 0;border-bottom:1px solid var(--line);font-size:14px}
+    .site-nav .identity{font-weight:700;color:var(--ink);text-decoration:none}.site-nav .links{display:flex;gap:22px;flex-wrap:wrap}
+    main{max-width:820px;margin:0 auto;padding:42px 0 24px}.eyebrow{font-size:13px;color:var(--muted);margin:0 0 14px;letter-spacing:.025em}
+    h1{font-size:clamp(30px,4.4vw,43px);line-height:1.2;letter-spacing:-.025em;margin:0 0 25px}h2{font-size:27px;line-height:1.3;letter-spacing:-.015em;margin:0 0 18px}
+    p{margin:0 0 21px}.lead{font-size:19px;line-height:1.75}.meta{display:grid;grid-template-columns:52px 1fr;gap:6px 14px;font-size:14px;line-height:1.6;margin:0 0 30px}.meta dt{font-weight:700}.meta dd{margin:0;color:var(--muted)}
+    figure{margin:28px 0 32px}.figure-canvas{position:relative}.figure-image{display:block}figure img{display:block;width:100%;height:auto}figcaption{font-size:13px;line-height:1.6;color:var(--muted);margin-top:12px}figcaption a{white-space:normal}.figure-actions{display:flex;flex-wrap:wrap;gap:7px 18px;margin-top:7px}
+    .image-link{position:absolute;border-radius:5px}.image-link:hover,.image-link:focus-visible{outline:2px solid var(--link);outline-offset:-2px;background:rgb(37 97 118 / 7%)}
+    .toc{margin:30px 0;padding:18px 0;border-block:1px solid var(--line);font-size:15px}.toc span{font-weight:700}.toc ol{margin:9px 0 0;padding-left:24px}.toc li{margin:4px 0}
+    section{margin-top:42px;padding-top:26px;border-top:1px solid var(--line)}.number{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}.question{font-weight:700}
+    details{margin:22px 0 0;padding-top:18px;border-top:1px solid var(--line)}summary{cursor:pointer;font-weight:600;margin-left:18px;padding-left:4px}details[open] summary{margin-bottom:16px}.detail-body{font-size:15px;line-height:1.75}.references{padding-left:24px}.references li{margin-bottom:10px}
+    footer{max-width:820px;margin:20px auto 0;padding:20px 0 32px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}footer nav{display:flex;gap:18px;flex-wrap:wrap}
+    @media(max-width:600px){.frame{padding:0 22px}.site-nav{display:block;padding:20px 0}.site-nav .links{gap:10px 20px;margin-top:12px}main{padding-top:28px}body{font-size:16px}.lead{font-size:17px}h1{font-size:31px}h2{font-size:24px}.meta{font-size:13px;gap:8px 12px}figure{margin:24px 0}.toc{font-size:14px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+    @media print{@page{size:A4;margin:18mm}.frame{max-width:none;padding:0}.site-nav,.skip,.toc,.figure-actions,footer{display:none}body{font-size:10.5pt;line-height:1.55;color:#111}main{max-width:none;padding:0}h1{font-size:24pt}h2{font-size:17pt;break-after:avoid}.lead{font-size:11pt}.meta,figcaption{font-size:9pt}figure{break-inside:avoid;max-width:155mm;margin:16px auto}section{margin-top:22px;padding-top:16px}a{color:inherit}}
+  </style>
+</head>
+<body>
+<a class="skip" href="#statement">Skip to statement</a>
+<div class="frame">
+  <nav class="site-nav" aria-label="Main navigation">
+    <a class="identity" href="/home">Jian Wang · 王剑</a>
+    <div class="links"><a href="/home">Home</a><a href="/statement">Research statement</a><a href="/pubs">Publications</a><a href="/cv">CV</a></div>
+  </nav>
+  <main id="statement" tabindex="-1">
+    <header>
+      <p class="eyebrow">Research statement · 28 October 2026</p>
+      <h1>Learning Reusable Reasoning for Reliable AI-Assisted Programming</h1>
+      <dl class="meta"><dt>Scope</dt><dd>Program reasoning and coding agents for software generation, repair, and maintenance.</dd><dt>Aim</dt><dd>Learn transferable reasoning and use it to make reliable software changes supported by clear evidence.</dd></dl>
+    </header>
+    <p class="lead">I study how AI systems learn to reason about software and turn that reasoning into reliable programming behavior. Coding agents must understand existing code, identify necessary changes, investigate unsuccessful attempts, and assess whether their edits satisfy requirements without introducing regressions.</p>
+    <p>My research connects two directions: <strong>learning reusable reasoning for programming</strong> and <strong>building reliable coding agents</strong>. Formal verification provides one source of evidence, alongside execution, testing, static analysis, and human review.</p>
+    <figure aria-label="Two connected research directions">
+      <div class="figure-canvas">
+        <a class="figure-image" href="/figures/agent-reliable/01-overview.png" target="_blank" rel="noreferrer" aria-label="Open research overview at full size"><img src="/figures/agent-reliable/01-overview.webp" width="1672" height="941" alt="Reusable reasoning provides strategies to reliable coding agents; agents provide feedback for learning." decoding="async" fetchpriority="high"></a>
+        <a class="image-link" href="#reusable-reasoning" aria-label="Read about learning reusable reasoning" title="Learning reusable reasoning" style="left:4.3%;top:33.5%;width:33.4%;height:46.3%"></a>
+        <a class="image-link" href="#reliable-coding-agents" aria-label="Read about building reliable coding agents" title="Building reliable coding agents" style="left:62.2%;top:33.5%;width:33.5%;height:46.3%"></a>
+      </div>
+      <figcaption>Proposed agenda: reasoning strategies inform agents, while experience from agents provides feedback for learning. <span class="figure-actions"><a href="/figures/agent-reliable/01-overview.png" target="_blank" rel="noreferrer">Full-size image ↗</a><a href="/data/agent-reliable-diagrams.zip" download>Download diagrams</a></span></figcaption>
+    </figure>
+    <nav class="toc" aria-label="Research directions"><span>Two connected directions</span><ol><li><a href="#reusable-reasoning">Learning reusable reasoning for programming</a></li><li><a href="#reliable-coding-agents">Building reliable coding agents</a></li></ol></nav>
+    <section id="reusable-reasoning" aria-labelledby="reasoning-title" tabindex="-1">
+      <p class="number">Research direction 1</p>
+      <h2 id="reasoning-title">Learning reusable reasoning for programming</h2>
+      <p class="question">How can models learn reasoning strategies that transfer across programs and tasks?</p>
+      <figure><a class="figure-image" href="/figures/agent-reliable/02-reusable-reasoning.png" target="_blank" rel="noreferrer" aria-label="Open reusable reasoning diagram at full size"><img src="/figures/agent-reliable/02-reusable-reasoning.webp" width="1672" height="941" alt="Experience from execution, tests, and verification informs reusable strategies for unfamiliar tasks." loading="lazy" decoding="async"></a><figcaption>Proposed research: learn from experience and evaluate whether the resulting strategies transfer to unfamiliar programming tasks.</figcaption></figure>
+      <p>Programming involves understanding behavior, identifying assumptions, decomposing problems, and revising hypotheses when evidence contradicts them. I would study how models acquire these capabilities from successful solutions, failed attempts, and tool feedback.</p>
+      <p>My hypothesis is that learning from <strong>reasoning decisions linked to their consequences</strong> supports better transfer than learning only from final solutions. For example, an agent could learn why a diagnostic input distinguishes competing explanations, or why an assertion helps establish a program property. The goal is to learn when to introduce an abstraction, gather evidence, revise a hypothesis, or change a decomposition.</p>
+      <p>Evaluation would distinguish retrieval, refinement during inference, and strategies learned through training. Comparisons would control information, tools, and computational resources, measuring accuracy, transfer, and total effort on unfamiliar programs and changed requirements. Loop-invariant revision provides an initial setting, followed by debugging, repair, and program understanding.</p>
+    </section>
+    <section id="reliable-coding-agents" aria-labelledby="agents-title" tabindex="-1">
+      <p class="number">Research direction 2</p>
+      <h2 id="agents-title">Building reliable coding agents</h2>
+      <p class="question">How can agents make useful software changes while preserving required behavior?</p>
+      <figure><a class="figure-image" href="/figures/agent-reliable/03-reliable-coding-agents.png" target="_blank" rel="noreferrer" aria-label="Open coding agents diagram at full size"><img src="/figures/agent-reliable/03-reliable-coding-agents.webp" width="1672" height="941" alt="Requirements guide a coding agent's software changes. Checks provide feedback to guide revision, with preservation of required behavior as the goal." loading="lazy" decoding="async"></a><figcaption>Proposed research: use checks to guide revision and preserve required behavior. The evidence remains conditional on the checks, specifications, and assumptions.</figcaption></figure>
+      <p>Reliable agents must manage sequences of actions across repositories, tools, and dependencies. Evidence can become outdated after code changes, and passing available tests does not necessarily establish that a patch addresses the underlying defect.</p>
+      <p>I would study agents that connect <strong>requirements, reasoning decisions, software changes, and supporting evidence</strong>. Agents would track established facts, unresolved assumptions, and checks that need repeating. This would guide investigation, tool selection, plan revision, and requests for human review.</p>
+      <p>Experiments would begin with repository-level repair and maintenance, then extend to changes across interacting components. Agents would combine tests, execution, static analysis, and formal verification where suitable. Evaluation would measure useful completion, functional and selected security regressions, unsupported success claims, recovery cost, and review effort under matched resources.</p>
+    </section>
+    <p>Together, these directions aim to develop models that learn transferable reasoning and agents that use it to produce software changes supported by clear evidence.</p>
+    <details id="foundation"><summary>Research foundation</summary><div class="detail-body"><p>My work in code-model evaluation, program repair, and loop-invariant synthesis provides the foundation. Related projects include <a href="/pubs/loop-r1">Loop-R1</a>, <a href="/pubs/defects4c">Defects4C</a>, <a href="/pubs/ratchet">RATCHET</a>, and <a href="/pubs/code-semantics-execution-traces">execution-trace evaluation</a>. The learning and agent methods described above are proposed research.</p></div></details>
+    <details id="references"><summary>References and related context</summary><div class="detail-body"><ol class="references"><li>Anthropic and Theorem. <a href="https://www.anthropic.com/research/formal-verification">LLMs are making formal software verification feasible at a much larger scale.</a></li><li>Theorem. <a href="https://theorem.dev/blog/verified-software-stack/">Bootstrapping the Verified Software Stack.</a></li><li>Verus documentation. <a href="https://verus-lang.github.io/verus/guide/llmforverusproof.html">Using LLMs to Help Write Verus Proofs.</a></li></ol><p>These sources provide context for the verification aspects of the agenda; they do not establish the proposed learning and agent results.</p></div></details>
+  </main>
+  <footer><nav aria-label="Related pages"><a href="/home">Home</a><a href="/statement">Formal-reasoning statement</a><a href="/statement_multi_agent">Multi-agent statement</a><a href="/pubs">Publications</a></nav><p>Jian Wang · 2026</p></footer>
+</div>
+</body>
+</html>
