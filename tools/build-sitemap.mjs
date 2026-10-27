@@ -29,6 +29,7 @@ const today = new Date().toISOString().slice(0, 10);
 const STATIC_ROUTES = [
   { path: '/home', changefreq: 'monthly', priority: '1.0' },
   { path: '/statement', changefreq: 'monthly', priority: '0.9' },
+  { path: '/agent_reliable.html', changefreq: 'monthly', priority: '0.8' },
   { path: '/statement_multi_agent', changefreq: 'monthly', priority: '0.9' },
   { path: '/research_coding_statement', changefreq: 'monthly', priority: '0.8' },
   { path: '/pubs', changefreq: 'monthly', priority: '0.9' },
