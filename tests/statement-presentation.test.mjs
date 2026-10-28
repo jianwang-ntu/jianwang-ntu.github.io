@@ -86,8 +86,10 @@ test('the multi-agent page retains its supplied image with full-size access and 
 test('the homepage keeps its introduction concise and displays the current research overview', () => {
   const home = renderRoute('/home');
   const research = home.match(/<section\b[^>]*aria-labelledby="interests-title"[^>]*>[\s\S]*?<\/section>/)?.[0] || '';
-  const prose = [...research.split('<figure')[0].matchAll(/<p>([\s\S]*?)<\/p>/g)].map(match => match[1].replace(/<[^>]+>/g, '')).join(' ');
-  assert.ok(prose.trim().split(/\s+/).length <= 150, 'Keep the complete homepage research narrative brief');
+  const paragraphs = [...research.split('<figure')[0].matchAll(/<p>([\s\S]*?)<\/p>/g)];
+  assert.equal(paragraphs.length, 1, 'Use the approved one-sentence homepage summary');
+  const prose = paragraphs.map(match => match[1].replace(/<[^>]+>/g, '')).join(' ');
+  assert.ok(prose.trim().split(/\s+/).length <= 50, 'Keep the homepage summary brief');
   assert.doesNotMatch(research, /reliable-agents-human-control\.svg|Trustworthy Code LLMs|limited gains/);
   assert.match(research, /aria-label="Reusable reasoning and reliable coding agents"/);
   assert.match(research, /href="\/agent_reliable\.html"/);
@@ -286,9 +288,9 @@ test('Primary statement navigation and homepage directions consistently target t
     assert.ok(home.includes(`href="/agent_reliable.html#${target}"`), target);
     assert.ok(statement.includes(`id="${target}"`), target);
   }
-  assert.match(home, /transfers to unfamiliar programs/);
+  assert.match(home, /transfer to unfamiliar programs/);
   assert.match(home, /extended tasks and changing contexts/);
-  for (const html of [home, statement]) assert.match(html, /My long-term goal is/);
+  assert.match(statement, /My long-term goal is/);
   assert.doesNotMatch(home, /learn formal reasoning|preserving guarantees through change/);
 });
 
