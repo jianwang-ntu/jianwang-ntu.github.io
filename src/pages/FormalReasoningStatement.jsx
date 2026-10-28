@@ -70,7 +70,7 @@ export default function FormalReasoningStatement() {
         </details>
       </article>
       <div className="statement-download">
-        <a href="/agent_reliable.html">Reusable reasoning and reliable coding agents ↗</a>
+        <a href="/agent_reliable.html">Current research statement ↗</a>
         <Link to="/statement_multi_agent">Multi-agent research statement ↗</Link>
         <Link to="/research_coding_statement">Program reasoning statement ↗</Link>
         <Link to="/pubs">Browse publications ↗</Link>

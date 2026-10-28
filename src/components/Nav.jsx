@@ -3,7 +3,7 @@ import { Link, NavLink, useLocation } from 'react-router-dom';
 
 const NAV_ITEMS = [
   { to: '/home', label: 'Home' },
-  { to: '/statement', label: 'Research statement', short: 'Research' },
+  { href: '/agent_reliable.html', label: 'Research statement', short: 'Research' },
   { to: '/pubs', label: 'Publications' },
   { to: '/work', label: 'Work' },
   { to: '/cv',   label: 'CV' },
@@ -24,6 +24,9 @@ export default function Nav({ skipToContent = false }) {
       <div className="links">
         {NAV_ITEMS.map((n) => {
           const label = n.short ? <><span className="nav-label-full">{n.label}</span><span className="nav-label-short" aria-hidden="true">{n.short}</span></> : n.label;
+          if (n.href) {
+            return <a key={n.href} href={n.href} aria-label={n.label}>{label}</a>;
+          }
           if (n.to === '/work' && isChineseWorkPage) {
             return <Link key={n.to} to={n.to} className="active" aria-current="page" aria-label={n.label}>{label}</Link>;
           }
