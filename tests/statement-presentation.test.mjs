@@ -86,8 +86,8 @@ test('the multi-agent page retains its supplied image with full-size access and 
 test('the homepage keeps its introduction concise and displays the current research overview', () => {
   const home = renderRoute('/home');
   const research = home.match(/<section\b[^>]*aria-labelledby="interests-title"[^>]*>[\s\S]*?<\/section>/)?.[0] || '';
-  const intro = research.match(/<p>([\s\S]*?)<\/p>/)?.[1] || '';
-  assert.ok(intro.replace(/<[^>]+>/g, '').split(/\s+/).length <= 50);
+  const prose = [...research.split('<figure')[0].matchAll(/<p>([\s\S]*?)<\/p>/g)].map(match => match[1].replace(/<[^>]+>/g, '')).join(' ');
+  assert.ok(prose.trim().split(/\s+/).length <= 150, 'Keep the complete homepage research narrative brief');
   assert.doesNotMatch(research, /reliable-agents-human-control\.svg|Trustworthy Code LLMs|limited gains/);
   assert.match(research, /aria-label="Reusable reasoning and reliable coding agents"/);
   assert.match(research, /href="\/agent_reliable\.html"/);
@@ -277,6 +277,7 @@ test('Home and the linked statement present the same two research directions', (
   }
   assert.match(home, /transfers to unfamiliar programs/);
   assert.match(home, /extended tasks and changing contexts/);
+  for (const html of [home, statement]) assert.match(html, /My long-term goal is/);
   assert.doesNotMatch(home, /learn formal reasoning|preserving guarantees through change/);
 });
 
