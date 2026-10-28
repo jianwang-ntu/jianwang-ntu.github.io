@@ -35,7 +35,7 @@ const audit = '/statement#trustworthy-verification-feedback';
 const assetVersion = '20261027-simple';
 // Coordinates match the simplified overview's 1672 × 941 canvas.
 const overviewRegions = [
-  ['Read the full reliable programming statement', '/statement', 462, 208, 748, 202],
+  ['Read this earlier formal-reasoning statement', '/statement', 462, 208, 748, 202],
   ['Learn reasoning from verification', learn, 141, 606, 416, 225],
   ['Compose guarantees across software changes', compose, 638, 606, 397, 225],
   ['Audit feedback against intended behavior', audit, 1119, 606, 414, 225],

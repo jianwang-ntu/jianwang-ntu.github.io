@@ -40,7 +40,7 @@ export default function CV() {
         <h1>Curriculum vitae</h1>
         <p className="page-deck">Education, research and industry experience.</p>
         <p className="text-index-intro">PhD conferred June 2026. The downloadable CV was updated in October 2026;
-          the <a href="/statement">research statement</a> describes my proposed next direction.</p>
+          the <a href="/agent_reliable.html">research statement</a> describes my proposed next direction.</p>
         <div className="reading-links">
           <a className="cv-download-link" href="/data/Jian_Wang_CV_Academic_202610.pdf" target="_blank" rel="noreferrer">Download CV (PDF) ↗</a>
           <a href="/data/jornbowrl-bio.txt">Short bio</a>

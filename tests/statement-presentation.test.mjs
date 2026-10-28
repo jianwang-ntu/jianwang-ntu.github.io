@@ -268,9 +268,20 @@ test('statement bibliography is collapsed by default with its bookmark preserved
   assert.match(disclosure, /Do Code Semantics Help/);
 });
 
-test('Home and the linked statement present the same two research directions', () => {
+test('Primary statement navigation and homepage directions consistently target the current statement', () => {
   const home = renderRoute('/home');
   const statement = readFileSync(new URL('../public/agent_reliable.html', import.meta.url), 'utf8');
+  for (const route of ['/home', '/pubs', '/work', '/cv', '/blog', '/statement', '/statement_multi_agent', '/research_coding_statement']) {
+    const html = renderRoute(route);
+    const nav = html.match(/<nav\b[^>]*aria-label="Main navigation"[^>]*>[\s\S]*?<\/nav>/)?.[0] || '';
+    const link = [...nav.matchAll(/<a\b[^>]*>/g)].map(match => match[0]).find(anchor => anchor.includes('aria-label="Research statement"')) || '';
+    assert.match(link, /href="\/agent_reliable\.html"/, route);
+  }
+  const standaloneNav = statement.match(/<nav\b[^>]*aria-label="Main navigation"[^>]*>[\s\S]*?<\/nav>/)?.[0] || '';
+  assert.match(standaloneNav, /href="\/agent_reliable\.html"[^>]*>Research statement<\/a>/);
+  assert.doesNotMatch(standaloneNav, /href="\/statement"/);
+  assert.match(renderRoute('/cv'), /href="\/agent_reliable\.html">research statement<\/a>/);
+  assert.match(renderRoute('/research_coding_statement'), /href="\/agent_reliable\.html">Primary research statement/);
   for (const target of ['reusable-reasoning', 'reliable-coding-agents']) {
     assert.ok(home.includes(`href="/agent_reliable.html#${target}"`), target);
     assert.ok(statement.includes(`id="${target}"`), target);

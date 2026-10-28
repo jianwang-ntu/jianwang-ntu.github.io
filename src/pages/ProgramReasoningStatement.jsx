@@ -38,7 +38,7 @@ export default function ProgramReasoningStatement() {
         </figure>
         <div className="statement-download">
           <a href="/data/Jian_Wang_Program_Reasoning_Statement_2026.pdf" target="_blank" rel="noreferrer">Two-page statement (PDF) ↗</a>
-          <Link to="/statement">Primary research statement ↗</Link>
+          <a href="/agent_reliable.html">Primary research statement ↗</a>
         </div>
         <article className="statement-body program-reasoning-body" aria-label="Program reasoning research statement">
           <ReactMarkdown remarkPlugins={[remarkGfm]}>{webMarkdown}</ReactMarkdown>
