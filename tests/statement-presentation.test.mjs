@@ -89,8 +89,8 @@ test('the homepage keeps its introduction concise and displays the current resea
   const intro = research.match(/<p>([\s\S]*?)<\/p>/)?.[1] || '';
   assert.ok(intro.replace(/<[^>]+>/g, '').split(/\s+/).length <= 50);
   assert.doesNotMatch(research, /reliable-agents-human-control\.svg|Trustworthy Code LLMs|limited gains/);
-  assert.match(research, /aria-label="Formal reasoning research overview"/);
-  assert.match(research, /href="\/statement"/);
+  assert.match(research, /aria-label="Reusable reasoning and reliable coding agents"/);
+  assert.match(research, /href="\/agent_reliable\.html"/);
   const primary = renderRoute('/statement');
   const foundation = primary.match(/<details\b[^>]*id="research-foundation-and-approach"[^>]*>[\s\S]*?<\/details>/)?.[0] || '';
   assert.ok(foundation);
@@ -268,13 +268,16 @@ test('statement bibliography is collapsed by default with its bookmark preserved
   assert.match(disclosure, /Do Code Semantics Help/);
 });
 
-test('Home and the primary statement link the same three research directions', () => {
+test('Home and the linked statement present the same two research directions', () => {
   const home = renderRoute('/home');
-  const statement = renderRoute('/statement');
-  for (const target of ['learning-reusable-proof-strategies', 'compositional-verification', 'trustworthy-verification-feedback']) {
-    assert.ok(home.includes(`href="/statement#${target}"`), target);
+  const statement = readFileSync(new URL('../public/agent_reliable.html', import.meta.url), 'utf8');
+  for (const target of ['reusable-reasoning', 'reliable-coding-agents']) {
+    assert.ok(home.includes(`href="/agent_reliable.html#${target}"`), target);
     assert.ok(statement.includes(`id="${target}"`), target);
   }
+  assert.match(home, /transfers to unfamiliar programs/);
+  assert.match(home, /extended tasks and changing contexts/);
+  assert.doesNotMatch(home, /learn formal reasoning|preserving guarantees through change/);
 });
 
 test('research foundation is collapsed while the introduction stays visible', () => {

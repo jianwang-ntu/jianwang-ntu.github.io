@@ -123,7 +123,7 @@ function writeRoute(routePath, html) {
 // Per-route descriptions — keep terse, ~150 chars max. These match the dynamic
 // Seo component's defaults so the static and JS-rendered metadata agree.
 const STATIC_ROUTES = [
-  { path: '/home', title: 'Home',           desc: 'Jian Wang — PhD, NTU Singapore. Reliable AI-assisted programming through learned formal reasoning, verification feedback, and evidence for software changes.' },
+  { path: '/home', title: 'Home',           desc: 'Jian Wang — PhD, NTU Singapore. Learning reusable reasoning for programming and building reliable coding agents for extended software tasks.' },
   { path: '/statement_multi_agent', title: 'Research Statement', desc: 'Reliable AI agents under human control: oversight before action, preserving safety through continual updates, and authorization across delegated workflows.' },
   { path: '/statement', title: 'Research Statement', desc: 'Learning formal reasoning for reliable AI-assisted programming: verification-guided strategies, guarantees across software changes, and feedback aligned with intended behavior.' },
   { path: '/research_coding_statement', title: 'Program Reasoning Research Statement', desc: 'Reliable program reasoning through learned semantic abstractions, formal feedback, and rigorous evaluation.' },
