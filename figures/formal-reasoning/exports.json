@@ -1,0 +1,48 @@
+{
+  "source_pdf": "/data/formal-reasoning-diagrams/formal-reasoning-diagrams.pdf",
+  "source_pdf_sha256": "c53ab9cb26af21ad9b045b05f10c8ff8e7d63199f47e9ad80e3e8a52b92fd003",
+  "editable_pptx_sha256": "26f2145954477e834d262a39b1dde313445d529cf26e3715d92a593d03770e58",
+  "canvas": {
+    "width": 1672,
+    "height": 941
+  },
+  "citations": "HTML figure captions and PowerPoint speaker notes",
+  "figures": [
+    {
+      "name": "overview",
+      "pdf_page": 1,
+      "files": {
+        "svg": "c831a1a4b4776d102d547d331c4c50a871aaf63c37fc34a58ebef44828d471c1",
+        "png": "8908359dd6561d81066f1da78d279b7b75707fd2b905c849f54f2afbbc11f9a8",
+        "webp": "b34ac22a838c8199fbde0eef0a6dc209c13d8d615707b149a8fae617ac41c47d"
+      }
+    },
+    {
+      "name": "learning-proof-strategies",
+      "pdf_page": 2,
+      "files": {
+        "svg": "172804f5e37add0bed50807d8776cbeccdaf2314428df6ea9d41cbfc886525c1",
+        "png": "8e1e73c466e0866d8cceea1f98823e0664c1f3cbc28a47138ff93e3f8cfa45ea",
+        "webp": "34a72b60bd7bc50f5e4666f493449f6c9d504655232b2927fd549397af48ac06"
+      }
+    },
+    {
+      "name": "compositional-verification",
+      "pdf_page": 3,
+      "files": {
+        "svg": "d879b78d80359f5d40c23d795dbc3e93824dae2e04c52a1a3777a24d0b86e43d",
+        "png": "6d9b1afacf2046701a190fcb1c273a2b261300f84470f90ea86a51c4bf2a9811",
+        "webp": "e1efc8d26b769d513f9907fd5eec7e98243cfc747ece794dc5220435b8aafb1f"
+      }
+    },
+    {
+      "name": "trustworthy-feedback",
+      "pdf_page": 4,
+      "files": {
+        "svg": "abec44e8b572c22e659ccbba64daf97e006e414c4be7be78f1ecb6761cce8ef0",
+        "png": "3c4e67d49c5cd2e54480e495979c8ce41393ecc3ee326e445cdef80ea374a937",
+        "webp": "da0ee780aeebf25a5a6aae60acb926d21ae22ea6d72beb5e90a56dcae6f97a20"
+      }
+    }
+  ]
+}

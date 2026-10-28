@@ -1,0 +1,35 @@
+[
+  {
+    "file": "01-overview.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "sha256": "ae6b4a4edb9d52a97c6460f750ff1b493b166a63ae71436784b04160ddc29320",
+    "preview": "01-overview.webp",
+    "preview_sha256": "a1c0f274746a64dab209a7a429d92c48dd82676d2c5ddacff66fa3ae4958ef73",
+    "generation": "ChatGPT image generation in Chrome"
+  },
+  {
+    "file": "02-reusable-reasoning.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "sha256": "453ac7be5dad140a6315664e056c3ac3792ed53cea9ca0b5ad846b8e2a410dff",
+    "preview": "02-reusable-reasoning.webp",
+    "preview_sha256": "ac1e3c238822eb1f3e26ce04b6923d70508b825388cab5c8cdd19fdc2def1ad8",
+    "generation": "ChatGPT image generation in Chrome"
+  },
+  {
+    "file": "03-reliable-coding-agents.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "sha256": "3df714b5400df02a06a78326e3358f1450bd899ec4b9874aa857b1c5d84b4c07",
+    "preview": "03-reliable-coding-agents.webp",
+    "preview_sha256": "c50099671cdcfd5432425a78d7fa979c65aaa7917417b618d8ef0c7b95801e33",
+    "generation": "ChatGPT image generation in Chrome"
+  }
+]

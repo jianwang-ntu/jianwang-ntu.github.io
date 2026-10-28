@@ -1,0 +1,9 @@
+# Allow everything; nothing on the site is private.
+# /data/ holds publicly distributed CVs / papers — fine to crawl.
+User-agent: *
+Allow: /
+
+# Canonical sitemap. Both deploy targets serve identical content; canonical
+# URL points at wj2ai.com (set as <link rel="canonical"> on every page), so
+# search engines should attribute all signals to the wj2ai.com origin.
+Sitemap: https://www.wj2ai.com/sitemap.xml
