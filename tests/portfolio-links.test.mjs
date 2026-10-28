@@ -68,11 +68,11 @@ test('old statement bookmarks resolve to the sections that absorb their topics',
 
 test('homepage research interests point to real statement sections', () => {
   const home = readFileSync(new URL('../src/pages/Home.jsx', import.meta.url), 'utf8');
-  const statement = readFileSync(new URL('../src/content/formal-reasoning-statement.md', import.meta.url), 'utf8');
-  const targets = new Set(statementHeadings(statement).map(heading => heading.id));
-  const links = [...home.matchAll(/to="\/statement#([^"]+)"/g)];
-  assert.equal(links.length, 3);
-  for (const [, id] of links) assert.ok(targets.has(id), id);
+  const statement = readFileSync(new URL('../public/agent_reliable.html', import.meta.url), 'utf8');
+  const targets = new Set([...statement.matchAll(/\bid="([^"]+)"/g)].map(match => match[1]));
+  const links = new Set([...home.matchAll(/href="\/agent_reliable\.html#([^"]+)"/g)].map(match => match[1]));
+  assert.equal(links.size, 2);
+  for (const id of links) assert.ok(targets.has(id), id);
 });
 
 test('bookmarks for shortened statement subsections reach their retained research area', () => {

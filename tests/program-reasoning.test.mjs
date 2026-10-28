@@ -50,14 +50,15 @@ function mainContent(html) {
   return html.match(/<main\b[\s\S]*<\/main>/)?.[0] || '';
 }
 
-test('the primary agenda resolves every homepage direction and retains access to the multi-agent statement', () => {
+test('the linked agenda resolves both homepage directions and earlier statements remain accessible', () => {
   const home = mainContent(renderRoute('/home'));
   const primary = mainContent(renderRoute('/statement'));
+  const linked = readFileSync(file('public/agent_reliable.html'), 'utf8');
   const multiAgent = mainContent(renderRoute('/statement_multi_agent'));
   assert.ok(primary, '/statement must render its own main content');
-  const directionTargets = new Set([...home.matchAll(/href="\/statement#([^"]+)"/g)].map(match => match[1]));
-  assert.equal(directionTargets.size, 3);
-  for (const target of directionTargets) assert.ok(primary.includes(`id="${target}"`), target);
+  const directionTargets = new Set([...home.matchAll(/href="\/agent_reliable\.html#([^"]+)"/g)].map(match => match[1]));
+  assert.equal(directionTargets.size, 2);
+  for (const target of directionTargets) assert.ok(linked.includes(`id="${target}"`), target);
   assert.match(primary, /href="\/statement_multi_agent"/);
   assert.match(primary, /href="\/research_coding_statement"/);
   assert.match(primary, /<details[^>]*id="references"[^>]*><summary>References<\/summary>/);
@@ -67,13 +68,19 @@ test('the primary agenda resolves every homepage direction and retains access to
 test('simple research diagrams offer full-size access, matching previews and overview navigation', () => {
   const home = mainContent(renderRoute('/home'));
   const primary = mainContent(renderRoute('/statement'));
-  for (const html of [home, primary]) {
-    const overview = html.match(/<figure\b[^>]*aria-label="Formal reasoning research overview"[^>]*>[\s\S]*?<\/figure>/)?.[0];
+  for (const [html, label, route, targets] of [
+    [home, 'Reusable reasoning and reliable coding agents', '/agent_reliable.html', ['reusable-reasoning', 'reliable-coding-agents']],
+    [primary, 'Formal reasoning research overview', '/statement', ['learning-reusable-proof-strategies', 'compositional-verification', 'trustworthy-verification-feedback']],
+  ]) {
+    const overview = html.match(new RegExp(`<figure\\b[^>]*aria-label="${label}"[^>]*>[\\s\\S]*?<\\/figure>`))?.[0];
     assert.ok(overview, 'the current research overview is missing');
-    for (const target of ['learning-reusable-proof-strategies', 'compositional-verification', 'trustworthy-verification-feedback']) {
-      assert.ok(overview.includes(`href="/statement#${target}"`), target);
+    for (const target of targets) {
+      assert.ok(overview.includes(`href="${route}#${target}"`), target);
     }
   }
+  assert.match(home, /href="\/figures\/agent-reliable\/01-overview\.png"/);
+  assert.match(home, /src="\/figures\/agent-reliable\/01-overview\.webp"/);
+  for (const extension of ['png', 'webp']) assert.ok(existsSync(file(`public/figures/agent-reliable/01-overview.${extension}`)));
   for (const name of ['01-overview', '02-programming-strategies', '03-software-changes', '04-intended-behavior']) {
     const path = `/figures/reliable-programming/${name}.png`;
     assert.ok(primary.includes(`href="${path}?v=`), path);

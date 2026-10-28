@@ -4,7 +4,6 @@ import Nav from '../components/Nav.jsx';
 import Footer from '../components/Footer.jsx';
 import Seo from '../components/Seo.jsx';
 import SiteFrame from '../components/SiteFrame.jsx';
-import FormalReasoningFigure from '../components/FormalReasoningFigure.jsx';
 import { NEWS, ALL_PUBS } from '../data.jsx';
 import { PUB_META } from '../data-pubs.js';
 
@@ -29,13 +28,25 @@ function AcademicPagesHome() {
         <section className="home-section" aria-labelledby="interests-title">
           <div className="section-heading">
             <h2 id="interests-title">Research interests</h2>
-            <Link className="text-link" to="/statement">Research statement ↗</Link>
+            <a className="text-link" href="/agent_reliable.html">Research statement ↗</a>
           </div>
-          <p>My research focuses on <strong>reliable AI-assisted programming</strong>: how coding agents can learn formal reasoning to write, repair, and maintain software. My proposed agenda connects{' '}
-            <Link to="/statement#learning-reusable-proof-strategies">learning from verification</Link>,{' '}
-            <Link to="/statement#compositional-verification">preserving guarantees through change</Link>, and{' '}
-            <Link to="/statement#trustworthy-verification-feedback">aligning feedback with intended behavior</Link>.</p>
-          <FormalReasoningFigure />
+          <p>My research focuses on <strong>reliable AI-assisted programming</strong>. My proposed agenda connects{' '}
+            <a href="/agent_reliable.html#reusable-reasoning">learning reusable reasoning</a> that transfers to unfamiliar programs with{' '}
+            <a href="/agent_reliable.html#reliable-coding-agents">building reliable coding agents</a> that remain dependable across extended tasks and changing contexts.</p>
+          <figure className="research-overview formal-research-figure" aria-label="Reusable reasoning and reliable coding agents">
+            <div className="linked-research-image formal-research-canvas">
+              <a className="formal-research-open" href="/figures/agent-reliable/01-overview.png" target="_blank" rel="noreferrer" aria-label="Open the two-direction research overview at full size">
+                <img className="home-research-image" src="/figures/agent-reliable/01-overview.webp" width="1672" height="941" alt="Reusable reasoning provides strategies to reliable coding agents; agents provide feedback for learning." loading="lazy" decoding="async" />
+              </a>
+              <a className="research-image-link" href="/agent_reliable.html#reusable-reasoning" aria-label="Read about learning reusable reasoning" title="Learning reusable reasoning" style={{ left: '4.3%', top: '33.5%', width: '33.4%', height: '46.3%' }} />
+              <a className="research-image-link" href="/agent_reliable.html#reliable-coding-agents" aria-label="Read about building reliable coding agents" title="Building reliable coding agents" style={{ left: '62.2%', top: '33.5%', width: '33.5%', height: '46.3%' }} />
+            </div>
+            <ul className="research-overview-mobile" aria-label="Research directions">
+              <li><a href="/agent_reliable.html#reusable-reasoning">Learning reusable reasoning</a></li>
+              <li><a href="/agent_reliable.html#reliable-coding-agents">Building reliable coding agents</a></li>
+            </ul>
+            <figcaption>Proposed agenda: learned strategies guide agents; experience from agents informs learning.</figcaption>
+          </figure>
         </section>
         <section className="home-section" aria-labelledby="selected-title">
           <div className="section-heading"><h2 id="selected-title">Selected publications</h2>
@@ -79,7 +90,7 @@ function AcademicPagesHome() {
 
 export default function Home() {
   return <div className="page">
-    <Seo title="Home" description="Jian Wang — PhD, NTU Singapore. Reliable AI-assisted programming through learned formal reasoning, verification feedback, and evidence for software changes." path="/home" />
+    <Seo title="Home" description="Jian Wang — PhD, NTU Singapore. Learning reusable reasoning for programming and building reliable coding agents for extended software tasks." path="/home" />
     <Nav skipToContent /><AcademicPagesHome /><Footer />
   </div>;
 }
