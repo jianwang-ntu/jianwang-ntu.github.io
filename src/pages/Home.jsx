@@ -30,9 +30,10 @@ function AcademicPagesHome() {
             <h2 id="interests-title">Research interests</h2>
             <a className="text-link" href="/agent_reliable.html">Research statement ↗</a>
           </div>
-          <p>My research focuses on <strong>reliable AI-assisted programming</strong>. My proposed agenda connects{' '}
-            <a href="/agent_reliable.html#reusable-reasoning">learning reusable reasoning</a> that transfers to unfamiliar programs with{' '}
-            <a href="/agent_reliable.html#reliable-coding-agents">building reliable coding agents</a> that remain dependable across extended tasks and changing contexts.</p>
+          <p>I study <strong>reasoning for reliable AI-assisted programming</strong>: how AI systems understand software, learn from experience, and use that knowledge in unfamiliar settings. My proposed agenda connects two directions.</p>
+          <p><strong><a href="/agent_reliable.html#reusable-reasoning">(1) Learning reusable reasoning.</a></strong> I aim to develop models that learn how to understand code, test hypotheses, and revise solutions using execution and verification feedback. Here, <em>reusable</em> means reasoning that transfers to unfamiliar programs.</p>
+          <p><strong><a href="/agent_reliable.html#reliable-coding-agents">(2) Building reliable coding agents.</a></strong> I seek to understand how agents remain dependable across extended tasks and changing contexts by maintaining objectives, assessing uncertainty, and recovering from mistakes.</p>
+          <p>My long-term goal is <strong>AI systems that learn to solve unfamiliar programming problems and produce software people can depend on.</strong></p>
           <figure className="research-overview formal-research-figure" aria-label="Reusable reasoning and reliable coding agents">
             <div className="linked-research-image formal-research-canvas">
               <a className="formal-research-open" href="/figures/agent-reliable/01-overview.png" target="_blank" rel="noreferrer" aria-label="Open the two-direction research overview at full size">
